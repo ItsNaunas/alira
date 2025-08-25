@@ -8,7 +8,7 @@ const cards = [
     description: 'The situation, reframed with precision.',
     model: 'ANALYSIS',
     href: '#problem',
-    image: '/images/cards/problem-statement.jpg',
+    image: '/images/cards/problem-statement.png',
     badges: ['Structure', 'Context'],
   },
   {
@@ -16,7 +16,7 @@ const cards = [
     description: 'What success looks like, near and next.',
     model: 'FRAMEWORK',
     href: '#objectives',
-    image: '/images/cards/objectives.jpg',
+    image: '/images/cards/objectives.png',
     badges: ['Goals', 'Metrics'],
   },
   {
@@ -24,7 +24,7 @@ const cards = [
     description: 'Mapped to ALIRA. services and scope.',
     model: 'STRATEGY',
     href: '#solution',
-    image: '/images/cards/proposed-solution.jpg',
+    image: '/images/cards/proposed-solution.png',
     badges: ['Strategy', 'Scope'],
   },
   {
@@ -32,7 +32,7 @@ const cards = [
     description: 'Decisions, timelines, and the first move.',
     model: 'ROADMAP',
     href: '#next-steps',
-    image: '/images/cards/next-steps.jpg',
+    image: '/images/cards/next-steps.png',
     badges: ['Timeline', 'Actions'],
   },
 ]
