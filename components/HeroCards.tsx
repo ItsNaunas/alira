@@ -65,30 +65,23 @@ export default function HeroCards() {
 
         {/* Cards Container */}
         <div className="relative max-w-7xl mx-auto">
-          {/* Mobile gradient edge fades */}
-          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-alira-porcelain to-transparent pointer-events-none z-10 lg:hidden"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-alira-porcelain to-transparent pointer-events-none z-10 lg:hidden"></div>
-          
           {/* Card grid */}
-          <div className="flex lg:grid lg:grid-cols-4 gap-8 overflow-x-auto lg:overflow-visible snap-x snap-mandatory scrollbar-hide pb-4 lg:pb-0">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((card, index) => {
               const IconComponent = card.icon
               return (
                 <Link 
                   key={card.title}
                   href={card.href} 
-                  className="flex-shrink-0 w-80 lg:w-auto snap-start group focus:outline-none focus-visible:ring-2 focus-visible:ring-alira-midnight focus-visible:ring-offset-2 focus-visible:ring-offset-alira-porcelain rounded-2xl"
+                  className="group focus:outline-none focus-visible:ring-2 focus-visible:ring-alira-midnight focus-visible:ring-offset-2 focus-visible:ring-offset-alira-porcelain rounded-3xl"
                   aria-label={`Learn more about ${card.title}`}
                   style={{
                     animationDelay: `${index * 100}ms`
                   }}
                 >
-                  <div className="h-full bg-alira-porcelain rounded-2xl border border-alira-onyx/8 overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-2 hover:shadow-alira-card-elevated focus-within:shadow-alira-card-elevated shadow-alira-card group animate-fade-up">
-                    {/* Enhanced hover glow outline */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-alira-gold/0 via-alira-gold/0 to-alira-gold/0 group-hover:from-alira-gold/10 group-hover:via-alira-gold/5 group-hover:to-alira-gold/10 transition-all duration-300 pointer-events-none"></div>
-                    
-                    {/* Image block - 16:9 aspect ratio with porcelain plinth */}
-                    <div className="relative w-full aspect-video overflow-hidden bg-alira-onyx/5">
+                  <article className="h-full rounded-3xl bg-white/90 ring-1 ring-black/5 backdrop-blur shadow-[0_1px_1px_rgba(0,0,0,0.06),0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300 ease-in-out hover:-translate-y-1.5 group-hover:ring-alira-gold/35">
+                    {/* Icon safe area */}
+                    <div className="h-48 p-3 flex items-center justify-center rounded-t-3xl bg-[#F8F7F5] relative overflow-hidden">
                       <Image 
                         src={card.image}
                         alt={card.title}
@@ -113,41 +106,37 @@ export default function HeroCards() {
                     </div>
                     
                     {/* Card body */}
-                    <div className="p-6">
-                      {/* Model label - Midnight Blue */}
+                    <div className="p-5">
+                      {/* Eyebrow - Midnight Blue */}
                       <div className="mb-2">
-                        <span className="text-xs text-alira-midnight font-semibold tracking-widest uppercase">
+                        <span className="text-[11px] tracking-[0.14em] font-semibold text-alira-midnight uppercase">
                           {card.model}
                         </span>
                       </div>
                       
                       {/* Title */}
-                      <h3 className="text-lg md:text-xl font-bold text-alira-onyx mb-2 line-clamp-2 leading-tight">
+                      <h3 className="text-lg font-semibold text-alira-onyx mb-2 line-clamp-2 leading-tight">
                         {card.title}
                       </h3>
                       
                       {/* Description */}
-                      <p className="text-sm text-alira-onyx/70 leading-relaxed mb-4 line-clamp-2">
+                      <p className="text-sm text-alira-onyx/70 leading-6 mb-4 line-clamp-2">
                         {card.description}
                       </p>
                       
-                      {/* Enhanced badges row */}
+                      {/* Enhanced badges row - Option B: Keep minimal pills */}
                       <div className="flex gap-2">
-                        {card.badges.map((badge, badgeIndex) => (
+                        {card.badges.slice(0, 1).map((badge) => (
                           <span 
                             key={badge}
-                            className="px-3 py-1.5 text-xs font-medium bg-alira-porcelain text-alira-onyx/80 rounded-full border border-alira-gold/30 hover:bg-alira-onyx/5 transition-colors duration-200 flex items-center gap-1"
+                            className="inline-flex items-center rounded-full border border-alira-gold/30 bg-white px-2.5 py-1 text-[12px] text-alira-onyx/80"
                           >
-                            {badgeIndex === 0 && badge === 'Structure' && '✅'}
-                            {badgeIndex === 0 && badge === 'Goals' && '📊'}
-                            {badgeIndex === 0 && badge === 'Strategy' && '➡️'}
-                            {badgeIndex === 0 && badge === 'Timeline' && '📅'}
                             {badge}
                           </span>
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </article>
                 </Link>
               )
             })}
@@ -157,23 +146,11 @@ export default function HeroCards() {
           <div className="mt-12 text-center">
             <Link
               href="#how-it-works"
-              className="inline-flex items-center px-6 py-3 bg-alira-onyx text-alira-porcelain font-medium rounded-lg hover:bg-alira-onyx/90 focus:outline-none focus:ring-2 focus:ring-alira-gold focus:ring-offset-2 focus:ring-offset-alira-porcelain transition-all duration-200 border border-alira-onyx hover:border-alira-gold/30"
+              className="inline-flex items-center rounded-full bg-alira-onyx text-white px-5 py-2.5 text-sm font-medium border border-transparent hover:border-alira-gold hover:shadow-lg hover:shadow-black/10 transition-all duration-200"
             >
               See How It Works
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
-          </div>
-          
-          {/* Pagination dots for mobile */}
-          <div className="flex justify-center mt-8 space-x-2 lg:hidden">
-            {cards.map((_, index) => (
-              <div 
-                key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === 0 ? 'bg-alira-gold w-6' : 'bg-alira-gold/30'
-                }`}
-              ></div>
-            ))}
           </div>
         </div>
       </div>

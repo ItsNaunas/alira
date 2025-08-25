@@ -15,9 +15,9 @@ import Link from 'next/link'
 
 const RotatingPhrase = () => {
   const phrases = [
-    "We turn complexity into",
-    "We turn confusion into", 
-    "We turn noise into"
+    "We turn complexity into ",
+    "We turn confusion into ", 
+    "We turn noise into "
   ]
   const [index, setIndex] = useState(0)
   const [isRotating, setIsRotating] = useState(false)
@@ -36,7 +36,7 @@ const RotatingPhrase = () => {
   }, [phrases.length])
 
   return (
-    <span className="relative inline-block" style={{ minWidth: '20ch' }}>
+    <span className="inline-block align-baseline ml-[0.25ch]" style={{ minWidth: '18ch' }}>
       <span
         className={`inline-block will-change-transform transition-all duration-500 ease-in-out ${
           isRotating 
@@ -58,7 +58,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-16 md:py-24 bg-alira-porcelain relative overflow-hidden">
+      <section className="py-16 md:py-24 lg:py-32 pb-24 md:pb-28 lg:pb-32 bg-alira-porcelain relative overflow-hidden">
                  {/* Minimal Background */}
                  <div className="absolute inset-0 pointer-events-none">
           {/* Architectural grid background */}
@@ -116,7 +116,7 @@ export default function Home() {
                 
                 <div className="text-xl md:text-2xl text-alira-onyx/70 max-w-[72ch] mx-auto leading-snug space-y-2">
                   <p className="leading-snug">
-                    <RotatingPhrase /> <em className="not-italic font-medium italic text-alira-gold">clarity</em>
+                    <RotatingPhrase /><em className="not-italic font-medium italic text-alira-gold">clarity</em>
                   </p>
                   <p className="leading-snug">so your decisions move faster.</p>
                 </div>
@@ -129,11 +129,14 @@ export default function Home() {
       </section>
 
       {/* Hero Cards Section */}
-      <section className="relative bg-alira-porcelain z-[2]">
+      <section className="relative bg-alira-porcelain z-[2] mt-20 md:mt-24 lg:mt-28">
+        {/* Optional hairline divider */}
+        <div className="absolute -top-6 left-0 right-0 h-px max-w-7xl mx-auto bg-alira-onyx/5"></div>
+        
         {/* Overlap gradient underlay */}
         <div className="absolute top-0 left-0 right-0 h-36 bg-gradient-to-b from-transparent via-alira-porcelain/40 to-alira-porcelain pointer-events-none"></div>
         
-        <div className="container mx-auto px-6 lg:px-8 relative -mt-14 lg:-mt-16 pb-8">
+        <div className="container mx-auto px-6 lg:px-8 relative pb-8">
           <Reveal>
             <HeroCards />
           </Reveal>
