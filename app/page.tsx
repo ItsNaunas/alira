@@ -36,7 +36,7 @@ const RotatingPhrase = () => {
   }, [phrases.length])
 
   return (
-    <span className="inline-block align-baseline ml-[0.25ch]" style={{ minWidth: '18ch' }}>
+    <span className="inline-block align-baseline" style={{ minWidth: '18ch' }}>
       <span
         className={`inline-block will-change-transform transition-all duration-500 ease-in-out ${
           isRotating 
@@ -116,7 +116,10 @@ export default function Home() {
                 
                 <div className="text-xl md:text-2xl text-alira-onyx/70 max-w-[72ch] mx-auto leading-snug space-y-2">
                   <p className="leading-snug">
-                    <RotatingPhrase /><em className="not-italic font-medium italic text-alira-gold">clarity</em>
+                    <span className="inline-flex items-baseline gap-1 align-baseline tracking-tight">
+                      <RotatingPhrase />
+                      <em className="not-italic font-medium italic text-alira-gold">clarity</em>
+                    </span>
                   </p>
                   <p className="leading-snug">so your decisions move faster.</p>
                 </div>
@@ -129,7 +132,7 @@ export default function Home() {
       </section>
 
       {/* Hero Cards Section */}
-      <section className="relative bg-alira-porcelain z-[2] mt-20 md:mt-24 lg:mt-28">
+      <section className="relative bg-alira-porcelain z-[2] mt-24 sm:mt-28 lg:mt-32">
         {/* Optional hairline divider */}
         <div className="absolute -top-6 left-0 right-0 h-px max-w-7xl mx-auto bg-alira-onyx/5"></div>
         
@@ -143,8 +146,90 @@ export default function Home() {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="py-24 bg-white relative z-[1]" id="how-it-works">
+        <div className="container mx-auto px-6 lg:px-8">
+          <Reveal>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold text-alira-onyx font-sans leading-[0.95] tracking-tight mb-6">
+                How it works
+              </h2>
+              
+              {/* Gold hairline */}
+              <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
+              
+              <p className="text-xl md:text-2xl text-alira-onyx/70 max-w-[65ch] mx-auto leading-snug">
+                From enquiry to structured business case in three clear steps.
+              </p>
+            </div>
+          </Reveal>
+          
+          <Reveal delay={200}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
+              {/* Step 1 */}
+              <div className="text-center space-y-6">
+                <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20">
+                  <span className="text-2xl font-bold text-alira-gold">1</span>
+                </div>
+                <div className="space-y-3">
+                  <h3 className="text-xl font-semibold text-alira-onyx font-sans">
+                    Complete the Form
+                  </h3>
+                  <p className="text-alira-onyx/70 leading-relaxed">
+                    Share your business context, challenges, and objectives through our structured intake form. Takes 10-15 minutes.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="text-center space-y-6">
+                <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20">
+                  <span className="text-2xl font-bold text-alira-gold">2</span>
+                </div>
+                <div className="space-y-3">
+                  <h3 className="text-xl font-semibold text-alira-onyx font-sans">
+                    Engine Processing
+                  </h3>
+                  <p className="text-alira-onyx/70 leading-relaxed">
+                    Our strategic framework analyzes your inputs and maps them to proven business case structures and methodologies.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="text-center space-y-6">
+                <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20">
+                  <span className="text-2xl font-bold text-alira-gold">3</span>
+                </div>
+                <div className="space-y-3">
+                  <h3 className="text-xl font-semibold text-alira-onyx font-sans">
+                    Receive Your Draft
+                  </h3>
+                  <p className="text-alira-onyx/70 leading-relaxed">
+                    Get a structured business case with problem statement, objectives, proposed solution, and next steps within 24 hours.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* CTA */}
+          <Reveal delay={400}>
+            <div className="text-center mt-12">
+              <Link
+                href="#start"
+                className="inline-flex items-center rounded-full bg-alira-onyx text-white px-6 py-3 text-sm font-medium border border-transparent hover:border-alira-gold hover:shadow-lg hover:shadow-black/10 transition-all duration-200"
+              >
+                Start Your Business Case
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Value Pillars Section */}
-      <section className="pt-28 lg:pt-32 pb-24 bg-white z-[0]">
+      <section className="pt-28 lg:pt-32 pb-24 bg-alira-porcelain z-[0]">
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="text-center mb-16">

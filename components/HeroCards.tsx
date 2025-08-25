@@ -45,9 +45,6 @@ const cards = [
 export default function HeroCards() {
   return (
     <div className="relative">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-alira-porcelain via-alira-porcelain to-alira-midnight/5 pointer-events-none"></div>
-      
       <div className="relative text-center">
         {/* Subheading Section */}
         <div className="mb-12 lg:mb-16">
@@ -79,9 +76,9 @@ export default function HeroCards() {
                     animationDelay: `${index * 100}ms`
                   }}
                 >
-                  <article className="h-full rounded-3xl bg-white/90 ring-1 ring-black/5 backdrop-blur shadow-[0_1px_1px_rgba(0,0,0,0.06),0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300 ease-in-out hover:-translate-y-1.5 group-hover:ring-alira-gold/35">
+                  <article className="h-full rounded-3xl bg-white/90 ring-1 ring-black/5 shadow-[0_1px_1px_rgba(0,0,0,0.06),0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300 will-change-transform hover:-translate-y-1.5 group-hover:ring-alira-gold/35">
                     {/* Icon safe area */}
-                    <div className="h-48 p-3 flex items-center justify-center rounded-t-3xl bg-[#F8F7F5] relative overflow-hidden">
+                    <div className="overflow-hidden rounded-t-3xl aspect-[4/3] bg-alira-porcelain relative">
                       <Image 
                         src={card.image}
                         alt={card.title}
@@ -100,41 +97,27 @@ export default function HeroCards() {
                       <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent"></div>
                       
                       {/* Icon on porcelain plinth */}
-                      <div className="absolute bottom-4 right-4 w-12 h-12 bg-alira-porcelain/95 rounded-xl border border-alira-onyx/10 flex items-center justify-center shadow-lg group-hover:rotate-3 transition-transform duration-300">
+                      <div className="absolute bottom-4 right-4 w-12 h-12 bg-alira-porcelain/95 rounded-xl border border-alira-onyx/10 flex items-center justify-center group-hover:rotate-3 transition-transform duration-300">
                         <IconComponent className="w-6 h-6 text-alira-midnight" />
                       </div>
                     </div>
                     
                     {/* Card body */}
-                    <div className="p-5">
-                      {/* Eyebrow - Midnight Blue */}
-                      <div className="mb-2">
-                        <span className="text-[11px] tracking-[0.14em] font-semibold text-alira-midnight uppercase">
-                          {card.model}
-                        </span>
-                      </div>
+                    <div className="p-6 lg:p-7 space-y-3">
+                      {/* Eyebrow */}
+                      <span className="tracking-wide text-[11px] font-medium text-alira-onyx/50 uppercase">
+                        {card.model}
+                      </span>
                       
                       {/* Title */}
-                      <h3 className="text-lg font-semibold text-alira-onyx mb-2 line-clamp-2 leading-tight">
+                      <h3 className="text-[18px] sm:text-[20px] font-semibold tracking-tight text-alira-onyx leading-tight">
                         {card.title}
                       </h3>
                       
                       {/* Description */}
-                      <p className="text-sm text-alira-onyx/70 leading-6 mb-4 line-clamp-2">
+                      <p className="text-[13.5px] leading-6 text-alira-onyx/70 max-w-prose text-balance">
                         {card.description}
                       </p>
-                      
-                      {/* Enhanced badges row - Option B: Keep minimal pills */}
-                      <div className="flex gap-2">
-                        {card.badges.slice(0, 1).map((badge) => (
-                          <span 
-                            key={badge}
-                            className="inline-flex items-center rounded-full border border-alira-gold/30 bg-white px-2.5 py-1 text-[12px] text-alira-onyx/80"
-                          >
-                            {badge}
-                          </span>
-                        ))}
-                      </div>
                     </div>
                   </article>
                 </Link>
