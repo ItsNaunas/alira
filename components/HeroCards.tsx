@@ -81,14 +81,16 @@ export default function HeroCards() {
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                     style={{
-                      filter: 'saturate(0.85) contrast(0.98)'
+                      filter: 'saturate(0.75) contrast(1.05) brightness(0.95)'
                     }}
                   />
-                  {/* Brand tint overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-alira-gold/6 to-alira-midnight/4"></div>
-                  {/* Vignette overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/10"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent"></div>
+                  {/* Enhanced brand tint overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-alira-gold/8 via-alira-gold/4 to-alira-midnight/6"></div>
+                  {/* Refined vignette overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/8 via-transparent to-black/8"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/12 via-transparent to-transparent"></div>
+                  {/* Subtle inner glow for depth */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent"></div>
                 </div>
                 
                 {/* Card body */}
