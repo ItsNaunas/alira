@@ -215,6 +215,23 @@ body {
     inset 0 -1px 0 rgba(255, 255, 255, 0.6);
 }
 
+/* Fade-up animation for cards */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out forwards;
+  opacity: 0;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .card-3d {
@@ -236,6 +253,12 @@ body {
 
   .transition-transform {
     transition: none !important;
+  }
+
+  /* Disable fade-up animation */
+  .animate-fade-up {
+    animation: none;
+    opacity: 1;
   }
 }
 
