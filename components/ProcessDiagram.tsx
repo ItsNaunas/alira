@@ -4,19 +4,19 @@ const processSteps = [
   {
     id: 'form',
     title: 'Form',
-    description: 'Complete our structured intake form with your business details, challenges, and goals.',
+    description: 'Structured intake captures your reality without assumptions.',
     stepNumber: '01'
   },
   {
     id: 'engine', 
     title: 'Engine',
-    description: 'Our system processes your information through strategic frameworks and business logic.',
+    description: 'Strategic frameworks process complexity into actionable clarity.',
     stepNumber: '02'
   },
   {
     id: 'output',
     title: 'Output', 
-    description: 'Receive a comprehensive Draft Business Case PDF tailored to your specific situation.',
+    description: 'Comprehensive business case tailored to your specific situation.',
     stepNumber: '03'
   },
 ]
@@ -43,11 +43,11 @@ export default function ProcessDiagram() {
                 {/* Step Number & Icon */}
                 <div className="relative">
                   <div 
-                    className="w-20 h-20 rounded-full border-2 border-neutral-200 bg-white flex items-center justify-center shadow-sm transition-all duration-200 hover:shadow-md hover:border-neutral-300"
+                    className="w-20 h-20 rounded-full border-2 border-alira-onyx bg-white flex items-center justify-center shadow-sm transition-all duration-200 hover:shadow-md hover:border-alira-gold"
                     role="img"
                     aria-label={`Step ${step.stepNumber}: ${step.title}`}
                   >
-                    <span className="text-lg font-semibold text-neutral-700">
+                    <span className="text-lg font-semibold text-alira-onyx">
                       {step.stepNumber}
                     </span>
                   </div>
@@ -55,10 +55,10 @@ export default function ProcessDiagram() {
 
                 {/* Content */}
                 <div className="space-y-4 max-w-xs">
-                  <h3 className="text-xl font-semibold text-neutral-900 leading-tight">
+                  <h3 className="text-xl font-semibold text-alira-onyx font-serif leading-tight">
                     {step.title}
                   </h3>
-                  <p className="text-base text-neutral-600 leading-relaxed">
+                  <p className="text-base text-alira-onyx/70 leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -70,7 +70,7 @@ export default function ProcessDiagram() {
                   className="absolute top-10 left-full w-16 flex items-center justify-center -translate-x-8 z-10"
                   aria-hidden="true"
                 >
-                  <ArrowRight className="w-6 h-6 text-neutral-400" />
+                  <ArrowRight className="w-6 h-6 text-alira-gold" />
                 </div>
               )}
             </div>
@@ -88,11 +88,11 @@ export default function ProcessDiagram() {
                 {/* Step Number & Icon */}
                 <div className="flex-shrink-0">
                   <div 
-                    className="w-16 h-16 rounded-full border-2 border-neutral-200 bg-white flex items-center justify-center shadow-sm"
+                    className="w-16 h-16 rounded-full border-2 border-alira-onyx bg-white flex items-center justify-center shadow-sm"
                     role="img"
                     aria-label={`Step ${step.stepNumber}: ${step.title}`}
                   >
-                    <span className="text-base font-semibold text-neutral-700">
+                    <span className="text-base font-semibold text-alira-onyx">
                       {step.stepNumber}
                     </span>
                   </div>
@@ -100,10 +100,10 @@ export default function ProcessDiagram() {
 
                 {/* Content */}
                 <div className="flex-1 space-y-3 pt-1">
-                  <h3 className="text-lg font-semibold text-neutral-900 leading-tight">
+                  <h3 className="text-lg font-semibold text-alira-onyx font-serif leading-tight">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">
+                  <p className="text-sm text-alira-onyx/70 leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -112,7 +112,7 @@ export default function ProcessDiagram() {
               {/* Connector Line */}
               {index < processSteps.length - 1 && (
                 <div 
-                  className="absolute left-8 top-16 w-px h-12 bg-neutral-200"
+                  className="absolute left-8 top-16 w-px h-12 bg-alira-gold/30"
                   aria-hidden="true"
                 />
               )}

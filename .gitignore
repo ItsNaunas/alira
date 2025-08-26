@@ -41,3 +41,8 @@ next-env.d.ts
 
 # OS
 Thumbs.db
+
+# Ignore docs and accidental files
+*.pdf
+tatus
+ophy component with 4-principle grid layout

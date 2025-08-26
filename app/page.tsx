@@ -5,8 +5,10 @@ import HeroCTAs from '@/components/HeroCTAs'
 import HeroCards from '@/components/HeroCards'
 import ProcessDiagram from '@/components/ProcessDiagram'
 import ProcessFlow from '@/components/ProcessFlow'
-import ValuePillars from '@/components/ValuePillars'
-import ServicesGrid from '@/components/ServicesGrid'
+import OurPhilosophy from '@/components/OurPhilosophy'
+import SignatureEngagements from '@/components/SignatureEngagements'
+import ProofOfClarity from '@/components/ProofOfClarity'
+import FinalCTA from '@/components/FinalCTA'
 import Reveal from '@/components/Reveal'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -228,231 +230,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Value Pillars Section */}
-      <section className="pt-28 lg:pt-32 pb-24 bg-alira-porcelain z-[0]">
-        <div className="container mx-auto px-6 lg:px-8">
+      {/* Our Philosophy Section */}
+      <OurPhilosophy />
+
+      {/* Signature Engagements Section */}
+      <SignatureEngagements />
+
+      {/* The Engine Section */}
+      <section className="w-full py-24 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
           <Reveal>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold alira-heading text-alira-onyx mb-4">
-                Our Approach
+              <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx font-serif leading-tight mb-6">
+                The Engine
               </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Four principles that guide every engagement and deliver lasting results.
-              </p>
+              <div className="w-16 h-px bg-alira-gold mx-auto"></div>
             </div>
           </Reveal>
           
           <Reveal delay={200}>
-            <ValuePillars />
+            <ProcessDiagram />
           </Reveal>
         </div>
       </section>
 
-      {/* Services Preview Section */}
-      <section className="py-24 bg-alira-porcelain">
-        <div className="container mx-auto px-6 lg:px-8">
-          <Reveal>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold alira-heading text-alira-onyx mb-4">
-                Tailored to Your Stage
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Whether you're just starting out or scaling an established business, our services are designed to meet you where you are and take you where you want to go.
-              </p>
-            </div>
-          </Reveal>
-          
-          <Reveal delay={200}>
-            <ServicesGrid />
-          </Reveal>
-          
-          <Reveal delay={400}>
-            <div className="text-center mt-12">
-              <Button asChild variant="outline" size="lg" className="px-8">
-                <Link href="/services">
-                  View All Services
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* Proof of Clarity Section */}
+      <ProofOfClarity />
 
-      {/* Process Explanation Section */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <Reveal>
-              <div className="space-y-8">
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-bold alira-heading text-alira-onyx mb-6">
-                    From Form to Framework
-                  </h2>
-                  <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                    Every business case we generate is built on proven strategic frameworks, tailored to your specific industry, stage, and challenges. No generic templates — just sharp, actionable insights.
-                  </p>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    Our engine processes your information through multiple lenses: market analysis, competitive positioning, resource optimization, and growth potential. The result is a document that speaks directly to your situation.
-                  </p>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-4">
-                    <CheckCircle className="h-6 w-6 text-alira-gold mt-1 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-semibold text-alira-onyx mb-1">Comprehensive Analysis</h3>
-                      <p className="text-sm text-muted-foreground">Strategic frameworks adapted to your specific context</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <Target className="h-6 w-6 text-alira-gold mt-1 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-semibold text-alira-onyx mb-1">Clear Objectives</h3>
-                      <p className="text-sm text-muted-foreground">Measurable outcomes and success metrics</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <Zap className="h-6 w-6 text-alira-gold mt-1 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-semibold text-alira-onyx mb-1">Immediate Value</h3>
-                      <p className="text-sm text-muted-foreground">Structured thinking and planning from day one</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-            
-            <Reveal delay={200}>
-              <div className="bg-gradient-to-br from-alira-onyx/5 to-alira-gold/5 p-8 rounded-lg border border-alira-onyx/10">
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-8 h-8 rounded-full bg-alira-gold/20 flex items-center justify-center">
-                    <FileCheck className="h-4 w-4 text-alira-gold" />
-                  </div>
-                  <h3 className="text-xl font-semibold alira-heading text-alira-onyx">
-                    What You Receive
-                  </h3>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-alira-onyx/5 transition-colors">
-                    <div className="w-2 h-2 bg-alira-gold rounded-full flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Draft Business Case tailored to your business</span>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-alira-onyx/5 transition-colors">
-                    <div className="w-2 h-2 bg-alira-gold rounded-full flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Clear problem statement and objectives</span>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-alira-onyx/5 transition-colors">
-                    <div className="w-2 h-2 bg-alira-gold rounded-full flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Strategic recommendations based on your service choice</span>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-alira-onyx/5 transition-colors">
-                    <div className="w-2 h-2 bg-alira-gold rounded-full flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Expected outcomes and success metrics</span>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-alira-onyx/5 transition-colors">
-                    <div className="w-2 h-2 bg-alira-gold rounded-full flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Clear next steps and implementation roadmap</span>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof Section */}
-      <section className="py-24 bg-alira-porcelain">
-        <div className="container mx-auto px-6 lg:px-8">
-          <Reveal>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold alira-heading text-alira-onyx mb-4">
-                Trusted by Founders
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Business owners who value clarity, structure, and lasting systems.
-              </p>
-            </div>
-          </Reveal>
-          
-          <Reveal delay={200}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="border-alira-onyx/10 bg-white">
-                <CardContent className="p-6">
-                  <p className="text-muted-foreground italic mb-4">
-                    "ALIRA. helped us strip away the noise and focus on what actually matters. The business case they generated gave us the clarity we needed to make confident decisions."
-                  </p>
-                  <div className="flex items-center space-x-3">
-                    <Users className="h-8 w-8 text-alira-gold" />
-                    <div>
-                      <p className="font-semibold text-alira-onyx">Sarah Chen</p>
-                      <p className="text-sm text-muted-foreground">Founder, TechFlow</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-alira-onyx/10 bg-white">
-                <CardContent className="p-6">
-                  <p className="text-muted-foreground italic mb-4">
-                    "The structured approach and clear deliverables made all the difference. We went from feeling overwhelmed to having a clear roadmap forward."
-                  </p>
-                  <div className="flex items-center space-x-3">
-                    <Target className="h-8 w-8 text-alira-gold" />
-                    <div>
-                      <p className="font-semibold text-alira-onyx">Marcus Rodriguez</p>
-                      <p className="text-sm text-muted-foreground">CEO, GrowthLab</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-alira-onyx/10 bg-white">
-                <CardContent className="p-6">
-                  <p className="text-muted-foreground italic mb-4">
-                    "Elegant solutions that actually work. ALIRA. doesn't just give you a plan—they give you the systems to make it happen."
-                  </p>
-                  <div className="flex items-center space-x-3">
-                    <Zap className="h-8 w-8 text-alira-gold" />
-                    <div>
-                      <p className="font-semibold text-alira-onyx">Emma Thompson</p>
-                      <p className="text-sm text-muted-foreground">Founder, ScaleUp</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-alira-onyx text-alira-porcelain">
-        <div className="container mx-auto px-6 lg:px-8 text-center">
-          <Reveal>
-            <div className="max-w-3xl mx-auto space-y-8">
-              <h2 className="text-3xl md:text-4xl font-bold alira-heading">
-                Ready to Transform Your Business?
-              </h2>
-              <p className="text-xl text-alira-porcelain/80 leading-relaxed">
-                Every new enquiry should feel like the start of a tailored, professional journey — no blank pages, no wasted time.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild size="lg" variant="secondary" className="px-8">
-                  <Link href="/contact">
-                    Start Your Journey
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="px-8 border-alira-porcelain text-alira-porcelain hover:bg-alira-porcelain hover:text-alira-onyx">
-                  <Link href="/how-it-works">
-                    Learn More
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* Final CTA Section */}
+      <FinalCTA />
     </div>
   )
 }
