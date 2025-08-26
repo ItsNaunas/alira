@@ -1,4 +1,4 @@
-import { Briefcase, Target, Brain, Handshake } from "lucide-react";
+import { Briefcase, Target, Brain, Users } from "lucide-react";
 
 type Service = {
   id: string;
@@ -51,7 +51,7 @@ const SERVICES: Service[] = [
     id: "partner",
     title: "Strategic Partner",
     tag: "PARTNERSHIP",
-    icon: Handshake,
+    icon: Users,
     tagline: "Ongoing counsel for leaders in motion.",
     outcomes: [
       "Clarity on priorities and sequence",
