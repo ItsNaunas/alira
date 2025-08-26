@@ -1,63 +1,117 @@
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ClipboardList, Settings, FileText } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 
 const steps = [
   {
     title: 'Form',
     description: 'Complete our structured intake form with your business details, challenges, and goals.',
-    icon: '📝',
+    icon: ClipboardList,
   },
   {
     title: 'Engine',
     description: 'Our system processes your information through strategic frameworks and business logic.',
-    icon: '⚙️',
+    icon: Settings,
   },
   {
     title: 'Output',
     description: 'Receive a comprehensive Draft Business Case PDF tailored to your specific situation.',
-    icon: '📄',
+    icon: FileText,
   },
 ]
 
 export default function HowItWorksSteps() {
   return (
-    <div className="space-y-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {steps.map((step, index) => (
-          <div key={step.title} className="relative">
-            <Card className="border-alira-onyx/10 hover:border-alira-gold/30 transition-colors">
-              <CardHeader className="text-center pb-4">
-                <div className="text-4xl mb-2">{step.icon}</div>
-                <CardTitle className="text-xl alira-heading">
-                  {step.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-muted-foreground leading-relaxed">
-                  {step.description}
-                </p>
-              </CardContent>
-            </Card>
-            
-            {/* Arrow connector */}
-            {index < steps.length - 1 && (
-              <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
-                <div className="bg-alira-porcelain p-2 rounded-full border border-alira-onyx/10">
-                  <ArrowRight className="h-4 w-4 text-alira-gold" />
+    <div className="max-w-5xl mx-auto">
+      {/* Desktop Layout */}
+      <div className="hidden md:block">
+        <div className="grid grid-cols-3 gap-16 items-start">
+          {steps.map((step, index) => {
+            const IconComponent = step.icon
+            return (
+              <div key={step.title} className="relative">
+                {/* Step Container */}
+                <div className="flex flex-col items-center text-center space-y-8">
+                  {/* Icon */}
+                  <div className="relative group">
+                    <div 
+                      className="w-20 h-20 rounded-full border-2 border-alira-onyx bg-white flex items-center justify-center shadow-sm transition-all duration-200 hover:shadow-md hover:border-alira-gold hover:-translate-y-1"
+                      role="img"
+                      aria-label={`${step.title} step`}
+                    >
+                      <IconComponent className="w-8 h-8 text-alira-onyx transition-colors duration-200 group-hover:text-alira-gold" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="space-y-4 max-w-xs">
+                    <h3 className="h3">
+                      {step.title}
+                    </h3>
+                    <p className="copy">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
+
+                {/* Arrow Connector */}
+                {index < steps.length - 1 && (
+                  <div 
+                    className="absolute top-10 left-full w-16 flex items-center justify-center -translate-x-8 z-10"
+                    aria-hidden="true"
+                  >
+                    <ArrowRight className="w-6 h-6 text-alira-gold transition-all duration-200 hover:scale-110" />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ))}
+            )
+          })}
+        </div>
       </div>
-      
-      {/* Mobile arrows */}
-      <div className="md:hidden flex justify-center items-center space-x-4">
-        {steps.slice(0, -1).map((_, index) => (
-          <div key={index} className="flex items-center space-x-2">
-            <ArrowRight className="h-4 w-4 text-alira-gold rotate-90" />
-          </div>
-        ))}
+
+      {/* Mobile Layout */}
+      <div className="md:hidden max-w-sm mx-auto">
+        <div className="space-y-12">
+          {steps.map((step, index) => {
+            const IconComponent = step.icon
+            return (
+              <div key={step.title} className="relative">
+                {/* Step Container */}
+                <div className="flex items-start space-x-6">
+                  {/* Icon */}
+                  <div className="flex-shrink-0 group">
+                    <div 
+                      className="w-16 h-16 rounded-full border-2 border-alira-onyx bg-white flex items-center justify-center shadow-sm transition-all duration-200 hover:shadow-md hover:border-alira-gold hover:-translate-y-1"
+                      role="img"
+                      aria-label={`${step.title} step`}
+                    >
+                      <IconComponent className="w-6 h-6 text-alira-onyx transition-colors duration-200 group-hover:text-alira-gold" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 space-y-3 pt-1">
+                    <h3 className="h3">
+                      {step.title}
+                    </h3>
+                    <p className="copy">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Arrow Connector */}
+                {index < steps.length - 1 && (
+                  <div 
+                    className="absolute left-8 top-16 w-12 flex items-center justify-center"
+                    aria-hidden="true"
+                  >
+                    <ArrowRight className="w-5 h-5 text-alira-gold rotate-90 transition-all duration-200 hover:scale-110" />
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
