@@ -2,18 +2,22 @@ import Reveal from './Reveal'
 
 const engagements = [
   {
+    eyebrow: "RESET",
     title: "Business Reset",
     description: "Transform operational chaos into systematic clarity within 30 days."
   },
   {
-    title: "Growth Blueprint",
+    eyebrow: "STRATEGY",
+    title: "Growth Blueprint", 
     description: "Design scalable frameworks that turn ambition into executable strategy."
   },
   {
-    title: "AI Advantage", 
+    eyebrow: "AI",
+    title: "AI Advantage",
     description: "Integrate intelligence systems that amplify human decision-making."
   },
   {
+    eyebrow: "PARTNERSHIP",
     title: "Strategic Partner",
     description: "Ongoing clarity counsel for leaders navigating complex transitions."
   }
@@ -21,24 +25,51 @@ const engagements = [
 
 export default function SignatureEngagements() {
   return (
-    <section className="section bg-alira-porcelain">
-      <div className="container">
+    <section className="py-24 bg-alira-porcelain/40">
+      <div className="container mx-auto px-6 lg:px-8">
         <Reveal>
           <div className="text-center mb-16">
-            <div className="heading-eyebrow">Our Services</div>
-            <h2 className="h2 mb-6">Signature Engagements</h2>
+            <div className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-medium">
+              Our Services
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-alira-onyx mb-6">
+              Signature Engagements
+            </h2>
             <div className="w-16 h-px bg-alira-gold mx-auto"></div>
           </div>
         </Reveal>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* VARIANT A: Row of 4 Cards */}
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {engagements.map((engagement, index) => (
             <Reveal key={index} delay={index * 100}>
-              <div className="card">
-                <h3 className="h3 mb-4">
+              <div className="p-8 border border-alira-onyx/10 rounded-lg hover:border-alira-gold hover:-translate-y-1 transition-all duration-300 ease-out">
+                <span className="block text-alira-gold text-xs tracking-wide uppercase mb-2 font-medium">
+                  {engagement.eyebrow}
+                </span>
+                <h3 className="text-xl font-semibold text-alira-onyx mb-3">
                   {engagement.title}
                 </h3>
-                <p className="copy">
+                <p className="text-alira-onyx/70 leading-relaxed">
+                  {engagement.description}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div> */}
+        
+        {/* VARIANT B: 2x2 Grid (Recommended) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {engagements.map((engagement, index) => (
+            <Reveal key={index} delay={index * 150}>
+              <div className="p-8 border border-alira-onyx/10 rounded-lg hover:border-alira-gold hover:-translate-y-1 transition-all duration-300 ease-out">
+                <span className="block text-alira-gold text-xs tracking-wide uppercase mb-2 font-medium">
+                  {engagement.eyebrow}
+                </span>
+                <h3 className="text-xl font-semibold text-alira-onyx mb-3">
+                  {engagement.title}
+                </h3>
+                <p className="text-alira-onyx/70 leading-relaxed">
                   {engagement.description}
                 </p>
               </div>
