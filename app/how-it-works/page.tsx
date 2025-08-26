@@ -73,15 +73,28 @@ export default function HowItWorks() {
               </h1>
             </Reveal>
             
-            {/* Subheadline */}
-            <Reveal delay={250}>
-              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-16">
-                Our streamlined process transforms your business challenges into actionable strategic documents in three simple steps.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+                         {/* Subheadline */}
+             <Reveal delay={250}>
+               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-16">
+                 Our streamlined process transforms your business challenges into actionable strategic documents in three simple steps.
+               </p>
+             </Reveal>
+             
+             {/* CTA Button */}
+             <Reveal delay={300}>
+               <div className="inline-block group">
+                 <Link
+                   href="/contact"
+                   className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl border-2 border-alira-onyx hover:border-alira-gold"
+                 >
+                   Start Your Business Case
+                   <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                 </Link>
+               </div>
+             </Reveal>
+           </div>
+         </div>
+       </section>
 
       {/* Process Steps Section */}
       <section className="py-24 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]">
