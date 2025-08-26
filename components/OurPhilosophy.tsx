@@ -20,7 +20,7 @@ const principles = [
 ]
 
 // Choose layout variation: 'grid' or 'manifesto'
-const LAYOUT_VARIATION = 'manifesto'
+const LAYOUT_VARIATION: 'grid' | 'manifesto' = 'manifesto'
 
 export default function OurPhilosophy() {
   return (
