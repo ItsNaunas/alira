@@ -66,33 +66,42 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
-          <Reveal>
-            <div className="max-w-4xl mx-auto text-center space-y-12">
-              {/* Eyebrow */}
-              <div className="heading-eyebrow tracking-wider">ALIRA.</div>
-              
-              {/* Headline */}
-              <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Brand Eyebrow */}
+            <Reveal>
+              <div className="mb-6">
+                <span className="block text-2xl tracking-[0.14em] uppercase text-alira-onyx font-semibold mb-6 font-serif">
+                  ALIRA.
+                </span>
+                <div className="w-16 h-[2px] bg-alira-gold mx-auto mb-8"></div>
+              </div>
+            </Reveal>
+            
+            {/* Headline */}
+            <Reveal delay={150}>
+              <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-6">
                 Business clarity. One click away.
               </h1>
-              
-              {/* Subheadline */}
-              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug">
+            </Reveal>
+            
+            {/* Subheadline */}
+            <Reveal delay={300}>
+              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-12">
                 We turn your inputs into a ready-to-use business case. Instantly.
               </p>
-              
-              {/* CTA Button */}
-              <div className="pt-4">
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-alira-porcelain bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-2 focus:ring-alira-gold focus:ring-offset-2 focus:ring-offset-alira-porcelain transition-all duration-200 active:scale-95"
-                  onClick={() => document.getElementById('start')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Start Your Business Case
-                </button>
-              </div>
-            </div>
-          </Reveal>
+            </Reveal>
+            
+            {/* CTA Button */}
+            <Reveal delay={450}>
+              <button
+                type="button"
+                className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-alira-porcelain bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-2 focus:ring-alira-gold focus:ring-offset-2 focus:ring-offset-alira-porcelain transition-all duration-200 active:scale-95"
+                onClick={() => document.getElementById('start')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Start Your Business Case
+              </button>
+            </Reveal>
+          </div>
         </div>
       </section>
 
