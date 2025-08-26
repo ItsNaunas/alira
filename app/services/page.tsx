@@ -1,4 +1,4 @@
-import ServicesGrid from '@/components/ServicesGrid'
+import SignatureEngagements from '@/components/SignatureEngagements'
 import Reveal from '@/components/Reveal'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -101,9 +101,9 @@ export default function Services() {
             </div>
           </Reveal>
           
-          <Reveal delay={200}>
-            <ServicesGrid />
-          </Reveal>
+                     <Reveal delay={200}>
+             <SignatureEngagements />
+           </Reveal>
         </div>
       </section>
 
