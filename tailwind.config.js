@@ -75,6 +75,10 @@ module.exports = {
         '5xl': ['3rem', { lineHeight: '1.1' }],
         '6xl': ['3.75rem', { lineHeight: '1.1' }],
       },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+      },
       letterSpacing: {
         'tight': '-0.02em',
       },

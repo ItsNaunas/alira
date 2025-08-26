@@ -153,14 +153,14 @@ export default function Home() {
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold text-alira-onyx font-sans leading-[0.95] tracking-tight mb-6">
+              <h2 className="h2 mb-6">
                 How it works
               </h2>
               
               {/* Gold hairline */}
               <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
               
-              <p className="text-xl md:text-2xl text-alira-onyx/70 max-w-[65ch] mx-auto leading-snug">
+              <p className="copy text-xl md:text-2xl max-w-[65ch] mx-auto">
                 From enquiry to structured business case in three clear steps.
               </p>
             </div>
@@ -174,10 +174,10 @@ export default function Home() {
                   <span className="text-2xl font-bold text-alira-gold">1</span>
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-alira-onyx font-sans">
+                  <h3 className="h3">
                     Complete the Form
                   </h3>
-                  <p className="text-alira-onyx/70 leading-relaxed">
+                  <p className="copy">
                     Share your business context, challenges, and objectives through our structured intake form. Takes 10-15 minutes.
                   </p>
                 </div>
@@ -189,10 +189,10 @@ export default function Home() {
                   <span className="text-2xl font-bold text-alira-gold">2</span>
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-alira-onyx font-sans">
+                  <h3 className="h3">
                     Engine Processing
                   </h3>
-                  <p className="text-alira-onyx/70 leading-relaxed">
+                  <p className="copy">
                     Our strategic framework analyzes your inputs and maps them to proven business case structures and methodologies.
                   </p>
                 </div>
@@ -204,10 +204,10 @@ export default function Home() {
                   <span className="text-2xl font-bold text-alira-gold">3</span>
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-alira-onyx font-sans">
+                  <h3 className="h3">
                     Receive Your Draft
                   </h3>
-                  <p className="text-alira-onyx/70 leading-relaxed">
+                  <p className="copy">
                     Get a structured business case with problem statement, objectives, proposed solution, and next steps within 24 hours.
                   </p>
                 </div>
@@ -220,7 +220,7 @@ export default function Home() {
             <div className="text-center mt-12">
               <Link
                 href="#start"
-                className="inline-flex items-center rounded-full bg-alira-onyx text-white px-6 py-3 text-sm font-medium border border-transparent hover:border-alira-gold hover:shadow-lg hover:shadow-black/10 transition-all duration-200"
+                className="btn-primary inline-flex items-center"
               >
                 Start Your Business Case
                 <ArrowRight className="ml-2 w-4 h-4" />
@@ -244,7 +244,7 @@ export default function Home() {
               <div className="text-center mb-16">
                 <div className="heading-eyebrow">Our Process</div>
                 <h2 className="h2 mb-6">The Engine</h2>
-                <div className="rule"></div>
+                <div className="w-16 h-px bg-alira-gold mx-auto"></div>
               </div>
             </Reveal>
             

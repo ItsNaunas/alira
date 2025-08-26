@@ -75,6 +75,25 @@ body {
 }
 
 /* ALIRA. Design System Utilities */
+.section {
+  padding: 6rem 1rem;
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.heading-eyebrow {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: #C5A572;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .h2 {
   font-size: 2.25rem;
   line-height: 1.2;
@@ -98,36 +117,6 @@ body {
   opacity: 0.8;
 }
 
-.heading-eyebrow {
-  font-size: 0.875rem;
-  line-height: 1.5;
-  font-weight: 500;
-  color: #C5A572;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.section {
-  padding: 6rem 1rem;
-}
-
-.container {
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.rule {
-  width: 4rem;
-  height: 1px;
-  background-color: #C5A572;
-  margin: 1.5rem auto;
-}
-
-.gold-accent {
-  color: #C5A572;
-}
-
 .card {
   background: #FDFDFD;
   border: 1px solid rgba(11, 11, 11, 0.1);
@@ -138,6 +127,28 @@ body {
 
 .card:hover {
   border-color: rgba(197, 165, 114, 0.3);
+}
+
+.gold-accent {
+  color: #C5A572;
+}
+
+.btn-primary {
+  background: #0B0B0B;
+  color: #FDFDFD;
+  padding: 1rem 3rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  border: 2px solid #0B0B0B;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: rgba(11, 11, 11, 0.9);
+  border-color: rgba(11, 11, 11, 0.9);
 }
 
 /* Custom scrollbar */

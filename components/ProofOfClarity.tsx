@@ -23,7 +23,7 @@ export default function ProofOfClarity() {
           <div className="text-center mb-16">
             <div className="heading-eyebrow">Case Studies</div>
             <h2 className="h2 mb-6">Proof of Clarity</h2>
-            <div className="rule"></div>
+            <div className="w-16 h-px bg-alira-gold mx-auto"></div>
           </div>
         </Reveal>
         
