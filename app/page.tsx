@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import HeroCards from '@/components/HeroCards'
+import WhatYouGet from '@/components/WhatYouGet'
 import ProcessDiagram from '@/components/ProcessDiagram'
 import ProcessFlow from '@/components/ProcessFlow'
 import OurPhilosophy from '@/components/OurPhilosophy'
@@ -105,20 +105,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hero Cards Section */}
-      <section className="relative bg-alira-porcelain z-[2] mt-24 sm:mt-28 lg:mt-32">
-        {/* Optional hairline divider */}
-        <div className="absolute -top-6 left-0 right-0 h-px max-w-7xl mx-auto bg-alira-onyx/5"></div>
-        
-        {/* Overlap gradient underlay */}
-        <div className="absolute top-0 left-0 right-0 h-36 bg-gradient-to-b from-transparent via-alira-porcelain/40 to-alira-porcelain pointer-events-none"></div>
-        
-        <div className="container mx-auto px-6 lg:px-8 relative pb-8">
-          <Reveal>
-            <HeroCards />
-          </Reveal>
-        </div>
-      </section>
+      {/* What You Get Section */}
+      <WhatYouGet />
 
       {/* How It Works Section */}
       <section className="py-24 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]" id="how-it-works">
@@ -205,16 +193,21 @@ export default function Home() {
             </div>
           </Reveal>
 
-          {/* CTA */}
+          {/* Enhanced CTA */}
           <Reveal delay={400}>
-            <div className="text-center mt-16">
-              <Link
-                href="#start"
-                className="btn-primary inline-flex items-center"
-              >
-                Start Your Business Case
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
+            <div className="text-center mt-20">
+              <div className="inline-block group">
+                <Link
+                  href="#start"
+                  className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl border-2 border-alira-onyx hover:border-alira-gold"
+                >
+                  Start Your Business Case
+                  <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+                <div className="mt-4 text-sm text-alira-onyx/60 font-medium">
+                  Ready to turn complexity into clarity?
+                </div>
+              </div>
             </div>
           </Reveal>
         </div>
