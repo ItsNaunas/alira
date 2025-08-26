@@ -93,13 +93,12 @@ export default function Home() {
             
             {/* CTA Button */}
             <Reveal delay={300}>
-              <button
-                type="button"
+              <Link
+                href="/contact"
                 className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-alira-porcelain bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-2 focus:ring-alira-gold focus:ring-offset-2 focus:ring-offset-alira-porcelain transition-all duration-200 active:scale-95"
-                onClick={() => document.getElementById('start')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Start Your Business Case
-              </button>
+              </Link>
             </Reveal>
           </div>
         </div>
@@ -197,13 +196,13 @@ export default function Home() {
           <Reveal delay={400}>
             <div className="text-center mt-20">
               <div className="inline-block group">
-                <Link
-                  href="#start"
-                  className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl border-2 border-alira-onyx hover:border-alira-gold"
-                >
-                  Start Your Business Case
-                  <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
+                              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl border-2 border-alira-onyx hover:border-alira-gold"
+              >
+                Start Your Business Case
+                <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
                 <div className="mt-4 text-sm text-alira-onyx/60 font-medium">
                   Ready to turn complexity into clarity?
                 </div>
