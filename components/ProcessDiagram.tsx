@@ -55,10 +55,10 @@ export default function ProcessDiagram() {
 
                 {/* Content */}
                 <div className="space-y-4 max-w-xs">
-                  <h3 className="text-xl font-semibold text-alira-onyx font-serif leading-tight">
+                  <h3 className="h3">
                     {step.title}
                   </h3>
-                  <p className="text-base text-alira-onyx/70 leading-relaxed">
+                  <p className="copy">
                     {step.description}
                   </p>
                 </div>
@@ -100,10 +100,10 @@ export default function ProcessDiagram() {
 
                 {/* Content */}
                 <div className="flex-1 space-y-3 pt-1">
-                  <h3 className="text-lg font-semibold text-alira-onyx font-serif leading-tight">
+                  <h3 className="h3">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-alira-onyx/70 leading-relaxed">
+                  <p className="copy">
                     {step.description}
                   </p>
                 </div>

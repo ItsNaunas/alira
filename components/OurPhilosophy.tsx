@@ -21,14 +21,13 @@ const principles = [
 
 export default function OurPhilosophy() {
   return (
-    <section className="w-full py-24 px-4 bg-white">
-      <div className="max-w-6xl mx-auto">
+    <section className="section bg-white">
+      <div className="container">
         <Reveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx font-serif leading-tight mb-6">
-              Our Philosophy
-            </h2>
-            <div className="w-16 h-px bg-alira-gold mx-auto"></div>
+            <div className="heading-eyebrow">Our Approach</div>
+            <h2 className="h2 mb-6">Our Philosophy</h2>
+            <div className="rule"></div>
           </div>
         </Reveal>
         
@@ -36,10 +35,10 @@ export default function OurPhilosophy() {
           {principles.map((principle, index) => (
             <Reveal key={index} delay={index * 100}>
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-alira-onyx font-serif leading-tight">
+                <h3 className="h3">
                   {principle.title}
                 </h3>
-                <p className="text-base text-alira-onyx/70 leading-relaxed">
+                <p className="copy">
                   {principle.description}
                 </p>
               </div>

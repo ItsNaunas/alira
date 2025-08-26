@@ -237,20 +237,21 @@ export default function Home() {
       <SignatureEngagements />
 
       {/* The Engine Section */}
-      <section className="w-full py-24 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <Reveal>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx font-serif leading-tight mb-6">
-                The Engine
-              </h2>
-              <div className="w-16 h-px bg-alira-gold mx-auto"></div>
-            </div>
-          </Reveal>
-          
-          <Reveal delay={200}>
-            <ProcessDiagram />
-          </Reveal>
+      <section className="section bg-white">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <Reveal>
+              <div className="text-center mb-16">
+                <div className="heading-eyebrow">Our Process</div>
+                <h2 className="h2 mb-6">The Engine</h2>
+                <div className="rule"></div>
+              </div>
+            </Reveal>
+            
+            <Reveal delay={200}>
+              <ProcessDiagram />
+            </Reveal>
+          </div>
         </div>
       </section>
 

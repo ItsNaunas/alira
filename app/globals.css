@@ -74,6 +74,72 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+/* ALIRA. Design System Utilities */
+.h2 {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #0B0B0B;
+  letter-spacing: -0.02em;
+}
+
+.h3 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #0B0B0B;
+  letter-spacing: -0.02em;
+}
+
+.copy {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #0B0B0B;
+  opacity: 0.8;
+}
+
+.heading-eyebrow {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: #C5A572;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.section {
+  padding: 6rem 1rem;
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.rule {
+  width: 4rem;
+  height: 1px;
+  background-color: #C5A572;
+  margin: 1.5rem auto;
+}
+
+.gold-accent {
+  color: #C5A572;
+}
+
+.card {
+  background: #FDFDFD;
+  border: 1px solid rgba(11, 11, 11, 0.1);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  transition: border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(197, 165, 114, 0.3);
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

@@ -21,25 +21,24 @@ const engagements = [
 
 export default function SignatureEngagements() {
   return (
-    <section className="w-full py-24 px-4 bg-alira-porcelain">
-      <div className="max-w-6xl mx-auto">
+    <section className="section bg-alira-porcelain">
+      <div className="container">
         <Reveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx font-serif leading-tight mb-6">
-              Signature Engagements
-            </h2>
-            <div className="w-16 h-px bg-alira-gold mx-auto"></div>
+            <div className="heading-eyebrow">Our Services</div>
+            <h2 className="h2 mb-6">Signature Engagements</h2>
+            <div className="rule"></div>
           </div>
         </Reveal>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {engagements.map((engagement, index) => (
             <Reveal key={index} delay={index * 100}>
-              <div className="bg-white p-8 space-y-4 border border-alira-onyx/10 hover:border-alira-gold/30 transition-colors duration-200">
-                <h3 className="text-lg font-semibold text-alira-onyx font-serif leading-tight">
+              <div className="card">
+                <h3 className="h3 mb-4">
                   {engagement.title}
                 </h3>
-                <p className="text-sm text-alira-onyx/70 leading-relaxed">
+                <p className="copy">
                   {engagement.description}
                 </p>
               </div>
