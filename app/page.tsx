@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import HeroCTAs from '@/components/HeroCTAs'
+
 import HeroCards from '@/components/HeroCards'
 import ProcessDiagram from '@/components/ProcessDiagram'
 import ProcessFlow from '@/components/ProcessFlow'
@@ -15,54 +15,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight, CheckCircle, Users, Target, Zap, FileCheck } from 'lucide-react'
 import Link from 'next/link'
 
-const RotatingPhrase = () => {
-  const phrases = [
-    "We turn complexity into ",
-    "We turn confusion into ", 
-    "We turn noise into "
-  ]
-  const [index, setIndex] = useState(0)
-  const [isRotating, setIsRotating] = useState(false)
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIsRotating(true)
-      setTimeout(() => {
-        setIndex((i) => (i + 1) % phrases.length)
-        setTimeout(() => {
-          setIsRotating(false)
-        }, 100)
-      }, 200)
-    }, 2800)
-    return () => clearInterval(timer)
-  }, [phrases.length])
-
-  return (
-    <span className="inline-block align-baseline" style={{ minWidth: '18ch' }}>
-      <span
-        className={`inline-block will-change-transform transition-all duration-500 ease-in-out ${
-          isRotating 
-            ? 'opacity-0 transform rotate-x-90 scale-95' 
-            : 'opacity-100 transform rotate-x-0 scale-100'
-        }`}
-        style={{
-          transformStyle: 'preserve-3d',
-          transform: isRotating ? 'rotateX(90deg) scale(0.95)' : 'rotateX(0deg) scale(1)'
-        }}
-      >
-        {phrases[index]}
-      </span>
-    </span>
-  )
-}
-
 export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-16 md:py-24 lg:py-32 pb-24 md:pb-28 lg:pb-32 bg-alira-porcelain relative overflow-hidden">
-                 {/* Minimal Background */}
-                 <div className="absolute inset-0 pointer-events-none">
+      <section 
+        className="min-h-screen flex items-center justify-center bg-alira-porcelain relative overflow-hidden"
+        aria-labelledby="hero-heading"
+      >
+        {/* Minimal Background */}
+        <div className="absolute inset-0 pointer-events-none">
           {/* Architectural grid background */}
           <svg
             aria-hidden="true"
@@ -105,28 +67,29 @@ export default function Home() {
         
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <Reveal>
-            <div className="max-w-4xl mx-auto text-center space-y-8">
-              <div className="space-y-8">
-                <div className="space-y-6">
-                  <h1 className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight font-sans">
-                    How business owners build <span className="text-alira-gold">clarity</span>.
-                  </h1>
-                  
-                  {/* Gold hairline */}
-                  <div className="w-16 h-px bg-alira-gold mx-auto"></div>
-                </div>
-                
-                <div className="text-xl md:text-2xl text-alira-onyx/70 max-w-[72ch] mx-auto leading-snug space-y-2">
-                  <p className="leading-snug">
-                    <span className="inline-flex items-baseline gap-1 align-baseline tracking-tight">
-                      <RotatingPhrase />
-                      <em className="not-italic font-medium italic text-alira-gold">clarity</em>
-                    </span>
-                  </p>
-                  <p className="leading-snug">so your decisions move faster.</p>
-                </div>
-                
-                <HeroCTAs />
+            <div className="max-w-4xl mx-auto text-center space-y-12">
+              {/* Eyebrow */}
+              <div className="heading-eyebrow tracking-wider">ALIRA.</div>
+              
+              {/* Headline */}
+              <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight">
+                Business clarity. One click away.
+              </h1>
+              
+              {/* Subheadline */}
+              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug">
+                We turn your inputs into a ready-to-use business case. Instantly.
+              </p>
+              
+              {/* CTA Button */}
+              <div className="pt-4">
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-alira-porcelain bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-2 focus:ring-alira-gold focus:ring-offset-2 focus:ring-offset-alira-porcelain transition-all duration-200 active:scale-95"
+                  onClick={() => document.getElementById('start')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  Start Your Business Case
+                </button>
               </div>
             </div>
           </Reveal>
