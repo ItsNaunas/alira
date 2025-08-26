@@ -7,7 +7,7 @@ import ProcessDiagram from '@/components/ProcessDiagram'
 import ProcessFlow from '@/components/ProcessFlow'
 import OurPhilosophy from '@/components/OurPhilosophy'
 import SignatureEngagements from '@/components/SignatureEngagements'
-import ProofOfClarity from '@/components/ProofOfClarity'
+import Experience from '@/components/Experience'
 import FinalCTA from '@/components/FinalCTA'
 import Reveal from '@/components/Reveal'
 import { Button } from '@/components/ui/button'
@@ -227,8 +227,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Proof of Clarity Section */}
-      <ProofOfClarity />
+      {/* Experience Section */}
+      <Experience />
 
       {/* Final CTA Section */}
       <FinalCTA />
