@@ -67,32 +67,32 @@ export default function Home() {
         
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Brand Eyebrow */}
+            {/* Brand Seal */}
             <Reveal>
-              <div className="mb-6">
-                <span className="block text-2xl tracking-[0.14em] uppercase text-alira-onyx font-semibold mb-6 font-serif">
+              <div className="mb-16">
+                <span className="block text-3xl tracking-[0.2em] uppercase text-alira-onyx font-bold mb-4 font-serif">
                   ALIRA.
                 </span>
-                <div className="w-16 h-[2px] bg-alira-gold mx-auto mb-8"></div>
+                <div className="w-20 h-[3px] bg-alira-gold mx-auto mb-12"></div>
               </div>
             </Reveal>
             
             {/* Headline */}
-            <Reveal delay={150}>
-              <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-6">
-                Business clarity. One click away.
+            <Reveal delay={200}>
+              <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
+                Turn complexity into clarity. Instantly.
               </h1>
             </Reveal>
             
             {/* Subheadline */}
-            <Reveal delay={300}>
-              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-12">
+            <Reveal delay={250}>
+              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-16">
                 We turn your inputs into a ready-to-use business case. Instantly.
               </p>
             </Reveal>
             
             {/* CTA Button */}
-            <Reveal delay={450}>
+            <Reveal delay={300}>
               <button
                 type="button"
                 className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-alira-porcelain bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-2 focus:ring-alira-gold focus:ring-offset-2 focus:ring-offset-alira-porcelain transition-all duration-200 active:scale-95"
@@ -121,7 +121,7 @@ export default function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 bg-white relative z-[1]" id="how-it-works">
+      <section className="py-24 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]" id="how-it-works">
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="text-center mb-16">
@@ -139,57 +139,75 @@ export default function Home() {
           </Reveal>
           
           <Reveal delay={200}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
-              {/* Step 1 */}
-              <div className="text-center space-y-6">
-                <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20">
-                  <span className="text-2xl font-bold text-alira-gold">1</span>
-                </div>
-                <div className="space-y-3">
-                  <h3 className="h3">
+            <div className="max-w-5xl mx-auto">
+              {/* Horizontal Process Flow */}
+              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-16 relative">
+                
+                {/* Step 1: Complete the Form */}
+                <div className="flex flex-col items-center text-center group flex-1">
+                  <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20 mb-6 group-hover:border-alira-gold/40 transition-colors duration-300">
+                    <svg className="w-8 h-8 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-alira-onyx mb-4 group-hover:text-alira-gold transition-colors duration-300">
                     Complete the Form
                   </h3>
-                  <p className="copy">
+                  <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
                     Share your business context, challenges, and objectives through our structured intake form. Takes 10-15 minutes.
                   </p>
                 </div>
-              </div>
 
-              {/* Step 2 */}
-              <div className="text-center space-y-6">
-                <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20">
-                  <span className="text-2xl font-bold text-alira-gold">2</span>
+                {/* Connecting Arrow 1 */}
+                <div className="hidden lg:flex items-center justify-center w-16 h-16 relative">
+                  <div className="w-12 h-px bg-alira-onyx/30 group-hover:bg-alira-gold transition-colors duration-300"></div>
+                  <div className="absolute right-0 w-2 h-2 bg-alira-onyx/30 group-hover:bg-alira-gold border-r-2 border-t-2 border-current transform rotate-45 transition-colors duration-300"></div>
                 </div>
-                <div className="space-y-3">
-                  <h3 className="h3">
+
+                {/* Step 2: Engine Processing */}
+                <div className="flex flex-col items-center text-center group flex-1">
+                  <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20 mb-6 group-hover:border-alira-gold/40 transition-colors duration-300">
+                    <svg className="w-8 h-8 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-alira-onyx mb-4 group-hover:text-alira-gold transition-colors duration-300">
                     Engine Processing
                   </h3>
-                  <p className="copy">
+                  <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
                     Our strategic framework analyzes your inputs and maps them to proven business case structures and methodologies.
                   </p>
                 </div>
-              </div>
 
-              {/* Step 3 */}
-              <div className="text-center space-y-6">
-                <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20">
-                  <span className="text-2xl font-bold text-alira-gold">3</span>
+                {/* Connecting Arrow 2 */}
+                <div className="hidden lg:flex items-center justify-center w-16 h-16 relative">
+                  <div className="w-12 h-px bg-alira-onyx/30 group-hover:bg-alira-gold transition-colors duration-300"></div>
+                  <div className="absolute right-0 w-2 h-2 bg-alira-onyx/30 group-hover:bg-alira-gold border-r-2 border-t-2 border-current transform rotate-45 transition-colors duration-300"></div>
                 </div>
-                <div className="space-y-3">
-                  <h3 className="h3">
+
+                {/* Step 3: Receive Your Draft */}
+                <div className="flex flex-col items-center text-center group flex-1">
+                  <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20 mb-6 group-hover:border-alira-gold/40 transition-colors duration-300">
+                    <svg className="w-8 h-8 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-alira-onyx mb-4 group-hover:text-alira-gold transition-colors duration-300">
                     Receive Your Draft
                   </h3>
-                  <p className="copy">
+                  <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
                     Get a structured business case with problem statement, objectives, proposed solution, and next steps within 24 hours.
                   </p>
                 </div>
+
               </div>
             </div>
           </Reveal>
 
           {/* CTA */}
           <Reveal delay={400}>
-            <div className="text-center mt-12">
+            <div className="text-center mt-16">
               <Link
                 href="#start"
                 className="btn-primary inline-flex items-center"

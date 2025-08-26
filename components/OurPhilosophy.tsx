@@ -19,9 +19,6 @@ const principles = [
   }
 ]
 
-// Choose layout variation: 'grid' or 'zigzag'
-const LAYOUT_VARIATION: 'grid' | 'zigzag' = 'zigzag'
-
 export default function OurPhilosophy() {
   return (
     <section 
@@ -39,79 +36,53 @@ export default function OurPhilosophy() {
 
       <div className="max-w-5xl mx-auto px-4 relative z-10">
         <Reveal>
-          <div className="text-center mb-20">
-            <div className="heading-eyebrow tracking-wider">OUR APPROACH</div>
-            <h2 id="philosophy-heading" className="h2 mb-8">Our Philosophy</h2>
+          <div className="text-center mb-16">
+            <div className="text-sm tracking-wide uppercase text-alira-onyx/60 mb-4 font-medium">
+              OUR APPROACH
+            </div>
+            <div className="group inline-block">
+              <h2 id="philosophy-heading" className="text-4xl md:text-5xl font-bold text-alira-onyx mb-8 relative">
+                Our Philosophy
+                <div className="absolute bottom-0 left-0 w-0 h-1 bg-alira-gold transition-all duration-500 ease-out group-hover:w-full"></div>
+              </h2>
+            </div>
             <div className="w-16 h-px bg-alira-gold mx-auto mb-12"></div>
-            
-            {/* Quote */}
-            <blockquote className="text-xl text-alira-ink/80 italic font-light max-w-3xl mx-auto leading-relaxed">
+          </div>
+        </Reveal>
+
+        {/* Premium Pull Quote */}
+        <Reveal delay={150}>
+          <div className="text-center mb-20">
+            <blockquote className="text-3xl md:text-4xl text-alira-onyx font-serif italic font-light max-w-4xl mx-auto leading-tight">
               "Simple systems outlast complicated ones."
             </blockquote>
           </div>
         </Reveal>
 
-        {LAYOUT_VARIATION === 'grid' ? (
-          <VariationAGrid />
-        ) : (
-          <VariationBZigZag />
-        )}
+        {/* 2x2 Grid of Principles */}
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            {principles.map((principle, index) => (
+              <Reveal key={index} delay={index * 100}>
+                <div className="relative group">
+                  {/* Gold divider line */}
+                  <div className="absolute left-0 top-0 bottom-0 w-px bg-alira-gold/30 transition-colors duration-300 group-hover:bg-alira-gold/60"></div>
+                  
+                  <div className="pl-6 py-4">
+                    <h3 className="text-xl font-bold text-alira-onyx mb-3 relative">
+                      {principle.title}
+                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-alira-gold transition-all duration-300 ease-out group-hover:w-full"></div>
+                    </h3>
+                    <p className="text-alira-onyx/70 leading-relaxed text-base group-hover:text-alira-onyx/90 transition-colors duration-300">
+                      {principle.description}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
-  )
-}
-
-// Variation A: 2x2 Grid
-function VariationAGrid() {
-  return (
-    <div className="max-w-4xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {principles.map((principle, index) => (
-          <Reveal key={index} delay={index * 150}>
-            <div className="group">
-              <h3 className="h3 mb-3 relative">
-                {principle.title}
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-alira-gold transition-all duration-300 group-hover:w-full"></div>
-              </h3>
-              <p className="text-alira-ink/70 leading-relaxed">
-                {principle.description}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// Variation B: Zig-Zag Stagger
-function VariationBZigZag() {
-  return (
-    <div className="max-w-4xl mx-auto relative">
-      {/* Subtle central anchor line */}
-      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-alira-onyx/5 transform -translate-x-1/2" />
-      
-      <div className="space-y-12">
-        {principles.map((principle, index) => (
-          <Reveal 
-            key={index} 
-            delay={index * 200}
-            className={`${index % 2 === 0 ? 'md:mr-12' : 'md:ml-12'}`}
-          >
-            <div className={`group ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
-              <h3 className="h3 mb-3 relative">
-                {principle.title}
-                <div className={`absolute bottom-0 h-0.5 bg-alira-gold transition-all duration-300 group-hover:w-full ${
-                  index % 2 === 0 ? 'left-0 w-0' : 'right-0 w-0'
-                }`}></div>
-              </h3>
-              <p className="text-alira-ink/70 leading-relaxed">
-                {principle.description}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </div>
   )
 }
