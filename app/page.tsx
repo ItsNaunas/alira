@@ -6,7 +6,7 @@ import WhatYouGet from '@/components/WhatYouGet'
 import ProcessDiagram from '@/components/ProcessDiagram'
 import ProcessFlow from '@/components/ProcessFlow'
 import OurPhilosophy from '@/components/OurPhilosophy'
-import SignatureEngagements from '@/components/SignatureEngagements'
+import HomeServices from '@/components/HomeServices'
 import Experience from '@/components/Experience'
 import FinalCTA from '@/components/FinalCTA'
 import Reveal from '@/components/Reveal'
@@ -216,7 +216,7 @@ export default function Home() {
       <OurPhilosophy />
 
       {/* Signature Engagements Section */}
-      <SignatureEngagements />
+      <HomeServices />
 
       {/* The Engine Section */}
       <section className="section bg-white">

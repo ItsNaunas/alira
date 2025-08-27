@@ -5,9 +5,9 @@ type Service = {
   title: string;
   tag: string;
   icon: React.ComponentType<any>;
-  tagline: string;         // short italic line
-  outcomes: string[];      // 2–3 bullets
-  duration: string;        // small meta
+  tagline: string;
+  outcomes: string[];
+  duration: string;
 };
 
 const SERVICES: Service[] = [
@@ -83,20 +83,10 @@ export default function SignatureEngagements() {
         {SERVICES.map(({ id, title, tag, icon: Icon, tagline, outcomes, duration }) => (
           <article
             key={id}
-            className="
-              group relative rounded-2xl border border-alira-onyx/10
-              bg-white/90 shadow-sm ring-1 ring-black/[0.02]
-              transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md
-              p-5 sm:p-6
-            "
+            className="group relative rounded-2xl border border-alira-onyx/10 bg-white/90 shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md p-5 sm:p-6"
           >
             <div className="flex items-start gap-4">
-              <div
-                className="
-                  grid place-items-center h-10 w-10 shrink-0 rounded-full
-                  bg-alira-gold/10 text-alira-gold border border-alira-gold/30
-                "
-              >
+              <div className="grid place-items-center h-10 w-10 shrink-0 rounded-full bg-alira-gold/10 text-alira-gold border border-alira-gold/30">
                 <Icon className="h-5 w-5" aria-hidden />
               </div>
               <div className="flex-1">
@@ -106,13 +96,7 @@ export default function SignatureEngagements() {
                 <h3 className="mt-1 text-lg font-semibold text-alira-onyx">
                   <span className="relative inline-block">
                     {title}
-                    {/* Animated underline */}
-                    <span
-                      className="
-                        absolute left-0 -bottom-1 h-[2px] w-full scale-x-0 origin-left
-                        bg-alira-gold transition-transform duration-300 group-hover:scale-x-100
-                      "
-                    />
+                    <span className="absolute left-0 -bottom-1 h-[2px] w-full scale-x-0 origin-left bg-alira-gold transition-transform duration-300 group-hover:scale-x-100" />
                   </span>
                 </h3>
                 <p className="mt-1 italic text-alira-onyx/70 text-[13.5px]">{tagline}</p>
@@ -130,13 +114,7 @@ export default function SignatureEngagements() {
 
             <div className="mt-5 flex items-center justify-between pt-4 border-t border-alira-onyx/10">
               <span className="text-[12px] text-alira-onyx/55">Duration: {duration}</span>
-              <span
-                className="
-                  text-[12.5px] font-medium text-alira-onyx/80
-                  group-hover:text-alira-onyx transition-colors
-                "
-                aria-hidden
-              >
+              <span className="text-[12.5px] font-medium text-alira-onyx/80 group-hover:text-alira-onyx transition-colors" aria-hidden>
                 Learn more →
               </span>
             </div>
