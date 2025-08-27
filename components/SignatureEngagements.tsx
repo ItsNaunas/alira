@@ -25,7 +25,7 @@ const SERVICES: Service[] = [
       "Stabilised ops and decision cadence",
     ],
     duration: "10 days",
-    href: "/contact",
+    href: "/form",
   },
   {
     id: "blueprint",
@@ -38,7 +38,7 @@ const SERVICES: Service[] = [
       "Metrics and milestones you can track",
     ],
     duration: "3–6 weeks",
-    href: "/contact",
+    href: "/form",
   },
   {
     id: "ai-advantage",
@@ -51,7 +51,7 @@ const SERVICES: Service[] = [
       "Lean workflows that compound over time",
     ],
     duration: "4–8 weeks",
-    href: "/contact",
+    href: "/form",
   },
   {
     id: "partner",
@@ -64,7 +64,7 @@ const SERVICES: Service[] = [
       "Structured support for complex transitions",
     ],
     duration: "Ongoing",
-    href: "/contact",
+    href: "/form",
   },
 ];
 

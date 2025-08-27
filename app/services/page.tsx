@@ -85,12 +85,12 @@ export default function Services() {
             {/* CTA Button */}
             <Reveal delay={300}>
               <div className="mt-6 flex justify-center">
-                <Link
-                  href="/contact"
-                  className="rounded-full bg-alira-onyx text-white px-6 py-3 text-sm font-medium tracking-tight hover:bg-black transition-colors"
-                >
-                  Start Your Business Case
-                </Link>
+                                  <Link
+                    href="/form"
+                    className="rounded-full bg-alira-onyx text-white px-6 py-3 text-sm font-medium tracking-tight hover:bg-black transition-colors"
+                  >
+                    Start Your Business Case
+                  </Link>
               </div>
             </Reveal>
           </div>
@@ -178,7 +178,7 @@ export default function Services() {
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
                   <div className="inline-block group">
                     <Link
-                      href="/contact"
+                      href="/form"
                       className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-alira-gold border-2 border-alira-gold rounded-full hover:bg-alira-gold hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
                     >
                       Start with Intake Form
@@ -187,10 +187,10 @@ export default function Services() {
                   </div>
                   <div className="inline-block group">
                     <Link
-                      href="/contact"
+                      href="/form"
                       className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white border-2 border-white rounded-full hover:bg-white hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-white/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
                     >
-                      Schedule a Call
+                      Start with Form
                       <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                   </div>
