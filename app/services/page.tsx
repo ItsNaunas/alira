@@ -75,24 +75,24 @@ export default function Services() {
               </h1>
             </Reveal>
             
-                         {/* Subheadline */}
-             <Reveal delay={250}>
-               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
-                 Signature engagements designed to cut through complexity and deliver lasting clarity. Each service is crafted to meet you where you are and take you where you want to go.
-               </p>
-             </Reveal>
-             
-             {/* CTA Button */}
-             <Reveal delay={300}>
-               <div className="mt-6 flex justify-center">
-                 <Link
-                   href="/contact"
-                   className="rounded-full bg-alira-onyx text-white px-6 py-3 text-sm font-medium tracking-tight hover:bg-black transition-colors"
-                 >
-                   Start Your Business Case
-                 </Link>
-               </div>
-             </Reveal>
+            {/* Subheadline */}
+            <Reveal delay={250}>
+              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
+                Signature engagements designed to cut through complexity and deliver lasting clarity. Each service is crafted to meet you where you are and take you where you want to go.
+              </p>
+            </Reveal>
+            
+            {/* CTA Button */}
+            <Reveal delay={300}>
+              <div className="mt-6 flex justify-center">
+                <Link
+                  href="/contact"
+                  className="rounded-full bg-alira-onyx text-white px-6 py-3 text-sm font-medium tracking-tight hover:bg-black transition-colors"
+                >
+                  Start Your Business Case
+                </Link>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -121,41 +121,40 @@ export default function Services() {
                   </h2>
                   <div className="w-16 h-px bg-alira-gold mb-8"></div>
                 </div>
-                   <div className="space-y-6">
-                     <p className="copy text-lg leading-relaxed">
-                       Every engagement is designed to cut through the noise and deliver actionable clarity. We don't create generic templates — we build systems that endure.
-                     </p>
-                     <p className="copy text-lg leading-relaxed">
-                       Whether you're resetting, scaling, adopting AI, or seeking long-term guidance, the outcome is always the same: lasting clarity and systems that work.
-                     </p>
-                   </div>
-                </div>
-                <div className="bg-alira-onyx/5 p-8 rounded-lg border border-alira-onyx/10">
-                                   <h3 className="h3 mb-6">
-                   Our Approach
-                 </h3>
-                 <ul className="space-y-4">
-                   <li className="flex items-start space-x-4">
-                     <span className="text-alira-gold font-bold text-lg">•</span>
-                     <span className="copy">Outcome-focused engagements, not time-based billing</span>
-                   </li>
-                   <li className="flex items-start space-x-4">
-                     <span className="text-alira-gold font-bold text-lg">•</span>
-                     <span className="copy">Systems that endure beyond the engagement</span>
-                   </li>
-                   <li className="flex items-start space-x-4">
-                     <span className="text-alira-gold font-bold text-lg">•</span>
-                     <span className="copy">Clarity as the foundation for all decisions</span>
-                   </li>
-                   <li className="flex items-start space-x-4">
-                     <span className="text-alira-gold font-bold text-lg">•</span>
-                     <span className="copy">Elegant solutions to complex problems</span>
-                   </li>
-                 </ul>
+                <div className="space-y-6">
+                  <p className="copy text-lg leading-relaxed">
+                    Every engagement is designed to cut through the noise and deliver actionable clarity. We don't create generic templates — we build systems that endure.
+                  </p>
+                  <p className="copy text-lg leading-relaxed">
+                    Whether you're resetting, scaling, adopting AI, or seeking long-term guidance, the outcome is always the same: lasting clarity and systems that work.
+                  </p>
                 </div>
               </div>
-            </Reveal>
-          </div>
+              <div className="bg-alira-onyx/5 p-8 rounded-lg border border-alira-onyx/10">
+                <h3 className="h3 mb-6">
+                  Our Approach
+                </h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="copy">Outcome-focused engagements, not time-based billing</span>
+                  </li>
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="copy">Systems that endure beyond the engagement</span>
+                  </li>
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="copy">Clarity as the foundation for all decisions</span>
+                  </li>
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="copy">Elegant solutions to complex problems</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
