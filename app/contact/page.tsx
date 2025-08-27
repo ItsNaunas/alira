@@ -1,7 +1,6 @@
-import IntakeForm from '@/components/IntakeForm'
 import Reveal from '@/components/Reveal'
 import { Button } from '@/components/ui/button'
-import { Mail, Calendar, MessageSquare, ArrowRight } from 'lucide-react'
+import { Mail, Calendar, MessageSquare, ArrowRight, Users, Target, Clock, Award } from 'lucide-react'
 import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
 
@@ -102,7 +101,7 @@ export default function Contact() {
                 </p>
                 <div className="inline-block group">
                   <Link
-                    href="#intake-form"
+                    href="/form"
                     className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium text-white bg-alira-onyx rounded-full hover:bg-alira-onyx/90 transition-colors"
                   >
                     Start Form
@@ -161,65 +160,158 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Intake Form Section */}
-      <section id="intake-form" className="py-16 md:py-20 bg-white">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+      {/* About ALIRA Section */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal>
             <SectionHeading>
-              Generate Your Business Case
+              Why Choose ALIRA?
             </SectionHeading>
           </Reveal>
           
           <Reveal delay={200}>
-            <p className="mt-6 text-center text-alira-onyx/70 max-w-2xl mx-auto mb-12">
-              Complete the form below to receive a comprehensive Draft Business Case tailored to your specific situation. This is the first step in your journey with ALIRA.
-            </p>
-          </Reveal>
-
-          <Reveal delay={300}>
-            <IntakeForm />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Additional Information Section */}
-      <section className="py-16 md:py-20 bg-alira-onyx/5">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <Reveal>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-              <div>
-                <h3 className="text-2xl font-serif font-bold text-alira-onyx mb-6">
-                  What Happens Next?
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="mx-auto w-12 h-12 bg-alira-gold/10 rounded-full flex items-center justify-center mb-4">
+                  <Target className="h-6 w-6 text-alira-gold" />
+                </div>
+                <h3 className="text-lg font-serif font-bold text-alira-onyx mb-3">
+                  Clarity-First
                 </h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start space-x-4">
-                    <span className="text-alira-gold font-bold text-lg">1.</span>
-                    <span className="text-alira-onyx/70">Complete the intake form and receive your Draft Business Case</span>
-                  </li>
-                  <li className="flex items-start space-x-4">
-                    <span className="text-alira-gold font-bold text-lg">2.</span>
-                    <span className="text-alira-onyx/70">We'll review your information and reach out within 24 hours</span>
-                  </li>
-                  <li className="flex items-start space-x-4">
-                    <span className="text-alira-gold font-bold text-lg">3.</span>
-                    <span className="text-alira-onyx/70">Schedule a consultation call to discuss your business case</span>
-                  </li>
-                  <li className="flex items-start space-x-4">
-                    <span className="text-alira-gold font-bold text-lg">4.</span>
-                    <span className="text-alira-onyx/70">Refine the approach and begin your engagement</span>
-                  </li>
-                </ul>
+                <p className="text-sm text-alira-onyx/70">
+                  We cut through complexity to deliver actionable insights that drive real results.
+                </p>
               </div>
-              <div>
-                <h3 className="text-2xl font-serif font-bold text-alira-onyx mb-6">
-                  Why This Approach?
+              
+              <div className="text-center">
+                <div className="mx-auto w-12 h-12 bg-alira-gold/10 rounded-full flex items-center justify-center mb-4">
+                  <Users className="h-6 w-6 text-alira-gold" />
+                </div>
+                <h3 className="text-lg font-serif font-bold text-alira-onyx mb-3">
+                  Expert Team
                 </h3>
-                <p className="text-alira-onyx/70 leading-relaxed">
-                  We believe every business owner deserves to start with clarity, not confusion. Our intake form ensures we capture the essential information needed to create a meaningful business case, while our immediate PDF generation gives you tangible value from the very first interaction.
+                <p className="text-sm text-alira-onyx/70">
+                  Seasoned consultants with deep experience across industries and business stages.
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="mx-auto w-12 h-12 bg-alira-gold/10 rounded-full flex items-center justify-center mb-4">
+                  <Clock className="h-6 w-6 text-alira-gold" />
+                </div>
+                <h3 className="text-lg font-serif font-bold text-alira-onyx mb-3">
+                  Rapid Delivery
+                </h3>
+                <p className="text-sm text-alira-onyx/70">
+                  Get your business case within minutes, not weeks. Immediate value from day one.
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="mx-auto w-12 h-12 bg-alira-gold/10 rounded-full flex items-center justify-center mb-4">
+                  <Award className="h-6 w-6 text-alira-gold" />
+                </div>
+                <h3 className="text-lg font-serif font-bold text-alira-onyx mb-3">
+                  Proven Results
+                </h3>
+                <p className="text-sm text-alira-onyx/70">
+                  Systems that endure beyond the engagement, delivering lasting clarity and growth.
                 </p>
               </div>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Our Approach Section */}
+      <section className="py-16 md:py-20 bg-alira-onyx/5">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-3xl font-serif font-bold text-alira-onyx mb-6">
+                  Our Approach
+                </h2>
+                <div className="w-16 h-px bg-alira-gold mb-8"></div>
+                <div className="space-y-6">
+                  <p className="text-alira-onyx/70 leading-relaxed">
+                    We believe every business owner deserves to start with clarity, not confusion. Our approach is built on the principle that the best strategies emerge from understanding, not assumptions.
+                  </p>
+                  <p className="text-alira-onyx/70 leading-relaxed">
+                    Whether you're resetting operations, scaling growth, integrating AI, or seeking ongoing guidance, we deliver systems that endure beyond the engagement.
+                  </p>
+                </div>
+              </div>
+              <div className="bg-white p-8 rounded-lg border border-alira-onyx/10">
+                <h3 className="text-xl font-serif font-bold text-alira-onyx mb-6">
+                  What Sets Us Apart
+                </h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="text-alira-onyx/70">Outcome-focused engagements, not time-based billing</span>
+                  </li>
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="text-alira-onyx/70">Immediate value through instant business case generation</span>
+                  </li>
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="text-alira-onyx/70">Tailored solutions, never generic templates</span>
+                  </li>
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="text-alira-onyx/70">Ongoing support for complex transitions</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 md:py-20 bg-alira-onyx">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="text-center">
+            <Reveal>
+              <div className="space-y-12">
+                <div className="relative">
+                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                    Ready to Get Started?
+                  </h2>
+                  <div className="w-20 h-px bg-alira-gold mx-auto"></div>
+                </div>
+                
+                <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
+                  Choose your preferred way to begin your journey with ALIRA. Every path leads to clarity.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <div className="inline-block group">
+                    <Link
+                      href="/form"
+                      className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-alira-gold border-2 border-alira-gold rounded-full hover:bg-alira-gold hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
+                    >
+                      Start with Form
+                      <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                  <div className="inline-block group">
+                    <a
+                      href="https://calendly.com/alira-consulting"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white border-2 border-white rounded-full hover:bg-white hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-white/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
+                    >
+                      Schedule Call
+                      <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
     </div>
