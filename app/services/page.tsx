@@ -1,4 +1,5 @@
 import SignatureEngagements from '@/components/SignatureEngagements'
+import ServicesDeliverables from '@/components/ServicesDeliverables'
 import Reveal from '@/components/Reveal'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -82,6 +83,9 @@ export default function Services() {
           </div>
         </div>
       </section>
+
+      {/* Services Deliverables Section */}
+      <ServicesDeliverables />
 
       {/* Services Grid Section */}
       <section className="py-24 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]">
