@@ -1,18 +1,13 @@
 import Reveal from './Reveal'
+import SectionHeading from './ui/SectionHeading'
 
 export default function ServicesDeliverables() {
   return (
     <section aria-labelledby="svc-deliverables-heading" className="relative max-w-6xl mx-auto px-6 sm:px-8 py-16 md:py-24">
       <Reveal>
-        <p className="text-xs tracking-[0.18em] text-alira-gold uppercase font-semibold text-center">
-          WHAT EVERY ENGAGEMENT DELIVERS
-        </p>
-      </Reveal>
-
-      <Reveal delay={200}>
-        <h2 id="svc-deliverables-heading" className="mt-2 text-3xl md:text-4xl font-serif font-semibold text-center text-alira-onyx">
-          Clarity you can act on — built into every service.
-        </h2>
+        <SectionHeading subtleLabel="WHAT EVERY ENGAGEMENT DELIVERS" id="svc-deliverables-heading">
+          Clarity you can act on, built into every service.
+        </SectionHeading>
       </Reveal>
 
       <Reveal delay={250}>

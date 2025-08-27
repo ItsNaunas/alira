@@ -1,4 +1,6 @@
 import { Briefcase, Target, Brain, Users } from "lucide-react";
+import SectionHeading from "@/components/ui/SectionHeading";
+import React from "react";
 
 type Service = {
   id: string;
@@ -8,6 +10,7 @@ type Service = {
   tagline: string;
   outcomes: string[];
   duration: string;
+  href?: string;
 };
 
 const SERVICES: Service[] = [
@@ -22,6 +25,7 @@ const SERVICES: Service[] = [
       "Stabilised ops and decision cadence",
     ],
     duration: "10 days",
+    href: "/contact",
   },
   {
     id: "blueprint",
@@ -34,6 +38,7 @@ const SERVICES: Service[] = [
       "Metrics and milestones you can track",
     ],
     duration: "3–6 weeks",
+    href: "/contact",
   },
   {
     id: "ai-advantage",
@@ -46,6 +51,7 @@ const SERVICES: Service[] = [
       "Lean workflows that compound over time",
     ],
     duration: "4–8 weeks",
+    href: "/contact",
   },
   {
     id: "partner",
@@ -58,68 +64,64 @@ const SERVICES: Service[] = [
       "Structured support for complex transitions",
     ],
     duration: "Ongoing",
+    href: "/contact",
   },
 ];
 
 export default function SignatureEngagements() {
   return (
-    <section id="services" className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-10 py-20">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <p className="text-xs font-semibold tracking-[0.18em] text-alira-gold uppercase">
-          Our Services
-        </p>
-        <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-alira-onyx">
-          Signature Engagements
-        </h2>
-        <div className="mx-auto mt-3 h-[2px] w-12 bg-alira-gold/80" />
-        <p className="mt-4 text-sm sm:text-base text-alira-onyx/70">
-          Four distinct approaches to deliver clarity, structure, and systems that last.
-        </p>
-      </div>
+    <section className="py-16 md:py-20">
+      <SectionHeading subtleLabel="Our Services">Signature Engagements</SectionHeading>
 
-      {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-        {SERVICES.map(({ id, title, tag, icon: Icon, tagline, outcomes, duration }) => (
-          <article
-            key={id}
-            className="group relative rounded-2xl border border-alira-onyx/10 bg-white/90 shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md p-5 sm:p-6"
-          >
-            <div className="flex items-start gap-4">
-              <div className="grid place-items-center h-10 w-10 shrink-0 rounded-full bg-alira-gold/10 text-alira-gold border border-alira-gold/30">
-                <Icon className="h-5 w-5" aria-hidden />
-              </div>
-              <div className="flex-1">
-                <span className="text-[11px] tracking-[0.18em] text-alira-gold font-semibold uppercase">
-                  {tag}
+      <div className="mx-auto mt-10 max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {SERVICES.map((s) => {
+          const Icon = s.icon;
+          return (
+            <article
+              key={s.id}
+              className="group relative rounded-2xl border border-black/[0.06] bg-white/80 backdrop-blur-sm p-5 shadow-sm hover:shadow-md transition-shadow"
+            >
+              {/* Tag + Icon */}
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center rounded-full border border-alira-gold/50 bg-alira-gold/10 px-2.5 py-1 text-[11px] font-semibold tracking-[0.16em] text-alira-gold uppercase">
+                  {s.tag}
                 </span>
-                <h3 className="mt-1 text-lg font-semibold text-alira-onyx">
-                  <span className="relative inline-block">
-                    {title}
-                    <span className="absolute left-0 -bottom-1 h-[2px] w-full scale-x-0 origin-left bg-alira-gold transition-transform duration-300 group-hover:scale-x-100" />
-                  </span>
-                </h3>
-                <p className="mt-1 italic text-alira-onyx/70 text-[13.5px]">{tagline}</p>
+                <Icon className="h-4 w-4 text-alira-gold" aria-hidden />
               </div>
-            </div>
 
-            <ul className="mt-4 space-y-2 text-[13.5px] text-alira-onyx/80">
-              {outcomes.map((o) => (
-                <li key={o} className="flex items-start gap-2">
-                  <span className="mt-[6px] h-[5px] w-[5px] rounded-full bg-alira-gold/70" />
-                  <span>{o}</span>
-                </li>
-              ))}
-            </ul>
+              {/* Title */}
+              <h3 className="mt-3 text-lg font-semibold text-alira-onyx underline-grow">
+                <a href={s.href || "/contact"}>{s.title}</a>
+              </h3>
 
-            <div className="mt-5 flex items-center justify-between pt-4 border-t border-alira-onyx/10">
-              <span className="text-[12px] text-alira-onyx/55">Duration: {duration}</span>
-              <span className="text-[12.5px] font-medium text-alira-onyx/80 group-hover:text-alira-onyx transition-colors" aria-hidden>
-                Learn more →
-              </span>
-            </div>
-          </article>
-        ))}
+              {/* Tagline */}
+              <p className="mt-1 text-[13px] italic text-alira-onyx/70 leading-relaxed">
+                {s.tagline}
+              </p>
+
+              {/* Outcomes */}
+              <ul className="mt-4 space-y-2 text-[13px] text-alira-onyx/80">
+                {s.outcomes.map((o) => (
+                  <li key={o} className="flex gap-2">
+                    <span className="mt-[7px] h-[3px] w-[3px] rounded-full bg-alira-onyx/50" />
+                    <span>{o}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Meta row */}
+              <div className="mt-5 flex items-center justify-between pt-3 text-[12px] text-alira-onyx/60 border-t border-black/[0.06]">
+                <span>Duration: {s.duration}</span>
+                <a
+                  href={s.href || "/contact"}
+                  className="text-alira-onyx hover:text-black transition-colors underline-grow"
+                >
+                  Learn more
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

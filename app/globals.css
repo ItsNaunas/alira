@@ -358,3 +358,21 @@ html {
     scroll-behavior: auto;
   }
 }
+
+/* Premium underline animation */
+.underline-grow {
+  position: relative;
+}
+.underline-grow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 0;
+  background: var(--alira-gold, #C6A769);
+  transition: width 200ms ease;
+}
+.underline-grow:hover::after {
+  width: 100%;
+}

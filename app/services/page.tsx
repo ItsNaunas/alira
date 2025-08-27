@@ -4,6 +4,7 @@ import Reveal from '@/components/Reveal'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import SectionHeading from '@/components/ui/SectionHeading'
 
 export default function Services() {
   return (
@@ -76,9 +77,21 @@ export default function Services() {
             
                          {/* Subheadline */}
              <Reveal delay={250}>
-               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-16">
+               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
                  Signature engagements designed to cut through complexity and deliver lasting clarity. Each service is crafted to meet you where you are and take you where you want to go.
                </p>
+             </Reveal>
+             
+             {/* CTA Button */}
+             <Reveal delay={300}>
+               <div className="mt-6 flex justify-center">
+                 <Link
+                   href="/contact"
+                   className="rounded-full bg-alira-onyx text-white px-6 py-3 text-sm font-medium tracking-tight hover:bg-black transition-colors"
+                 >
+                   Start Your Business Case
+                 </Link>
+               </div>
              </Reveal>
           </div>
         </div>
@@ -88,42 +101,26 @@ export default function Services() {
       <ServicesDeliverables />
 
       {/* Services Grid Section */}
-      <section className="py-24 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]">
-        <div className="container mx-auto px-6 lg:px-8">
-          <Reveal>
-            <div className="text-center mb-16">
-                             <h2 className="h2 mb-6">
-                 Signature Engagements
-               </h2>
-               
-               {/* Gold hairline */}
-               <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
-               
-               <p className="copy text-xl md:text-2xl max-w-[65ch] mx-auto">
-                 Four distinct approaches to deliver clarity, structure, and systems that last.
-               </p>
-            </div>
+      <section className="py-16 md:py-20 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal delay={200}>
+            <SignatureEngagements />
           </Reveal>
-          
-                     <Reveal delay={200}>
-             <SignatureEngagements />
-           </Reveal>
         </div>
       </section>
 
       {/* Service Philosophy Section */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <Reveal>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div className="space-y-8">
-                                     <div>
-                     <h2 className="h2 mb-6">
-                       Clarity Over Complexity
-                     </h2>
-                     <div className="w-16 h-px bg-alira-gold mb-8"></div>
-                   </div>
+      <section className="py-16 md:py-20 bg-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div className="space-y-8">
+                <div>
+                  <h2 className="h2 mb-6">
+                    Clarity Over Complexity
+                  </h2>
+                  <div className="w-16 h-px bg-alira-gold mb-8"></div>
+                </div>
                    <div className="space-y-6">
                      <p className="copy text-lg leading-relaxed">
                        Every engagement is designed to cut through the noise and deliver actionable clarity. We don't create generic templates — we build systems that endure.
@@ -163,9 +160,9 @@ export default function Services() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-alira-onyx">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
+      <section className="py-16 md:py-20 bg-alira-onyx">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="text-center">
             <Reveal>
               <div className="space-y-12">
                 <div className="relative">
