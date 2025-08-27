@@ -70,55 +70,64 @@ const SERVICES: Service[] = [
 
 export default function SignatureEngagements() {
   return (
-    <section className="py-16 md:py-20">
-      <SectionHeading subtleLabel="Our Services">Signature Engagements</SectionHeading>
+    <section className="max-w-5xl mx-auto px-6 md:px-8 lg:px-0 py-20">
+      {/* Intro Block */}
+      <SectionHeading subtleLabel="Our Services">
+        Signature Engagements
+      </SectionHeading>
+      
+      <p className="mt-6 text-center text-alira-onyx/70 max-w-2xl mx-auto">
+        Four distinct approaches to deliver clarity, structure, and systems that last.
+      </p>
 
-      <div className="mx-auto mt-10 max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {SERVICES.map((s) => {
-          const Icon = s.icon;
+      {/* Services Grid */}
+      <div className="mt-16 grid md:grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-14">
+        {SERVICES.map((service, index) => {
+          const Icon = service.icon;
+          const isRightColumn = index === 1 || index === 3;
+          
           return (
-            <article
-              key={s.id}
-              className="group relative rounded-2xl border border-black/[0.06] bg-white/80 backdrop-blur-sm p-5 shadow-sm hover:shadow-md transition-shadow"
+            <article 
+              key={service.id} 
+              className={`group ${isRightColumn ? 'lg:mt-10' : ''}`}
             >
-              {/* Tag + Icon */}
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center rounded-full border border-alira-gold/50 bg-alira-gold/10 px-2.5 py-1 text-[11px] font-semibold tracking-[0.16em] text-alira-gold uppercase">
-                  {s.tag}
+              {/* Gold rule */}
+              <div className="h-px w-12 bg-alira-gold mb-6"></div>
+              
+              {/* Tag */}
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-xs font-semibold tracking-wide uppercase text-alira-gold">
+                  {service.tag}
                 </span>
-                <Icon className="h-4 w-4 text-alira-gold" aria-hidden />
+                <Icon className="h-3 w-3 text-alira-gold" aria-hidden />
               </div>
-
+              
               {/* Title */}
-              <h3 className="mt-3 text-lg font-semibold text-alira-onyx underline-grow">
-                <a href={s.href || "/contact"}>{s.title}</a>
+              <h3 className="text-2xl font-serif font-bold text-alira-onyx mb-3 underline-grow">
+                <a href={service.href || "/contact"}>
+                  {service.title}
+                </a>
               </h3>
-
+              
               {/* Tagline */}
-              <p className="mt-1 text-[13px] italic text-alira-onyx/70 leading-relaxed">
-                {s.tagline}
+              <p className="text-alira-onyx/70 italic mb-6 leading-relaxed">
+                {service.tagline}
               </p>
-
+              
               {/* Outcomes */}
-              <ul className="mt-4 space-y-2 text-[13px] text-alira-onyx/80">
-                {s.outcomes.map((o) => (
-                  <li key={o} className="flex gap-2">
-                    <span className="mt-[7px] h-[3px] w-[3px] rounded-full bg-alira-onyx/50" />
-                    <span>{o}</span>
+              <ul className="space-y-2 mb-6">
+                {service.outcomes.map((outcome, outcomeIndex) => (
+                  <li key={outcomeIndex} className="flex items-start gap-3 text-sm text-alira-onyx/80">
+                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-alira-gold flex-shrink-0"></span>
+                    <span>{outcome}</span>
                   </li>
                 ))}
               </ul>
-
-              {/* Meta row */}
-              <div className="mt-5 flex items-center justify-between pt-3 text-[12px] text-alira-onyx/60 border-t border-black/[0.06]">
-                <span>Duration: {s.duration}</span>
-                <a
-                  href={s.href || "/contact"}
-                  className="text-alira-onyx hover:text-black transition-colors underline-grow"
-                >
-                  Learn more
-                </a>
-              </div>
+              
+              {/* Duration */}
+              <p className="text-xs text-alira-onyx/50">
+                Duration: {service.duration}
+              </p>
             </article>
           );
         })}
