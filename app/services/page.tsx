@@ -123,7 +123,7 @@ export default function Services() {
                 </div>
                 <div className="space-y-6">
                   <p className="copy text-lg leading-relaxed">
-                    Every engagement is designed to cut through the noise and deliver actionable clarity. We don't create generic templates — we build systems that endure.
+                    Every engagement is designed to cut through the noise and deliver actionable clarity. We don't create generic templates - we build systems that endure.
                   </p>
                   <p className="copy text-lg leading-relaxed">
                     Whether you're resetting, scaling, adopting AI, or seeking long-term guidance, the outcome is always the same: lasting clarity and systems that work.

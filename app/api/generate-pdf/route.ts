@@ -130,7 +130,7 @@ async function generateBusinessCase(data: IntakeFormData): Promise<Buffer> {
       doc
         .font('Helvetica')
         .fontSize(8)
-        .text('ALIRA. — Build With Clarity, Scale With Confidence', { align: 'center' })
+        .text('ALIRA. - Build With Clarity, Scale With Confidence', { align: 'center' })
         .text('This is a draft document for discussion purposes only.', { align: 'center' })
 
       doc.end()
@@ -166,7 +166,7 @@ function addSection(doc: PDFKit.PDFDocument, title: string, content: string[]) {
 function getServiceDescription(service: string): string {
   const descriptions = {
     'Business Reset': 'A private 10-day engagement to strip away overload and rebuild clarity. Focus on identifying core priorities, eliminating distractions, and establishing clear systems.',
-    'Growth Blueprint': 'A 3–6 week programme that turns ideas into credible businesses. Comprehensive strategy development, market analysis, and execution planning.',
+    'Growth Blueprint': 'A 3-6 week programme that turns ideas into credible businesses. Comprehensive strategy development, market analysis, and execution planning.',
     'AI Advantage': 'Practical AI integration to make systems faster, smarter, leaner. Assessment of current processes and implementation of AI solutions for efficiency gains.',
     'Strategic Partner': 'Ongoing oversight and structured support for serious ambitions. Long-term strategic guidance and implementation support for scaling businesses.',
   }

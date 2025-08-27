@@ -5,7 +5,7 @@ export default function WhatYouGet() {
     {
       icon: FileText,
       title: "Your Business Case, Drafted for You",
-      desc: "A formatted document with clarity of problem, objectives, and solutions — ready to share with your team or board.",
+      desc: "A formatted document with clarity of problem, objectives, and solutions - ready to share with your team or board.",
     },
     {
       icon: Compass,

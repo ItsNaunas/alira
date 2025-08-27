@@ -22,7 +22,7 @@ export default function ServicesDeliverables() {
             <span className="block h-[2px] w-12 bg-alira-gold mb-3 transition-all duration-300 group-hover:w-16" />
             <h3 className="text-lg font-semibold text-alira-onyx">Board-ready Business Case Draft</h3>
             <p className="mt-2 text-sm leading-relaxed text-alira-onyx/70">
-              A formatted document with problem, objectives, and solution framing — ready to share, edit, and approve.
+                                  A formatted document with problem, objectives, and solution framing - ready to share, edit, and approve.
             </p>
           </li>
         </Reveal>
@@ -42,7 +42,7 @@ export default function ServicesDeliverables() {
             <span className="block h-[2px] w-12 bg-alira-gold mb-3 transition-all duration-300 group-hover:w-16" />
             <h3 className="text-lg font-semibold text-alira-onyx">Fit-for-Purpose Solutions (incl. AI)</h3>
             <p className="mt-2 text-sm leading-relaxed text-alira-onyx/70">
-              Practical recommendations mapped to your context — not hype. Includes AI options where they create leverage.
+                                  Practical recommendations mapped to your context - not hype. Includes AI options where they create leverage.
             </p>
           </li>
         </Reveal>

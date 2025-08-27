@@ -1,6 +1,6 @@
 # ALIRA. Website & System
 
-A production-ready Next.js 14 + TypeScript + Tailwind project for **ALIRA.** — a refined consultancy that delivers clarity, structure, and lasting systems.
+A production-ready Next.js 14 + TypeScript + Tailwind project for **ALIRA.** - a refined consultancy that delivers clarity, structure, and lasting systems.
 
 ## Overview
 
@@ -8,7 +8,7 @@ This website is **only the first step** of a larger system where every client en
 
 ## Philosophy & Brand
 
-- **Purpose:** ALIRA. exists to bring clarity and structure to overloaded business owners. Every new enquiry should feel like the start of a tailored, professional journey — no blank pages, no wasted time.
+- **Purpose:** ALIRA. exists to bring clarity and structure to overloaded business owners. Every new enquiry should feel like the start of a tailored, professional journey - no blank pages, no wasted time.
 - **Branding:** Clarity over clutter, discipline over distraction, elegance over noise, systems that last.
 - **Identity:** Minimal, high contrast, restrained accents. Logo always "ALIRA." with full stop.
 - **Visuals:** Onyx black, porcelain white, royal gold, midnight blue. Times New Roman for formal headings/documents; Inter/Helvetica Neue for digital UI.
@@ -34,22 +34,22 @@ This website is **only the first step** of a larger system where every client en
 - **Brand Consistency:** ALIRA. design system throughout
 
 ### Pages
-- `/` — Home (hero with rotator + device mockup)
-- `/how-it-works` — explain "Form → Engine → Output"
-- `/services` — service framework grid
-- `/contact` — short form + Calendly link
+- `/` - Home (hero with rotator + device mockup)
+- `/how-it-works` - explain "Form → Engine → Output"
+- `/services` - service framework grid
+- `/contact` - short form + Calendly link
 
 ### Components
-- `LogoMark.tsx` — uppercase "ALIRA." with full stop
-- `Header.tsx` — navigation with mobile menu
-- `HeroRotator.tsx` — rotating brand values
-- `DeviceMock.tsx` — form and PDF preview slides
-- `ValuePillars.tsx` — four core principles
-- `ServicesGrid.tsx` — service offerings
-- `HowItWorksSteps.tsx` — process visualization
-- `IntakeForm.tsx` — main form with PDF generation
-- `Reveal.tsx` — scroll animations
-- `Footer.tsx` — branding and links
+- `LogoMark.tsx` - uppercase "ALIRA." with full stop
+- `Header.tsx` - navigation with mobile menu
+- `HeroRotator.tsx` - rotating brand values
+- `DeviceMock.tsx` - form and PDF preview slides
+- `ValuePillars.tsx` - four core principles
+- `ServicesGrid.tsx` - service offerings
+- `HowItWorksSteps.tsx` - process visualization
+- `IntakeForm.tsx` - main form with PDF generation
+- `Reveal.tsx` - scroll animations
+- `Footer.tsx` - branding and links
 
 ## Getting Started
 
@@ -133,7 +133,7 @@ The intake form collects:
 ## PDF Output
 
 Generated PDFs include:
-- Title: Draft Business Case — [BusinessName]
+- Title: Draft Business Case - [BusinessName]
 - Problem Statement
 - Objectives
 - Current State
@@ -154,10 +154,10 @@ Generated PDFs include:
 
 ## Services
 
-1. **Business Reset** — £2,500 (10 days)
-2. **Growth Blueprint** — £5,000 (3–6 weeks)
-3. **AI Advantage** — £8,000 (4–8 weeks)
-4. **Strategic Partner** — £15,000+ (Ongoing)
+1. **Business Reset** - £2,500 (10 days)
+2. **Growth Blueprint** - £5,000 (3-6 weeks)
+3. **AI Advantage** - £8,000 (4-8 weeks)
+4. **Strategic Partner** - £15,000+ (Ongoing)
 
 ## Direction of Travel
 
@@ -181,4 +181,4 @@ Private project for ALIRA. consultancy.
 
 ---
 
-**ALIRA.** — Build With Clarity, Scale With Confidence
+**ALIRA.** - Build With Clarity, Scale With Confidence

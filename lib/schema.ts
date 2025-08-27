@@ -61,7 +61,7 @@ export const services = [
   {
     value: 'Growth Blueprint',
     label: 'Growth Blueprint',
-    description: 'A 3–6 week programme that turns ideas into credible businesses.',
+    description: 'A 3-6 week programme that turns ideas into credible businesses.',
     price: '£5,000',
     duration: '3–6 weeks',
   },

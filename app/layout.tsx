@@ -7,22 +7,22 @@ import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ALIRA. — Build With Clarity, Scale With Confidence',
+  title: 'ALIRA. - Build With Clarity, Scale With Confidence',
   description: 'Sharp strategic input for founders and teams ready to grow with purpose. Clarity over clutter, discipline over distraction, elegance over noise, systems that last.',
   keywords: ['consultancy', 'strategy', 'business growth', 'clarity', 'systems', 'founders'],
   authors: [{ name: 'ALIRA.' }],
   creator: 'ALIRA.',
   openGraph: {
-    title: 'ALIRA. — Build With Clarity, Scale With Confidence',
+    title: 'ALIRA. - Build With Clarity, Scale With Confidence',
     description: 'Sharp strategic input for founders and teams ready to grow with purpose.',
     url: 'https://alira.com',
     siteName: 'ALIRA.',
-    locale: 'en_US',
+    locale: 'en_GB',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ALIRA. — Build With Clarity, Scale With Confidence',
+    title: 'ALIRA. - Build With Clarity, Scale With Confidence',
     description: 'Sharp strategic input for founders and teams ready to grow with purpose.',
   },
   robots: {
@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en-GB" className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
         <div className="min-h-screen flex flex-col">
           <Header />

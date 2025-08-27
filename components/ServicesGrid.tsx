@@ -114,7 +114,7 @@ export default function ServicesGrid() {
             Why ALIRA Services?
           </h3>
           <p className="text-lg text-alira-onyx/70 leading-relaxed">
-            Every engagement is designed to cut through complexity and leave you with <em className="text-alira-gold font-medium">lasting clarity</em>. Whether you're resetting, scaling, adopting AI, or seeking long-term guidance — the outcome is always systems that endure.
+            Every engagement is designed to cut through complexity and leave you with <em className="text-alira-gold font-medium">lasting clarity</em>. Whether you're resetting, scaling, adopting AI, or seeking long-term guidance - the outcome is always systems that endure.
           </p>
         </div>
       </div>

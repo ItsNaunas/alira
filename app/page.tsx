@@ -163,7 +163,7 @@ export default function Home() {
                     Engine Processing
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    Our strategic framework analyzes your inputs and maps them to proven business case structures and methodologies.
+                    Our strategic framework analyses your inputs and maps them to proven business case structures and methodologies.
                   </p>
                 </div>
 
