@@ -23,8 +23,8 @@ export default function FinalCTA() {
                   href="/form" 
                   variant="aliraOutline"
                 />
-                <p className="text-sm text-white/60">
-                  ✓ Takes 10 minutes • ✓ Private & GDPR-compliant • ✓ 24-hour turnaround
+                <p className="text-sm text-white/70">
+                  ✓ Takes 10 minutes • 🔒 Private & GDPR-compliant • ⏱ 24-hour turnaround
                 </p>
               </div>
             </div>

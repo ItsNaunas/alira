@@ -103,8 +103,8 @@ export default function Home() {
                   variant="alira"
                   className="px-8 py-4 text-lg font-medium"
                 />
-                <p className="text-sm text-alira-onyx/60 font-medium">
-                  ✓ Takes 10 minutes • ✓ Private & GDPR-compliant • ✓ 24-hour turnaround
+                <p className="text-sm text-alira-onyx/70 font-medium">
+                  ✓ Takes 10 minutes • 🔒 Private & GDPR-compliant • ⏱ 24-hour turnaround
                 </p>
               </div>
             </Reveal>
@@ -112,14 +112,20 @@ export default function Home() {
             {/* Hero Proof Strip */}
             <Reveal delay={400}>
               <div className="mt-16 pt-8 border-t border-alira-onyx/10">
-                <div className="flex flex-wrap justify-center items-center gap-6 mb-4">
-                  <span className="text-sm font-semibold text-alira-onyx">£21k annual savings</span>
-                  <span className="text-sm font-semibold text-alira-onyx">25% sign-ups ↑</span>
-                  <span className="text-sm font-semibold text-alira-onyx">1,000+ staff trained</span>
+                <div className="bg-alira-onyx/5 rounded-lg p-6 mb-6">
+                  <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
+                    <span className="text-lg font-bold text-alira-onyx">£21k annual savings</span>
+                    <div className="w-px h-6 bg-alira-onyx/20"></div>
+                    <span className="text-lg font-bold text-alira-onyx">25% sign-ups ↑</span>
+                    <div className="w-px h-6 bg-alira-onyx/20"></div>
+                    <span className="text-lg font-bold text-alira-onyx">1,000+ staff trained</span>
+                  </div>
+                  <div className="border-t border-alira-onyx/10 pt-4">
+                    <p className="text-base text-alira-onyx/70 italic leading-relaxed">
+                      "Creativity to solve problems and deliver results."
+                    </p>
+                  </div>
                 </div>
-                <p className="text-sm text-alira-onyx/60 italic">
-                  "Creativity to solve problems and deliver results."
-                </p>
               </div>
             </Reveal>
 
