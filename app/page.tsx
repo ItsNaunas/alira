@@ -207,32 +207,17 @@ export default function Home() {
             </div>
           </Reveal>
 
-          {/* Enhanced CTA */}
+          {/* CTA */}
           <Reveal delay={400}>
             <div className="text-center mt-20">
-              <div className="inline-block group">
-                <CTAButton 
-                  href="/form" 
-                  variant="alira"
-                />
-                <div className="mt-4 text-sm text-alira-onyx/60 font-medium">
-                  Ready to get your business case?
-                </div>
-              </div>
-              
-              {/* CTA Under Steps */}
-              <Reveal delay={400}>
-                <div className="text-center mt-12">
-                  <CTAButton 
-                    href="/form" 
-                    variant="alira"
-                    className="px-8 py-4 text-lg font-medium"
-                  />
-                  <p className="text-sm text-alira-onyx/70 mt-4">
-                    Free • Secure • Delivered in minutes
-                  </p>
-                </div>
-              </Reveal>
+              <CTAButton 
+                href="/form" 
+                variant="alira"
+                className="px-8 py-4 text-lg font-medium"
+              />
+              <p className="text-sm text-alira-onyx/70 mt-4">
+                Free • Secure • Delivered in minutes
+              </p>
             </div>
           </Reveal>
         </div>
