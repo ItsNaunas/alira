@@ -122,26 +122,44 @@ export default function ProvenOutcomes() {
                ))}
              </div>
 
-            {/* Helper line */}
-            <div className="text-center mb-12">
-              <p className="text-sm text-alira-onyx/50">
-                Built from just 10 minutes of your input.
-              </p>
-            </div>
+                         {/* Divider Tagline */}
+             <div className="text-center mb-16">
+               <div className="w-16 h-px bg-alira-gold/30 mx-auto mb-4"></div>
+               <p className="text-sm tracking-wide uppercase text-alira-gold font-medium">
+                 All from just 10 minutes of your input.
+               </p>
+               <div className="w-16 h-px bg-alira-gold/30 mx-auto mt-4"></div>
+             </div>
 
-            {/* Testimonials */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="border border-alira-onyx/10 rounded-lg p-6">
-                  <p className="text-alira-onyx/80 italic mb-4 leading-relaxed">
-                    "{testimonial.quote}"
-                  </p>
-                  <p className="text-sm text-alira-onyx/60">
-                    — {testimonial.author}
-                  </p>
-                </div>
-              ))}
-            </div>
+             {/* Testimonials */}
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               {testimonials.map((testimonial, index) => (
+                 <div key={index} className="bg-white rounded-lg p-8 shadow-sm border border-alira-onyx/5 relative group hover:shadow-md transition-shadow duration-300">
+                   {/* Gold accent bar */}
+                   <div className="absolute top-0 left-0 right-0 h-1 bg-alira-gold/20 rounded-t-lg"></div>
+                   
+                   {/* Quote */}
+                   <p className="text-alira-onyx/80 italic mb-6 leading-relaxed text-lg">
+                     "{testimonial.quote}"
+                   </p>
+                   
+                   {/* Author with avatar */}
+                   <div className="flex items-center">
+                     <div className="w-10 h-10 bg-alira-gold/10 rounded-full flex items-center justify-center mr-3">
+                       <span className="text-alira-gold font-semibold text-sm">
+                         {testimonial.author.split(' ').map(n => n[0]).join('')}
+                       </span>
+                     </div>
+                     <div>
+                       <p className="font-semibold text-alira-onyx">
+                         {testimonial.author}
+                       </p>
+                       <p className="text-sm text-alira-onyx/60">Client</p>
+                     </div>
+                   </div>
+                 </div>
+               ))}
+             </div>
           </div>
         </Reveal>
       </div>
