@@ -85,14 +85,14 @@ export default function Home() {
             {/* Headline */}
             <Reveal delay={200}>
               <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
-                Your 24-Hour Business Case.
+                Your Business Case in Minutes.
               </h1>
             </Reveal>
             
             {/* Subheadline */}
             <Reveal delay={250}>
               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
-                10 minutes from you → board-ready PDF in 24 hours.
+                10 minutes from you → board-ready PDF in minutes.
               </p>
             </Reveal>
             
@@ -105,7 +105,7 @@ export default function Home() {
                   className="px-8 py-4 text-lg font-medium"
                 />
                 <p className="text-sm text-alira-onyx/70 font-medium">
-                  Start Your Business Case • Private & GDPR-compliant • Preview in minutes
+                  Start Your Business Case • Private & GDPR-compliant • Ready in minutes
                 </p>
               </div>
             </Reveal>
@@ -217,7 +217,7 @@ export default function Home() {
                     Receive Your Draft
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    Board-ready PDF in 24h.
+                    Board-ready PDF in minutes.
                   </p>
                 </div>
 

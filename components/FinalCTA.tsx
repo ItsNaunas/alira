@@ -24,7 +24,7 @@ export default function FinalCTA() {
                   variant="aliraOutline"
                 />
                 <p className="text-sm text-white/70">
-                  Takes 10 minutes • Preview in minutes • Full PDF in 24 hours
+                  Takes 10 minutes • Ready in minutes
                 </p>
               </div>
             </div>

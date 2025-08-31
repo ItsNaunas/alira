@@ -8,7 +8,7 @@ export default function FAQ() {
     },
     {
       q: "How fast is it?",
-      a: "Preview in minutes, full case in 24h."
+      a: "Ready in minutes."
     },
     {
       q: "What if I don't like it?",

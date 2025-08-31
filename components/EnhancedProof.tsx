@@ -19,7 +19,7 @@ export default function EnhancedProof() {
     }
   ]
 
-  const logos = ['NHS', 'ELFT', 'HMPPS']
+
 
   return (
     <section className="py-20 bg-white">
@@ -59,17 +59,7 @@ export default function EnhancedProof() {
               ))}
             </div>
 
-            {/* Logos */}
-            <div className="text-center">
-              <p className="text-sm text-alira-onyx/50 mb-4">Trusted by</p>
-              <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-                {logos.map((logo, index) => (
-                  <span key={index} className="text-sm font-medium text-alira-onyx/70">
-                    {logo}
-                  </span>
-                ))}
-              </div>
-            </div>
+
           </div>
         </Reveal>
       </div>

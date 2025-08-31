@@ -28,10 +28,10 @@ export default function StickyCTA() {
             className="w-full"
           />
         </div>
-        <div className="ml-4 text-xs text-alira-onyx/70">
-          <div>✓ 10 minutes</div>
-          <div>⏱ 24 hours</div>
-        </div>
+                 <div className="ml-4 text-xs text-alira-onyx/70">
+           <div>✓ 10 minutes</div>
+           <div>⏱ Ready in minutes</div>
+         </div>
       </div>
     </div>
   )
