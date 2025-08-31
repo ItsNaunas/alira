@@ -26,31 +26,14 @@ export default function EnhancedProof() {
       <div className="container mx-auto px-6 lg:px-8">
         <Reveal>
           <div className="max-w-6xl mx-auto">
-            {/* Testimonials */}
-            <div className="text-center mb-12">
-              <h2 className="text-2xl font-bold text-alira-onyx mb-8">
-                What Our Clients Say
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="bg-alira-onyx/5 rounded-lg p-8 border border-alira-onyx/10">
-                  <p className="text-alira-onyx/80 italic mb-6 leading-relaxed text-lg">
-                    "{testimonial.quote}"
-                  </p>
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 bg-alira-gold/20 rounded-full flex items-center justify-center mr-3">
-                      <span className="text-alira-gold font-semibold text-sm">
-                        {testimonial.author.split(' ').map(n => n[0]).join('')}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-alira-onyx">{testimonial.author}</p>
-                      <p className="text-sm text-alira-onyx/60">Client</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            {/* Logo Strip */}
+            <div className="text-center">
+              <p className="text-sm text-alira-onyx/50 mb-4">Trusted by</p>
+              <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+                <span className="text-sm font-medium text-alira-onyx/70">NHS</span>
+                <span className="text-sm font-medium text-alira-onyx/70">ELFT</span>
+                <span className="text-sm font-medium text-alira-onyx/70">HMPPS</span>
+              </div>
             </div>
           </div>
         </Reveal>

@@ -8,7 +8,7 @@ import OurPhilosophy from '@/components/OurPhilosophy'
 import HomeServices from '@/components/HomeServices'
 import Experience from '@/components/Experience'
 import ClientResults from '@/components/ClientResults'
-import EnhancedProof from '@/components/EnhancedProof'
+import ProvenOutcomes from '@/components/ProvenOutcomes'
 import FAQ from '@/components/FAQ'
 
 import StickyCTA from '@/components/StickyCTA'
@@ -92,7 +92,7 @@ export default function Home() {
             {/* Subheadline */}
             <Reveal delay={250}>
               <p className="text-3xl md:text-4xl text-alira-onyx font-serif italic font-light max-w-[50ch] mx-auto leading-tight mb-8">
-                10 minutes from you → full, board-ready PDF in minutes.
+                A complete, board-ready PDF — built from just 10 minutes of your input.
               </p>
             </Reveal>
             
@@ -110,36 +110,14 @@ export default function Home() {
               </div>
             </Reveal>
 
-            {/* Hero Proof Stats */}
-            <Reveal delay={400}>
-              <div className="mt-12 pt-8 border-t border-alira-onyx/10">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-alira-gold mb-1">£21k</div>
-                    <div className="text-sm text-alira-onyx/60">saved annually</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-alira-gold mb-1">25%</div>
-                    <div className="text-sm text-alira-onyx/60">sign-ups ↑</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-alira-gold mb-1">1,000+</div>
-                    <div className="text-sm text-alira-onyx/60">staff trained</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-alira-gold mb-1">200+</div>
-                    <div className="text-sm text-alira-onyx/60">attendees per event</div>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
+
 
           </div>
         </div>
       </section>
 
-      {/* Enhanced Proof Section */}
-      <EnhancedProof />
+      {/* Proven Outcomes Section */}
+      <ProvenOutcomes />
 
       {/* What You Get Section */}
       <WhatYouGet />
