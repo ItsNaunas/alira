@@ -1,58 +1,203 @@
 import SignatureEngagements from '@/components/SignatureEngagements'
+import ServicesDeliverables from '@/components/ServicesDeliverables'
+import Reveal from '@/components/Reveal'
 import CTAButton from '@/components/CTAButton'
-import { CTA_VARIANTS } from '@/components/CTAButton'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import SectionHeading from '@/components/ui/SectionHeading'
 
-export default function ServicesPage() {
+export default function Services() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-alira-porcelain/20 via-white to-alira-porcelain/20">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl lg:text-6xl font-bold text-alira-onyx mb-6">
-              Our Signature Engagements
-            </h1>
-            <p className="text-xl lg:text-2xl text-alira-onyx/70 mb-12 leading-relaxed">
-              Tailored solutions for every stage of your business journey
-            </p>
-            
-            {/* A/B Testing CTA */}
-            <CTAButton 
-              href="/form"
-              variant="alira"
-              testVariants={[CTA_VARIANTS.DEFAULT, CTA_VARIANTS.SPEED]}
-              testKey="services-hero"
-              className="mb-8"
+      <section 
+        className="min-h-screen flex items-center justify-center bg-alira-porcelain relative overflow-hidden"
+        aria-labelledby="services-heading"
+      >
+        {/* Minimal Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Architectural grid background */}
+          <svg
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full"
+          >
+            <defs>
+              <pattern
+                id="alira-grid-services"
+                width="40"
+                height="40"
+                patternUnits="userSpaceOnUse"
+              >
+                <path 
+                  d="M 40 0 L 0 0 0 40" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="0.5" 
+                />
+              </pattern>
+            </defs>
+            <rect
+              width="100%"
+              height="100%"
+              fill="url(#alira-grid-services)"
+              className="text-alira-onyx/10"
+              opacity="0.35"
             />
-          </div>
+            {/* Subtle major lines */}
+            <g className="text-alira-onyx/15" opacity="0.25">
+              <path d="M0 80 H100%" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M0 160 H100%" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M120 0 V100%" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M240 0 V100%" stroke="currentColor" strokeWidth="0.6" />
+            </g>
+          </svg>
+          
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 opacity-[0.01] bg-gradient-to-br from-alira-onyx via-transparent to-alira-gold"></div>
         </div>
-      </section>
-
-      {/* Services Grid */}
-      <SignatureEngagements />
-
-      {/* Final CTA Section */}
-      <section className="py-20 bg-alira-onyx">
-        <div className="container mx-auto px-4">
+        
+        <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Ready to Transform Your Business?
-            </h2>
-            <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
-              Get your customized business case and start your journey to clarity today
-            </p>
+            {/* Brand Seal */}
+            <Reveal>
+              <div className="mb-16">
+                <span className="block text-3xl tracking-[0.2em] uppercase text-alira-onyx font-bold mb-4 font-serif">
+                  ALIRA.
+                </span>
+                <div className="w-20 h-[3px] bg-alira-gold mx-auto mb-12"></div>
+              </div>
+            </Reveal>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <CTAButton 
-                href="/form"
-                variant="aliraOutline"
-                testVariants={[CTA_VARIANTS.DEFAULT, CTA_VARIANTS.BRAND]}
-                testKey="services-final"
-              />
-            </div>
+            {/* Headline */}
+            <Reveal delay={200}>
+              <h1 id="services-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
+                Our Services
+              </h1>
+            </Reveal>
+            
+            {/* Subheadline */}
+            <Reveal delay={250}>
+              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
+                Signature engagements designed to cut through complexity and deliver lasting clarity. Each service is crafted to meet you where you are and take you where you want to go.
+              </p>
+            </Reveal>
+            
+            {/* CTA Button */}
+            <Reveal delay={300}>
+              <div className="mt-6 flex justify-center">
+                <CTAButton 
+                  href="/form" 
+                  variant="alira"
+                  className="px-6 py-3 text-sm font-medium tracking-tight"
+                />
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
-    </main>
+
+      {/* Services Deliverables Section */}
+      <ServicesDeliverables />
+
+      {/* Services Grid Section */}
+      <section className="py-16 md:py-20 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal delay={200}>
+            <SignatureEngagements />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Service Philosophy Section */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div className="space-y-8">
+                <div>
+                  <h2 className="h2 mb-6">
+                    Clarity Over Complexity
+                  </h2>
+                  <div className="w-16 h-px bg-alira-gold mb-8"></div>
+                </div>
+                <div className="space-y-6">
+                  <p className="copy text-lg leading-relaxed">
+                    Every engagement is designed to cut through the noise and deliver actionable clarity. We don't create generic templates - we build systems that endure.
+                  </p>
+                  <p className="copy text-lg leading-relaxed">
+                    Whether you're resetting, scaling, adopting AI, or seeking long-term guidance, the outcome is always the same: lasting clarity and systems that work.
+                  </p>
+                </div>
+              </div>
+              <div className="bg-alira-onyx/5 p-8 rounded-lg border border-alira-onyx/10">
+                <h3 className="h3 mb-6">
+                  Our Approach
+                </h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="copy">Outcome-focused engagements, not time-based billing</span>
+                  </li>
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="copy">Systems that endure beyond the engagement</span>
+                  </li>
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="copy">Clarity as the foundation for all decisions</span>
+                  </li>
+                  <li className="flex items-start space-x-4">
+                    <span className="text-alira-gold font-bold text-lg">•</span>
+                    <span className="copy">Elegant solutions to complex problems</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 md:py-20 bg-alira-onyx">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="text-center">
+            <Reveal>
+              <div className="space-y-12">
+                <div className="relative">
+                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                    Not Sure Which Service Fits?
+                  </h2>
+                  <div className="w-20 h-px bg-alira-gold mx-auto"></div>
+                </div>
+                
+                <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
+                  Complete our intake form and we'll recommend the best approach for your situation, or schedule a call to discuss your options.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <div className="inline-block group">
+                    <CTAButton 
+                      href="/form" 
+                      variant="aliraOutline"
+                      testVariants={['Start with Intake Form', 'Start Your Business Case']}
+                      testKey="services-cta"
+                    />
+                  </div>
+                  <div className="inline-block group">
+                    <Link
+                      href="/form"
+                      className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white border-2 border-white rounded-full hover:bg-white hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-white/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
+                    >
+                      Start with Form
+                      <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }

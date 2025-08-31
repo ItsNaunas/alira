@@ -17,8 +17,10 @@ import { Textarea } from './ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 import { Checkbox } from './ui/checkbox'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
+import { CheckCircle, ArrowRight, Download, Mail } from 'lucide-react'
 
 export default function IntakeForm() {
+  const [step, setStep] = useState<'initial' | 'preview' | 'full-form'>('initial')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
@@ -32,6 +34,17 @@ export default function IntakeForm() {
   } = useForm<IntakeFormData>({
     resolver: zodResolver(intakeFormSchema),
   })
+
+  const generatePreview = () => {
+    const { businessName, industry, stage, challenges } = watch()
+    if (businessName && industry && stage && challenges) {
+      setStep('preview')
+    }
+  }
+
+  const requestFullCase = () => {
+    setStep('full-form')
+  }
 
   const onSubmit = async (data: IntakeFormData) => {
     setIsSubmitting(true)
@@ -68,6 +81,23 @@ export default function IntakeForm() {
     }
   }
 
+  const generatePreviewContent = () => {
+    const { businessName, industry, stage, challenges } = watch()
+    return {
+      problemStatement: `${businessName} faces challenges in ${challenges?.toLowerCase() || 'business operations'} within the ${industry} sector at the ${stage} stage.`,
+      objectives: [
+        'Streamline operational processes for improved efficiency',
+        'Develop scalable growth strategies',
+        'Optimize resource allocation and cost management'
+      ],
+      solutionFramework: [
+        'Strategic assessment and gap analysis',
+        'Process optimization and system implementation',
+        'Performance monitoring and continuous improvement'
+      ]
+    }
+  }
+
   if (isSuccess) {
     return (
       <Card className="max-w-2xl mx-auto">
@@ -91,6 +121,174 @@ export default function IntakeForm() {
     )
   }
 
+  // Initial step - just key fields for preview
+  if (step === 'initial') {
+    return (
+      <div className="space-y-8 max-w-2xl mx-auto">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl alira-heading">Get Your Business Case Preview</CardTitle>
+            <p className="text-alira-onyx/70">
+              Answer 4 quick questions to see your customized business case structure
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Business Name</label>
+                <Input
+                  {...register('businessName')}
+                  placeholder="Your business name"
+                />
+                {errors.businessName && (
+                  <p className="text-red-500 text-sm mt-1">{errors.businessName.message}</p>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Industry</label>
+                <Input
+                  {...register('industry')}
+                  placeholder="e.g., Technology, Healthcare"
+                />
+                {errors.industry && (
+                  <p className="text-red-500 text-sm mt-1">{errors.industry.message}</p>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Business Stage</label>
+              <Select onValueChange={(value) => setValue('stage', value as any)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your business stage" />
+                </SelectTrigger>
+                <SelectContent>
+                  {businessStages.map((stage) => (
+                    <SelectItem key={stage.value} value={stage.value}>
+                      {stage.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.stage && (
+                <p className="text-red-500 text-sm mt-1">{errors.stage.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Current Challenges</label>
+              <Textarea
+                {...register('challenges')}
+                placeholder="Describe the main challenges your business is facing..."
+                rows={3}
+              />
+              {errors.challenges && (
+                <p className="text-red-500 text-sm mt-1">{errors.challenges.message}</p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="text-center">
+          <Button 
+            onClick={generatePreview}
+            disabled={!watch('businessName') || !watch('industry') || !watch('stage') || !watch('challenges')}
+            size="lg"
+            className="px-8 bg-alira-onyx hover:bg-alira-onyx/90"
+          >
+            Generate Preview
+            <ArrowRight className="ml-2 w-4 h-4" />
+          </Button>
+          <p className="text-xs text-alira-onyx/60 mt-4">
+            Takes 30 seconds • No email required for preview
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  // Preview step
+  if (step === 'preview') {
+    const preview = generatePreviewContent()
+    const { businessName } = watch()
+    
+    return (
+      <div className="space-y-8 max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-alira-onyx mb-4">
+            Your Business Case Preview
+          </h2>
+          <p className="text-alira-onyx/70">
+            This is just a preview of your customized business case structure
+          </p>
+        </div>
+        
+        <Card className="border-2 border-alira-gold/20">
+          <CardHeader className="bg-alira-gold/5">
+            <CardTitle className="text-xl font-bold text-alira-onyx">
+              {businessName} - Business Case Framework
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div>
+              <h3 className="font-semibold text-alira-onyx mb-2">Problem Statement</h3>
+              <p className="text-alira-onyx/80 leading-relaxed">
+                {preview.problemStatement}
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-alira-onyx mb-2">Key Objectives</h3>
+              <ul className="space-y-2">
+                {preview.objectives.map((objective, index) => (
+                  <li key={index} className="flex items-start space-x-2">
+                    <CheckCircle className="w-4 h-4 text-alira-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-alira-onyx/80">{objective}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-alira-onyx mb-2">Solution Framework</h3>
+              <ul className="space-y-2">
+                {preview.solutionFramework.map((solution, index) => (
+                  <li key={index} className="flex items-start space-x-2">
+                    <CheckCircle className="w-4 h-4 text-alira-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-alira-onyx/80">{solution}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <div className="text-center space-y-4">
+          <div className="bg-alira-gold/10 rounded-lg p-4 border border-alira-gold/20">
+            <h3 className="font-semibold text-alira-onyx mb-2">
+              Get Your Complete Business Case
+            </h3>
+            <p className="text-alira-onyx/70 mb-4">
+              Receive your full customized business case with detailed analysis, recommendations, and implementation roadmap.
+            </p>
+            <Button 
+              onClick={requestFullCase}
+              className="bg-alira-onyx hover:bg-alira-onyx/90"
+            >
+              Get Full Business Case
+              <Download className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
+          
+          <p className="text-sm text-alira-onyx/60">
+            ✓ Professional formatting • ✓ Detailed analysis • ✓ Implementation roadmap • ✓ 24-hour delivery
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  // Full form step
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 max-w-2xl mx-auto">
       <Card>
