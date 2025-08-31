@@ -4,10 +4,18 @@ import { db, supabase } from '@/lib/supabase-server'
 
 export async function POST(request: NextRequest) {
   try {
+    console.log("=== SAVE API DEBUG ===")
+    console.log("SUPABASE_URL present:", !!process.env.SUPABASE_URL)
+    console.log("SUPABASE_ANON_KEY present:", !!process.env.SUPABASE_ANON_KEY)
+    
     const body = await request.json()
+    console.log("Received save request body:", JSON.stringify(body, null, 2))
+    
     const validatedData = saveRequestSchema.parse(body)
+    console.log("Data validation successful")
     
     // Insert lead into database
+    console.log("Attempting to insert lead...")
     const lead = await db.insertLead({
       business_name: validatedData.lead.businessName,
       industry: validatedData.lead.industry,
@@ -24,6 +32,7 @@ export async function POST(request: NextRequest) {
       notes: validatedData.lead.notes,
       consent: validatedData.lead.consent
     })
+    console.log("Lead inserted successfully:", lead.id)
     
     // Convert base64 PDF to buffer
     const pdfBuffer = Buffer.from(validatedData.businessCase.pdfBuffer, 'base64')
