@@ -25,13 +25,13 @@ export const aiGenerateSchema = z.object({
   industry: z.string().min(1),
   stage: z.string().min(1),
   challenges: z.string().min(1),
-  goalsShort: z.string().min(1),
-  goalsLong: z.string().min(1),
-  resources: z.string().min(1),
-  budget: z.string().min(1),
-  timeline: z.string().min(1),
-  service: z.string().min(1),
-  notes: z.string().optional()
+  goalsShort: z.string().optional().default(''),
+  goalsLong: z.string().optional().default(''),
+  resources: z.string().optional().default(''),
+  budget: z.string().optional().default(''),
+  timeline: z.string().optional().default(''),
+  service: z.string().optional().default(''),
+  notes: z.string().optional().default('')
 })
 
 // Save request schema

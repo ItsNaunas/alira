@@ -37,11 +37,13 @@ export default function IntakeForm() {
   })
 
   const generatePreview = async () => {
-    const { businessName, industry, stage, challenges, goalsShort, goalsLong, resources, budget, timeline, service, notes } = watch()
+    const formData = watch()
+    const { businessName, industry, stage, challenges } = formData
+    
     if (businessName && industry && stage && challenges) {
       setIsSubmitting(true)
       try {
-        // Call AI generation API
+        // Call AI generation API with only the required fields for preview
         const response = await fetch('/api/ai/generate', {
           method: 'POST',
           headers: {
@@ -52,13 +54,13 @@ export default function IntakeForm() {
             industry,
             stage,
             challenges,
-            goalsShort,
-            goalsLong,
-            resources,
-            budget,
-            timeline,
-            service,
-            notes
+            goalsShort: formData.goalsShort || '',
+            goalsLong: formData.goalsLong || '',
+            resources: formData.resources || '',
+            budget: formData.budget || '',
+            timeline: formData.timeline || '',
+            service: formData.service || '',
+            notes: formData.notes || ''
           }),
         })
 
