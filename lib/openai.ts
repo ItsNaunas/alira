@@ -65,6 +65,10 @@ export interface BusinessCaseOutline {
 }
 
 export async function generateBusinessCase(formData: any): Promise<BusinessCaseOutline> {
+  console.log("=== OPENAI FUNCTION DEBUG ===")
+  console.log("Form data received:", JSON.stringify(formData, null, 2))
+  console.log("OpenAI API Key present:", !!process.env.OPENAI_API_KEY)
+  
   try {
     const userPrompt = `
 Business Information:
@@ -85,6 +89,7 @@ Project Details:
 - Additional Notes: ${formData.notes || 'None provided'}
 `
 
+    console.log("Making OpenAI API call...")
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
@@ -101,6 +106,7 @@ Project Details:
       max_tokens: 1200,
       response_format: { type: 'json_object' }
     })
+    console.log("OpenAI API call completed successfully")
 
     const content = completion.choices[0]?.message?.content
     if (!content) {
@@ -117,6 +123,12 @@ Project Details:
     return outline
   } catch (error) {
     console.error('OpenAI API error:', error)
-    throw new Error('Failed to generate business case. Please try again.')
+    console.error('Error details:', {
+      message: error.message,
+      status: error.status,
+      code: error.code,
+      type: error.type
+    })
+    throw new Error(`Failed to generate business case: ${error.message}`)
   }
 }
