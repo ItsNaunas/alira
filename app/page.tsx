@@ -85,7 +85,7 @@ export default function Home() {
             {/* Headline */}
             <Reveal delay={200}>
               <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
-                Your Business Case in Minutes.
+                Your <span className="text-alira-gold">Free</span> Business Case in Minutes.
               </h1>
             </Reveal>
             
