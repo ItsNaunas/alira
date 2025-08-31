@@ -11,11 +11,11 @@ export default function EnhancedProof() {
   const testimonials = [
     {
       quote: "Creativity to solve problems and deliver results.",
-      author: "Programme Director"
+      author: "Auzewell Chitewe"
     },
     {
       quote: "Transformed our approach to business planning.",
-      author: "Operations Manager"
+      author: "Naufal Nassor"
     }
   ]
 
