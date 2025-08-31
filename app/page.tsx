@@ -8,6 +8,7 @@ import OurPhilosophy from '@/components/OurPhilosophy'
 import HomeServices from '@/components/HomeServices'
 import Experience from '@/components/Experience'
 import ClientResults from '@/components/ClientResults'
+import EnhancedProof from '@/components/EnhancedProof'
 import FAQ from '@/components/FAQ'
 import MiniCaseStudy from '@/components/MiniCaseStudy'
 import StickyCTA from '@/components/StickyCTA'
@@ -109,31 +110,14 @@ export default function Home() {
               </div>
             </Reveal>
 
-            {/* Hero Proof Strip */}
-            <Reveal delay={400}>
-              <div className="mt-16 pt-8 border-t border-alira-onyx/10">
-                <div className="bg-alira-onyx/5 rounded-lg p-6 mb-6">
-                  <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-                    <span className="text-lg font-bold text-alira-onyx">£21k annual savings</span>
-                    <div className="w-px h-6 bg-alira-onyx/20"></div>
-                    <span className="text-lg font-bold text-alira-onyx">25% sign-ups ↑</span>
-                    <div className="w-px h-6 bg-alira-onyx/20"></div>
-                    <span className="text-lg font-bold text-alira-onyx">1,000+ staff trained</span>
-                  </div>
-                  <div className="border-t border-alira-onyx/10 pt-4">
-                    <p className="text-base text-alira-onyx/70 italic leading-relaxed">
-                      "Creativity to solve problems and deliver results."
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
+
 
           </div>
         </div>
       </section>
 
-
+      {/* Enhanced Proof Section */}
+      <EnhancedProof />
 
       {/* What You Get Section */}
       <WhatYouGet />
