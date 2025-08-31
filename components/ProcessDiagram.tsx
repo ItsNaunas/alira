@@ -1,3 +1,5 @@
+'use client'
+
 import { ClipboardList, Settings, FileText, ArrowRight, Info } from 'lucide-react'
 import { useState } from 'react'
 
