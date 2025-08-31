@@ -24,7 +24,7 @@ export default function FinalCTA() {
                   variant="aliraOutline"
                 />
                 <p className="text-sm text-white/60">
-                  ✓ No credit card required • ✓ 24-hour delivery • ✓ 100% satisfaction guarantee
+                  ✓ Takes 10 minutes • ✓ Private & GDPR-compliant • ✓ 24-hour turnaround
                 </p>
               </div>
             </div>

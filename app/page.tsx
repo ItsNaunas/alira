@@ -8,6 +8,9 @@ import OurPhilosophy from '@/components/OurPhilosophy'
 import HomeServices from '@/components/HomeServices'
 import Experience from '@/components/Experience'
 import ClientResults from '@/components/ClientResults'
+import SelectedOutcomes from '@/components/SelectedOutcomes'
+import FAQ from '@/components/FAQ'
+import StickyCTA from '@/components/StickyCTA'
 import FinalCTA from '@/components/FinalCTA'
 import Reveal from '@/components/Reveal'
 import CTAButton from '@/components/CTAButton'
@@ -88,7 +91,7 @@ export default function Home() {
             {/* Subheadline */}
             <Reveal delay={250}>
               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
-                Transform your business challenges into a structured, actionable business case. No templates, no delays.
+                Get a preview in minutes, full business case in 24 hours. No templates, no delays.
               </p>
             </Reveal>
             
@@ -101,33 +104,31 @@ export default function Home() {
                   className="px-8 py-4 text-lg font-medium"
                 />
                 <p className="text-sm text-alira-onyx/60 font-medium">
-                  ✓ No credit card required • ✓ Takes 10 minutes • ✓ 24-hour delivery
+                  ✓ Takes 10 minutes • ✓ Private & GDPR-compliant • ✓ 24-hour turnaround
                 </p>
               </div>
             </Reveal>
 
-            {/* Trust Strip */}
+            {/* Hero Proof Strip */}
             <Reveal delay={400}>
               <div className="mt-16 pt-8 border-t border-alira-onyx/10">
-                <p className="text-sm text-alira-onyx/50 mb-4">Trusted by business leaders from:</p>
-                <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-                  <span className="text-sm font-medium text-alira-onyx/70">Technology</span>
-                  <span className="text-sm font-medium text-alira-onyx/70">Healthcare</span>
-                  <span className="text-sm font-medium text-alira-onyx/70">Finance</span>
-                  <span className="text-sm font-medium text-alira-onyx/70">Manufacturing</span>
-                  <span className="text-sm font-medium text-alira-onyx/70">Professional Services</span>
+                <div className="flex flex-wrap justify-center items-center gap-6 mb-4">
+                  <span className="text-sm font-semibold text-alira-onyx">£21k annual savings</span>
+                  <span className="text-sm font-semibold text-alira-onyx">25% sign-ups ↑</span>
+                  <span className="text-sm font-semibold text-alira-onyx">1,000+ staff trained</span>
                 </div>
+                <p className="text-sm text-alira-onyx/60 italic">
+                  "Creativity to solve problems and deliver results."
+                </p>
               </div>
             </Reveal>
+
           </div>
         </div>
       </section>
 
-      {/* Social Proof Section - Moved Higher for CRO */}
-      <Experience />
-
-      {/* Client Results Section - Moved Higher for CRO */}
-      <ClientResults />
+      {/* Selected Outcomes - Compact Social Proof */}
+      <SelectedOutcomes />
 
       {/* What You Get Section */}
       <WhatYouGet />
@@ -209,7 +210,7 @@ export default function Home() {
                     Receive Your Draft
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    Get a structured business case with problem statement, objectives, proposed solution, and next steps in minutes.
+                    Get a preview in minutes. Full business case in 24 hours.
                   </p>
                 </div>
 
@@ -234,6 +235,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <FAQ />
+
       {/* Our Philosophy Section */}
       <OurPhilosophy />
 
@@ -242,6 +246,9 @@ export default function Home() {
 
       {/* Final CTA Section */}
       <FinalCTA />
+      
+      {/* Sticky CTA for Mobile */}
+      <StickyCTA />
     </div>
   )
 }

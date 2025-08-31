@@ -94,6 +94,14 @@ export default function IntakeForm() {
         'Strategic assessment and gap analysis',
         'Process optimization and system implementation',
         'Performance monitoring and continuous improvement'
+      ],
+      outline: [
+        'Problem Statement',
+        'Objectives',
+        'Current State',
+        'Proposed Solution',
+        'Expected Outcomes',
+        'Next Steps'
       ]
     }
   }
@@ -259,6 +267,18 @@ export default function IntakeForm() {
                   </li>
                 ))}
               </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-alira-onyx mb-2">Your Business Case Outline</h3>
+              <div className="grid grid-cols-2 gap-2">
+                {preview.outline.map((item, index) => (
+                  <div key={index} className="flex items-center space-x-2">
+                    <CheckCircle className="w-3 h-3 text-alira-gold flex-shrink-0" />
+                    <span className="text-sm text-alira-onyx/80">{item}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>
