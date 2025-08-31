@@ -36,12 +36,52 @@ export default function IntakeForm() {
     resolver: zodResolver(intakeFormSchema),
   })
 
-  const generatePreview = () => {
-    const { businessName, industry, stage, challenges } = watch()
+  const generatePreview = async () => {
+    const { businessName, industry, stage, challenges, goalsShort, goalsLong, resources, budget, timeline, service, notes } = watch()
     if (businessName && industry && stage && challenges) {
-      setStep('preview')
-      // Track preview generation
-      conversionEvents.previewGenerated(businessName || 'Unknown Business')
+      setIsSubmitting(true)
+      try {
+        // Call AI generation API
+        const response = await fetch('/api/ai/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            businessName,
+            industry,
+            stage,
+            challenges,
+            goalsShort,
+            goalsLong,
+            resources,
+            budget,
+            timeline,
+            service,
+            notes
+          }),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to generate preview')
+        }
+
+        const result = await response.json()
+        if (result.success) {
+          setStep('preview')
+          // Store the AI-generated outline for later use
+          setValue('aiOutline', result.outline)
+          // Track preview generation
+          conversionEvents.previewGenerated(businessName || 'Unknown Business')
+        } else {
+          throw new Error(result.error || 'Failed to generate preview')
+        }
+      } catch (error) {
+        console.error('Error generating preview:', error)
+        alert('There was an error generating your preview. Please try again.')
+      } finally {
+        setIsSubmitting(false)
+      }
     }
   }
 
@@ -54,35 +94,75 @@ export default function IntakeForm() {
   const onSubmit = async (data: IntakeFormData) => {
     setIsSubmitting(true)
     try {
-      const response = await fetch('/api/generate-pdf', {
+      // Get the AI-generated outline from the form
+      const aiOutline = watch('aiOutline')
+      if (!aiOutline) {
+        throw new Error('No AI outline available. Please generate a preview first.')
+      }
+
+      // Generate PDF
+      const pdfResponse = await fetch('/api/pdf', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          outline: aiOutline,
+          businessName: data.businessName,
+          contactName: data.contactName
+        }),
       })
 
-      if (!response.ok) {
+      if (!pdfResponse.ok) {
         throw new Error('Failed to generate PDF')
       }
 
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `Draft-Business-Case-${data.businessName.replace(/\s+/g, '-')}.pdf`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      window.URL.revokeObjectURL(url)
+      const pdfBlob = await pdfResponse.blob()
+      const pdfBuffer = await pdfBlob.arrayBuffer()
+      const uint8Array = new Uint8Array(pdfBuffer)
+      const base64PDF = btoa(String.fromCharCode.apply(null, Array.from(uint8Array)))
 
-      setIsSuccess(true)
-      reset()
-      // Track successful business case generation
-      conversionEvents.businessCaseGenerated(data.businessName)
-      conversionEvents.formCompleted('business_case_full')
+      // Save to database and get download URL
+      const saveResponse = await fetch('/api/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lead: data,
+          businessCase: {
+            outline: aiOutline,
+            pdfBuffer: base64PDF
+          }
+        }),
+      })
+
+      if (!saveResponse.ok) {
+        throw new Error('Failed to save business case')
+      }
+
+      const saveResult = await saveResponse.json()
+      if (saveResult.success) {
+        // Download the PDF
+        const url = window.URL.createObjectURL(pdfBlob)
+        const link = document.createElement('a')
+        link.href = url
+        link.download = saveResult.businessCase.fileName
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(url)
+
+        setIsSuccess(true)
+        reset()
+        // Track successful business case generation
+        conversionEvents.businessCaseGenerated(data.businessName)
+        conversionEvents.formCompleted('business_case_full')
+      } else {
+        throw new Error(saveResult.error || 'Failed to save business case')
+      }
     } catch (error) {
-      console.error('Error generating PDF:', error)
+      console.error('Error generating business case:', error)
       alert('There was an error generating your business case. Please try again.')
     } finally {
       setIsSubmitting(false)
@@ -90,14 +170,25 @@ export default function IntakeForm() {
   }
 
   const generatePreviewContent = () => {
-    const { businessName, industry, stage, challenges } = watch()
+    const aiOutline = watch('aiOutline')
+    if (!aiOutline) {
+      return {
+        problemStatement: 'AI-generated problem statement will appear here...',
+        objectives: ['AI-generated objectives will appear here...'],
+        currentState: 'AI-generated current state analysis will appear here...',
+        proposedSolution: ['AI-generated solution will appear here...'],
+        expectedOutcomes: ['AI-generated outcomes will appear here...'],
+        nextSteps: ['AI-generated next steps will appear here...']
+      }
+    }
+    
     return {
-      problemStatement: `${businessName} faces challenges in ${challenges?.toLowerCase() || 'business operations'} within the ${industry} sector at the ${stage} stage.`,
-      objectives: [
-        'Streamline operational processes for improved efficiency',
-        'Develop scalable growth strategies',
-        'Optimize resource allocation and cost management'
-      ],
+      problemStatement: aiOutline.problem_statement,
+      objectives: aiOutline.objectives,
+      currentState: aiOutline.current_state,
+      proposedSolution: aiOutline.proposed_solution.map((s: any) => s.pillar),
+      expectedOutcomes: aiOutline.expected_outcomes,
+      nextSteps: aiOutline.next_steps,
       solutionFramework: [
         'Strategic assessment and gap analysis',
         'Process optimization and system implementation',
@@ -265,7 +356,7 @@ export default function IntakeForm() {
             <div>
               <h3 className="font-semibold text-alira-onyx mb-2">Key Objectives</h3>
               <ul className="space-y-2">
-                {preview.objectives.map((objective, index) => (
+                {preview.objectives?.map((objective: any, index: number) => (
                   <li key={index} className="flex items-start space-x-2">
                     <CheckCircle className="w-4 h-4 text-alira-gold mt-0.5 flex-shrink-0" />
                     <span className="text-alira-onyx/80">{objective}</span>
@@ -277,7 +368,7 @@ export default function IntakeForm() {
             <div>
               <h3 className="font-semibold text-alira-onyx mb-2">Solution Framework</h3>
               <ul className="space-y-2">
-                {preview.solutionFramework.map((solution, index) => (
+                {preview.solutionFramework?.map((solution: any, index: number) => (
                   <li key={index} className="flex items-start space-x-2">
                     <CheckCircle className="w-4 h-4 text-alira-gold mt-0.5 flex-shrink-0" />
                     <span className="text-alira-onyx/80">{solution}</span>
@@ -289,7 +380,7 @@ export default function IntakeForm() {
             <div>
               <h3 className="font-semibold text-alira-onyx mb-2">Your Business Case Outline</h3>
               <div className="grid grid-cols-2 gap-2">
-                {preview.outline.map((item, index) => (
+                {preview.outline?.map((item: any, index: number) => (
                   <div key={index} className="flex items-center space-x-2">
                     <CheckCircle className="w-3 h-3 text-alira-gold flex-shrink-0" />
                     <span className="text-sm text-alira-onyx/80">{item}</span>

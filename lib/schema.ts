@@ -1,33 +1,68 @@
 import { z } from 'zod'
 
+// IntakeForm validation schema
 export const intakeFormSchema = z.object({
-  businessName: z.string().min(2, 'Business name must be at least 2 characters'),
-  industry: z.string().min(2, 'Industry must be at least 2 characters'),
-  stage: z.enum(['idea', 'early', 'growing', 'established'], {
-    required_error: 'Please select your business stage',
-  }),
-  challenges: z.string().min(10, 'Please provide at least 10 characters describing your challenges'),
-  goalsShort: z.string().min(10, 'Please provide at least 10 characters describing your short-term goals'),
-  goalsLong: z.string().min(10, 'Please provide at least 10 characters describing your long-term goals'),
-  resources: z.string().min(5, 'Please describe your available resources'),
-  budget: z.enum(['<£2k', '£2k–£5k', '£5k–£15k', '£15k+'], {
-    required_error: 'Please select your budget range',
-  }),
-  timeline: z.enum(['asap', '2–4 weeks', '1–3 months', '3+ months'], {
-    required_error: 'Please select your timeline',
-  }),
-  service: z.enum(['Business Reset', 'Growth Blueprint', 'AI Advantage', 'Strategic Partner'], {
-    required_error: 'Please select a service',
-  }),
-  contactName: z.string().min(2, 'Contact name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
+  businessName: z.string().min(1, "Business name is required"),
+  industry: z.string().min(1, "Industry is required"),
+  stage: z.string().min(1, "Business stage is required"),
+  challenges: z.string().min(10, "Please provide more detail about your challenges"),
+  goalsShort: z.string().min(10, "Please provide more detail about your short-term goals"),
+  goalsLong: z.string().min(10, "Please provide more detail about your long-term goals"),
+  resources: z.string().min(1, "Please describe your available resources"),
+  budget: z.string().min(1, "Budget range is required"),
+  timeline: z.string().min(1, "Timeline is required"),
+  service: z.string().min(1, "Service focus is required"),
+  contactName: z.string().min(1, "Contact name is required"),
+  email: z.string().email("Valid email is required"),
   notes: z.string().optional(),
-  consent: z.boolean().refine((val) => val === true, {
-    message: 'You must agree to the terms and conditions',
-  }),
+  consent: z.boolean().refine(val => val === true, "You must agree to the terms"),
+  aiOutline: z.any().optional() // Store AI-generated outline
 })
 
+// AI generation request schema
+export const aiGenerateSchema = z.object({
+  businessName: z.string().min(1),
+  industry: z.string().min(1),
+  stage: z.string().min(1),
+  challenges: z.string().min(1),
+  goalsShort: z.string().min(1),
+  goalsLong: z.string().min(1),
+  resources: z.string().min(1),
+  budget: z.string().min(1),
+  timeline: z.string().min(1),
+  service: z.string().min(1),
+  notes: z.string().optional()
+})
+
+// Save request schema
+export const saveRequestSchema = z.object({
+  lead: intakeFormSchema,
+  businessCase: z.object({
+    outline: z.any(),
+    pdfBuffer: z.string() // base64 encoded PDF
+  })
+})
+
+// Business case outline schema
+export const businessCaseOutlineSchema = z.object({
+  problem_statement: z.string(),
+  objectives: z.array(z.string()),
+  current_state: z.string(),
+  proposed_solution: z.array(z.object({
+    pillar: z.string(),
+    actions: z.array(z.string()),
+    effort: z.enum(['low', 'med', 'high']),
+    impact: z.enum(['low', 'med', 'high'])
+  })),
+  expected_outcomes: z.array(z.string()),
+  next_steps: z.array(z.string())
+})
+
+// Types
 export type IntakeFormData = z.infer<typeof intakeFormSchema>
+export type AIGenerateRequest = z.infer<typeof aiGenerateSchema>
+export type SaveRequest = z.infer<typeof saveRequestSchema>
+export type BusinessCaseOutline = z.infer<typeof businessCaseOutlineSchema>
 
 export const businessStages = [
   { value: 'idea', label: 'Idea Stage' },

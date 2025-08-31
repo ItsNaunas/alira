@@ -20,15 +20,22 @@ This website is **only the first step** of a larger system where every client en
 - **UI:** shadcn/ui (cards, buttons, inputs, accordion)
 - **Forms:** React Hook Form + Zod
 - **Animations:** Tailwind + IntersectionObserver reveals (no Framer)
-- **PDF generation:** PDFKit → outputs Draft Business Case
-- **Email:** Optional integration via Resend (stubbed behind env)
+- **AI Integration:** OpenAI GPT-4o-mini for business case generation
+- **Database:** Supabase (PostgreSQL) for data storage
+- **PDF Generation:** @react-pdf/renderer with ALIRA branding
+- **Storage:** Supabase Storage for PDF hosting
+- **Analytics:** Custom tracking system (GA4 ready)
 - **Accessibility:** Passes a11y, prefers-reduced-motion respected
 
 ## Features
 
 ### Core Functionality
-- **Intake Form:** Comprehensive form with Zod validation
-- **PDF Generation:** Server-side PDF creation with PDFKit
+- **AI-Powered Business Cases:** OpenAI GPT-4o-mini generates customized business case content
+- **Multi-Step Form:** Value-first gating with preview → full form → PDF generation
+- **PDF Generation:** Server-side PDF creation with @react-pdf/renderer and ALIRA branding
+- **Database Storage:** Supabase PostgreSQL for leads, business cases, and analytics
+- **PDF Storage:** Supabase Storage for secure PDF hosting and download links
+- **Analytics Tracking:** Comprehensive conversion tracking with GA4 integration
 - **Responsive Design:** Mobile-first approach with Tailwind
 - **Scroll Animations:** Custom reveal animations without external libraries
 - **Brand Consistency:** ALIRA. design system throughout
@@ -70,17 +77,29 @@ cd alira-website
 npm install
 ```
 
-3. Create environment variables (optional):
+3. Set up environment variables:
 ```bash
-cp .env.example .env.local
+cp env.example .env.local
 ```
+
+Edit `.env.local` with your API keys:
+- `OPENAI_API_KEY` - Your OpenAI API key
+- `SUPABASE_URL` - Your Supabase project URL
+- `SUPABASE_ANON_KEY` - Your Supabase anonymous key
+- `NEXT_PUBLIC_SUPABASE_URL` - Same as SUPABASE_URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Same as SUPABASE_ANON_KEY
+- `NEXT_PUBLIC_GA4_ID` - Your GA4 Measurement ID (optional)
 
 4. Run the development server:
 ```bash
 npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Set up the database:
+   - Run the SQL migration in `db/migrations/001_init.sql` in your Supabase SQL editor
+   - Create a storage bucket named `business-cases` in your Supabase dashboard
+
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Build for Production
 
@@ -89,11 +108,38 @@ npm run build
 npm start
 ```
 
+## AI + Supabase Setup
+
+### Database Schema
+The system uses three main tables:
+- `leads` - Form submissions and contact information
+- `business_cases` - Generated business cases linked to leads
+- `events` - Analytics events for tracking user interactions
+
+### AI Integration
+- **Model:** GPT-4o-mini for cost-effective, fast generation
+- **Prompt:** Structured to maintain ALIRA brand voice and British English
+- **Output:** JSON-structured business case with problem statement, objectives, solutions, etc.
+
+### PDF Generation
+- **Library:** @react-pdf/renderer for server-side PDF creation
+- **Branding:** ALIRA colors, fonts, and layout
+- **Storage:** Supabase Storage with public download URLs
+
+### Analytics
+- **Events:** Form starts, previews, completions, CTA clicks
+- **Providers:** GA4 and Facebook Pixel ready
+- **Storage:** Events stored in Supabase for backup
+
 ## Project Structure
 
 ```
 alira-website/
 ├── app/                    # Next.js App Router pages
+│   ├── api/               # API routes
+│   │   ├── ai/generate/   # AI business case generation
+│   │   ├── pdf/           # PDF generation
+│   │   └── save/          # Database save operations
 │   ├── globals.css        # Global styles and ALIRA. tokens
 │   ├── layout.tsx         # Root layout with metadata
 │   ├── page.tsx           # Home page
