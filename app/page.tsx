@@ -25,7 +25,9 @@ import { conversionEvents } from '@/lib/analytics'
 export default function Home() {
   // Track page view
   React.useEffect(() => {
-    conversionEvents.pageView('homepage')
+    if (typeof window !== 'undefined') {
+      conversionEvents.pageView('homepage')
+    }
   }, [])
 
   return (

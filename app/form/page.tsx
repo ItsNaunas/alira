@@ -1,3 +1,5 @@
+'use client'
+
 import IntakeForm from '@/components/IntakeForm'
 import Reveal from '@/components/Reveal'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -9,8 +11,10 @@ import React from 'react'
 export default function Form() {
   // Track page view
   React.useEffect(() => {
-    conversionEvents.pageView('form_page')
-    conversionEvents.formStarted('business_case_initial')
+    if (typeof window !== 'undefined') {
+      conversionEvents.pageView('form_page')
+      conversionEvents.formStarted('business_case_initial')
+    }
   }, [])
 
   return (
