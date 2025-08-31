@@ -10,10 +10,10 @@ export default function FinalCTA() {
             <div className="space-y-12">
               <div className="relative">
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                  Ready to get your business case?
+                  Every enquiry is the start of clarity.
                 </h2>
                 <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-                  Join hundreds of business leaders who've transformed their challenges into clear, actionable strategies.
+                  Start your journey to business clarity today.
                 </p>
                 <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
               </div>
@@ -24,7 +24,7 @@ export default function FinalCTA() {
                   variant="aliraOutline"
                 />
                 <p className="text-sm text-white/70">
-                  ✓ Takes 10 minutes • 🔒 Private & GDPR-compliant • ⏱ 24-hour turnaround
+                  Takes 10 minutes • Preview in minutes • Full PDF in 24 hours
                 </p>
               </div>
             </div>

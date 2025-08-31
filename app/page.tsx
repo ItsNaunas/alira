@@ -8,8 +8,9 @@ import OurPhilosophy from '@/components/OurPhilosophy'
 import HomeServices from '@/components/HomeServices'
 import Experience from '@/components/Experience'
 import ClientResults from '@/components/ClientResults'
-import SelectedOutcomes from '@/components/SelectedOutcomes'
+import EnhancedProof from '@/components/EnhancedProof'
 import FAQ from '@/components/FAQ'
+import MiniCaseStudy from '@/components/MiniCaseStudy'
 import StickyCTA from '@/components/StickyCTA'
 import FinalCTA from '@/components/FinalCTA'
 import Reveal from '@/components/Reveal'
@@ -84,14 +85,14 @@ export default function Home() {
             {/* Headline */}
             <Reveal delay={200}>
               <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
-                Get your business case in 24 hours.
+                Your 24-Hour Business Case.
               </h1>
             </Reveal>
             
             {/* Subheadline */}
             <Reveal delay={250}>
               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
-                Get a preview in minutes, full business case in 24 hours. No templates, no delays.
+                10 minutes from you → board-ready PDF in 24 hours.
               </p>
             </Reveal>
             
@@ -104,7 +105,7 @@ export default function Home() {
                   className="px-8 py-4 text-lg font-medium"
                 />
                 <p className="text-sm text-alira-onyx/70 font-medium">
-                  ✓ Takes 10 minutes • 🔒 Private & GDPR-compliant • ⏱ 24-hour turnaround
+                  Start Your Business Case • Private & GDPR-compliant • Preview in minutes
                 </p>
               </div>
             </Reveal>
@@ -133,8 +134,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Selected Outcomes - Compact Social Proof */}
-      <SelectedOutcomes />
+      {/* Enhanced Proof Section */}
+      <EnhancedProof />
 
       {/* What You Get Section */}
       <WhatYouGet />
@@ -173,7 +174,7 @@ export default function Home() {
                     Complete the Form
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    Share your business context, challenges, and objectives through our structured intake form. Takes 10-15 minutes.
+                    10 mins of your time.
                   </p>
                 </div>
 
@@ -195,7 +196,7 @@ export default function Home() {
                     Engine Processing
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    Our strategic framework analyses your inputs and maps them to proven business case structures and methodologies.
+                    AI + consulting discipline transforms it instantly.
                   </p>
                 </div>
 
@@ -216,7 +217,7 @@ export default function Home() {
                     Receive Your Draft
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    Get a preview in minutes. Full business case in 24 hours.
+                    Board-ready PDF in 24h.
                   </p>
                 </div>
 
@@ -249,6 +250,9 @@ export default function Home() {
 
       {/* Signature Engagements Section */}
       <HomeServices />
+
+      {/* Mini Case Study */}
+      <MiniCaseStudy />
 
       {/* Final CTA Section */}
       <FinalCTA />

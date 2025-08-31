@@ -7,16 +7,16 @@ export default function FAQ() {
       a: "A board-ready PDF with problem statement, objectives, proposed solution, and clear next steps."
     },
     {
-      q: "Is it really custom?",
-      a: "Yes. No templates — see the outcomes above. Every business case is tailored to your specific situation."
+      q: "How fast is it?",
+      a: "Preview in minutes, full case in 24h."
     },
     {
-      q: "How fast is '24 hours'?",
-      a: "Preview in minutes, full business case in 24 hours. We'll email you as soon as it's ready."
+      q: "What if I don't like it?",
+      a: "No risk, no credit card required."
     },
     {
-      q: "Is my info confidential?",
-      a: "We operate private, GDPR-compliant intake. Your information is secure and never shared."
+      q: "Is my info secure?",
+      a: "GDPR compliant, private."
     }
   ]
 

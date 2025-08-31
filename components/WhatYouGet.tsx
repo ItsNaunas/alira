@@ -4,23 +4,18 @@ export default function WhatYouGet() {
   const items = [
     {
       icon: FileText,
-      title: "Ready-to-Use Business Case",
-      desc: "A professional document you can immediately share with stakeholders, investors, or your board.",
+      title: "Clarity in Writing",
+      desc: "Board-ready PDF, no blank page stress.",
     },
     {
       icon: Compass,
-      title: "Clear Action Plan",
-      desc: "Specific next steps with timelines and responsibilities so you know exactly what to do.",
+      title: "Actionable Priorities",
+      desc: "Know exactly where to focus first.",
     },
     {
       icon: Sparkles,
-      title: "Custom Solutions for Your Business",
-      desc: "Tailored recommendations based on your unique situation, not generic templates.",
-    },
-    {
-      icon: MapPin,
-      title: "Immediate Implementation",
-      desc: "Start executing your strategy right away with clear priorities and measurable goals.",
+      title: "Independent Insight",
+      desc: "Outside eyes to cut through internal noise.",
     },
   ];
 
@@ -46,8 +41,8 @@ export default function WhatYouGet() {
           </p>
         </div>
 
-        {/* 2x2 Grid of Deliverables */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-16">
+        {/* 3-Card Row of Benefits */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-16">
           {items.map(({ icon: Icon, title, desc }) => (
             <article
               key={title}
