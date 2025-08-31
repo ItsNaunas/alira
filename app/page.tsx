@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import React from 'react'
 
 import WhatYouGet from '@/components/WhatYouGet'
 import ProcessDiagram from '@/components/ProcessDiagram'
@@ -19,8 +20,14 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight, CheckCircle, Users, Target, Zap, FileCheck } from 'lucide-react'
 import Link from 'next/link'
+import { conversionEvents } from '@/lib/analytics'
 
 export default function Home() {
+  // Track page view
+  React.useEffect(() => {
+    conversionEvents.pageView('homepage')
+  }, [])
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -103,6 +110,7 @@ export default function Home() {
                   href="/form" 
                   variant="alira"
                   className="px-8 py-4 text-lg font-medium"
+                  location="hero"
                 />
                 <p className="text-sm text-alira-onyx/70 font-medium">
                   No credit card required • Completely free • Delivered in minutes • Private & secure
@@ -214,6 +222,7 @@ export default function Home() {
                 href="/form" 
                 variant="alira"
                 className="px-8 py-4 text-lg font-medium"
+                location="how-it-works"
               />
               <p className="text-sm text-alira-onyx/70 mt-4">
                 Free • Secure • Delivered in minutes

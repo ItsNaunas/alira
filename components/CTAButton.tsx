@@ -4,6 +4,7 @@ import { Button } from './ui/button'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { conversionEvents } from '@/lib/analytics'
 
 interface CTAButtonProps {
   href: string
@@ -13,6 +14,9 @@ interface CTAButtonProps {
   // A/B testing props
   testVariants?: string[]
   testKey?: string
+  // Analytics props
+  location?: string
+  children?: React.ReactNode
 }
 
 export default function CTAButton({ 
@@ -21,7 +25,9 @@ export default function CTAButton({
   className = '',
   showArrow = true,
   testVariants,
-  testKey
+  testKey,
+  location = 'unknown',
+  children
 }: CTAButtonProps) {
   const [buttonText, setButtonText] = useState('Start Your Business Case')
 
@@ -39,13 +45,19 @@ export default function CTAButton({
     }
   }, [testVariants, testKey])
 
+  const handleClick = () => {
+    // Track CTA click
+    const finalText = children || buttonText
+    conversionEvents.ctaClicked(location, finalText)
+  }
+
   return (
-    <Link href={href} className="inline-block group">
+    <Link href={href} className="inline-block group" onClick={handleClick}>
       <Button 
         variant={variant} 
         className={className}
       >
-        {buttonText}
+        {children || buttonText}
         {showArrow && (
           <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
         )}

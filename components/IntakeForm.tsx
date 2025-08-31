@@ -18,6 +18,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Checkbox } from './ui/checkbox'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import { CheckCircle, ArrowRight, Download, Mail } from 'lucide-react'
+import { conversionEvents } from '@/lib/analytics'
 
 export default function IntakeForm() {
   const [step, setStep] = useState<'initial' | 'preview' | 'full-form'>('initial')
@@ -39,11 +40,15 @@ export default function IntakeForm() {
     const { businessName, industry, stage, challenges } = watch()
     if (businessName && industry && stage && challenges) {
       setStep('preview')
+      // Track preview generation
+      conversionEvents.previewGenerated(businessName || 'Unknown Business')
     }
   }
 
   const requestFullCase = () => {
     setStep('full-form')
+    // Track form progression
+    conversionEvents.formStarted('business_case_full')
   }
 
   const onSubmit = async (data: IntakeFormData) => {
@@ -73,6 +78,9 @@ export default function IntakeForm() {
 
       setIsSuccess(true)
       reset()
+      // Track successful business case generation
+      conversionEvents.businessCaseGenerated(data.businessName)
+      conversionEvents.formCompleted('business_case_full')
     } catch (error) {
       console.error('Error generating PDF:', error)
       alert('There was an error generating your business case. Please try again.')
@@ -197,16 +205,25 @@ export default function IntakeForm() {
           </CardContent>
         </Card>
 
-        <div className="text-center">
-          <Button 
-            onClick={generatePreview}
-            disabled={!watch('businessName') || !watch('industry') || !watch('stage') || !watch('challenges')}
-            size="lg"
-            className="px-8 bg-alira-onyx hover:bg-alira-onyx/90"
-          >
-            Generate Preview
-            <ArrowRight className="ml-2 w-4 h-4" />
-          </Button>
+                 <div className="text-center">
+           <Button 
+             onClick={generatePreview}
+             disabled={!watch('businessName') || !watch('industry') || !watch('stage') || !watch('challenges')}
+             size="lg"
+             className="px-8 bg-alira-onyx hover:bg-alira-onyx/90"
+           >
+             {isSubmitting ? (
+               <>
+                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                 Generating Preview...
+               </>
+             ) : (
+               <>
+                 Generate Preview
+                 <ArrowRight className="ml-2 w-4 h-4" />
+               </>
+             )}
+           </Button>
           <p className="text-xs text-alira-onyx/60 mt-4">
             Takes 30 seconds • No email required for preview
           </p>
@@ -291,13 +308,23 @@ export default function IntakeForm() {
             <p className="text-alira-onyx/70 mb-4">
               Receive your full customized business case with detailed analysis, recommendations, and implementation roadmap.
             </p>
-            <Button 
-              onClick={requestFullCase}
-              className="bg-alira-onyx hover:bg-alira-onyx/90"
-            >
-              Get Full Business Case
-              <Download className="ml-2 w-4 h-4" />
-            </Button>
+                         <Button 
+               onClick={requestFullCase}
+               className="bg-alira-onyx hover:bg-alira-onyx/90"
+               disabled={isSubmitting}
+             >
+               {isSubmitting ? (
+                 <>
+                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                   Processing...
+                 </>
+               ) : (
+                 <>
+                   Get Full Business Case
+                   <Download className="ml-2 w-4 h-4" />
+                 </>
+               )}
+             </Button>
           </div>
           
           <p className="text-sm text-alira-onyx/60">
@@ -539,14 +566,21 @@ export default function IntakeForm() {
       </Card>
 
       <div className="text-center">
-        <Button 
-          type="submit" 
-          size="lg" 
-          disabled={isSubmitting}
-          className="px-8"
-        >
-          {isSubmitting ? 'Generating Business Case...' : 'Generate Business Case'}
-        </Button>
+                 <Button 
+           type="submit" 
+           size="lg" 
+           disabled={isSubmitting}
+           className="px-8"
+         >
+           {isSubmitting ? (
+             <>
+               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+               Generating Business Case...
+             </>
+           ) : (
+             'Generate Business Case'
+           )}
+         </Button>
       </div>
     </form>
   )

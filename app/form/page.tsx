@@ -3,8 +3,16 @@ import Reveal from '@/components/Reveal'
 import SectionHeading from '@/components/ui/SectionHeading'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { conversionEvents } from '@/lib/analytics'
+import React from 'react'
 
 export default function Form() {
+  // Track page view
+  React.useEffect(() => {
+    conversionEvents.pageView('form_page')
+    conversionEvents.formStarted('business_case_initial')
+  }, [])
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
