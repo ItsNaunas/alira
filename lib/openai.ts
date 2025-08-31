@@ -58,8 +58,8 @@ export interface BusinessCaseOutline {
   proposed_solution: Array<{
     pillar: string
     actions: string[]
-    effort: 'low' | 'med' | 'high'
-    impact: 'low' | 'med' | 'high'
+    effort: 'low' | 'med' | 'medium' | 'high'
+    impact: 'low' | 'med' | 'medium' | 'high'
   }>
   expected_outcomes: string[]
   next_steps: string[]
