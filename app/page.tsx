@@ -91,7 +91,7 @@ export default function Home() {
             
             {/* Subheadline */}
             <Reveal delay={250}>
-              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
+              <p className="text-3xl md:text-4xl text-alira-onyx font-serif italic font-light max-w-[50ch] mx-auto leading-tight mb-8">
                 10 minutes from you → board-ready PDF in minutes.
               </p>
             </Reveal>
