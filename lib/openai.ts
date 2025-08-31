@@ -48,6 +48,7 @@ Requirements:
 - Maximum 1200 tokens total
 - No placeholders - provide specific, actionable content
 - Maintain professional, authoritative tone
+- For effort and impact fields, use exactly: "low", "med", or "high" (not "medium")
 `
 
 export interface BusinessCaseOutline {

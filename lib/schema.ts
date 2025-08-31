@@ -51,8 +51,8 @@ export const businessCaseOutlineSchema = z.object({
   proposed_solution: z.array(z.object({
     pillar: z.string(),
     actions: z.array(z.string()),
-    effort: z.enum(['low', 'med', 'high']),
-    impact: z.enum(['low', 'med', 'high'])
+    effort: z.enum(['low', 'med', 'medium', 'high']),
+    impact: z.enum(['low', 'med', 'medium', 'high'])
   })),
   expected_outcomes: z.array(z.string()),
   next_steps: z.array(z.string())
