@@ -116,7 +116,7 @@ export default function IntakeForm() {
         </CardHeader>
         <CardContent className="text-center space-y-4">
           <p className="text-muted-foreground">
-            Your Draft Business Case has been downloaded. We'll review your information and be in touch within 24 hours to discuss next steps.
+            Your Draft Business Case has been downloaded. We'll review your information and be in touch within minutes to discuss next steps.
           </p>
           <Button 
             onClick={() => setIsSuccess(false)}

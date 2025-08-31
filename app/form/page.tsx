@@ -60,11 +60,11 @@ export default function Form() {
             <Reveal>
               <div className="mb-8">
                 <Link
-                  href="/contact"
+                  href="/"
                   className="inline-flex items-center text-alira-onyx/70 hover:text-alira-onyx transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Contact
+                  Back to Home
                 </Link>
               </div>
             </Reveal>
@@ -125,7 +125,7 @@ export default function Form() {
                   </li>
                   <li className="flex items-start space-x-4">
                     <span className="text-alira-gold font-bold text-lg">3.</span>
-                    <span className="text-alira-onyx/70">We'll review your information and reach out within 24 hours</span>
+                    <span className="text-alira-onyx/70">We'll review your information and reach out within minutes</span>
                   </li>
                   <li className="flex items-start space-x-4">
                     <span className="text-alira-gold font-bold text-lg">4.</span>
