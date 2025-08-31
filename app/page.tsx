@@ -10,7 +10,7 @@ import Experience from '@/components/Experience'
 import ClientResults from '@/components/ClientResults'
 import EnhancedProof from '@/components/EnhancedProof'
 import FAQ from '@/components/FAQ'
-import MiniCaseStudy from '@/components/MiniCaseStudy'
+
 import StickyCTA from '@/components/StickyCTA'
 import FinalCTA from '@/components/FinalCTA'
 import Reveal from '@/components/Reveal'
@@ -105,7 +105,7 @@ export default function Home() {
                   className="px-8 py-4 text-lg font-medium"
                 />
                 <p className="text-sm text-alira-onyx/70 font-medium">
-                  Start Your Business Case • Private & GDPR-compliant • Ready in minutes
+                  No credit card required • Completely free • Private and secure
                 </p>
               </div>
             </Reveal>
@@ -232,9 +232,6 @@ export default function Home() {
 
       {/* Signature Engagements Section */}
       <HomeServices />
-
-      {/* Mini Case Study */}
-      <MiniCaseStudy />
 
       {/* Final CTA Section */}
       <FinalCTA />

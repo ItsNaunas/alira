@@ -29,8 +29,8 @@ export default function StickyCTA() {
           />
         </div>
                  <div className="ml-4 text-xs text-alira-onyx/70">
-           <div>✓ 10 minutes</div>
-           <div>⏱ Ready in minutes</div>
+           <div>✓ Completely free</div>
+           <div>🔒 Private & secure</div>
          </div>
       </div>
     </div>
