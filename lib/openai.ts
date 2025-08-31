@@ -123,12 +123,17 @@ Project Details:
     return outline
   } catch (error) {
     console.error('OpenAI API error:', error)
-    console.error('Error details:', {
-      message: error.message,
-      status: error.status,
-      code: error.code,
-      type: error.type
-    })
-    throw new Error(`Failed to generate business case: ${error.message}`)
+    
+    // Type-safe error handling
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+    const errorDetails = {
+      message: errorMessage,
+      status: (error as any)?.status || 'unknown',
+      code: (error as any)?.code || 'unknown',
+      type: (error as any)?.type || 'unknown'
+    }
+    
+    console.error('Error details:', errorDetails)
+    throw new Error(`Failed to generate business case: ${errorMessage}`)
   }
 }
