@@ -1,5 +1,4 @@
 import Reveal from './Reveal'
-import CTAButton from './CTAButton'
 
 const engagements = [
   {
@@ -51,16 +50,9 @@ export default function HomeServices() {
                 <h3 className="text-xl font-semibold text-alira-onyx mb-3">
                   {engagement.title}
                 </h3>
-                <p className="text-alira-onyx/70 leading-relaxed mb-6">
+                <p className="text-alira-onyx/70 leading-relaxed">
                   {engagement.description}
                 </p>
-                <CTAButton 
-                  href="/form" 
-                  variant="aliraOutline"
-                  className="w-full"
-                >
-                  Start with a free business case in minutes →
-                </CTAButton>
               </div>
             </Reveal>
           ))}
