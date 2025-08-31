@@ -43,29 +43,35 @@ export default function IntakeForm() {
     if (businessName && industry && stage && challenges) {
       setIsSubmitting(true)
       try {
+        // Prepare the request body
+        const requestBody = {
+          businessName,
+          industry,
+          stage,
+          challenges,
+          goalsShort: formData.goalsShort || '',
+          goalsLong: formData.goalsLong || '',
+          resources: formData.resources || '',
+          budget: formData.budget || '',
+          timeline: formData.timeline || '',
+          service: formData.service || '',
+          notes: formData.notes || ''
+        }
+        
+        console.log('Frontend sending data:', requestBody)
+        
         // Call AI generation API with only the required fields for preview
         const response = await fetch('/api/ai/generate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            businessName,
-            industry,
-            stage,
-            challenges,
-            goalsShort: formData.goalsShort || '',
-            goalsLong: formData.goalsLong || '',
-            resources: formData.resources || '',
-            budget: formData.budget || '',
-            timeline: formData.timeline || '',
-            service: formData.service || '',
-            notes: formData.notes || ''
-          }),
+          body: JSON.stringify(requestBody),
         })
 
         if (!response.ok) {
-          throw new Error('Failed to generate preview')
+          const errorData = await response.json().catch(() => ({}))
+          throw new Error(errorData.error || `HTTP ${response.status}: Failed to generate preview`)
         }
 
         const result = await response.json()
