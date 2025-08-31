@@ -8,7 +8,6 @@ import OurPhilosophy from '@/components/OurPhilosophy'
 import HomeServices from '@/components/HomeServices'
 import Experience from '@/components/Experience'
 import ClientResults from '@/components/ClientResults'
-import EnhancedProof from '@/components/EnhancedProof'
 import FAQ from '@/components/FAQ'
 import MiniCaseStudy from '@/components/MiniCaseStudy'
 import StickyCTA from '@/components/StickyCTA'
@@ -134,8 +133,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Enhanced Proof Section */}
-      <EnhancedProof />
+
 
       {/* What You Get Section */}
       <WhatYouGet />
