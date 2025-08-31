@@ -4,12 +4,20 @@ import { businessCaseOutlineSchema } from '@/lib/schema'
 
 export async function POST(request: NextRequest) {
   try {
+    console.log("=== PDF GENERATION API DEBUG ===")
     const body = await request.json()
+    console.log("Received body:", JSON.stringify(body, null, 2))
     
     // Validate the business case outline
+    console.log("Validating outline...")
     const outline = businessCaseOutlineSchema.parse(body.outline)
+    console.log("Outline validation successful")
+    
     const businessName = body.businessName
     const contactName = body.contactName
+    
+    console.log("Business name:", businessName)
+    console.log("Contact name:", contactName)
     
     if (!businessName) {
       return NextResponse.json(
@@ -19,7 +27,9 @@ export async function POST(request: NextRequest) {
     }
     
     // Generate PDF buffer
+    console.log("Generating PDF buffer...")
     const pdfBuffer = await generatePDFBuffer(outline, businessName, contactName)
+    console.log("PDF buffer generated successfully, length:", pdfBuffer.length)
     
     // Return PDF as binary response
     return new NextResponse(pdfBuffer as any, {
