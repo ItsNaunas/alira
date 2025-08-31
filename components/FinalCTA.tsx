@@ -10,10 +10,10 @@ export default function FinalCTA() {
             <div className="space-y-12">
               <div className="relative">
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                  Every enquiry is the start of clarity.
+                  Your clarity starts in minutes.
                 </h2>
                 <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-                  Start your journey to business clarity today.
+                  Every enquiry is the start of clarity. Start yours today.
                 </p>
                 <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
               </div>
@@ -24,7 +24,7 @@ export default function FinalCTA() {
                   variant="aliraOutline"
                 />
                 <p className="text-sm text-white/70">
-                  No credit card required • Completely free • Private and secure
+                  No credit card • Completely free • Delivered in minutes • Private & secure
                 </p>
               </div>
             </div>

@@ -29,7 +29,7 @@ export default function StickyCTA() {
           />
         </div>
                  <div className="ml-4 text-xs text-alira-onyx/70">
-           <div>✓ Completely free</div>
+           <div>✓ Delivered in minutes</div>
            <div>🔒 Private & secure</div>
          </div>
       </div>

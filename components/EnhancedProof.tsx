@@ -2,15 +2,15 @@ import Reveal from './Reveal'
 
 export default function EnhancedProof() {
   const outcomes = [
-    { metric: '£21k', label: 'saved annually' },
-    { metric: '25%', label: 'sign-ups ↑' },
+    { metric: '£21k', label: 'saved annually — from changes identified instantly' },
+    { metric: '25%', label: 'sign-ups ↑ — clarity delivered in minutes' },
     { metric: '1,000+', label: 'staff trained' },
     { metric: '200+', label: 'attendees per event' }
   ]
 
   const testimonials = [
     {
-      quote: "Creativity to solve problems and deliver results.",
+      quote: "Creativity to solve problems and deliver results — fast.",
       author: "Auzewell Chitewe"
     },
     {
@@ -34,12 +34,12 @@ export default function EnhancedProof() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 {outcomes.map((outcome, index) => (
                   <div key={index} className="text-center">
-                    <div className="text-3xl font-bold text-alira-gold mb-2">
-                      {outcome.metric}
-                    </div>
-                    <div className="text-sm text-alira-onyx/70">
-                      {outcome.label}
-                    </div>
+                                       <div className="text-2xl font-semibold text-alira-gold mb-2">
+                     {outcome.metric}
+                   </div>
+                   <div className="text-sm text-alira-onyx/60">
+                     {outcome.label}
+                   </div>
                   </div>
                 ))}
               </div>

@@ -4,19 +4,19 @@ export default function FAQ() {
   const faqs = [
     {
       q: "What exactly do I receive?",
-      a: "A board-ready PDF with problem statement, objectives, proposed solution, and clear next steps."
+      a: "A complete, board-ready PDF with problem statement, objectives, solution, and next steps — generated in minutes."
     },
     {
       q: "How fast is it?",
-      a: "Ready in minutes."
+      a: "Once you submit the form, you'll receive your full, board-ready business case in just minutes."
     },
     {
       q: "What if I don't like it?",
-      a: "No risk, no credit card required."
+      a: "No risk, no credit card. You'll see results in minutes, and if it's not useful, you can walk away."
     },
     {
       q: "Is my info secure?",
-      a: "GDPR compliant, private."
+      a: "Yes. Your information is processed instantly and privately — GDPR compliant."
     }
   ]
 

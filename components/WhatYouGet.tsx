@@ -37,7 +37,7 @@ export default function WhatYouGet() {
             Everything you need to move forward.
           </h2>
           <p className="text-lg text-alira-onyx/70 max-w-2xl mx-auto leading-relaxed">
-            Get a complete business case that your team can use immediately to drive decisions and action.
+            Get a complete business case your team can use immediately — delivered in minutes.
           </p>
         </div>
 
@@ -71,8 +71,8 @@ export default function WhatYouGet() {
         {/* Stats Row */}
         <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-12 text-center">
           <div className="flex flex-col items-center">
-            <span className="text-2xl font-bold text-alira-onyx">24 hours</span>
-            <span className="text-sm text-alira-onyx/60 mt-1">delivery guarantee</span>
+            <span className="text-2xl font-bold text-alira-onyx">Ready in minutes</span>
+            <span className="text-sm text-alira-onyx/60 mt-1">delivered instantly</span>
           </div>
           <div className="hidden md:block w-px h-8 bg-alira-onyx/20"></div>
           <div className="flex flex-col items-center">

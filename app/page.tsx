@@ -92,7 +92,7 @@ export default function Home() {
             {/* Subheadline */}
             <Reveal delay={250}>
               <p className="text-3xl md:text-4xl text-alira-onyx font-serif italic font-light max-w-[50ch] mx-auto leading-tight mb-8">
-                10 minutes from you → board-ready PDF in minutes.
+                10 minutes from you → full, board-ready PDF in minutes.
               </p>
             </Reveal>
             
@@ -105,7 +105,7 @@ export default function Home() {
                   className="px-8 py-4 text-lg font-medium"
                 />
                 <p className="text-sm text-alira-onyx/70 font-medium">
-                  No credit card required • Completely free • Private and secure
+                  No credit card required • Completely free • Delivered in minutes • Private & secure
                 </p>
               </div>
             </Reveal>
@@ -156,7 +156,7 @@ export default function Home() {
                     Complete the Form
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    10 mins of your time.
+                    10 minutes of your time.
                   </p>
                 </div>
 
@@ -178,7 +178,7 @@ export default function Home() {
                     Engine Processing
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    AI + consulting discipline transforms it instantly.
+                    AI + consulting discipline transforms your answers instantly.
                   </p>
                 </div>
 
@@ -199,7 +199,7 @@ export default function Home() {
                     Receive Your Draft
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    Board-ready PDF in minutes.
+                    A board-ready PDF generated in minutes, not days.
                   </p>
                 </div>
 
