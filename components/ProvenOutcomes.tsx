@@ -125,9 +125,9 @@ export default function ProvenOutcomes() {
                          {/* Divider Tagline */}
              <div className="text-center mb-16">
                <div className="w-16 h-px bg-alira-gold/30 mx-auto mb-4"></div>
-               <p className="text-sm tracking-wide uppercase text-alira-gold font-medium">
-                 All from just 10 minutes of your input.
-               </p>
+                               <p className="text-sm tracking-wide uppercase text-alira-onyx font-medium">
+                  All from just 10 minutes of your input.
+                </p>
                <div className="w-16 h-px bg-alira-gold/30 mx-auto mt-4"></div>
              </div>
 
