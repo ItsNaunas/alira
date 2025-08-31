@@ -1,6 +1,6 @@
 import { BusinessCaseOutline } from './openai'
 
-// Simple PDF generation using a more compatible approach
+// Enhanced PDF generation with full business case content
 export async function generatePDFBuffer(
   outline: BusinessCaseOutline,
   businessName: string,
@@ -12,141 +12,7 @@ export async function generatePDFBuffer(
     year: 'numeric'
   })
 
-  // Create a simple HTML-based PDF content
-  const htmlContent = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <title>Business Case - ${businessName}</title>
-      <style>
-        body {
-          font-family: 'Times New Roman', serif;
-          font-size: 12px;
-          line-height: 1.5;
-          color: #0B0B0B;
-          margin: 72px;
-          max-width: 800px;
-        }
-        .header {
-          border-bottom: 2px solid #C5A572;
-          padding-bottom: 20px;
-          margin-bottom: 40px;
-        }
-        .logo {
-          font-size: 24px;
-          font-weight: bold;
-          color: #0B0B0B;
-          margin-bottom: 8px;
-        }
-        .subtitle {
-          font-size: 14px;
-          color: #1A2238;
-        }
-        .section {
-          margin-bottom: 24px;
-        }
-        .sectionTitle {
-          font-size: 16px;
-          font-weight: bold;
-          color: #C5A572;
-          margin-bottom: 12px;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-        }
-        .content {
-          font-size: 12px;
-          line-height: 1.6;
-          margin-bottom: 8px;
-        }
-        .listItem {
-          font-size: 12px;
-          line-height: 1.6;
-          margin-bottom: 4px;
-          padding-left: 16px;
-        }
-        .solutionItem {
-          margin-bottom: 16px;
-          padding: 12px;
-          background-color: #FDFDFD;
-          border: 1px solid #C5A572;
-        }
-        .solutionPillar {
-          font-size: 14px;
-          font-weight: bold;
-          color: #1A2238;
-          margin-bottom: 8px;
-        }
-        .solutionMeta {
-          font-size: 10px;
-          color: #1A2238;
-        }
-        .footer {
-          position: fixed;
-          bottom: 72px;
-          left: 72px;
-          right: 72px;
-          text-align: center;
-          font-size: 10px;
-          color: #1A2238;
-          border-top: 1px solid #C5A572;
-          padding-top: 12px;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="header">
-        <div class="logo">ALIRA.</div>
-        <div class="subtitle">Business Case Analysis</div>
-      </div>
-      
-      <div class="section">
-        <div class="sectionTitle">Problem Statement</div>
-        <div class="content">${outline.problem_statement}</div>
-      </div>
-      
-      <div class="section">
-        <div class="sectionTitle">Objectives</div>
-        ${outline.objectives.map(objective => `<div class="listItem">• ${objective}</div>`).join('')}
-      </div>
-      
-      <div class="section">
-        <div class="sectionTitle">Current State</div>
-        <div class="content">${outline.current_state}</div>
-      </div>
-      
-      <div class="section">
-        <div class="sectionTitle">Proposed Solution</div>
-        ${outline.proposed_solution.map(solution => `
-          <div class="solutionItem">
-            <div class="solutionPillar">${solution.pillar}</div>
-            ${solution.actions.map(action => `<div class="listItem">• ${action}</div>`).join('')}
-            <div class="solutionMeta">
-              Effort: ${solution.effort.toUpperCase()} | Impact: ${solution.impact.toUpperCase()}
-            </div>
-          </div>
-        `).join('')}
-      </div>
-      
-      <div class="section">
-        <div class="sectionTitle">Expected Outcomes</div>
-        ${outline.expected_outcomes.map(outcome => `<div class="listItem">• ${outcome}</div>`).join('')}
-      </div>
-      
-      <div class="section">
-        <div class="sectionTitle">Next Steps</div>
-        ${outline.next_steps.map(step => `<div class="listItem">• ${step}</div>`).join('')}
-      </div>
-      
-      <div class="footer">
-        ALIRA. Confidential | Generated for ${businessName} | ${generatedDate}
-      </div>
-    </body>
-    </html>
-  `
-
-  // For now, return a simple text-based PDF structure
-  // In production, you'd use a proper PDF library like puppeteer or jsPDF
+  // Create a comprehensive PDF content with all business case sections
   const pdfContent = `
 %PDF-1.4
 1 0 obj
@@ -175,17 +41,61 @@ endobj
 
 4 0 obj
 <<
-/Length 1000
+/Length 5000
 >>
 stream
 BT
-/F1 12 Tf
+/F1 16 Tf
 72 720 Td
 (ALIRA. Business Case Analysis) Tj
-0 -20 Td
+0 -25 Td
+/F1 12 Tf
 (Generated for ${businessName}) Tj
 0 -20 Td
 (${generatedDate}) Tj
+0 -40 Td
+/F1 14 Tf
+(Problem Statement) Tj
+0 -20 Td
+/F1 10 Tf
+(${outline.problem_statement}) Tj
+0 -30 Td
+/F1 14 Tf
+(Objectives) Tj
+0 -20 Td
+/F1 10 Tf
+${outline.objectives.map(obj => `(• ${obj}) Tj 0 -15 Td`).join(' ')}
+0 -20 Td
+/F1 14 Tf
+(Current State) Tj
+0 -20 Td
+/F1 10 Tf
+(${outline.current_state}) Tj
+0 -30 Td
+/F1 14 Tf
+(Proposed Solution) Tj
+0 -20 Td
+/F1 10 Tf
+${outline.proposed_solution.map(solution => `
+(${solution.pillar}) Tj 0 -15 Td
+${solution.actions.map(action => `(• ${action}) Tj 0 -12 Td`).join(' ')}
+(Effort: ${solution.effort.toUpperCase()} | Impact: ${solution.impact.toUpperCase()}) Tj 0 -20 Td
+`).join(' ')}
+0 -20 Td
+/F1 14 Tf
+(Expected Outcomes) Tj
+0 -20 Td
+/F1 10 Tf
+${outline.expected_outcomes.map(outcome => `(• ${outcome}) Tj 0 -15 Td`).join(' ')}
+0 -20 Td
+/F1 14 Tf
+(Next Steps) Tj
+0 -20 Td
+/F1 10 Tf
+${outline.next_steps.map(step => `(• ${step}) Tj 0 -15 Td`).join(' ')}
+0 -40 Td
+/F1 8 Tf
+(ALIRA. Confidential | Generated for ${businessName} | ${generatedDate}) Tj
 ET
 endstream
 endobj
@@ -203,7 +113,7 @@ trailer
 /Root 1 0 R
 >>
 startxref
-300
+5000
 %%EOF
   `
 
