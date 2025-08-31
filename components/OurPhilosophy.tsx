@@ -82,6 +82,15 @@ export default function OurPhilosophy() {
             ))}
           </div>
         </div>
+        
+        {/* Speed Connection */}
+        <Reveal delay={500}>
+          <div className="text-center mt-16">
+            <p className="text-lg text-alira-onyx/80 font-medium">
+              That's why every business case we deliver arrives in minutes, not days — clarity without delay.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   )

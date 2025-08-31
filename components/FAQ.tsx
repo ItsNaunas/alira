@@ -12,11 +12,11 @@ export default function FAQ() {
     },
     {
       q: "What if I don't like it?",
-      a: "No risk, no credit card. You'll see results in minutes, and if it's not useful, you can walk away."
+      a: "No risk, no credit card. Because it's delivered in minutes, there's no wasted time — you can walk away."
     },
     {
       q: "Is my info secure?",
-      a: "Yes. Your information is processed instantly and privately — GDPR compliant."
+      a: "Yes. It's processed instantly and privately, GDPR-compliant."
     }
   ]
 

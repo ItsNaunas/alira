@@ -110,7 +110,29 @@ export default function Home() {
               </div>
             </Reveal>
 
-
+            {/* Hero Proof Stats */}
+            <Reveal delay={400}>
+              <div className="mt-12 pt-8 border-t border-alira-onyx/10">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-alira-gold mb-1">£21k</div>
+                    <div className="text-sm text-alira-onyx/60">saved annually</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-alira-gold mb-1">25%</div>
+                    <div className="text-sm text-alira-onyx/60">sign-ups ↑</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-alira-gold mb-1">1,000+</div>
+                    <div className="text-sm text-alira-onyx/60">staff trained</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-alira-gold mb-1">200+</div>
+                    <div className="text-sm text-alira-onyx/60">attendees per event</div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
 
           </div>
         </div>
@@ -219,6 +241,20 @@ export default function Home() {
                   Ready to get your business case?
                 </div>
               </div>
+              
+              {/* CTA Under Steps */}
+              <Reveal delay={400}>
+                <div className="text-center mt-12">
+                  <CTAButton 
+                    href="/form" 
+                    variant="alira"
+                    className="px-8 py-4 text-lg font-medium"
+                  />
+                  <p className="text-sm text-alira-onyx/70 mt-4">
+                    Free • Secure • Delivered in minutes
+                  </p>
+                </div>
+              </Reveal>
             </div>
           </Reveal>
         </div>
