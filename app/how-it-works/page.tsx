@@ -1,102 +1,32 @@
-import HowItWorksSteps from '@/components/HowItWorksSteps'
 import Reveal from '@/components/Reveal'
-import { Button } from '@/components/ui/button'
+import ProcessDiagram from '@/components/ProcessDiagram'
+import CTAButton from '@/components/CTAButton'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
-export default function HowItWorks() {
+export default function HowItWorksPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section 
-        className="min-h-screen flex items-center justify-center bg-alira-porcelain relative overflow-hidden"
-        aria-labelledby="how-it-works-heading"
-      >
-        {/* Minimal Background */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Architectural grid background */}
-          <svg
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full"
-          >
-            <defs>
-              <pattern
-                id="alira-grid-how-it-works"
-                width="40"
-                height="40"
-                patternUnits="userSpaceOnUse"
-              >
-                <path 
-                  d="M 40 0 L 0 0 0 40" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="0.5" 
-                />
-              </pattern>
-            </defs>
-            <rect
-              width="100%"
-              height="100%"
-              fill="url(#alira-grid-how-it-works)"
-              className="text-alira-onyx/10"
-              opacity="0.35"
-            />
-            {/* Subtle major lines */}
-            <g className="text-alira-onyx/15" opacity="0.25">
-              <path d="M0 80 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M0 160 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M120 0 V100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M240 0 V100%" stroke="currentColor" strokeWidth="0.6" />
-            </g>
-          </svg>
-          
-          {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 opacity-[0.01] bg-gradient-to-br from-alira-onyx via-transparent to-alira-gold"></div>
-        </div>
-        
-        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+      <section className="py-24 md:py-32 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]">
+        <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Brand Seal */}
             <Reveal>
-              <div className="mb-16">
-                <span className="block text-3xl tracking-[0.2em] uppercase text-alira-onyx font-bold mb-4 font-serif">
-                  ALIRA.
-                </span>
-                <div className="w-20 h-[3px] bg-alira-gold mx-auto mb-12"></div>
-              </div>
-            </Reveal>
-            
-            {/* Headline */}
-            <Reveal delay={200}>
-              <h1 id="how-it-works-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
+              <h1 className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
                 How It Works
               </h1>
             </Reveal>
             
-                         {/* Subheadline */}
-             <Reveal delay={250}>
-               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-16">
-                 Our streamlined process transforms your business challenges into actionable strategic documents in three simple steps.
-               </p>
-             </Reveal>
-             
-             {/* CTA Button */}
-             <Reveal delay={300}>
-               <div className="inline-block group">
-                                 <Link
-                  href="/form"
-                  className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl border-2 border-alira-onyx hover:border-alira-gold"
-                >
-                  Start Your Business Case
-                  <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
-               </div>
-             </Reveal>
-           </div>
-         </div>
-       </section>
+            <Reveal delay={100}>
+              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[60ch] mx-auto leading-snug mb-16">
+                From enquiry to structured business case in three clear steps. No complexity, no confusion - just clarity and action.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
 
-      {/* Process Steps Section */}
+      {/* Process Section */}
       <section className="py-24 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]">
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
@@ -115,7 +45,7 @@ export default function HowItWorks() {
           </Reveal>
           
           <Reveal delay={200}>
-            <HowItWorksSteps />
+            <ProcessDiagram />
           </Reveal>
         </div>
       </section>
@@ -189,13 +119,10 @@ export default function HowItWorks() {
                 </p>
                 
                 <div className="inline-block group">
-                                  <Link
-                  href="/form"
-                  className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-alira-gold border-2 border-alira-gold rounded-full hover:bg-alira-gold hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
-                >
-                  Generate Your Business Case
-                  <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
+                  <CTAButton 
+                    href="/form" 
+                    variant="aliraOutline"
+                  />
                 </div>
               </div>
             </Reveal>

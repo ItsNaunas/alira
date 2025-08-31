@@ -1,5 +1,5 @@
 import Reveal from '@/components/Reveal'
-import { Button } from '@/components/ui/button'
+import CTAButton from '@/components/CTAButton'
 import { Mail, Calendar, MessageSquare, ArrowRight, Users, Target, Clock, Award } from 'lucide-react'
 import Link from 'next/link'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -76,87 +76,50 @@ export default function Contact() {
             {/* Subheadline */}
             <Reveal delay={250}>
               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-16">
-                Choose your preferred way to begin. Complete our intake form for an immediate business case, or schedule a call to discuss your options.
+                Complete our intake form to receive your personalized business case, or reach out directly if you prefer to discuss your options first.
               </p>
             </Reveal>
-          </div>
-        </div>
-      </section>
 
-      {/* Contact Options Section */}
-      <section className="py-16 md:py-20 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <Reveal>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Intake Form Option */}
-              <div className="group text-center">
-                <div className="mx-auto w-16 h-16 bg-alira-gold/10 rounded-full flex items-center justify-center mb-6">
-                  <MessageSquare className="h-8 w-8 text-alira-gold" />
-                </div>
-                <h3 className="text-xl font-serif font-bold text-alira-onyx mb-4">
-                  Intake Form
-                </h3>
-                <p className="text-alira-onyx/70 mb-6 leading-relaxed">
-                  Complete our structured form and receive a personalized Draft Business Case within minutes.
+            {/* Primary CTA */}
+            <Reveal delay={300}>
+              <div className="mb-12">
+                <CTAButton 
+                  href="/form" 
+                  variant="alira"
+                  className="px-12 py-5 text-lg font-semibold"
+                />
+                <p className="mt-4 text-sm text-alira-onyx/60">
+                  Get your business case within minutes, not weeks. Immediate value from day one.
                 </p>
-                <div className="inline-block group">
-                  <Link
-                    href="/form"
-                    className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium text-white bg-alira-onyx rounded-full hover:bg-alira-onyx/90 transition-colors"
-                  >
-                    Start Form
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
-                </div>
               </div>
+            </Reveal>
 
-              {/* Schedule Call Option */}
-              <div className="group text-center">
-                <div className="mx-auto w-16 h-16 bg-alira-gold/10 rounded-full flex items-center justify-center mb-6">
-                  <Calendar className="h-8 w-8 text-alira-gold" />
-                </div>
-                <h3 className="text-xl font-serif font-bold text-alira-onyx mb-4">
-                  Schedule Call
-                </h3>
-                <p className="text-alira-onyx/70 mb-6 leading-relaxed">
-                  Book a 30-minute consultation to discuss your business challenges and explore solutions.
-                </p>
-                <div className="inline-block group">
+            {/* Secondary Options */}
+            <Reveal delay={400}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <span className="text-sm text-alira-onyx/50">Or</span>
+                <div className="flex gap-4">
                   <a
                     href="https://calendly.com/alira-consulting"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium text-alira-onyx border-2 border-alira-onyx rounded-full hover:bg-alira-onyx hover:text-white transition-colors"
+                    className="text-sm text-alira-onyx/70 hover:text-alira-gold transition-colors flex items-center"
                   >
-                    Book Call
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    <Calendar className="w-4 h-4 mr-2" />
+                    Schedule a call
                   </a>
-                </div>
-              </div>
-
-              {/* Email Option */}
-              <div className="group text-center">
-                <div className="mx-auto w-16 h-16 bg-alira-gold/10 rounded-full flex items-center justify-center mb-6">
-                  <Mail className="h-8 w-8 text-alira-gold" />
-                </div>
-                <h3 className="text-xl font-serif font-bold text-alira-onyx mb-4">
-                  Email Us
-                </h3>
-                <p className="text-alira-onyx/70 mb-6 leading-relaxed">
-                  Send us a direct message with your questions or specific requirements.
-                </p>
-                <div className="inline-block group">
+                  <span className="text-alira-onyx/30">•</span>
                   <a
                     href="mailto:hello@alira.com"
-                    className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium text-alira-onyx border-2 border-alira-onyx rounded-full hover:bg-alira-onyx hover:text-white transition-colors"
+                    className="text-sm text-alira-onyx/70 hover:text-alira-gold transition-colors flex items-center"
                   >
-                    Send Email
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    <Mail className="w-4 h-4 mr-2" />
+                    Email us
                   </a>
                 </div>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -288,26 +251,19 @@ export default function Contact() {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                  <div className="inline-block group">
-                    <Link
-                      href="/form"
-                      className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-alira-gold border-2 border-alira-gold rounded-full hover:bg-alira-gold hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
-                    >
-                      Start with Form
-                      <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                  <div className="inline-block group">
-                    <a
-                      href="https://calendly.com/alira-consulting"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white border-2 border-white rounded-full hover:bg-white hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-white/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
-                    >
-                      Schedule Call
-                      <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </a>
-                  </div>
+                  <CTAButton 
+                    href="/form" 
+                    variant="aliraOutline"
+                  />
+                  <a
+                    href="https://calendly.com/alira-consulting"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white border-2 border-white rounded-full hover:bg-white hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-white/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
+                  >
+                    Schedule Call
+                    <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </a>
                 </div>
               </div>
             </Reveal>

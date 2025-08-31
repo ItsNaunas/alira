@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 
 import WhatYouGet from '@/components/WhatYouGet'
 import ProcessDiagram from '@/components/ProcessDiagram'
-import ProcessFlow from '@/components/ProcessFlow'
 import OurPhilosophy from '@/components/OurPhilosophy'
 import HomeServices from '@/components/HomeServices'
 import Experience from '@/components/Experience'
 import FinalCTA from '@/components/FinalCTA'
 import Reveal from '@/components/Reveal'
+import CTAButton from '@/components/CTAButton'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight, CheckCircle, Users, Target, Zap, FileCheck } from 'lucide-react'
@@ -93,12 +93,11 @@ export default function Home() {
             
             {/* CTA Button */}
             <Reveal delay={300}>
-                              <Link
-                  href="/form"
-                  className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-alira-porcelain bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-2 focus:ring-alira-gold focus:ring-offset-2 focus:ring-offset-alira-porcelain transition-all duration-200 active:scale-95"
-                >
-                  Start Your Business Case
-                </Link>
+              <CTAButton 
+                href="/form" 
+                variant="alira"
+                className="px-8 py-4 text-lg font-medium"
+              />
             </Reveal>
           </div>
         </div>
@@ -184,7 +183,7 @@ export default function Home() {
                     Receive Your Draft
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    Get a structured business case with problem statement, objectives, proposed solution, and next steps within 24 hours.
+                    Get a structured business case with problem statement, objectives, proposed solution, and next steps in minutes.
                   </p>
                 </div>
 
@@ -196,13 +195,10 @@ export default function Home() {
           <Reveal delay={400}>
             <div className="text-center mt-20">
               <div className="inline-block group">
-                              <Link
-                href="/form"
-                className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white bg-alira-onyx rounded-full hover:bg-alira-onyx/90 focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl border-2 border-alira-onyx hover:border-alira-gold"
-              >
-                Start Your Business Case
-                <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
+                <CTAButton 
+                  href="/form" 
+                  variant="alira"
+                />
                 <div className="mt-4 text-sm text-alira-onyx/60 font-medium">
                   Ready to turn complexity into clarity?
                 </div>
@@ -217,25 +213,6 @@ export default function Home() {
 
       {/* Signature Engagements Section */}
       <HomeServices />
-
-      {/* The Engine Section */}
-      <section className="section bg-white">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <Reveal>
-              <div className="text-center mb-16">
-                <div className="heading-eyebrow">Our Process</div>
-                <h2 className="h2 mb-6">The Engine</h2>
-                <div className="w-16 h-px bg-alira-gold mx-auto"></div>
-              </div>
-            </Reveal>
-            
-            <Reveal delay={200}>
-              <ProcessDiagram />
-            </Reveal>
-          </div>
-        </div>
-      </section>
 
       {/* Experience Section */}
       <Experience />

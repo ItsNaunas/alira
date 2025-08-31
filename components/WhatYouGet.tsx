@@ -42,7 +42,7 @@ export default function WhatYouGet() {
             Clarity you can hold in your hands.
           </h2>
           <p className="text-lg text-alira-onyx/70 max-w-2xl mx-auto leading-relaxed">
-            Every enquiry is transformed into a tailored business case draft within 24 hours.
+            Every enquiry is transformed into a tailored business case draft with same day clarity.
           </p>
         </div>
 

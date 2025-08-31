@@ -56,7 +56,7 @@ export default function HeroCards() {
           <div className="w-16 h-px bg-alira-gold/30 mx-auto mb-4"></div>
           
           <p className="text-lg md:text-xl font-medium text-alira-onyx/70 max-w-[60ch] mx-auto">
-            Every business case draft contains these four building blocks.
+            Every business case draft contains these four building blocks, delivered with instant clarity.
           </p>
         </div>
 

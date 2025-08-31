@@ -1,5 +1,5 @@
 import Reveal from './Reveal'
-import Link from 'next/link'
+import CTAButton from './CTAButton'
 
 export default function FinalCTA() {
   return (
@@ -15,12 +15,10 @@ export default function FinalCTA() {
                 <div className="w-20 h-px bg-alira-gold mx-auto"></div>
               </div>
               
-              <Link 
+              <CTAButton 
                 href="/form" 
-                className="inline-flex items-center justify-center px-12 py-4 text-lg font-semibold text-alira-gold border-2 border-alira-gold rounded-full hover:bg-alira-gold hover:text-alira-onyx focus:outline-none focus:ring-2 focus:ring-alira-gold focus:ring-offset-2 focus:ring-offset-alira-onyx transition-all duration-300 active:scale-95"
-              >
-                Start Your Business Case
-              </Link>
+                variant="aliraOutline"
+              />
             </div>
           </Reveal>
         </div>

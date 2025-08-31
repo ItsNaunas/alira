@@ -82,7 +82,7 @@ export default function Form() {
             {/* Headline */}
             <Reveal delay={200}>
               <h1 id="form-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
-                Generate Your Business Case
+                Start Your Business Case
               </h1>
             </Reveal>
             
