@@ -47,7 +47,7 @@ export default function CTAButton({
 
   const handleClick = () => {
     // Track CTA click
-    const finalText = children || buttonText
+    const finalText = typeof children === 'string' ? children : buttonText
     conversionEvents.ctaClicked(location, finalText)
   }
 
