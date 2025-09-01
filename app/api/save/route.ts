@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       service: validatedData.lead.service,
       contact_name: validatedData.lead.contactName,
       email: validatedData.lead.email,
-      notes: validatedData.lead.notes || null
+      notes: null
     })
     console.log("Lead inserted:", lead.id)
     
