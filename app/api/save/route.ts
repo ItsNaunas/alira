@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { saveRequestSchema } from '@/lib/schema'
+import { db } from '@/lib/supabase-server'
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,29 +14,53 @@ export async function POST(request: NextRequest) {
     const validatedData = saveRequestSchema.parse(body)
     console.log("Data validation successful")
     
-    // For now, skip database operations and just return success
-    // This allows us to test the full flow while we debug Supabase
-    console.log("Skipping database operations for now...")
+    // Insert lead into database
+    console.log("Inserting lead into database...")
+    const lead = await db.insertLead({
+      business_name: validatedData.lead.businessName,
+      industry: validatedData.lead.industry,
+      stage: validatedData.lead.stage,
+      challenges: validatedData.lead.challenges,
+      goals_short: validatedData.lead.goalsShort,
+      goals_long: validatedData.lead.goalsLong,
+      resources: validatedData.lead.resources,
+      budget: validatedData.lead.budget,
+      timeline: validatedData.lead.timeline,
+      service: validatedData.lead.service,
+      contact_name: validatedData.lead.contactName,
+      email: validatedData.lead.email,
+      notes: validatedData.lead.notes || null
+    })
+    console.log("Lead inserted:", lead.id)
     
-    // Generate a mock filename
+    // Insert business case into database
+    console.log("Inserting business case into database...")
+    const businessCase = await db.insertBusinessCase({
+      lead_id: lead.id,
+      outline: validatedData.businessCase.outline,
+      status: 'new'
+    })
+    console.log("Business case inserted:", businessCase.id)
+    
+    // Generate filename
     const fileName = `${validatedData.lead.businessName}_${new Date().toISOString().split('T')[0]}.pdf`
       .replace(/[^a-zA-Z0-9-_]/g, '_')
     
-    console.log("Returning mock success response")
+    console.log("Database operations completed successfully")
     
     return NextResponse.json({
       success: true,
       lead: {
-        id: 'mock-lead-id',
+        id: lead.id,
         businessName: validatedData.lead.businessName,
         email: validatedData.lead.email
       },
       businessCase: {
-        id: 'mock-business-case-id',
+        id: businessCase.id,
         pdfUrl: `https://example.com/${fileName}`,
         fileName: fileName
       },
-      message: "Business case generated successfully (database operations temporarily disabled)"
+      message: "Business case generated and saved successfully"
     })
     
   } catch (error) {
