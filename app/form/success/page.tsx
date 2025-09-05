@@ -31,8 +31,7 @@ export default function SuccessPage() {
 
   const handleBookCall = () => {
     conversionEvents.ctaClicked('success_page', 'Book Call')
-    // You'll need to replace this with your actual booking URL
-    window.open('https://calendly.com/alira/consultation', '_blank')
+    window.open('https://calendly.com/its-naunas/30min', '_blank')
   }
 
   return (

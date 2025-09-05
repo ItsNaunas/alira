@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
               <li>Resource optimization recommendations</li>
               <li>Implementation roadmap</li>
             </ul>
-            <p>Ready to discuss your plan? <a href="https://calendly.com/alira/consultation">Book a free check-in call</a> to explore how we can help you implement these recommendations.</p>
+            <p>Ready to discuss your plan? <a href="https://calendly.com/its-naunas/30min">Book a free check-in call</a> to explore how we can help you implement these recommendations.</p>
             <p>Best regards,<br>The ALIRA Team</p>
           </div>
         `
