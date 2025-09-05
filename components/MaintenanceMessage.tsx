@@ -22,7 +22,7 @@ export default function MaintenanceMessage() {
         <CardContent className="text-center space-y-6">
           <div className="space-y-4">
             <p className="text-alira-onyx/80 leading-relaxed">
-              We're currently updating our business case form to provide you with an even better experience. 
+              We're currently updating our simple plan form to provide you with an even better experience. 
               Our team is working hard to bring you enhanced features and improved functionality.
             </p>
             
@@ -37,7 +37,7 @@ export default function MaintenanceMessage() {
               Need immediate assistance?
             </h3>
             <p className="text-sm text-alira-onyx/70 mb-4">
-              Our team is still available to help with your business case needs.
+              Our team is still available to help with your planning needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link href="/contact">
