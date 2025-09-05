@@ -1,33 +1,12 @@
 'use client'
 
-import FormWizard from '@/components/FormWizard'
-import LivePreview from '@/components/LivePreview'
+import MaintenanceMessage from '@/components/MaintenanceMessage'
 import Reveal from '@/components/Reveal'
-import SectionHeading from '@/components/ui/SectionHeading'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import { conversionEvents } from '@/lib/analytics'
 import React from 'react'
 
 export default function Form() {
-  const [resumeToken, setResumeToken] = React.useState<string | undefined>()
-  const [initialData, setInitialData] = React.useState<any>(null)
-  const [draftId, setDraftId] = React.useState<string | undefined>()
-
-  // Track page view
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      conversionEvents.pageView('form_page')
-      conversionEvents.formStarted('business_case_initial')
-      
-      // Check for resume token in URL
-      const urlParams = new URLSearchParams(window.location.search)
-      const token = urlParams.get('resume')
-      if (token) {
-        setResumeToken(token)
-      }
-    }
-  }, [])
 
   return (
     <div className="min-h-screen">
@@ -120,27 +99,11 @@ export default function Form() {
         </div>
       </section>
 
-      {/* Form Section */}
+      {/* Maintenance Section */}
       <section className="py-16 md:py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <Reveal>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Form Wizard */}
-              <div className="lg:col-span-2">
-                <FormWizard 
-                  resumeToken={resumeToken}
-                  initialData={initialData}
-                  draftId={draftId}
-                />
-              </div>
-              
-              {/* Live Preview */}
-              <div className="lg:col-span-1">
-                <div className="hidden lg:block">
-                  <LivePreview data={initialData || {}} />
-                </div>
-              </div>
-            </div>
+            <MaintenanceMessage />
           </Reveal>
         </div>
       </section>
