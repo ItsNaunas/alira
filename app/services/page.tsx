@@ -71,14 +71,14 @@ export default function Services() {
             {/* Headline */}
             <Reveal delay={200}>
               <h1 id="services-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
-                Our Services
+                Pick your path
               </h1>
             </Reveal>
             
             {/* Subheadline */}
             <Reveal delay={250}>
               <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
-                Signature engagements designed to cut through complexity and deliver lasting clarity. Each service is crafted to meet you where you are and take you where you want to go.
+                Every option starts with a clear outcome and simple deliverables. Choose what matches where you are right now.
               </p>
             </Reveal>
             
@@ -96,68 +96,285 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Services Deliverables Section */}
-      <ServicesDeliverables />
-
-      {/* Services Grid Section */}
-      <section className="py-16 md:py-20 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20 relative z-[1]">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <Reveal delay={200}>
-            <SignatureEngagements />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Service Philosophy Section */}
-      <section className="py-16 md:py-20 bg-white">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <Reveal>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8">
-                <div>
-                  <h2 className="h2 mb-6">
-                    Clarity Over Complexity
-                  </h2>
-                  <div className="w-16 h-px bg-alira-gold mb-8"></div>
+      {/* Pricing Tiers Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="space-y-16">
+              
+              {/* Quick Chat - Free */}
+              <Reveal>
+                <div className="bg-gradient-to-r from-alira-porcelain/30 to-white p-8 rounded-2xl border border-alira-onyx/10">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div className="lg:col-span-2">
+                      <div className="flex items-center gap-4 mb-4">
+                        <h3 className="text-2xl font-bold text-alira-onyx">Quick Chat — Free</h3>
+                        <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">Free</span>
+                      </div>
+                      <p className="text-lg text-alira-onyx/80 mb-4">
+                        A short 15-minute call to point you in the right direction.
+                      </p>
+                      <div className="space-y-3">
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">What you leave with:</h4>
+                          <p className="text-alira-onyx/70">One clear next step.</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Best for:</h4>
+                          <p className="text-alira-onyx/70">If you are unsure where to start.</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Price note:</h4>
+                          <p className="text-alira-onyx/70">Free. No payment or commitment required.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center lg:text-right">
+                      <CTAButton 
+                        href="/contact" 
+                        variant="aliraOutline"
+                        className="w-full lg:w-auto"
+                      >
+                        Start Free Chat
+                      </CTAButton>
+                      <p className="text-sm text-alira-onyx/60 mt-2">Book your 15-minute call today</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-6">
-                  <p className="copy text-lg leading-relaxed">
-                    Every engagement is designed to cut through the noise and deliver actionable clarity. We don't create generic templates - we build systems that endure.
-                  </p>
-                  <p className="copy text-lg leading-relaxed">
-                    Whether you're resetting, scaling, adopting AI, or seeking long-term guidance, the outcome is always the same: lasting clarity and systems that work.
-                  </p>
+              </Reveal>
+
+              {/* Clarity Session - £150 */}
+              <Reveal delay={200}>
+                <div className="bg-white p-8 rounded-2xl border-2 border-alira-gold/20 shadow-lg">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div className="lg:col-span-2">
+                      <div className="flex items-center gap-4 mb-4">
+                        <h3 className="text-2xl font-bold text-alira-onyx">Clarity Session — starting from £150</h3>
+                        <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">£150+</span>
+                      </div>
+                      <p className="text-lg text-alira-onyx/80 mb-4">
+                        A focused 90-minute session to cut the noise and give you direction.
+                      </p>
+                      <div className="space-y-3">
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">What you leave with:</h4>
+                          <ul className="text-alira-onyx/70 space-y-1">
+                            <li>• A one-page plan</li>
+                            <li>• Your top priorities</li>
+                            <li>• Three actions you can start this week</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Best for:</h4>
+                          <p className="text-alira-onyx/70">If you feel stuck and need clear direction right now.</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Price note:</h4>
+                          <p className="text-alira-onyx/70">Starting from £150. Final price is confirmed before you book — no surprises.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center lg:text-right">
+                      <CTAButton 
+                        href="/contact" 
+                        variant="alira"
+                        className="w-full lg:w-auto"
+                      >
+                        Get Clarity Now
+                      </CTAButton>
+                      <p className="text-sm text-alira-onyx/60 mt-2">Book your 90-minute session today</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="bg-alira-onyx/5 p-8 rounded-lg border border-alira-onyx/10">
-                <h3 className="h3 mb-6">
-                  Our Approach
-                </h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start space-x-4">
-                    <span className="text-alira-gold font-bold text-lg">•</span>
-                    <span className="copy">Outcome-focused engagements, not time-based billing</span>
-                  </li>
-                  <li className="flex items-start space-x-4">
-                    <span className="text-alira-gold font-bold text-lg">•</span>
-                    <span className="copy">Systems that endure beyond the engagement</span>
-                  </li>
-                  <li className="flex items-start space-x-4">
-                    <span className="text-alira-gold font-bold text-lg">•</span>
-                    <span className="copy">Clarity as the foundation for all decisions</span>
-                  </li>
-                  <li className="flex items-start space-x-4">
-                    <span className="text-alira-gold font-bold text-lg">•</span>
-                    <span className="copy">Elegant solutions to complex problems</span>
-                  </li>
-                </ul>
-              </div>
+              </Reveal>
+
+              {/* Idea to Action - £950 */}
+              <Reveal delay={300}>
+                <div className="bg-gradient-to-r from-alira-porcelain/20 to-white p-8 rounded-2xl border border-alira-onyx/10">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div className="lg:col-span-2">
+                      <div className="flex items-center gap-4 mb-4">
+                        <h3 className="text-2xl font-bold text-alira-onyx">Idea to Action — starting from £950</h3>
+                        <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">£950+</span>
+                      </div>
+                      <p className="text-lg text-alira-onyx/80 mb-4">
+                        A guided 2–3 week journey to turn your idea into something real.
+                      </p>
+                      <div className="space-y-3">
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">What you leave with:</h4>
+                          <ul className="text-alira-onyx/70 space-y-1">
+                            <li>• A clear offer people understand</li>
+                            <li>• A simple test you can run</li>
+                            <li>• A 90-day path to build from</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Best for:</h4>
+                          <p className="text-alira-onyx/70">If you have an idea and want proof it can work.</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Price note:</h4>
+                          <p className="text-alira-onyx/70">Starting from £950. Final price is confirmed before you book — no surprises.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center lg:text-right">
+                      <CTAButton 
+                        href="/contact" 
+                        variant="aliraOutline"
+                        className="w-full lg:w-auto"
+                      >
+                        Turn Idea Into Action
+                      </CTAButton>
+                      <p className="text-sm text-alira-onyx/60 mt-2">Begin your 2–3 week guided journey</p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* Operational Reset - £1,500 */}
+              <Reveal delay={400}>
+                <div className="bg-white p-8 rounded-2xl border border-alira-onyx/10">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div className="lg:col-span-2">
+                      <div className="flex items-center gap-4 mb-4">
+                        <h3 className="text-2xl font-bold text-alira-onyx">Operational Reset — starting from £1,500</h3>
+                        <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">£1,500+</span>
+                      </div>
+                      <p className="text-lg text-alira-onyx/80 mb-4">
+                        A 30-day reset to clear bottlenecks, simplify processes, and get momentum back.
+                      </p>
+                      <div className="space-y-3">
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">What you leave with:</h4>
+                          <ul className="text-alira-onyx/70 space-y-1">
+                            <li>• One-page view of how your work flows</li>
+                            <li>• Three key changes that unlock speed</li>
+                            <li>• A weekly rhythm that keeps you moving</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Best for:</h4>
+                          <p className="text-alira-onyx/70">If you are already running something but feel stuck.</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Price note:</h4>
+                          <p className="text-alira-onyx/70">Starting from £1,500. Final price is confirmed before you book — no surprises.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center lg:text-right">
+                      <CTAButton 
+                        href="/contact" 
+                        variant="aliraOutline"
+                        className="w-full lg:w-auto"
+                      >
+                        Start Your Reset
+                      </CTAButton>
+                      <p className="text-sm text-alira-onyx/60 mt-2">Begin your 30-day reset programme</p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* Build With Us - £2,000 */}
+              <Reveal delay={500}>
+                <div className="bg-gradient-to-r from-alira-onyx/5 to-alira-porcelain/20 p-8 rounded-2xl border-2 border-alira-gold/30 shadow-lg">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div className="lg:col-span-2">
+                      <div className="flex items-center gap-4 mb-4">
+                        <h3 className="text-2xl font-bold text-alira-onyx">Build With Us — starting from £2,000</h3>
+                        <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">£2,000+</span>
+                      </div>
+                      <p className="text-lg text-alira-onyx/80 mb-4">
+                        Hands-on partnership to build and launch with you.
+                      </p>
+                      <div className="space-y-3">
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">What you leave with:</h4>
+                          <ul className="text-alira-onyx/70 space-y-1">
+                            <li>• Working tools in place</li>
+                            <li>• A clear way to sell or deliver</li>
+                            <li>• Support through your first launch or reset</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Best for:</h4>
+                          <p className="text-alira-onyx/70">If you are ready to grow quickly and need more than advice.</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-alira-onyx mb-2">Price note:</h4>
+                          <p className="text-alira-onyx/70">Starting from £2,000. Final price is confirmed before you book — no surprises.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center lg:text-right">
+                      <CTAButton 
+                        href="/contact" 
+                        variant="alira"
+                        className="w-full lg:w-auto"
+                      >
+                        Build With Us Today
+                      </CTAButton>
+                      <p className="text-sm text-alira-onyx/60 mt-2">Discuss your project with our team</p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* FAQ Section */}
+      <section className="py-24 bg-gradient-to-r from-alira-porcelain/20 via-white to-alira-porcelain/20">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <Reveal>
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-alira-onyx mb-6">
+                  FAQ
+                </h2>
+                <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
+              </div>
+            </Reveal>
+
+            <div className="space-y-8">
+              <Reveal delay={200}>
+                <div className="bg-white p-6 rounded-lg border border-alira-onyx/10">
+                  <h3 className="text-xl font-semibold text-alira-onyx mb-3">How fast can I start?</h3>
+                  <p className="text-alira-onyx/70">Most sessions can begin within a few days.</p>
+                </div>
+              </Reveal>
+
+              <Reveal delay={300}>
+                <div className="bg-white p-6 rounded-lg border border-alira-onyx/10">
+                  <h3 className="text-xl font-semibold text-alira-onyx mb-3">How does pricing work?</h3>
+                  <p className="text-alira-onyx/70">Each service has a starting price. The final cost depends on the scope of work. You will always know the price before we begin.</p>
+                </div>
+              </Reveal>
+
+              <Reveal delay={400}>
+                <div className="bg-white p-6 rounded-lg border border-alira-onyx/10">
+                  <h3 className="text-xl font-semibold text-alira-onyx mb-3">Do I need to prepare anything?</h3>
+                  <p className="text-alira-onyx/70">No heavy prep. Just be ready to share where you are stuck or what you want to achieve.</p>
+                </div>
+              </Reveal>
+
+              <Reveal delay={500}>
+                <div className="bg-white p-6 rounded-lg border border-alira-onyx/10">
+                  <h3 className="text-xl font-semibold text-alira-onyx mb-3">Is this only for new ideas?</h3>
+                  <p className="text-alira-onyx/70">No. It works whether you are starting, building, or already running something.</p>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
       <section className="py-16 md:py-20 bg-alira-onyx">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="text-center">
@@ -165,33 +382,19 @@ export default function Services() {
               <div className="space-y-12">
                 <div className="relative">
                   <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                    Not Sure Which Service Fits?
+                    Choose your path and let's get started.
                   </h2>
                   <div className="w-20 h-px bg-alira-gold mx-auto"></div>
                 </div>
                 
-                <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-                  Complete our intake form and we'll recommend the best approach for your situation, or schedule a call to discuss your options.
-                </p>
-                
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                  <div className="inline-block group">
-                    <CTAButton 
-                      href="/form" 
-                      variant="aliraOutline"
-                      testVariants={['Start with Intake Form', 'Start Your Business Case']}
-                      testKey="services-cta"
-                    />
-                  </div>
-                  <div className="inline-block group">
-                    <Link
-                      href="/form"
-                      className="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white border-2 border-white rounded-full hover:bg-white hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-white/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl"
-                    >
-                      Start with Form
-                      <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </Link>
-                  </div>
+                  <CTAButton 
+                    href="/contact" 
+                    variant="aliraOutline"
+                    className="px-8 py-4 text-lg font-medium"
+                  >
+                    Take the Next Step
+                  </CTAButton>
                 </div>
               </div>
             </Reveal>

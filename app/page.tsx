@@ -299,19 +299,19 @@ export default function Home() {
               {/* Right column - Visual elements and CTA */}
               <Reveal delay={400}>
                 <div className="space-y-8">
-                  {/* Founder photo with elegant styling */}
-                  <div className="relative">
-                    <div className="w-full h-80 rounded-2xl overflow-hidden border border-alira-onyx/10 shadow-lg">
-                      <img 
-                        src="/images/assets/founder.jpg" 
-                        alt="ALIRA Founder - Professional headshot"
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </div>
-                    {/* Decorative elements */}
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-alira-gold/20 rounded-full"></div>
-                    <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-alira-gold/30 rounded-full"></div>
-                  </div>
+                                            {/* Founder photo with elegant styling */}
+                          <div className="relative">
+                            <div className="w-full h-80 rounded-2xl overflow-hidden border border-alira-onyx/10 shadow-lg">
+                              <img 
+                                src="/images/assets/founder.jpg" 
+                                alt="ALIRA Founder - Professional headshot"
+                                className="w-full h-full object-cover object-top"
+                              />
+                            </div>
+                            {/* Decorative elements */}
+                            <div className="absolute -top-4 -right-4 w-8 h-8 bg-alira-gold/20 rounded-full"></div>
+                            <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-alira-gold/30 rounded-full"></div>
+                          </div>
 
                   {/* Credentials/Experience */}
                   <div className="space-y-4">
