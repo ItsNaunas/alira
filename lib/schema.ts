@@ -1,6 +1,25 @@
 import { z } from 'zod'
 
-// IntakeForm validation schema
+// Mini form schema for homepage
+export const miniFormSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  email: z.string().email("Valid email is required"),
+  idea: z.string().optional()
+})
+
+// New wizard form schema (matches the document requirements)
+export const wizardFormSchema = z.object({
+  idea: z.string().min(10, "Please provide more detail about your idea"),
+  challenge: z.string().min(10, "Please provide more detail about your challenge"),
+  goal_90d: z.string().min(10, "Please provide more detail about your 90-day goal"),
+  resources: z.array(z.string()).min(1, "Please select at least one resource"),
+  other_resource: z.string().optional(),
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Valid email is required"),
+  consent: z.boolean().refine(val => val === true, "You must agree to the terms")
+})
+
+// Legacy IntakeForm validation schema (keeping for backward compatibility)
 export const intakeFormSchema = z.object({
   businessName: z.string().min(1, "Business name is required"),
   industry: z.string().min(1, "Industry is required"),
@@ -59,6 +78,8 @@ export const businessCaseOutlineSchema = z.object({
 })
 
 // Types
+export type MiniFormData = z.infer<typeof miniFormSchema>
+export type WizardFormData = z.infer<typeof wizardFormSchema>
 export type IntakeFormData = z.infer<typeof intakeFormSchema>
 export type AIGenerateRequest = z.infer<typeof aiGenerateSchema>
 export type SaveRequest = z.infer<typeof saveRequestSchema>
@@ -114,4 +135,14 @@ export const services = [
     price: '£15,000+',
     duration: 'Ongoing',
   },
+] as const
+
+// Resource options for the wizard form
+export const resourceOptions = [
+  { value: 'team', label: 'Team members' },
+  { value: 'budget', label: 'Budget available' },
+  { value: 'time', label: 'Time to dedicate' },
+  { value: 'network', label: 'Professional network' },
+  { value: 'skills', label: 'Relevant skills' },
+  { value: 'tools', label: 'Tools and software' }
 ] as const

@@ -16,6 +16,7 @@ import StickyCTA from '@/components/StickyCTA'
 import FinalCTA from '@/components/FinalCTA'
 import Reveal from '@/components/Reveal'
 import CTAButton from '@/components/CTAButton'
+import MiniForm from '@/components/MiniForm'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight, CheckCircle, Users, Target, Zap, FileCheck } from 'lucide-react'
@@ -105,15 +106,10 @@ export default function Home() {
               </p>
             </Reveal>
             
-            {/* CTA Button */}
+            {/* Mini Form */}
             <Reveal delay={300}>
               <div className="space-y-4">
-                <CTAButton 
-                  href="/form" 
-                  variant="alira"
-                  className="px-8 py-4 text-lg font-medium"
-                  location="hero"
-                />
+                <MiniForm />
                 <p className="text-sm text-alira-onyx/70 font-medium">
                   Free • Private • No card required • Delivered in minutes
                 </p>
