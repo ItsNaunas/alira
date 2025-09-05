@@ -9,20 +9,20 @@ export default function FAQ() {
 
   const faqs = [
     {
-      q: "What exactly do I receive?",
-      a: "A complete, board-ready PDF with problem statement, objectives, solution, and next steps — generated in minutes."
+      q: "How fast can I start?",
+      a: "Most sessions can begin within a few days."
     },
     {
-      q: "How fast is it?",
-      a: "Once you submit the form, you'll receive your full, board-ready business case in just minutes."
+      q: "How does pricing work?",
+      a: "Each service has a starting price. The final cost depends on the scope of work. You will always know the price before we begin."
     },
     {
-      q: "What if I don't like it?",
-      a: "No risk, no credit card. Because it's delivered in minutes, there's no wasted time — you can walk away."
+      q: "Do I need to prepare anything?",
+      a: "No heavy prep. Just be ready to share where you are stuck or what you want to achieve."
     },
     {
-      q: "Is my info secure?",
-      a: "Yes. It's processed instantly and privately, GDPR-compliant."
+      q: "Is this only for new ideas?",
+      a: "No. It works whether you are starting, building, or already running something."
     }
   ]
 
