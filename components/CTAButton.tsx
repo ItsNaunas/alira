@@ -29,7 +29,7 @@ export default function CTAButton({
   location = 'unknown',
   children
 }: CTAButtonProps) {
-  const [buttonText, setButtonText] = useState('Start Your Business Case')
+  const [buttonText, setButtonText] = useState('Start Your Simple Plan')
 
   useEffect(() => {
     // A/B testing logic - can be expanded later
@@ -68,10 +68,10 @@ export default function CTAButton({
 
 // Predefined CTA text variations for easy A/B testing
 export const CTA_VARIANTS = {
-  DEFAULT: 'Start Your Business Case',
-  SPEED: 'Your 24-Hour Business Case',
+  DEFAULT: 'Start Your Simple Plan',
+  SPEED: 'Your 24-Hour Simple Plan',
   BRAND: 'Get Your Clarity',
-  ACTION: 'Begin Your Business Case',
+  ACTION: 'Begin Your Simple Plan',
   SIMPLE: 'Get Started'
 } as const
 
