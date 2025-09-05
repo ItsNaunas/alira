@@ -94,14 +94,14 @@ export default function Home() {
             {/* Headline */}
             <Reveal delay={200}>
               <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
-                Your <span className="text-alira-gold">Free</span> Business Case in Minutes.
+                Get a <span className="text-alira-gold">simple plan</span> for your idea or business in minutes.
               </h1>
             </Reveal>
             
             {/* Subheadline */}
             <Reveal delay={250}>
-              <p className="text-3xl md:text-4xl text-alira-onyx font-serif italic font-light max-w-[50ch] mx-auto leading-tight mb-8">
-                A complete, board-ready PDF — built from just 10 minutes of your input.
+              <p className="text-2xl md:text-3xl text-alira-onyx font-serif italic font-light max-w-[60ch] mx-auto leading-tight mb-8">
+                Answer a few quick questions and receive a clear PDF plan with next steps. Free, private, no card required.
               </p>
             </Reveal>
             
@@ -115,7 +115,7 @@ export default function Home() {
                   location="hero"
                 />
                 <p className="text-sm text-alira-onyx/70 font-medium">
-                  No credit card required • Completely free • Delivered in minutes • Private & secure
+                  Free • Private • No card required • Delivered in minutes
                 </p>
               </div>
             </Reveal>
@@ -145,7 +145,7 @@ export default function Home() {
               <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
               
               <p className="copy text-xl md:text-2xl max-w-[65ch] mx-auto">
-                From enquiry to structured business case in three clear steps.
+                Simple steps to get your plan ready in minutes.
               </p>
             </div>
           </Reveal>
@@ -163,10 +163,10 @@ export default function Home() {
                     </svg>
                   </div>
                   <h3 className="text-xl font-semibold text-alira-onyx mb-4 group-hover:text-alira-gold transition-colors duration-300">
-                    Complete the Form
+                    Tell us a little about your idea or business
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    10 minutes of your time.
+                    Quick questions to understand where you are.
                   </p>
                 </div>
 
@@ -185,10 +185,10 @@ export default function Home() {
                     </svg>
                   </div>
                   <h3 className="text-xl font-semibold text-alira-onyx mb-4 group-hover:text-alira-gold transition-colors duration-300">
-                    Engine Processing
+                    We shape it into a clear plan
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    AI + consulting discipline transforms your answers instantly.
+                    Our system transforms your answers into actionable steps.
                   </p>
                 </div>
 
@@ -206,10 +206,10 @@ export default function Home() {
                     </svg>
                   </div>
                   <h3 className="text-xl font-semibold text-alira-onyx mb-4 group-hover:text-alira-gold transition-colors duration-300">
-                    Receive Your Draft
+                    You get it in minutes — ready to use
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed max-w-xs">
-                    A board-ready PDF generated in minutes, not days.
+                    A simple PDF plan delivered instantly to your inbox.
                   </p>
                 </div>
 
@@ -227,7 +227,7 @@ export default function Home() {
                 location="how-it-works"
               />
               <p className="text-sm text-alira-onyx/70 mt-4">
-                Free • Secure • Delivered in minutes
+                Free • Private • No card required • Delivered in minutes
               </p>
             </div>
           </Reveal>
@@ -236,6 +236,116 @@ export default function Home() {
 
       {/* FAQ Section */}
       <FAQ />
+
+      {/* Meet the Founder Section */}
+      <section className="py-24 bg-gradient-to-br from-alira-porcelain/30 via-white to-alira-porcelain/20 relative overflow-hidden" aria-labelledby="founder-heading">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.02]">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(to right, #0B0B0B 1px, transparent 1px),
+                             linear-gradient(to bottom, #0B0B0B 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }} />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+          <div className="max-w-6xl mx-auto">
+            <Reveal>
+              <div className="text-center mb-20">
+                <h2 id="founder-heading" className="text-4xl md:text-5xl font-bold text-alira-onyx mb-6">
+                  Meet the Founder
+                </h2>
+                <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
+              </div>
+            </Reveal>
+
+            {/* Two-column layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Left column - Story */}
+              <Reveal delay={200}>
+                <div className="space-y-8">
+                  {/* Opening statement */}
+                  <div className="relative">
+                    <div className="absolute -left-4 top-0 w-1 h-full bg-alira-gold/30"></div>
+                    <p className="text-2xl text-alira-onyx font-serif italic leading-relaxed pl-6">
+                      "I know what it feels like to have ambition but no clear path."
+                    </p>
+                  </div>
+
+                  {/* Personal journey */}
+                  <div className="space-y-6">
+                    <p className="text-lg text-alira-onyx/80 leading-relaxed">
+                      For over a decade, I worked in project management and operations, leading teams, fixing systems, and delivering projects that saved organisations time and money.
+                    </p>
+                    
+                    <p className="text-lg text-alira-onyx/80 leading-relaxed">
+                      But I kept seeing the same pattern: brilliant people with great ideas getting stuck in complexity. Projects that should take weeks taking months. Simple problems becoming complicated messes.
+                    </p>
+                    
+                    <p className="text-lg text-alira-onyx/80 leading-relaxed">
+                      The frustration was real. I'd watch talented founders and teams spin their wheels, not because they lacked vision, but because they lacked clarity on the next step.
+                    </p>
+                  </div>
+
+                  {/* The solution */}
+                  <div className="bg-alira-onyx/5 p-6 rounded-lg border-l-4 border-alira-gold">
+                    <p className="text-lg text-alira-onyx font-medium leading-relaxed">
+                      That's why I built ALIRA. To strip away the noise and give people what they actually need: a simple plan, clear steps, and the confidence to move forward.
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* Right column - Visual elements and CTA */}
+              <Reveal delay={400}>
+                <div className="space-y-8">
+                  {/* Founder photo with elegant styling */}
+                  <div className="relative">
+                    <div className="w-full h-80 rounded-2xl overflow-hidden border border-alira-onyx/10 shadow-lg">
+                      <img 
+                        src="/images/assets/founder.jpg" 
+                        alt="ALIRA Founder - Professional headshot"
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                    {/* Decorative elements */}
+                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-alira-gold/20 rounded-full"></div>
+                    <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-alira-gold/30 rounded-full"></div>
+                  </div>
+
+                  {/* Credentials/Experience */}
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
+                      <span className="text-alira-onyx/80 font-medium">10+ years in project management</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
+                      <span className="text-alira-onyx/80 font-medium">Led teams across multiple industries</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
+                      <span className="text-alira-onyx/80 font-medium">Saved organisations time and money</span>
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="text-center pt-4">
+                    <CTAButton 
+                      href="/contact" 
+                      variant="alira"
+                      className="px-8 py-4 text-lg font-medium"
+                      location="founder-section"
+                    >
+                      Contact Us
+                    </CTAButton>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Our Philosophy Section */}
       <OurPhilosophy />

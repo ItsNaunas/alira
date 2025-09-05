@@ -4,18 +4,18 @@ export default function WhatYouGet() {
   const items = [
     {
       icon: FileText,
-      title: "Clarity in Writing",
-      desc: "Board-ready PDF, no blank page stress.",
+      title: "A clear plan",
+      desc: "Simple, actionable steps you can follow immediately.",
     },
     {
       icon: Compass,
-      title: "Actionable Priorities",
-      desc: "Know exactly where to focus first.",
+      title: "Next steps",
+      desc: "Know exactly what to do first to move forward.",
     },
     {
-      icon: Sparkles,
-      title: "Independent Insight",
-      desc: "Outside eyes to cut through internal noise.",
+      icon: MapPin,
+      title: "Direction you can use today",
+      desc: "No waiting, no confusion — just clear direction.",
     },
   ];
 
@@ -34,10 +34,10 @@ export default function WhatYouGet() {
             id="what-you-get-heading"
             className="text-3xl md:text-4xl font-bold tracking-tight text-alira-onyx leading-tight mb-6"
           >
-            Everything you need to move forward.
+            What You Get
           </h2>
           <p className="text-lg text-alira-onyx/70 max-w-2xl mx-auto leading-relaxed">
-            Get a complete business case your team can use immediately — delivered in minutes.
+            In minutes, you'll receive a simple PDF that shows everything you need to move forward.
           </p>
         </div>
 
