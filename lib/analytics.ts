@@ -97,6 +97,14 @@ export const conversionEvents = {
     label: businessName
   }),
   
+  // Step view tracking
+  stepView: (stepName: string) => trackEvent({
+    event: 'step_view',
+    category: 'engagement',
+    action: 'step_view',
+    label: stepName
+  }),
+  
   // Scroll depth
   scrollDepth: (depth: number) => trackEvent({
     event: 'scroll_depth',
