@@ -126,9 +126,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Proven Outcomes Section */}
-      <ProvenOutcomes />
-
       {/* What You Get Section */}
       <WhatYouGet />
 
@@ -234,10 +231,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <FAQ />
+      {/* Signature Engagements Section */}
+      <HomeServices />
 
-              {/* Meet the Team Section */}
+      {/* Meet the Team Section */}
         <section className="py-24 bg-gradient-to-br from-alira-porcelain/30 via-white to-alira-porcelain/20 relative overflow-hidden" aria-labelledby="team-heading">
           {/* Subtle background pattern */}
           <div className="absolute inset-0 pointer-events-none opacity-[0.02]">
@@ -458,11 +455,11 @@ export default function Home() {
         </div>
                     </section>
 
+              {/* FAQ Section */}
+      <FAQ />
+
         {/* Our Philosophy Section */}
       <OurPhilosophy />
-
-      {/* Signature Engagements Section */}
-      <HomeServices />
 
       {/* Final CTA Section */}
       <FinalCTA />

@@ -31,7 +31,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-24 bg-gradient-to-br from-alira-porcelain/30 via-white to-alira-porcelain/20">
+      <section className="py-24 md:py-32 bg-gradient-to-br from-alira-porcelain/30 via-white to-alira-porcelain/20 relative overflow-hidden">
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="max-w-4xl mx-auto text-center">

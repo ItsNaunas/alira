@@ -1,3 +1,4 @@
+import React from 'react'
 import SignatureEngagements from '@/components/SignatureEngagements'
 import ServicesDeliverables from '@/components/ServicesDeliverables'
 import Reveal from '@/components/Reveal'
@@ -71,25 +72,31 @@ export default function Services() {
             {/* Headline */}
             <Reveal delay={200}>
               <h1 id="services-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx leading-[0.95] tracking-tight mb-8">
-                Pick your path
+                Pick your <span className="text-alira-gold">path</span>
               </h1>
             </Reveal>
             
             {/* Subheadline */}
             <Reveal delay={250}>
-              <p className="text-xl md:text-2xl text-alira-ink/80 max-w-[50ch] mx-auto leading-snug mb-8">
+              <p className="text-2xl md:text-3xl text-alira-onyx font-serif italic font-light max-w-[60ch] mx-auto leading-tight mb-8">
                 Every option starts with a clear outcome and simple deliverables. Choose what matches where you are right now.
               </p>
             </Reveal>
             
             {/* CTA Button */}
             <Reveal delay={300}>
-              <div className="mt-6 flex justify-center">
+              <div className="space-y-4">
                 <CTAButton 
                   href="/form" 
                   variant="alira"
-                  className="px-6 py-3 text-sm font-medium tracking-tight"
-                />
+                  className="px-8 py-4 text-lg font-medium"
+                  location="services-hero"
+                >
+                  Start Your Simple Plan
+                </CTAButton>
+                <p className="text-sm text-alira-onyx/70 font-medium">
+                  Free • Private • No card required • Delivered in minutes
+                </p>
               </div>
             </Reveal>
           </div>

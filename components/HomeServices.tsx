@@ -237,7 +237,7 @@ export default function HomeServices() {
           <div className="text-center mt-12">
             <CTAButton 
               href="/services" 
-              variant="aliraOutline"
+              variant="alira"
               className="px-8 py-4 text-lg font-medium"
             >
               View All Services
