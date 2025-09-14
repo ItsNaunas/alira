@@ -72,7 +72,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate PDF using the draft data
+    console.log('Generating PDF for draft:', draft.id)
     const pdfBuffer = await generatePersonalPlanPDF(draft.data)
+    console.log('PDF generated successfully, size:', pdfBuffer.length, 'bytes')
     
     // Upload PDF to Supabase Storage
     const fileName = `personal-plan-${id}.pdf`
@@ -102,10 +104,11 @@ export async function POST(request: NextRequest) {
       .update({ pdf_url: urlData.publicUrl })
       .eq('id', id)
 
-    // Send email with PDF
+    // Send email with PDF attachment
     try {
+      console.log('Sending email to:', email)
       const resend = new Resend(process.env.RESEND_API_KEY)
-      await resend.emails.send({
+      const emailResult = await resend.emails.send({
         from: 'ALIRA <contact@alirapartners.co.uk>',
         to: [email],
         subject: 'Your Personal Plan is Ready',
@@ -126,19 +129,29 @@ export async function POST(request: NextRequest) {
               <li>Implementation roadmap</li>
             </ul>
             <p>Ready to discuss your plan? <a href="https://calendly.com/its-naunas/30min">Book a free check-in call</a> to explore how we can help you implement these recommendations.</p>
+            <p><strong>Important:</strong> If you don't see this email in your inbox, please check your spam/junk folder.</p>
             <p>Best regards,<br>The ALIRA Team</p>
           </div>
-        `
+        `,
+        attachments: [
+          {
+            filename: `personal-plan-${draft.name || 'your-business'}.pdf`,
+            content: pdfBuffer
+          }
+        ]
       })
+      console.log('Email sent successfully:', emailResult)
     } catch (emailError) {
       console.error('Error sending email:', emailError)
-      // Don't fail the request if email fails
+      // Don't fail the request if email fails, but log the error
     }
 
     return NextResponse.json({
       success: true,
       pdf_url: urlData.publicUrl,
-      message: 'Plan generated and email sent successfully'
+      message: 'Plan generated and email sent successfully',
+      email_sent: true,
+      pdf_size: pdfBuffer.length
     })
   } catch (error) {
     console.error('Error in submit draft API:', error)
@@ -173,6 +186,10 @@ export async function POST(request: NextRequest) {
 async function generatePersonalPlanPDF(data: any): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     try {
+      if (!data) {
+        reject(new Error('No data provided for PDF generation'))
+        return
+      }
       const doc = new PDFDocument({
         size: 'A4',
         margins: {

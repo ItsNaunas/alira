@@ -256,9 +256,10 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       }
 
       const result = await response.json()
+      console.log('Plan submission result:', result)
       
-      // Show success message
-      alert('Your personalized business plan has been sent to your email!')
+      // Show success message with proper instructions
+      alert(`✅ Your personalized business plan has been sent to ${email}!\n\n📧 Please check your inbox and spam/junk folder.\n\n📎 Your plan is attached as a PDF file.\n\nIf you don't see the email within a few minutes, please contact us at contact@alirapartners.co.uk`)
       
       // Reset form
       setShowEmailGate(false)
