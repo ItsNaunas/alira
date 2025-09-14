@@ -150,25 +150,34 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     const isValid = await trigger(fieldsToValidate)
     console.log('Validation result for step', currentStep, ':', isValid)
     console.log('Fields to validate:', fieldsToValidate)
-    if (isValid && currentStep < 4) {
-      // Clear the current step's field after validation (except pre-filled business idea)
-      switch (currentStep) {
-        case 1:
-          // Don't clear if it was pre-filled from homepage
-          if (!draftData?.data?.mini_idea_one_liner) {
-            setValue('business_idea', '')
-          }
-          break
-        case 2:
-          setValue('current_challenges', '')
-          break
-        case 3:
-          setValue('immediate_goals', '')
-          break
+    console.log('Current form values:', watchedValues)
+    
+    if (isValid) {
+      if (currentStep < 4) {
+        // Clear the current step's field after validation (except pre-filled business idea)
+        switch (currentStep) {
+          case 1:
+            // Don't clear if it was pre-filled from homepage
+            if (!draftData?.data?.mini_idea_one_liner) {
+              setValue('business_idea', '')
+            }
+            break
+          case 2:
+            setValue('current_challenges', '')
+            break
+          case 3:
+            setValue('immediate_goals', '')
+            break
+        }
+        
+        setCurrentStep(currentStep + 1)
+        conversionEvents.stepView(`step_${currentStep + 1}`)
+      } else if (currentStep === 4) {
+        // On step 4, trigger form submission
+        console.log('Step 4 validation passed, triggering form submission')
+        const formData = watchedValues
+        await onSubmit(formData)
       }
-      
-      setCurrentStep(currentStep + 1)
-      conversionEvents.stepView(`step_${currentStep + 1}`)
     }
   }
 
@@ -181,13 +190,17 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   const onSubmit = async (data: WizardFormData) => {
     console.log('Form submitted with data:', data)
     console.log('Form errors:', errors)
+    console.log('Current step:', currentStep)
+    console.log('Draft data:', draftData)
     
     // Check if we have required user data
     if (!draftData?.name || !draftData?.email) {
+      console.log('Missing user data, showing alert')
       alert('Missing contact information. Please start from the homepage to provide your name and email.')
       return
     }
     
+    console.log('Starting form submission...')
     setIsSubmitting(true)
     try {
       let currentDraftId = draftId
@@ -609,7 +622,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} onSubmitCapture={(e) => console.log('Form submit event triggered', e)}>
         <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden">
           <CardHeader className="bg-gradient-to-r from-alira-onyx/5 to-alira-gold/5 border-b border-alira-onyx/10">
             <div className="flex items-center space-x-3">
@@ -724,6 +737,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   <Button
                     type="submit"
                     disabled={isSubmitting || isGeneratingPlan}
+                    onClick={() => console.log('Button clicked, current step:', currentStep, 'isSubmitting:', isSubmitting, 'isGeneratingPlan:', isGeneratingPlan)}
                     className="bg-gradient-to-r from-alira-gold to-alira-gold/90 hover:from-alira-gold/90 hover:to-alira-gold/80 text-alira-onyx px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                   >
                   {isSubmitting || isGeneratingPlan ? (

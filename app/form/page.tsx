@@ -67,10 +67,10 @@ export default function Form() {
             />
             {/* Subtle major lines */}
             <g className="text-alira-onyx/15" opacity="0.25">
-              <path d="M0 80 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M0 160 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M120 0 V100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M240 0 V100%" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M0,80 L500,80" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M0,160 L500,160" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M120,0 L120,300" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M240,0 L240,300" stroke="currentColor" strokeWidth="0.6" />
             </g>
           </svg>
           
