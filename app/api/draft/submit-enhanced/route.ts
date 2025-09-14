@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase-server'
 import { z } from 'zod'
-import { sendPersonalPlanEmail } from '@/lib/enhanced-email'
+import { sendPersonalPlanEmail, EmailData } from '@/lib/enhanced-email'
 import { PersonalPlanPDFData } from '@/lib/enhanced-pdf'
 
 const submitDraftSchema = z.object({
@@ -14,6 +14,8 @@ export async function POST(request: NextRequest) {
     // Parse and validate request body
     const body = await request.json()
     const { id, email } = submitDraftSchema.parse(body)
+
+    console.log('Processing draft submission:', { id, email })
 
     // Get the draft data
     const { data: draft, error: fetchError } = await supabase
@@ -53,6 +55,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    console.log('Draft found:', { 
+      id: draft.id, 
+      name: draft.name, 
+      status: draft.status,
+      hasData: !!draft.data 
+    })
+
     // Update draft status to submitted and email
     const { error: updateError } = await supabase
       .from('intake_forms')
@@ -71,7 +80,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Prepare PDF data for enhanced service
+    // Prepare PDF data
     const pdfData: PersonalPlanPDFData = {
       name: draft.name || 'Valued Client',
       email: email,
@@ -147,6 +156,13 @@ export async function POST(request: NextRequest) {
       // Don't fail the request if storage backup fails
     }
 
+    console.log('Draft submission completed successfully:', {
+      draftId: id,
+      email: email,
+      messageId: emailResult.messageId,
+      pdfSize: emailResult.pdfSize
+    })
+
     return NextResponse.json({
       success: true,
       message: 'Personal plan generated and sent successfully',
@@ -155,8 +171,9 @@ export async function POST(request: NextRequest) {
       pdf_size: emailResult.pdfSize,
       recipient: email
     })
+
   } catch (error) {
-    console.error('Error in submit draft API:', error)
+    console.error('Error in enhanced submit draft API:', error)
     
     // Handle validation errors
     if (error instanceof z.ZodError) {
@@ -184,3 +201,23 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// Test endpoint for development
+export async function GET() {
+  try {
+    const { sendTestEmail } = await import('@/lib/enhanced-email')
+    const testEmail = process.env.TEST_EMAIL || 'test@example.com'
+    
+    const result = await sendTestEmail(testEmail)
+    
+    return NextResponse.json({
+      success: result.success,
+      message: 'Test email sent',
+      details: result
+    })
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Test failed', details: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 500 }
+    )
+  }
+}
