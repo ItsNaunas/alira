@@ -188,6 +188,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   }
 
   const onSubmit = async (data: WizardFormData) => {
+    console.log('=== FORM SUBMISSION STARTED ===')
     console.log('Form submitted with data:', data)
     console.log('Form errors:', errors)
     console.log('Current step:', currentStep)
@@ -195,18 +196,21 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     
     // Check if we have required user data
     if (!draftData?.name || !draftData?.email) {
-      console.log('Missing user data, showing alert')
+      console.log('❌ Missing user data, showing alert')
       alert('Missing contact information. Please start from the homepage to provide your name and email.')
       return
     }
     
-    console.log('Starting form submission...')
+    console.log('✅ User data present, starting form submission...')
+    console.log('Name:', draftData.name)
+    console.log('Email:', draftData.email)
     setIsSubmitting(true)
     try {
       let currentDraftId = draftId
 
       // Create a draft if one doesn't exist
       if (!currentDraftId) {
+        console.log('📝 Creating new draft...')
         const createResponse = await fetch('/api/draft/create', {
           method: 'POST',
           headers: {
@@ -231,6 +235,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       }
 
       // Save the form data
+      console.log('💾 Saving form data to draft:', currentDraftId)
       const response = await fetch('/api/draft/save', {
         method: 'POST',
         headers: {
@@ -248,6 +253,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         throw new Error(errorData.error || 'Failed to save form')
       }
 
+      console.log('🎯 Form completed, triggering plan generation...')
       conversionEvents.formCompleted('wizard_form')
       
       // Generate and send plan directly
@@ -262,8 +268,10 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   }
 
   const generateAndSendPlan = async (draftId: string, email: string) => {
+    console.log('🚀 Starting plan generation for draft:', draftId, 'email:', email)
     setIsGeneratingPlan(true)
     try {
+      console.log('📡 Calling /api/draft/submit...')
       const response = await fetch('/api/draft/submit', {
         method: 'POST',
         headers: {
@@ -275,14 +283,16 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         }),
       })
 
+      console.log('📊 Response status:', response.status, response.statusText)
+      
       if (!response.ok) {
         const errorData = await response.json()
-        console.error('Submit error:', errorData)
+        console.error('❌ Plan generation failed:', errorData)
         throw new Error(errorData.error || 'Failed to generate plan')
       }
 
       const result = await response.json()
-      console.log('Plan submission result:', result)
+      console.log('✅ Plan generation successful:', result)
       
       // Show success message with proper instructions
       alert(`✅ Your personalized business plan has been sent to ${email}!\n\n📧 Please check your inbox and spam/junk folder.\n\n📎 Your plan is attached as a PDF file.\n\nIf you don't see the email within a few minutes, please contact us at contact@alirapartners.co.uk`)
