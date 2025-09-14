@@ -15,6 +15,11 @@ export const metadata: Metadata = {
   keywords: ['consultancy', 'strategy', 'business growth', 'clarity', 'systems', 'founders'],
   authors: [{ name: 'ALIRA.' }],
   creator: 'ALIRA.',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'ALIRA. - Build With Clarity, Scale With Confidence',
     description: 'Sharp strategic input for founders and teams ready to grow with purpose.',

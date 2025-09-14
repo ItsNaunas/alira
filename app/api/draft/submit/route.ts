@@ -2,39 +2,68 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase-server'
 import { z } from 'zod'
 import { Resend } from 'resend'
+import PDFDocument from 'pdfkit'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const submitDraftSchema = z.object({
   id: z.string().uuid(),
-  data: z.object({
-    idea: z.string(),
-    challenge: z.string(),
-    goal_90d: z.string(),
-    resources: z.array(z.string()),
-    other_resource: z.string().optional(),
-    name: z.string(),
-    email: z.string().email(),
-    consent: z.boolean()
-  })
+  email: z.string().email()
 })
 
 export async function POST(request: NextRequest) {
   try {
+    // Parse and validate request body
     const body = await request.json()
-    const { id, data } = submitDraftSchema.parse(body)
+    const { id, email } = submitDraftSchema.parse(body)
 
-    // Update draft status to submitted
-    const { data: draft, error: updateError } = await supabase
+    // Get the draft data
+    const { data: draft, error: fetchError } = await supabase
+      .from('intake_forms')
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (fetchError) {
+      console.error('Database error fetching draft:', fetchError)
+      
+      if (fetchError.code === 'PGRST116') { // Row not found
+        return NextResponse.json(
+          { error: 'Draft not found' },
+          { status: 404 }
+        )
+      }
+      
+      return NextResponse.json(
+        { error: 'Failed to retrieve draft. Please try again.' },
+        { status: 500 }
+      )
+    }
+
+    if (!draft) {
+      return NextResponse.json(
+        { error: 'Draft not found' },
+        { status: 404 }
+      )
+    }
+
+    // Check if draft is already submitted
+    if (draft.status === 'submitted') {
+      return NextResponse.json(
+        { error: 'Draft has already been submitted' },
+        { status: 409 }
+      )
+    }
+
+    // Update draft status to submitted and email
+    const { error: updateError } = await supabase
       .from('intake_forms')
       .update({
         status: 'submitted',
-        data,
+        email: email,
         updated_at: new Date().toISOString()
       })
       .eq('id', id)
-      .select()
-      .single()
 
     if (updateError) {
       console.error('Error updating draft:', updateError)
@@ -44,8 +73,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Generate PDF (we'll implement this next)
-    const pdfBuffer = await generatePersonalPlanPDF(data)
+    // Generate PDF using the draft data
+    const pdfBuffer = await generatePersonalPlanPDF(draft.data)
     
     // Upload PDF to Supabase Storage
     const fileName = `personal-plan-${id}.pdf`
@@ -78,12 +107,12 @@ export async function POST(request: NextRequest) {
     // Send email with PDF
     try {
       await resend.emails.send({
-        from: 'ALIRA <noreply@alira.co.uk>', // You'll need to verify this domain
-        to: [data.email],
+        from: 'ALIRA <contact@alirapartners.co.uk>',
+        to: [email],
         subject: 'Your Personal Plan is Ready',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #1a1a1a;">Hello ${data.name},</h2>
+            <h2 style="color: #1a1a1a;">Hello ${draft.name},</h2>
             <p>Your personalized business plan is ready! We've analyzed your inputs and created a comprehensive plan tailored to your specific situation.</p>
             <div style="text-align: center; margin: 30px 0;">
               <a href="${urlData.publicUrl}" style="background-color: #1a1a1a; color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; display: inline-block;">
@@ -114,16 +143,205 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('Error in submit draft API:', error)
+    
+    // Handle validation errors
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { 
+          error: 'Invalid request data',
+          details: error.errors.map(e => `${e.path.join('.')}: ${e.message}`)
+        },
+        { status: 400 }
+      )
+    }
+    
+    // Handle JSON parsing errors
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: 'Invalid JSON in request body' },
+        { status: 400 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'Invalid request data' },
-      { status: 400 }
+      { error: 'Internal server error. Please try again.' },
+      { status: 500 }
     )
   }
 }
 
-// Placeholder for PDF generation - we'll implement this next
+// Generate personalized business plan PDF
 async function generatePersonalPlanPDF(data: any): Promise<Buffer> {
-  // This will be implemented in the next step
-  // For now, return a simple buffer
-  return Buffer.from('PDF placeholder')
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({
+        size: 'A4',
+        margins: {
+          top: 50,
+          bottom: 50,
+          left: 50,
+          right: 50
+        }
+      })
+
+      const buffers: Buffer[] = []
+      doc.on('data', buffers.push.bind(buffers))
+      doc.on('end', () => {
+        const pdfData = Buffer.concat(buffers)
+        resolve(pdfData)
+      })
+
+      // Header with ALIRA branding
+      doc.fontSize(24)
+        .fillColor('#1a1a1a')
+        .text('ALIRA', 50, 50)
+      
+      doc.fontSize(12)
+        .fillColor('#666')
+        .text('Strategic Business Solutions', 50, 80)
+
+      // Title
+      doc.fontSize(20)
+        .fillColor('#1a1a1a')
+        .text('Your Personalized Business Plan', 50, 120)
+
+      // Date
+      doc.fontSize(10)
+        .fillColor('#999')
+        .text(`Generated on ${new Date().toLocaleDateString()}`, 50, 150)
+
+      let yPosition = 180
+
+      // Business Overview Section
+      doc.fontSize(16)
+        .fillColor('#1a1a1a')
+        .text('Business Overview', 50, yPosition)
+      
+      yPosition += 30
+      doc.fontSize(12)
+        .fillColor('#333')
+        .text(`Business Concept: ${data.business_idea}`, 50, yPosition, {
+          width: 500,
+          align: 'left'
+        })
+      
+      yPosition += 60
+
+      // Current Challenges Section
+      doc.fontSize(16)
+        .fillColor('#1a1a1a')
+        .text('Current Challenges', 50, yPosition)
+      
+      yPosition += 30
+      doc.fontSize(12)
+        .fillColor('#333')
+        .text(`Key Challenges: ${data.current_challenges}`, 50, yPosition, {
+          width: 500,
+          align: 'left'
+        })
+      
+      yPosition += 60
+
+      // Goals Section
+      doc.fontSize(16)
+        .fillColor('#1a1a1a')
+        .text('Immediate Goals (3-6 months)', 50, yPosition)
+      
+      yPosition += 30
+      doc.fontSize(12)
+        .fillColor('#333')
+        .text(`Goals: ${data.immediate_goals}`, 50, yPosition, {
+          width: 500,
+          align: 'left'
+        })
+      
+      yPosition += 60
+
+      // Service Interest Section
+      doc.fontSize(16)
+        .fillColor('#1a1a1a')
+        .text('Recommended ALIRA Services', 50, yPosition)
+      
+      yPosition += 30
+      doc.fontSize(12)
+        .fillColor('#333')
+      
+      const serviceMap = {
+        'brand_product': 'Brand & Product Management',
+        'content_management': 'Content Management',
+        'digital_solutions': 'Digital Solutions & AI Integration'
+      }
+      
+      const selectedServices = data.service_interest?.map((service: string) => 
+        serviceMap[service] || service
+      ).join(', ') || 'General business improvement'
+      
+      doc.text(`Selected Services: ${selectedServices}`, 50, yPosition, {
+        width: 500,
+        align: 'left'
+      })
+      
+      yPosition += 40
+
+      // Current Tools Section
+      if (data.current_tools) {
+        doc.fontSize(12)
+          .fillColor('#333')
+          .text(`Current Tools: ${data.current_tools}`, 50, yPosition, {
+            width: 500,
+            align: 'left'
+          })
+        
+        yPosition += 40
+      }
+
+      // Next Steps Section
+      doc.fontSize(16)
+        .fillColor('#1a1a1a')
+        .text('Recommended Next Steps', 50, yPosition)
+      
+      yPosition += 30
+      doc.fontSize(12)
+        .fillColor('#333')
+        .text('1. Schedule a consultation call to discuss your specific needs', 50, yPosition)
+      
+      yPosition += 20
+      doc.text('2. Review your current systems and identify optimization opportunities', 50, yPosition)
+      
+      yPosition += 20
+      doc.text('3. Develop a customized implementation roadmap', 50, yPosition)
+      
+      yPosition += 20
+      doc.text('4. Begin with high-impact, quick-win initiatives', 50, yPosition)
+
+      // Contact Information
+      yPosition += 50
+      doc.fontSize(14)
+        .fillColor('#1a1a1a')
+        .text('Ready to Get Started?', 50, yPosition)
+      
+      yPosition += 30
+      doc.fontSize(12)
+        .fillColor('#333')
+        .text('Contact ALIRA to discuss how we can help implement these recommendations:', 50, yPosition)
+      
+      yPosition += 30
+      doc.text('Email: contact@alirapartners.co.uk', 50, yPosition)
+      
+      yPosition += 20
+      doc.text('Website: alirapartners.co.uk', 50, yPosition)
+
+      // Footer
+      doc.fontSize(10)
+        .fillColor('#999')
+        .text('This plan was generated based on your specific inputs and ALIRA\'s expertise in business optimization.', 50, 750, {
+          width: 500,
+          align: 'center'
+        })
+
+      doc.end()
+    } catch (error) {
+      reject(error)
+    }
+  })
 }

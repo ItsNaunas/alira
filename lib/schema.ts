@@ -7,13 +7,13 @@ export const miniFormSchema = z.object({
   idea: z.string().optional()
 })
 
-// New wizard form schema (matches the document requirements)
+// New wizard form schema (aligned with ALIRA service areas)
 export const wizardFormSchema = z.object({
-  idea: z.string().min(10, "Please provide more detail about your idea"),
-  challenge: z.string().min(10, "Please provide more detail about your challenge"),
-  goal_90d: z.string().min(10, "Please provide more detail about your 90-day goal"),
-  resources: z.array(z.string()).min(1, "Please select at least one resource"),
-  other_resource: z.string().optional(),
+  business_idea: z.string().min(10, "Please provide more detail about your business idea"),
+  current_challenges: z.string().min(10, "Please provide more detail about your current challenges"),
+  immediate_goals: z.string().min(10, "Please provide more detail about your immediate goals"),
+  service_interest: z.array(z.string()).min(1, "Please select at least one service area"),
+  current_tools: z.string().optional(),
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Valid email is required"),
   consent: z.boolean().refine(val => val === true, "You must agree to the terms")
@@ -137,12 +137,31 @@ export const services = [
   },
 ] as const
 
-// Resource options for the wizard form
-export const resourceOptions = [
-  { value: 'team', label: 'Team members' },
-  { value: 'budget', label: 'Budget available' },
-  { value: 'time', label: 'Time to dedicate' },
-  { value: 'network', label: 'Professional network' },
-  { value: 'skills', label: 'Relevant skills' },
-  { value: 'tools', label: 'Tools and software' }
+// Service interest options for the wizard form
+export const serviceInterestOptions = [
+  { 
+    value: 'brand_product', 
+    label: 'Brand & Product Management',
+    description: 'Positioning, offer clarity, launch strategy'
+  },
+  { 
+    value: 'content_management', 
+    label: 'Content Management',
+    description: 'Social media strategy and content creation for business growth'
+  },
+  { 
+    value: 'digital_solutions', 
+    label: 'Digital Solutions & AI Integration',
+    description: 'Websites, AI tools, bespoke systems'
+  }
+] as const
+
+// Current tools/tech options
+export const currentToolsOptions = [
+  { value: 'none', label: 'No current tools' },
+  { value: 'basic', label: 'Basic tools (email, spreadsheets)' },
+  { value: 'crm', label: 'CRM system (HubSpot, Salesforce, etc.)' },
+  { value: 'website', label: 'Website with basic functionality' },
+  { value: 'automation', label: 'Some automation tools' },
+  { value: 'ai_tools', label: 'AI tools and integrations' }
 ] as const

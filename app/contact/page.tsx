@@ -13,6 +13,9 @@ export default function ContactPage() {
     email: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -22,10 +25,36 @@ export default function ContactPage() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    setErrorMessage('')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setSubmitStatus('error')
+        setErrorMessage(result.error || 'Failed to send message')
+      }
+    } catch (error) {
+      setSubmitStatus('error')
+      setErrorMessage('Network error. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -64,6 +93,32 @@ export default function ContactPage() {
                     Tell us about your project, idea, or challenge. We're here to help you move forward.
                   </p>
                   
+                  {/* Success Message */}
+                  {submitStatus === 'success' && (
+                    <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex items-center">
+                        <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <p className="text-green-800 font-medium">Message sent successfully!</p>
+                      </div>
+                      <p className="text-green-700 text-sm mt-1">We'll get back to you within 24 hours.</p>
+                    </div>
+                  )}
+
+                  {/* Error Message */}
+                  {submitStatus === 'error' && (
+                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <div className="flex items-center">
+                        <svg className="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <p className="text-red-800 font-medium">Failed to send message</p>
+                      </div>
+                      <p className="text-red-700 text-sm mt-1">{errorMessage}</p>
+                    </div>
+                  )}
+
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-alira-onyx mb-2">
@@ -76,7 +131,8 @@ export default function ContactPage() {
                         required
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-alira-onyx/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors"
+                        disabled={isSubmitting}
+                        className="w-full px-4 py-3 border border-alira-onyx/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors disabled:opacity-50"
                         placeholder="Your full name"
                       />
                     </div>
@@ -92,7 +148,8 @@ export default function ContactPage() {
                         required
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-alira-onyx/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors"
+                        disabled={isSubmitting}
+                        className="w-full px-4 py-3 border border-alira-onyx/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors disabled:opacity-50"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -108,16 +165,25 @@ export default function ContactPage() {
                         rows={6}
                         value={formData.message}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-alira-onyx/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors resize-none"
+                        disabled={isSubmitting}
+                        className="w-full px-4 py-3 border border-alira-onyx/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors resize-none disabled:opacity-50"
                         placeholder="Tell us about your project, idea, or what you'd like to achieve..."
                       />
                     </div>
                     
                     <Button
                       type="submit"
-                      className="w-full bg-alira-onyx hover:bg-alira-onyx/90 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+                      disabled={isSubmitting}
+                      className="w-full bg-alira-onyx hover:bg-alira-onyx/90 text-white py-3 px-6 rounded-lg font-medium transition-colors disabled:opacity-50"
                     >
-                      Send Message
+                      {isSubmitting ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          Sending...
+                        </>
+                      ) : (
+                        'Send Message'
+                      )}
                     </Button>
                   </form>
                 </div>
@@ -144,10 +210,10 @@ export default function ContactPage() {
                       <div>
                         <h3 className="text-lg font-semibold text-alira-onyx mb-2">Email</h3>
                         <a 
-                          href="mailto:enquiries@aliracapital.co.uk" 
+                          href="mailto:contact@alirapartners.co.uk" 
                           className="text-alira-gold hover:text-alira-onyx transition-colors font-medium"
                         >
-                          enquiries@aliracapital.co.uk
+                          contact@alirapartners.co.uk
                         </a>
                         <p className="text-alira-onyx/70 text-sm mt-1">
                           We typically respond within 24 hours

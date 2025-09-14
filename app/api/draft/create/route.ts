@@ -12,6 +12,7 @@ const createDraftSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Parse and validate request body
     const body = await request.json()
     const { name, email, data } = createDraftSchema.parse(body)
 
@@ -33,9 +34,25 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (error) {
-      console.error('Error creating draft:', error)
+      console.error('Database error creating draft:', error)
+      
+      // Handle specific database errors
+      if (error.code === '23505') { // Unique constraint violation
+        return NextResponse.json(
+          { error: 'A draft with this email already exists' },
+          { status: 409 }
+        )
+      }
+      
       return NextResponse.json(
-        { error: 'Failed to create draft' },
+        { error: 'Failed to create draft. Please try again.' },
+        { status: 500 }
+      )
+    }
+
+    if (!draft) {
+      return NextResponse.json(
+        { error: 'Draft was not created successfully' },
         { status: 500 }
       )
     }
@@ -47,9 +64,29 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('Error in create draft API:', error)
+    
+    // Handle validation errors
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { 
+          error: 'Invalid request data',
+          details: error.errors.map(e => `${e.path.join('.')}: ${e.message}`)
+        },
+        { status: 400 }
+      )
+    }
+    
+    // Handle JSON parsing errors
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: 'Invalid JSON in request body' },
+        { status: 400 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'Invalid request data' },
-      { status: 400 }
+      { error: 'Internal server error. Please try again.' },
+      { status: 500 }
     )
   }
 }

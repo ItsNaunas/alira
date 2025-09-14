@@ -3,22 +3,13 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { Card, CardContent } from './ui/card'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import { conversionEvents } from '@/lib/analytics'
-
-// Mini form schema
-const miniFormSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  email: z.string().email("Valid email is required"),
-  idea: z.string().optional()
-})
-
-type MiniFormData = z.infer<typeof miniFormSchema>
+import { miniFormSchema, type MiniFormData } from '@/lib/schema'
 
 interface MiniFormProps {
   onSuccess?: (data: MiniFormData) => void

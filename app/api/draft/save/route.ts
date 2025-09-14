@@ -10,8 +10,17 @@ const saveDraftSchema = z.object({
 
 export async function PUT(request: NextRequest) {
   try {
+    // Parse and validate request body
     const body = await request.json()
     const { id, step, data } = saveDraftSchema.parse(body)
+
+    // Validate step range
+    if (step < 1 || step > 4) {
+      return NextResponse.json(
+        { error: 'Step must be between 1 and 4' },
+        { status: 400 }
+      )
+    }
 
     // Update draft record
     const { data: draft, error } = await supabase
@@ -26,10 +35,26 @@ export async function PUT(request: NextRequest) {
       .single()
 
     if (error) {
-      console.error('Error saving draft:', error)
+      console.error('Database error saving draft:', error)
+      
+      // Handle specific database errors
+      if (error.code === 'PGRST116') { // Row not found
+        return NextResponse.json(
+          { error: 'Draft not found' },
+          { status: 404 }
+        )
+      }
+      
       return NextResponse.json(
-        { error: 'Failed to save draft' },
+        { error: 'Failed to save draft. Please try again.' },
         { status: 500 }
+      )
+    }
+
+    if (!draft) {
+      return NextResponse.json(
+        { error: 'Draft not found' },
+        { status: 404 }
       )
     }
 
@@ -39,9 +64,29 @@ export async function PUT(request: NextRequest) {
     })
   } catch (error) {
     console.error('Error in save draft API:', error)
+    
+    // Handle validation errors
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { 
+          error: 'Invalid request data',
+          details: error.errors.map(e => `${e.path.join('.')}: ${e.message}`)
+        },
+        { status: 400 }
+      )
+    }
+    
+    // Handle JSON parsing errors
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: 'Invalid JSON in request body' },
+        { status: 400 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'Invalid request data' },
-      { status: 400 }
+      { error: 'Internal server error. Please try again.' },
+      { status: 500 }
     )
   }
 }

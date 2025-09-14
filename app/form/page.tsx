@@ -1,12 +1,33 @@
 'use client'
 
-import MaintenanceMessage from '@/components/MaintenanceMessage'
+import FormWizard from '@/components/FormWizard'
+import LivePreview from '@/components/LivePreview'
 import Reveal from '@/components/Reveal'
+import SectionHeading from '@/components/ui/SectionHeading'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { conversionEvents } from '@/lib/analytics'
 import React from 'react'
 
 export default function Form() {
+  const [resumeToken, setResumeToken] = React.useState<string | undefined>()
+  const [initialData, setInitialData] = React.useState<any>(null)
+  const [draftId, setDraftId] = React.useState<string | undefined>()
+
+  // Track page view
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      conversionEvents.pageView('form_page')
+      conversionEvents.formStarted('business_case_initial')
+      
+      // Check for resume token in URL
+      const urlParams = new URLSearchParams(window.location.search)
+      const token = urlParams.get('resume')
+      if (token) {
+        setResumeToken(token)
+      }
+    }
+  }, [])
 
   return (
     <div className="min-h-screen">
@@ -46,10 +67,10 @@ export default function Form() {
             />
             {/* Subtle major lines */}
             <g className="text-alira-onyx/15" opacity="0.25">
-              <path d="M0 80 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M0 160 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M120 0 V100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M240 0 V100%" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M0 80 L100% 80" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M0 160 L100% 160" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M120 0 L120 100%" stroke="currentColor" strokeWidth="0.6" />
+              <path d="M240 0 L240 100%" stroke="currentColor" strokeWidth="0.6" />
             </g>
           </svg>
           
@@ -99,11 +120,58 @@ export default function Form() {
         </div>
       </section>
 
-      {/* Maintenance Section */}
-      <section className="py-16 md:py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      {/* Form Section */}
+      <section className="py-8 md:py-12 bg-gradient-to-br from-alira-porcelain/20 via-white to-alira-porcelain/10 relative overflow-hidden">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none">
+          <svg
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full"
+          >
+            <defs>
+              <pattern
+                id="alira-grid-form-bg"
+                width="60"
+                height="60"
+                patternUnits="userSpaceOnUse"
+              >
+                <path 
+                  d="M 60 0 L 0 0 0 60" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="0.5" 
+                />
+              </pattern>
+            </defs>
+            <rect
+              width="100%"
+              height="100%"
+              fill="url(#alira-grid-form-bg)"
+              className="text-alira-onyx/5"
+              opacity="0.3"
+            />
+          </svg>
+        </div>
+        
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
           <Reveal>
-            <MaintenanceMessage />
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-8">
+              {/* Form Wizard */}
+              <div className="lg:col-span-3">
+                <FormWizard 
+                  resumeToken={resumeToken}
+                  initialData={initialData}
+                  draftId={draftId}
+                />
+              </div>
+              
+              {/* Live Preview - Sticky */}
+              <div className="lg:col-span-2">
+                <div className="hidden lg:block lg:sticky lg:top-8">
+                  <LivePreview data={initialData || {}} />
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
