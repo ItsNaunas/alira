@@ -14,8 +14,8 @@ export const wizardFormSchema = z.object({
   immediate_goals: z.string().min(10, "Please provide more detail about your immediate goals"),
   service_interest: z.array(z.string()).min(1, "Please select at least one service area"),
   current_tools: z.string().optional(),
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Valid email is required"),
+  name: z.string().optional(), // Optional since it comes from hero form
+  email: z.string().email().optional(), // Optional since it comes from hero form
   consent: z.boolean().refine(val => val === true, "You must agree to the terms")
 })
 

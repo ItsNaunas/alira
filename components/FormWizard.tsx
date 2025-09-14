@@ -143,7 +143,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         fieldsToValidate = ['immediate_goals']
         break
       case 4:
-        fieldsToValidate = ['service_interest', 'current_tools', 'name', 'email', 'consent']
+        fieldsToValidate = ['service_interest', 'current_tools', 'consent']
         break
     }
     
@@ -181,6 +181,13 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   const onSubmit = async (data: WizardFormData) => {
     console.log('Form submitted with data:', data)
     console.log('Form errors:', errors)
+    
+    // Check if we have required user data
+    if (!draftData?.name || !draftData?.email) {
+      alert('Missing contact information. Please start from the homepage to provide your name and email.')
+      return
+    }
+    
     setIsSubmitting(true)
     try {
       let currentDraftId = draftId
@@ -193,8 +200,8 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            name: data.name,
-            email: data.email,
+            name: draftData.name,
+            email: draftData.email,
             data: {
               mini_idea_one_liner: data.business_idea?.substring(0, 100) || ''
             }
@@ -210,7 +217,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         setDraftId(currentDraftId)
       }
 
-      // Save the form data and show email gate
+      // Save the form data
       const response = await fetch('/api/draft/save', {
         method: 'POST',
         headers: {
@@ -229,7 +236,9 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       }
 
       conversionEvents.formCompleted('wizard_form')
-      setShowEmailGate(true)
+      
+      // Generate and send plan directly
+      await generateAndSendPlan(currentDraftId!, draftData.email!)
     } catch (error) {
       console.error('Error submitting form:', error)
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
@@ -239,7 +248,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     }
   }
 
-  const handleEmailGateSubmit = async (email: string) => {
+  const generateAndSendPlan = async (draftId: string, email: string) => {
     setIsGeneratingPlan(true)
     try {
       const response = await fetch('/api/draft/submit', {
@@ -276,6 +285,10 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     } finally {
       setIsGeneratingPlan(false)
     }
+  }
+
+  const handleEmailGateSubmit = async (email: string) => {
+    await generateAndSendPlan(draftId!, email)
   }
 
   const renderStep = () => {
@@ -425,34 +438,39 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-alira-onyx mb-2">
-                  Full Name *
-                </label>
-                <Input
-                  {...register('name')}
-                  placeholder="Your full name"
-                  className="w-full"
-                />
-                {errors.name && (
-                  <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-                )}
+            {/* Display saved user info */}
+            <div className="bg-alira-porcelain/30 p-4 rounded-lg border border-alira-onyx/10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-alira-onyx/70 mb-1">
+                    Full Name
+                  </label>
+                  <p className="text-alira-onyx font-medium">
+                    {draftData?.name || 'Not provided'}
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-alira-onyx/70 mb-1">
+                    Email
+                  </label>
+                  <p className="text-alira-onyx font-medium">
+                    {draftData?.email || 'Not provided'}
+                  </p>
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-alira-onyx mb-2">
-                  Email *
-                </label>
-                <Input
-                  {...register('email')}
-                  type="email"
-                  placeholder="your@email.com"
-                  className="w-full"
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-                )}
-              </div>
+              {(!draftData?.name || !draftData?.email) && (
+                <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                  <p className="text-amber-800 text-sm">
+                    ⚠️ Missing contact information. Please start from the homepage to provide your name and email.
+                  </p>
+                  <a 
+                    href="/" 
+                    className="inline-block mt-2 text-amber-700 underline text-sm hover:text-amber-900"
+                  >
+                    Go to homepage to start over
+                  </a>
+                </div>
+              )}
             </div>
 
             <div className="flex items-start space-x-3">
@@ -705,13 +723,13 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 >
                   <Button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isGeneratingPlan}
                     className="bg-gradient-to-r from-alira-gold to-alira-gold/90 hover:from-alira-gold/90 hover:to-alira-gold/80 text-alira-onyx px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                   >
-                  {isSubmitting ? (
+                  {isSubmitting || isGeneratingPlan ? (
                     <>
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-alira-onyx mr-2"></div>
-                      Generating My Plan...
+                      {isSubmitting ? 'Analyzing Your Inputs...' : 'Generating Your Plan...'}
                     </>
                   ) : (
                     <>
