@@ -4,8 +4,6 @@ import { z } from 'zod'
 import { Resend } from 'resend'
 import PDFDocument from 'pdfkit'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const submitDraftSchema = z.object({
   id: z.string().uuid(),
   email: z.string().email()
@@ -106,6 +104,7 @@ export async function POST(request: NextRequest) {
 
     // Send email with PDF
     try {
+      const resend = new Resend(process.env.RESEND_API_KEY)
       await resend.emails.send({
         from: 'ALIRA <contact@alirapartners.co.uk>',
         to: [email],
@@ -266,7 +265,7 @@ async function generatePersonalPlanPDF(data: any): Promise<Buffer> {
       doc.fontSize(12)
         .fillColor('#333')
       
-      const serviceMap = {
+      const serviceMap: Record<string, string> = {
         'brand_product': 'Brand & Product Management',
         'content_management': 'Content Management',
         'digital_solutions': 'Digital Solutions & AI Integration'

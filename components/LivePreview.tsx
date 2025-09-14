@@ -20,7 +20,7 @@ export default function LivePreview({ data }: LivePreviewProps) {
     const getServiceFocus = () => {
       if (!data.service_interest || data.service_interest.length === 0) return 'General business improvement'
       
-      const serviceMap = {
+      const serviceMap: Record<string, string> = {
         'brand_product': 'Brand & Product Management',
         'content_management': 'Content Management', 
         'digital_solutions': 'Digital Solutions & AI Integration'

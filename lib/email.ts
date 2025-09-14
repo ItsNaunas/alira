@@ -1,7 +1,5 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export interface ContactFormData {
   name: string
   email: string
@@ -216,12 +214,13 @@ const wizardFormTemplate = (data: WizardFormData) => `
 // Email sending functions
 export async function sendContactFormEmail(data: ContactFormData) {
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
     const result = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'contact@alirapartners.co.uk',
       to: [process.env.RESEND_FROM_EMAIL || 'contact@alirapartners.co.uk'],
       subject: `New Contact Form Submission from ${data.name}`,
       html: contactFormTemplate(data),
-      replyTo: data.email,
+      reply_to: data.email,
     })
 
     return { success: true, messageId: result.data?.id }
@@ -233,12 +232,13 @@ export async function sendContactFormEmail(data: ContactFormData) {
 
 export async function sendBusinessCaseFormEmail(data: BusinessCaseFormData) {
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
     const result = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'contact@alirapartners.co.uk',
       to: [process.env.RESEND_FROM_EMAIL || 'contact@alirapartners.co.uk'],
       subject: `New Business Case Request from ${data.businessName}`,
       html: businessCaseFormTemplate(data),
-      replyTo: data.email,
+      reply_to: data.email,
     })
 
     return { success: true, messageId: result.data?.id }
@@ -250,12 +250,13 @@ export async function sendBusinessCaseFormEmail(data: BusinessCaseFormData) {
 
 export async function sendWizardFormEmail(data: WizardFormData) {
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
     const result = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'contact@alirapartners.co.uk',
       to: [process.env.RESEND_FROM_EMAIL || 'contact@alirapartners.co.uk'],
       subject: `New Simple Plan Request from ${data.name}`,
       html: wizardFormTemplate(data),
-      replyTo: data.email,
+      reply_to: data.email,
     })
 
     return { success: true, messageId: result.data?.id }
@@ -316,6 +317,7 @@ export async function sendAutoReply(to: string, type: 'contact' | 'business-case
   }
 
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
     const template = templates[type]
     const result = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'contact@alirapartners.co.uk',

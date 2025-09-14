@@ -228,7 +228,8 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       setShowEmailGate(true)
     } catch (error) {
       console.error('Error submitting form:', error)
-      alert(`There was an error submitting your form: ${error.message}. Please try again.`)
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
+      alert(`There was an error submitting your form: ${errorMessage}. Please try again.`)
     } finally {
       setIsSubmitting(false)
     }
@@ -265,7 +266,8 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       setDraftId(null)
     } catch (error) {
       console.error('Error generating plan:', error)
-      alert(`There was an error generating your plan: ${error.message}. Please try again.`)
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
+      alert(`There was an error generating your plan: ${errorMessage}. Please try again.`)
     } finally {
       setIsGeneratingPlan(false)
     }
@@ -503,7 +505,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   </h3>
                   <p className="text-alira-onyx/70 leading-relaxed">
                     Based on your inputs, we've created a comprehensive analysis with specific recommendations 
-                    for your business growth. {existingEmail ? 'We\'ll send your personalized plan to your email.' : 'Enter your email below to receive your personalized plan.'}
+                    for your business growth. {draftData?.email ? 'We\'ll send your personalized plan to your email.' : 'Enter your email below to receive your personalized plan.'}
                   </p>
                 </div>
 
