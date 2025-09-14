@@ -148,6 +148,8 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     }
     
     const isValid = await trigger(fieldsToValidate)
+    console.log('Validation result for step', currentStep, ':', isValid)
+    console.log('Fields to validate:', fieldsToValidate)
     if (isValid && currentStep < 4) {
       // Clear the current step's field after validation (except pre-filled business idea)
       switch (currentStep) {
@@ -177,6 +179,8 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   }
 
   const onSubmit = async (data: WizardFormData) => {
+    console.log('Form submitted with data:', data)
+    console.log('Form errors:', errors)
     setIsSubmitting(true)
     try {
       let currentDraftId = draftId
@@ -454,6 +458,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
             <div className="flex items-start space-x-3">
               <Checkbox
                 id="consent"
+                {...register('consent')}
                 onCheckedChange={(checked) => setValue('consent', checked as boolean)}
               />
               <div className="space-y-1">
