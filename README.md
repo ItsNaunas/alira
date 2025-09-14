@@ -22,7 +22,7 @@ This website is **only the first step** of a larger system where every client en
 - **Animations:** Tailwind + IntersectionObserver reveals (no Framer)
 - **AI Integration:** OpenAI GPT-4o-mini for business case generation
 - **Database:** Supabase (PostgreSQL) for data storage
-- **PDF Generation:** @react-pdf/renderer with ALIRA branding
+- **PDF Generation:** pdfkit with ALIRA branding
 - **Storage:** Supabase Storage for PDF hosting
 - **Analytics:** Custom tracking system (GA4 ready)
 - **Accessibility:** Passes a11y, prefers-reduced-motion respected
@@ -32,7 +32,7 @@ This website is **only the first step** of a larger system where every client en
 ### Core Functionality
 - **AI-Powered Business Cases:** OpenAI GPT-4o-mini generates customized business case content
 - **Multi-Step Form:** Value-first gating with preview → full form → PDF generation
-- **PDF Generation:** Server-side PDF creation with @react-pdf/renderer and ALIRA branding
+- **PDF Generation:** Server-side PDF creation with pdfkit and ALIRA branding
 - **Database Storage:** Supabase PostgreSQL for leads, business cases, and analytics
 - **PDF Storage:** Supabase Storage for secure PDF hosting and download links
 - **Analytics Tracking:** Comprehensive conversion tracking with GA4 integration
@@ -86,8 +86,8 @@ Edit `.env.local` with your API keys:
 - `OPENAI_API_KEY` - Your OpenAI API key
 - `SUPABASE_URL` - Your Supabase project URL
 - `SUPABASE_ANON_KEY` - Your Supabase anonymous key
-- `NEXT_PUBLIC_SUPABASE_URL` - Same as SUPABASE_URL
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Same as SUPABASE_ANON_KEY
+- `RESEND_API_KEY` - Your Resend API key for email
+- `RESEND_FROM_EMAIL` - Your verified email address
 - `NEXT_PUBLIC_GA4_ID` - Your GA4 Measurement ID (optional)
 
 4. Run the development server:
@@ -122,7 +122,7 @@ The system uses three main tables:
 - **Output:** JSON-structured business case with problem statement, objectives, solutions, etc.
 
 ### PDF Generation
-- **Library:** @react-pdf/renderer for server-side PDF creation
+- **Library:** pdfkit for server-side PDF creation
 - **Branding:** ALIRA colors, fonts, and layout
 - **Storage:** Supabase Storage with public download URLs
 

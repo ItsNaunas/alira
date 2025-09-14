@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { generatePersonalPlanPDF, getPDFBase64, PersonalPlanPDFData } from './enhanced-pdf'
+import { env } from './env'
 
 // Enhanced email data interface
 export interface EmailData {
@@ -103,7 +104,7 @@ export async function sendPersonalPlanEmail(data: EmailData) {
     const pdfBase64 = getPDFBase64(pdfBuffer)
     
     // Initialize Resend client
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    const resend = new Resend(env.RESEND_API_KEY)
     
     // Send email with PDF attachment
     console.log('Sending email to:', data.to)
@@ -143,7 +144,7 @@ export async function sendPersonalPlanEmail(data: EmailData) {
 // Auto-reply email function
 export async function sendAutoReply(to: string, name: string) {
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    const resend = new Resend(env.RESEND_API_KEY)
     const { data: result, error } = await resend.emails.send({
       from: 'ALIRA <contact@alirapartners.co.uk>',
       to: [to],

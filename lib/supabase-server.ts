@@ -1,13 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
+import { env, validateEnvVar } from './env'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// Validate required environment variables at runtime
+validateEnvVar('SUPABASE_URL', env.SUPABASE_URL)
+validateEnvVar('SUPABASE_ANON_KEY', env.SUPABASE_ANON_KEY)
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Use validated environment variables
+export const supabase = createClient(env.SUPABASE_URL!, env.SUPABASE_ANON_KEY!, {
+  auth: { persistSession: false }
+})
 
 // Server-side database operations
 export const db = {

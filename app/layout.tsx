@@ -10,6 +10,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://alirapartners.co.uk'),
   title: 'ALIRA. - Build With Clarity, Scale With Confidence',
   description: 'Sharp strategic input for founders and teams ready to grow with purpose. Clarity over clutter, discipline over distraction, elegance over noise, systems that last.',
   keywords: ['consultancy', 'strategy', 'business growth', 'clarity', 'systems', 'founders'],
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ALIRA. - Build With Clarity, Scale With Confidence',
     description: 'Sharp strategic input for founders and teams ready to grow with purpose.',
-    url: 'https://alira.com',
+    url: 'https://alirapartners.co.uk',
     siteName: 'ALIRA.',
     locale: 'en_GB',
     type: 'website',

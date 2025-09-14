@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase-server'
+import { env } from '@/lib/env'
 import { z } from 'zod'
 import { sendPersonalPlanEmail } from '@/lib/enhanced-email'
 import { PersonalPlanPDFData } from '@/lib/enhanced-pdf'
