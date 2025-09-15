@@ -30,47 +30,73 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     }
 
     console.log('[PDF] Generating PDF with jsPDF (serverless-friendly)')
+    console.log('[PDF] Received data:', JSON.stringify(data, null, 2))
+    console.log('[PDF] Business idea:', data.business_idea)
+    console.log('[PDF] Current challenges:', data.current_challenges)
+    console.log('[PDF] Immediate goals:', data.immediate_goals)
     
     // Create PDF document
     const doc = new jsPDF('p', 'mm', 'a4')
     
-    // Helper function to add section
-    const addSection = (title: string, content: string, yPos: number): number => {
-      // Section title
+    // Page dimensions and margins
+    const pageWidth = 210 // A4 width in mm
+    const pageHeight = 297 // A4 height in mm
+    const margin = 20
+    const contentWidth = pageWidth - (margin * 2)
+    const footerHeight = 20
+    const maxContentHeight = pageHeight - margin - footerHeight
+    
+    let currentY = margin
+    let isFirstPage = true
+    
+    // Helper function to check if we need a new page
+    const checkPageBreak = (requiredHeight: number): void => {
+      if (currentY + requiredHeight > maxContentHeight) {
+        doc.addPage()
+        currentY = margin
+        isFirstPage = false
+      }
+    }
+    
+    // Helper function to add footer to current page
+    const addFooter = (): void => {
+      const footerY = pageHeight - 10
+      doc.setFontSize(8)
+      doc.setTextColor(102, 102, 102) // #666666
+      doc.text('ALIRA. Confidential Business Plan', margin, footerY)
+      doc.text(`Generated for ${safe(data.name)}`, pageWidth / 2, footerY)
+      doc.text(generatedDate, pageWidth - margin - 20, footerY)
+    }
+    
+    // Helper function to add section with automatic page breaks
+    const addSection = (title: string, content: string): void => {
+      // Calculate required height for this section
+      const titleHeight = 25 // Title + underline + spacing
+      const contentLines = doc.splitTextToSize(content, contentWidth)
+      const contentHeight = (contentLines.length * 5) + 20 // Line height + spacing
+      const totalHeight = titleHeight + contentHeight
+      
+      // Check if we need a new page
+      checkPageBreak(totalHeight)
+      
+      // Add section title
       doc.setFontSize(16)
       doc.setTextColor(26, 26, 26) // #1a1a1a
-      doc.text(title, 20, yPos)
+      doc.text(title, margin, currentY)
       
       // Gold underline
       doc.setDrawColor(212, 175, 55) // #d4af37
       doc.setLineWidth(2)
-      doc.line(20, yPos + 5, 170, yPos + 5)
+      doc.line(margin, currentY + 5, pageWidth - margin, currentY + 5)
       
-      // Content
+      // Add content
       doc.setFontSize(11)
       doc.setTextColor(102, 102, 102) // #666666
+      doc.text(contentLines, margin, currentY + 15)
       
-      // Split content into lines that fit the page width
-      const maxWidth = 170
-      const lines = doc.splitTextToSize(content, maxWidth)
-      doc.text(lines, 20, yPos + 15)
-      
-      return yPos + 15 + (lines.length * 5) + 20
+      // Update current Y position
+      currentY += totalHeight
     }
-
-    // Header
-    doc.setFontSize(28)
-    doc.setTextColor(26, 26, 26) // #1a1a1a
-    doc.text('ALIRA.', 20, 30)
-    
-    doc.setFontSize(12)
-    doc.setTextColor(212, 175, 55) // #d4af37
-    doc.text('Strategic Business Solutions', 20, 40)
-
-    // Title
-    doc.setFontSize(18)
-    doc.setTextColor(26, 26, 26) // #1a1a1a
-    doc.text(`Personal Business Plan for ${safe(data.name)}`, 20, 55)
 
     // Date
     const generatedDate = data.generatedDate || new Date().toLocaleDateString('en-GB', {
@@ -79,16 +105,37 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       year: 'numeric'
     })
     
+    // Header (only on first page)
+    doc.setFontSize(28)
+    doc.setTextColor(26, 26, 26) // #1a1a1a
+    doc.text('ALIRA.', margin, currentY)
+    currentY += 15
+    
+    doc.setFontSize(12)
+    doc.setTextColor(212, 175, 55) // #d4af37
+    doc.text('Strategic Business Solutions', margin, currentY)
+    currentY += 20
+
+    // Title
+    doc.setFontSize(18)
+    doc.setTextColor(26, 26, 26) // #1a1a1a
+    doc.text(`Personal Business Plan for ${safe(data.name)}`, margin, currentY)
+    currentY += 15
+    
     doc.setFontSize(10)
     doc.setTextColor(102, 102, 102) // #666666
-    doc.text(`Generated on ${generatedDate}`, 20, 65)
-
-    let yPosition = 80
+    doc.text(`Generated on ${generatedDate}`, margin, currentY)
+    currentY += 20
 
     // Sections
-    yPosition = addSection('Business Overview', safe(data.business_idea), yPosition)
-    yPosition = addSection('Current Challenges', safe(data.current_challenges), yPosition)
-    yPosition = addSection('Immediate Goals (3-6 months)', safe(data.immediate_goals), yPosition)
+    console.log('[PDF] Adding Business Overview section with:', safe(data.business_idea))
+    addSection('Business Overview', safe(data.business_idea))
+    
+    console.log('[PDF] Adding Current Challenges section with:', safe(data.current_challenges))
+    addSection('Current Challenges', safe(data.current_challenges))
+    
+    console.log('[PDF] Adding Immediate Goals section with:', safe(data.immediate_goals))
+    addSection('Immediate Goals (3-6 months)', safe(data.immediate_goals))
 
     // Service Interest
     const serviceMap: Record<string, string> = {
@@ -101,26 +148,26 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       serviceMap[service] || service
     ).join(', ') || 'General business improvement'
 
-    yPosition = addSection('Recommended ALIRA Services', selectedServices, yPosition)
+    addSection('Recommended ALIRA Services', selectedServices)
 
     // Current Tools
     if (data.current_tools) {
-      yPosition = addSection('Current Tools & Systems', safe(data.current_tools), yPosition)
+      addSection('Current Tools & Systems', safe(data.current_tools))
     }
 
     // AI Analysis Section (if available)
     if (data.aiAnalysis) {
-      yPosition = addSection('ALIRA Strategic Analysis', data.aiAnalysis.problem_statement, yPosition)
+      addSection('ALIRA Strategic Analysis', data.aiAnalysis.problem_statement)
       
       // Current State Analysis
       if (data.aiAnalysis.current_state) {
-        yPosition = addSection('Current State Assessment', data.aiAnalysis.current_state, yPosition)
+        addSection('Current State Assessment', data.aiAnalysis.current_state)
       }
       
       // Objectives
       if (data.aiAnalysis.objectives && data.aiAnalysis.objectives.length > 0) {
         const objectivesText = data.aiAnalysis.objectives.map((obj, index) => `${index + 1}. ${obj}`).join('\n')
-        yPosition = addSection('Strategic Objectives', objectivesText, yPosition)
+        addSection('Strategic Objectives', objectivesText)
       }
       
       // Proposed Solutions with Service Implementation
@@ -130,26 +177,38 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         data.aiAnalysis.proposed_solution.forEach((solution, index) => {
           solutionsText += `${index + 1}. ${solution.pillar}\n`
           solutionsText += `   Impact: ${solution.impact.toUpperCase()} | Effort: ${solution.effort.toUpperCase()}\n`
-          solutionsText += `   Actions:\n`
+          solutionsText += `   Timeline: ${solution.timeline || 'To be determined'}\n`
+          solutionsText += `   Investment: ${solution.investment || 'To be discussed'}\n`
+          solutionsText += `   ALIRA Implementation:\n`
           solution.actions.forEach(action => {
             solutionsText += `   • ${action}\n`
           })
           solutionsText += '\n'
         })
         
-        yPosition = addSection('ALIRA Service Implementation', solutionsText, yPosition)
+        addSection('ALIRA Service Implementation', solutionsText)
       }
       
       // Expected Outcomes
       if (data.aiAnalysis.expected_outcomes && data.aiAnalysis.expected_outcomes.length > 0) {
         const outcomesText = data.aiAnalysis.expected_outcomes.map((outcome, index) => `${index + 1}. ${outcome}`).join('\n')
-        yPosition = addSection('Expected Business Outcomes', outcomesText, yPosition)
+        addSection('Expected Business Outcomes', outcomesText)
       }
       
       // Next Steps
       if (data.aiAnalysis.next_steps && data.aiAnalysis.next_steps.length > 0) {
         const nextStepsText = data.aiAnalysis.next_steps.map((step, index) => `${index + 1}. ${step}`).join('\n')
-        yPosition = addSection('Recommended Next Steps', nextStepsText, yPosition)
+        addSection('Recommended Next Steps', nextStepsText)
+      }
+      
+      // Risk Assessment
+      if (data.aiAnalysis.risk_assessment) {
+        addSection('Risk Assessment', data.aiAnalysis.risk_assessment)
+      }
+      
+      // Competitive Advantage
+      if (data.aiAnalysis.competitive_advantage) {
+        addSection('Competitive Advantage', data.aiAnalysis.competitive_advantage)
       }
     } else {
       // Fallback recommendations if AI analysis is not available
@@ -166,19 +225,19 @@ Next Steps:
 • Develop a customized implementation roadmap
 • Begin with high-impact, quick-win initiatives`
 
-      yPosition = addSection('Strategic Recommendations', recommendations, yPosition)
+      addSection('Strategic Recommendations', recommendations)
     }
 
-    // Footer
-    doc.setFontSize(8)
-    doc.setTextColor(102, 102, 102) // #666666
-    doc.text('ALIRA. Confidential Business Plan', 20, 280)
-    doc.text(`Generated for ${safe(data.name)}`, 100, 280)
-    doc.text(generatedDate, 180, 280)
+    // Add footers to all pages
+    const totalPages = doc.getNumberOfPages()
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i)
+      addFooter()
+    }
 
     // Convert to buffer
     const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
-    console.log('[PDF] PDF generated successfully with jsPDF, size:', pdfBuffer.length, 'bytes')
+    console.log('[PDF] PDF generated successfully with jsPDF, size:', pdfBuffer.length, 'bytes, pages:', totalPages)
     
     return Promise.resolve(pdfBuffer)
   } catch (error) {

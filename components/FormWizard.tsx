@@ -135,21 +135,8 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         // Store the collected data
         setCollectedFormData(prev => ({ ...prev, ...currentStepData }))
         
-        // Clear the current step's field for better UX (except pre-filled business idea)
-        switch (currentStep) {
-          case 1:
-            // Don't clear if it was pre-filled from homepage
-            if (!draftData?.data?.mini_idea_one_liner) {
-              setValue('business_idea', '')
-            }
-            break
-          case 2:
-            setValue('current_challenges', '')
-            break
-          case 3:
-            setValue('immediate_goals', '')
-            break
-        }
+        // Don't clear the form fields - keep them for the final submission
+        // The data is already stored in collectedFormData
         
         setCurrentStep(currentStep + 1)
         conversionEvents.stepView(`step_${currentStep + 1}`)
