@@ -68,34 +68,105 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       doc.text(generatedDate, pageWidth - margin - 20, footerY)
     }
     
-    // Helper function to add section with automatic page breaks
-    const addSection = (title: string, content: string): void => {
+    // Helper function to add a professional section
+    const addSection = (title: string, content: string, isFirstSection: boolean = false): void => {
       // Calculate required height for this section
-      const titleHeight = 25 // Title + underline + spacing
+      const titleHeight = 35 // Title + underline + spacing
       const contentLines = doc.splitTextToSize(content, contentWidth)
-      const contentHeight = (contentLines.length * 5) + 20 // Line height + spacing
+      const contentHeight = (contentLines.length * 4.5) + 25 // Better line spacing
       const totalHeight = titleHeight + contentHeight
       
       // Check if we need a new page
       checkPageBreak(totalHeight)
       
-      // Add section title
-      doc.setFontSize(16)
+      // Add spacing before section (except first)
+      if (!isFirstSection) {
+        currentY += 15
+      }
+      
+      // Add section title with better typography
+      doc.setFontSize(18)
       doc.setTextColor(26, 26, 26) // #1a1a1a
+      doc.setFont(undefined, 'bold')
       doc.text(title, margin, currentY)
       
-      // Gold underline
+      // Professional underline (shorter, more elegant)
       doc.setDrawColor(212, 175, 55) // #d4af37
-      doc.setLineWidth(2)
-      doc.line(margin, currentY + 5, pageWidth - margin, currentY + 5)
+      doc.setLineWidth(1.5)
+      doc.line(margin, currentY + 6, margin + 60, currentY + 6)
       
-      // Add content
-      doc.setFontSize(11)
-      doc.setTextColor(102, 102, 102) // #666666
-      doc.text(contentLines, margin, currentY + 15)
+      // Add content with better formatting
+      doc.setFontSize(10)
+      doc.setTextColor(60, 60, 60) // Darker gray for better readability
+      doc.setFont(undefined, 'normal')
+      
+      // Split content into paragraphs for better formatting
+      const paragraphs = content.split('\n\n')
+      let contentY = currentY + 20
+      
+      paragraphs.forEach((paragraph, index) => {
+        if (paragraph.trim()) {
+          const lines = doc.splitTextToSize(paragraph.trim(), contentWidth)
+          doc.text(lines, margin, contentY)
+          contentY += (lines.length * 4.5) + 8 // Better paragraph spacing
+        }
+      })
       
       // Update current Y position
-      currentY += totalHeight
+      currentY = contentY + 10
+    }
+    
+    // Helper function to add a highlighted box
+    const addHighlightBox = (content: string, backgroundColor: number[] = [248, 249, 250]): void => {
+      const lines = doc.splitTextToSize(content, contentWidth - 20)
+      const boxHeight = (lines.length * 4.5) + 20
+      
+      checkPageBreak(boxHeight + 20)
+      
+      // Draw background
+      doc.setFillColor(backgroundColor[0], backgroundColor[1], backgroundColor[2])
+      doc.roundedRect(margin, currentY, contentWidth, boxHeight, 3, 3, 'F')
+      
+      // Add content
+      doc.setFontSize(10)
+      doc.setTextColor(60, 60, 60)
+      doc.text(lines, margin + 10, currentY + 15)
+      
+      currentY += boxHeight + 15
+    }
+    
+    // Helper function to add a two-column layout
+    const addTwoColumn = (leftTitle: string, leftContent: string, rightTitle: string, rightContent: string): void => {
+      const columnWidth = (contentWidth - 20) / 2
+      const leftLines = doc.splitTextToSize(leftContent, columnWidth)
+      const rightLines = doc.splitTextToSize(rightContent, columnWidth)
+      const maxHeight = Math.max(leftLines.length, rightLines.length) * 4.5 + 40
+      
+      checkPageBreak(maxHeight + 20)
+      
+      // Left column
+      doc.setFontSize(12)
+      doc.setTextColor(26, 26, 26)
+      doc.setFont(undefined, 'bold')
+      doc.text(leftTitle, margin, currentY)
+      
+      doc.setFontSize(9)
+      doc.setTextColor(60, 60, 60)
+      doc.setFont(undefined, 'normal')
+      doc.text(leftLines, margin, currentY + 12)
+      
+      // Right column
+      doc.setFontSize(12)
+      doc.setTextColor(26, 26, 26)
+      doc.setFont(undefined, 'bold')
+      doc.text(rightTitle, margin + columnWidth + 20, currentY)
+      
+      doc.setFontSize(9)
+      doc.setTextColor(60, 60, 60)
+      doc.setFont(undefined, 'normal')
+      doc.text(rightLines, margin + columnWidth + 20, currentY + 12)
+      
+      currentY += maxHeight + 20
     }
 
     // Date
@@ -105,116 +176,192 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       year: 'numeric'
     })
     
-    // 1. COVER PAGE
-    doc.setFontSize(32)
+    // 1. PROFESSIONAL COVER PAGE
+    // Header with logo
+    doc.setFontSize(24)
     doc.setTextColor(26, 26, 26) // #1a1a1a
-    doc.text('Your Personal Plan', margin, currentY)
-    currentY += 25
+    doc.setFont(undefined, 'bold')
+    doc.text('ALIRA.', margin, currentY)
+    currentY += 8
     
-    doc.setFontSize(16)
+    doc.setFontSize(10)
     doc.setTextColor(212, 175, 55) // #d4af37
-    doc.text(`Prepared for ${safe(data.name)}`, margin, currentY)
-    currentY += 15
+    doc.setFont(undefined, 'normal')
+    doc.text('Strategic Business Solutions', margin, currentY)
+    currentY += 40
     
-    doc.setFontSize(12)
-    doc.setTextColor(102, 102, 102) // #666666
-    doc.text(`Generated on ${generatedDate}`, margin, currentY)
-    currentY += 20
+    // Main title
+    doc.setFontSize(28)
+    doc.setTextColor(26, 26, 26)
+    doc.setFont(undefined, 'bold')
+    doc.text('Your Personal Plan', margin, currentY)
+    currentY += 35
+    
+    // Client info box
+    doc.setFillColor(248, 249, 250)
+    doc.roundedRect(margin, currentY, contentWidth, 60, 5, 5, 'F')
+    
+    doc.setFontSize(14)
+    doc.setTextColor(26, 26, 26)
+    doc.setFont(undefined, 'bold')
+    doc.text(`Prepared for ${safe(data.name)}`, margin + 15, currentY + 20)
+    
+    doc.setFontSize(10)
+    doc.setTextColor(102, 102, 102)
+    doc.setFont(undefined, 'normal')
+    doc.text(`Generated on ${generatedDate}`, margin + 15, currentY + 35)
+    
+    currentY += 80
     
     // Confidentiality notice
-    doc.setFontSize(10)
+    doc.setFontSize(8)
     doc.setTextColor(150, 150, 150)
     doc.text('ALIRA. Confidential Business Plan', margin, currentY)
-    currentY += 30
+    currentY += 20
 
-    // 2. SNAPSHOT SUMMARY
-    addSection('Snapshot Summary', 
-      `What you shared → ${safe(data.business_idea)}\n\n` +
-      `What matters most → ${data.aiAnalysis?.objectives?.slice(0, 3).join(', ') || 'Strategic growth and operational efficiency'}\n\n` +
-      `Things to be mindful of → ${data.aiAnalysis?.risk_assessment || 'Market competition and resource allocation'}`)
+    // 2. SNAPSHOT SUMMARY - Professional layout
+    addSection('Executive Summary', '', true)
+    
+    // Create a professional summary box
+    const summaryContent = `Business Concept: ${safe(data.business_idea)}\n\n` +
+      `Key Objectives: ${data.aiAnalysis?.objectives?.slice(0, 3).join(' • ') || 'Strategic growth and operational efficiency'}\n\n` +
+      `Primary Considerations: ${data.aiAnalysis?.risk_assessment || 'Market competition and resource allocation'}`
+    
+    addHighlightBox(summaryContent, [248, 249, 250])
 
-    // 3. THE BIGGER PICTURE
+    // 3. STRATEGIC OVERVIEW - Two column layout
     const purpose = data.aiAnalysis?.problem_statement || `Building a sustainable business around ${safe(data.business_idea)}`
     const outcomes = data.aiAnalysis?.expected_outcomes?.slice(0, 3) || [
       'Establish market presence and customer base',
-      'Develop efficient operational systems',
+      'Develop efficient operational systems', 
       'Achieve sustainable growth metrics'
     ]
-    const audience = data.aiAnalysis?.current_state || 'Target market and customer segments to be defined'
     
-    addSection('The Bigger Picture', 
-      `Purpose → ${purpose}\n\n` +
-      `Desired Outcomes (6-12 months) →\n${outcomes.map((outcome, i) => `• ${outcome}`).join('\n')}\n\n` +
-      `Audience → ${audience}`)
+    addSection('Strategic Overview', '')
+    addTwoColumn(
+      'Business Purpose',
+      purpose,
+      'Target Outcomes (6-12 months)',
+      outcomes.map((outcome, i) => `${i + 1}. ${outcome}`).join('\n')
+    )
 
-    // 4. INSIGHTS + OPPORTUNITIES
+    // 4. CURRENT POSITION & OPPORTUNITIES
     const currentPosition = data.aiAnalysis?.current_state || 'Early stage business development'
     const opportunities = data.aiAnalysis?.proposed_solution?.map(s => s.pillar) || ['Strategic positioning', 'Operational efficiency', 'Market expansion']
     const aliraView = data.aiAnalysis?.competitive_advantage || 'Focus on clarity over complexity, small tests over big theories, and systematic execution'
     
-    addSection('Insights + Opportunities', 
-      `Current Position → ${currentPosition}\n\n` +
-      `Opportunities →\n${opportunities.map((opp, i) => `• ${opp}`).join('\n')}\n\n` +
-      `ALIRA's View → ${aliraView}`)
+    addSection('Current Position & Opportunities', '')
+    
+    // Current position box
+    addHighlightBox(`Current State: ${currentPosition}`, [245, 248, 250])
+    
+    // Opportunities list
+    addSection('Key Opportunities', opportunities.map((opp, i) => `${i + 1}. ${opp}`).join('\n'))
+    
+    // ALIRA's perspective
+    addHighlightBox(`ALIRA's Strategic Perspective:\n\n${aliraView}`, [252, 245, 245])
 
-    // 5. RECOMMENDED NEXT STEPS
+    // 5. STRATEGIC ROADMAP
     const coreAim = data.aiAnalysis?.objectives?.[0] || 'Establish clear business direction and market position'
     const obstacles = data.aiAnalysis?.problem_statement || safe(data.current_challenges) || 'Resource allocation and market positioning'
     const ninetyDayOutcome = data.aiAnalysis?.next_steps?.[0] || safe(data.immediate_goals) || 'Complete initial market validation and customer discovery'
     const firstTest = data.aiAnalysis?.next_steps?.[1] || 'Launch a minimum viable product or service offering'
     const timeProtection = data.aiAnalysis?.next_steps?.[2] || 'Establish dedicated weekly business development time'
     
-    addSection('Recommended Next Steps', 
-      `Step 1: Name the Core Aim → ${coreAim}\n\n` +
-      `Step 2: Face the Obstacles → ${obstacles}\n\n` +
-      `Step 3: Define a 90-Day Outcome → ${ninetyDayOutcome}\n\n` +
-      `Step 4: Create the First Test → ${firstTest}\n\n` +
-      `Step 5: Protect the Time → ${timeProtection}`)
+    addSection('Strategic Roadmap', '')
+    
+    // Create a professional roadmap with numbered steps
+    const roadmapSteps = [
+      { title: 'Define Core Aim', content: coreAim },
+      { title: 'Address Key Obstacles', content: obstacles },
+      { title: 'Set 90-Day Target', content: ninetyDayOutcome },
+      { title: 'Create First Test', content: firstTest },
+      { title: 'Protect Development Time', content: timeProtection }
+    ]
+    
+    roadmapSteps.forEach((step, index) => {
+      addHighlightBox(
+        `Step ${index + 1}: ${step.title}\n\n${step.content}`,
+        index % 2 === 0 ? [248, 249, 250] : [252, 252, 252]
+      )
+    })
 
-    // 6. HOW ALIRA CAN HELP
+    // 6. ALIRA SERVICE RECOMMENDATIONS
     const serviceMap: Record<string, string> = {
-      'brand_product': 'Brand & Product Management → Clarify offer, shape brand, first 100 customers',
-      'content_management': 'Content Management → Capture leads, nurture, automate follow-ups',
-      'digital_solutions': 'Digital Solutions & AI Integration → MVP build, website, AI integrations'
+      'brand_product': 'Brand & Product Management\nClarify offer, shape brand, acquire first 100 customers',
+      'content_management': 'Content Management\nCapture leads, nurture prospects, automate follow-ups',
+      'digital_solutions': 'Digital Solutions & AI Integration\nBuild MVP, develop website, implement AI tools'
     }
     
     const selectedServices = data.service_interest?.map((service: string) => 
-      serviceMap[service] || `${service} → Strategic implementation and optimization`
-    ) || ['Brand & Product Management → Clarify offer, shape brand, first 100 customers']
+      serviceMap[service] || `${service}\nStrategic implementation and optimization`
+    ) || ['Brand & Product Management\nClarify offer, shape brand, acquire first 100 customers']
     
-    addSection('How ALIRA Can Help', 
-      selectedServices.join('\n\n') + '\n\n' +
-      'Current Tools & Systems → ' + (safe(data.current_tools) || 'Standard business tools and processes'))
+    addSection('Recommended ALIRA Services', '')
+    
+    selectedServices.forEach((service, index) => {
+      const [title, description] = service.split('\n')
+      addHighlightBox(
+        `${title}\n\n${description}`,
+        [245, 248, 250]
+      )
+    })
+    
+    // Current tools section
+    addSection('Current Tools & Systems', safe(data.current_tools) || 'Standard business tools and processes')
 
-    // 7. RISKS & MITIGATIONS
+    // 7. RISK ASSESSMENT
     const risks = [
       { risk: data.aiAnalysis?.risk_assessment || 'Market competition and resource constraints', mitigation: 'Focus on unique value proposition and efficient resource allocation' },
       { risk: 'Time management and prioritization challenges', mitigation: 'Implement systematic approach with clear milestones and accountability' },
       { risk: 'Customer acquisition and retention', mitigation: 'Develop targeted marketing strategy and customer experience optimization' }
     ]
     
-    let risksText = 'Risk | Mitigation\n'
-    risksText += '--- | ---\n'
-    risks.forEach(risk => {
-      risksText += `${risk.risk} | ${risk.mitigation}\n`
-    })
+    addSection('Risk Assessment & Mitigation', '')
     
-    addSection('Risks & Mitigations', risksText)
+    risks.forEach((risk, index) => {
+      addTwoColumn(
+        'Risk',
+        risk.risk,
+        'Mitigation Strategy',
+        risk.mitigation
+      )
+    })
 
-    // 8. REFLECTION SPACE
-    addSection('Reflection Space', 
-      'What excites you most about this plan?\n\n' +
-      'What\'s one step you\'ll act on this week?\n\n' +
-      'What happens if you do nothing?')
+    // 8. REFLECTION & ACTION
+    addSection('Reflection & Action Planning', '')
+    
+    const reflectionQuestions = [
+      'What excites you most about this plan?',
+      'What\'s one step you\'ll act on this week?',
+      'What happens if you do nothing?'
+    ]
+    
+    reflectionQuestions.forEach((question, index) => {
+      addHighlightBox(question, [252, 252, 252])
+    })
 
-    // 9. CLOSING PRINCIPLES
-    addSection('Closing Principles', 
-      'Clarity over complexity\n' +
-      'Small tests over big theories\n' +
-      'Focus creates momentum\n' +
-      'Systems that last\n' +
-      'Discipline over distraction\n\n' +
-      'Ready to move forward? Contact ALIRA for strategic implementation support.')
+    // 9. ALIRA PRINCIPLES & NEXT STEPS
+    addSection('ALIRA Principles', '')
+    
+    const principles = [
+      'Clarity over complexity',
+      'Small tests over big theories', 
+      'Focus creates momentum',
+      'Systems that last',
+      'Discipline over distraction'
+    ]
+    
+    addHighlightBox(
+      principles.join('\n\n'),
+      [248, 249, 250]
+    )
+    
+    // Call to action
+    addHighlightBox(
+      'Ready to move forward?\n\nContact ALIRA for strategic implementation support and begin your systematic business development journey.',
+      [252, 245, 245]
+    )
 
     // Add footers to all pages
     const totalPages = doc.getNumberOfPages()
