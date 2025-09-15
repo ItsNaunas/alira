@@ -96,6 +96,9 @@ export async function POST(request: NextRequest) {
     // Debug: Log the draft data structure
     console.log('[SUBMIT] Draft data structure:', JSON.stringify(draft, null, 2))
     console.log('[SUBMIT] Draft.data:', JSON.stringify(draft.data, null, 2))
+    console.log('[SUBMIT] Draft.data keys:', Object.keys(draft.data || {}))
+    console.log('[SUBMIT] Draft.data.current_challenges:', draft.data?.current_challenges)
+    console.log('[SUBMIT] Draft.data.immediate_goals:', draft.data?.immediate_goals)
 
     // Generate AI business analysis
     console.log('[SUBMIT] Generating AI business analysis...')

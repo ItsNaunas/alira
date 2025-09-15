@@ -195,6 +195,11 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
 
       // Save the form data
       console.log('💾 Saving form data to draft:', currentDraftId)
+      console.log('💾 Form data being saved:', JSON.stringify(data, null, 2))
+      console.log('💾 Data keys:', Object.keys(data || {}))
+      console.log('💾 current_challenges:', data?.current_challenges)
+      console.log('💾 immediate_goals:', data?.immediate_goals)
+      
       const response = await fetch('/api/draft/save', {
         method: 'POST',
         headers: {

@@ -14,6 +14,11 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { id, data } = body
 
+    console.log('[SAVE] Received data:', JSON.stringify(data, null, 2))
+    console.log('[SAVE] Data keys:', Object.keys(data || {}))
+    console.log('[SAVE] current_challenges:', data?.current_challenges)
+    console.log('[SAVE] immediate_goals:', data?.immediate_goals)
+
     if (!id || !data) {
       return NextResponse.json(
         { error: 'Missing required fields: id and data' },
