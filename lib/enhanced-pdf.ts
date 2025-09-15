@@ -8,6 +8,14 @@ const BRAND_COLORS = {
   light: '#f8f9fa'         // Light Background
 }
 
+// Font configuration to avoid Helvetica.afm issues
+const FONT_CONFIG = {
+  // Use built-in fonts that don't require external files
+  regular: 'Helvetica',
+  bold: 'Helvetica-Bold',
+  italic: 'Helvetica-Oblique'
+}
+
 // PDF Data Interface for Personal Plans
 export interface PersonalPlanPDFData {
   name: string
@@ -36,7 +44,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
           bottom: 60,
           left: 50,
           right: 50
-        }
+        },
+        // Use built-in fonts to avoid file system issues
+        font: FONT_CONFIG.regular
       })
 
       const buffers: Buffer[] = []
@@ -49,7 +59,8 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       // Helper function to add section with proper spacing
       const addSection = (title: string, content: string, yPos: number): number => {
         // Section title with gold accent
-        doc.fontSize(16)
+        doc.font(FONT_CONFIG.bold)
+          .fontSize(16)
           .fillColor(BRAND_COLORS.primary)
           .text(title, 50, yPos)
         
@@ -58,7 +69,8 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
           .fill(BRAND_COLORS.accent)
         
         // Content with proper wrapping
-        doc.fontSize(11)
+        doc.font(FONT_CONFIG.regular)
+          .fontSize(11)
           .fillColor(BRAND_COLORS.neutral)
           .text(content, 50, yPos + 40, {
             width: 500,
@@ -70,16 +82,19 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       }
 
       // Header with ALIRA branding
-      doc.fontSize(28)
+      doc.font(FONT_CONFIG.bold)
+        .fontSize(28)
         .fillColor(BRAND_COLORS.primary)
         .text('ALIRA.', 50, 50)
       
-      doc.fontSize(12)
+      doc.font(FONT_CONFIG.regular)
+        .fontSize(12)
         .fillColor(BRAND_COLORS.accent)
         .text('Strategic Business Solutions', 50, 85)
 
       // Personalized title
-      doc.fontSize(18)
+      doc.font(FONT_CONFIG.bold)
+        .fontSize(18)
         .fillColor(BRAND_COLORS.primary)
         .text(`Personal Business Plan for ${data.name}`, 50, 115)
 
@@ -90,7 +105,8 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         year: 'numeric'
       })
       
-      doc.fontSize(10)
+      doc.font(FONT_CONFIG.regular)
+        .fontSize(10)
         .fillColor(BRAND_COLORS.neutral)
         .text(`Generated on ${generatedDate}`, 50, 145)
 
@@ -146,7 +162,8 @@ Next Steps:
 
       // Footer
       const footerY = 750
-      doc.fontSize(8)
+      doc.font(FONT_CONFIG.regular)
+        .fontSize(8)
         .fillColor(BRAND_COLORS.neutral)
         .text('ALIRA. Confidential Business Plan', 50, footerY)
         .text(`Generated for ${data.name}`, 300, footerY)
@@ -180,7 +197,9 @@ export function generateBusinessCasePDF(data: any): Promise<Buffer> {
           bottom: 60,
           left: 50,
           right: 50
-        }
+        },
+        // Use built-in fonts to avoid file system issues
+        font: FONT_CONFIG.regular
       })
 
       const buffers: Buffer[] = []
@@ -191,16 +210,19 @@ export function generateBusinessCasePDF(data: any): Promise<Buffer> {
       })
 
       // Professional header
-      doc.fontSize(24)
+      doc.font(FONT_CONFIG.bold)
+        .fontSize(24)
         .fillColor(BRAND_COLORS.primary)
         .text('ALIRA.', 50, 50)
       
-      doc.fontSize(16)
+      doc.font(FONT_CONFIG.regular)
+        .fontSize(16)
         .fillColor(BRAND_COLORS.accent)
         .text('Business Case Analysis', 50, 85)
 
       // Add your business case content here
-      doc.fontSize(12)
+      doc.font(FONT_CONFIG.regular)
+        .fontSize(12)
         .fillColor(BRAND_COLORS.neutral)
         .text('Business case content would go here...', 50, 120)
 
