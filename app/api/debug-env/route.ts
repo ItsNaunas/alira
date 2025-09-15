@@ -12,7 +12,7 @@ export async function GET() {
     console.log('Direct RESEND_FROM_EMAIL:', directFromEmail)
     
     // Test the env system
-    let envApiKey, envFromEmail, envError
+    let envApiKey: string | undefined, envFromEmail: string | undefined, envError: string | undefined
     try {
       const { env } = await import('@/lib/env')
       envApiKey = env.RESEND_API_KEY
