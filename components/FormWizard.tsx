@@ -113,21 +113,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     
     if (isValid) {
       if (currentStep < 4) {
-        // Clear the current step's field after validation (except pre-filled business idea)
-        switch (currentStep) {
-          case 1:
-            // Don't clear if it was pre-filled from homepage
-            if (!draftData?.data?.mini_idea_one_liner) {
-              setValue('business_idea', '')
-            }
-            break
-          case 2:
-            setValue('current_challenges', '')
-            break
-          case 3:
-            setValue('immediate_goals', '')
-            break
-        }
+        // Don't clear fields - keep all user input for final submission
         
         setCurrentStep(currentStep + 1)
         conversionEvents.stepView(`step_${currentStep + 1}`)
@@ -135,6 +121,9 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         // On step 4, trigger form submission
         console.log('Step 4 validation passed, triggering form submission')
         const formData = watchedValues
+        console.log('Form data before submission:', formData)
+        console.log('Current challenges:', formData.current_challenges)
+        console.log('Immediate goals:', formData.immediate_goals)
         await onSubmit(formData)
       }
     }
