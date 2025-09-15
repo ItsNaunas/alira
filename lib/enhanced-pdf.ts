@@ -1,4 +1,4 @@
-import PDFDocument from 'pdfkit'
+import jsPDF from 'jspdf'
 
 // Safe string helper to prevent undefined/null issues
 const safe = (s?: string | null): string => {
@@ -18,119 +18,94 @@ export interface PersonalPlanPDFData {
   generatedDate?: string
 }
 
-// Enhanced PDF generation with PDFKit (serverless-friendly)
+// Enhanced PDF generation with jsPDF (serverless-friendly)
 export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    try {
-      if (!data) {
-        reject(new Error('No data provided for PDF generation'))
-        return
-      }
+  try {
+    if (!data) {
+      throw new Error('No data provided for PDF generation')
+    }
 
-      console.log('[PDF] Generating PDF with PDFKit (no external fonts)')
+    console.log('[PDF] Generating PDF with jsPDF (serverless-friendly)')
+    
+    // Create PDF document
+    const doc = new jsPDF('p', 'mm', 'a4')
+    
+    // Helper function to add section
+    const addSection = (title: string, content: string, yPos: number): number => {
+      // Section title
+      doc.setFontSize(16)
+      doc.setTextColor(26, 26, 26) // #1a1a1a
+      doc.text(title, 20, yPos)
       
-      // Create PDF document without specifying font to avoid file system issues
-      const doc = new PDFDocument({
-        size: 'A4',
-        margins: {
-          top: 60,
-          bottom: 60,
-          left: 50,
-          right: 50
-        }
-        // Don't specify font - let PDFKit use its default
-      })
-
-      const buffers: Buffer[] = []
-      doc.on('data', buffers.push.bind(buffers))
-      doc.on('end', () => {
-        const pdfData = Buffer.concat(buffers)
-        console.log('[PDF] PDF generated successfully, size:', pdfData.length, 'bytes')
-        resolve(pdfData)
-      })
-
-      // Helper function to add section
-      const addSection = (title: string, content: string, yPos: number): number => {
-        // Section title
-        doc.fontSize(16)
-          .fillColor('#1a1a1a')
-          .text(title, 50, yPos)
-        
-        // Gold underline
-        doc.rect(50, yPos + 25, 150, 2)
-          .fill('#d4af37')
-        
-        // Content
-        doc.fontSize(11)
-          .fillColor('#666666')
-          .text(content, 50, yPos + 40, {
-            width: 500,
-            align: 'left',
-            lineGap: 3
-          })
-        
-        return yPos + 40 + (doc.heightOfString(content, { width: 500 }) + 30)
-      }
-
-      // Header
-      doc.fontSize(28)
-        .fillColor('#1a1a1a')
-        .text('ALIRA.', 50, 50)
+      // Gold underline
+      doc.setDrawColor(212, 175, 55) // #d4af37
+      doc.setLineWidth(2)
+      doc.line(20, yPos + 5, 170, yPos + 5)
       
-      doc.fontSize(12)
-        .fillColor('#d4af37')
-        .text('Strategic Business Solutions', 50, 85)
-
-      // Title
-      doc.fontSize(18)
-        .fillColor('#1a1a1a')
-        .text(`Personal Business Plan for ${safe(data.name)}`, 50, 115)
-
-      // Date
-      const generatedDate = data.generatedDate || new Date().toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      })
+      // Content
+      doc.setFontSize(11)
+      doc.setTextColor(102, 102, 102) // #666666
       
-      doc.fontSize(10)
-        .fillColor('#666666')
-        .text(`Generated on ${generatedDate}`, 50, 145)
-
-      let yPosition = 175
-
-      // Sections
-      yPosition = addSection('Business Overview', safe(data.business_idea), yPosition)
-      yPosition += 20
-
-      yPosition = addSection('Current Challenges', safe(data.current_challenges), yPosition)
-      yPosition += 20
-
-      yPosition = addSection('Immediate Goals (3-6 months)', safe(data.immediate_goals), yPosition)
-      yPosition += 20
-
-      // Service Interest
-      const serviceMap: Record<string, string> = {
-        'brand_product': 'Brand & Product Management',
-        'content_management': 'Content Management',
-        'digital_solutions': 'Digital Solutions & AI Integration'
-      }
+      // Split content into lines that fit the page width
+      const maxWidth = 170
+      const lines = doc.splitTextToSize(content, maxWidth)
+      doc.text(lines, 20, yPos + 15)
       
-      const selectedServices = data.service_interest?.map((service: string) => 
-        serviceMap[service] || service
-      ).join(', ') || 'General business improvement'
+      return yPos + 15 + (lines.length * 5) + 20
+    }
 
-      yPosition = addSection('Recommended ALIRA Services', selectedServices, yPosition)
-      yPosition += 20
+    // Header
+    doc.setFontSize(28)
+    doc.setTextColor(26, 26, 26) // #1a1a1a
+    doc.text('ALIRA.', 20, 30)
+    
+    doc.setFontSize(12)
+    doc.setTextColor(212, 175, 55) // #d4af37
+    doc.text('Strategic Business Solutions', 20, 40)
 
-      // Current Tools
-      if (data.current_tools) {
-        yPosition = addSection('Current Tools & Systems', safe(data.current_tools), yPosition)
-        yPosition += 20
-      }
+    // Title
+    doc.setFontSize(18)
+    doc.setTextColor(26, 26, 26) // #1a1a1a
+    doc.text(`Personal Business Plan for ${safe(data.name)}`, 20, 55)
 
-      // Recommendations
-      const recommendations = `Based on your inputs, we recommend focusing on:
+    // Date
+    const generatedDate = data.generatedDate || new Date().toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    })
+    
+    doc.setFontSize(10)
+    doc.setTextColor(102, 102, 102) // #666666
+    doc.text(`Generated on ${generatedDate}`, 20, 65)
+
+    let yPosition = 80
+
+    // Sections
+    yPosition = addSection('Business Overview', safe(data.business_idea), yPosition)
+    yPosition = addSection('Current Challenges', safe(data.current_challenges), yPosition)
+    yPosition = addSection('Immediate Goals (3-6 months)', safe(data.immediate_goals), yPosition)
+
+    // Service Interest
+    const serviceMap: Record<string, string> = {
+      'brand_product': 'Brand & Product Management',
+      'content_management': 'Content Management',
+      'digital_solutions': 'Digital Solutions & AI Integration'
+    }
+    
+    const selectedServices = data.service_interest?.map((service: string) => 
+      serviceMap[service] || service
+    ).join(', ') || 'General business improvement'
+
+    yPosition = addSection('Recommended ALIRA Services', selectedServices, yPosition)
+
+    // Current Tools
+    if (data.current_tools) {
+      yPosition = addSection('Current Tools & Systems', safe(data.current_tools), yPosition)
+    }
+
+    // Recommendations
+    const recommendations = `Based on your inputs, we recommend focusing on:
 
 1. Strategic Assessment: Comprehensive analysis of your current business position
 2. Quick Wins: Identify and implement high-impact, low-effort improvements
@@ -143,22 +118,24 @@ Next Steps:
 • Develop a customized implementation roadmap
 • Begin with high-impact, quick-win initiatives`
 
-      yPosition = addSection('Strategic Recommendations', recommendations, yPosition)
+    yPosition = addSection('Strategic Recommendations', recommendations, yPosition)
 
-      // Footer
-      const footerY = 750
-      doc.fontSize(8)
-        .fillColor('#666666')
-        .text('ALIRA. Confidential Business Plan', 50, footerY)
-        .text(`Generated for ${safe(data.name)}`, 300, footerY)
-        .text(generatedDate, 500, footerY)
+    // Footer
+    doc.setFontSize(8)
+    doc.setTextColor(102, 102, 102) // #666666
+    doc.text('ALIRA. Confidential Business Plan', 20, 280)
+    doc.text(`Generated for ${safe(data.name)}`, 100, 280)
+    doc.text(generatedDate, 180, 280)
 
-      doc.end()
-    } catch (error) {
-      console.error('[PDF] Error generating PDF:', error)
-      reject(error)
-    }
-  })
+    // Convert to buffer
+    const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
+    console.log('[PDF] PDF generated successfully with jsPDF, size:', pdfBuffer.length, 'bytes')
+    
+    return Promise.resolve(pdfBuffer)
+  } catch (error) {
+    console.error('[PDF] Error generating PDF:', error)
+    return Promise.reject(error)
+  }
 }
 
 // Convert PDF to base64 for email attachment
@@ -173,45 +150,30 @@ export function getPDFBase64(pdfBuffer: Buffer): string {
 
 // Enhanced business case PDF (if needed for other use cases)
 export function generateBusinessCasePDF(data: any): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    try {
-      console.log('[PDF] Generating business case PDF with PDFKit')
-      
-      const doc = new PDFDocument({
-        size: 'A4',
-        margins: {
-          top: 60,
-          bottom: 60,
-          left: 50,
-          right: 50
-        }
-      })
+  try {
+    console.log('[PDF] Generating business case PDF with jsPDF')
+    
+    const doc = new jsPDF('p', 'mm', 'a4')
+    
+    // Simple business case content
+    doc.setFontSize(24)
+    doc.setTextColor(26, 26, 26) // #1a1a1a
+    doc.text('ALIRA.', 20, 30)
+    
+    doc.setFontSize(16)
+    doc.setTextColor(212, 175, 55) // #d4af37
+    doc.text('Business Case Analysis', 20, 50)
 
-      const buffers: Buffer[] = []
-      doc.on('data', buffers.push.bind(buffers))
-      doc.on('end', () => {
-        const pdfData = Buffer.concat(buffers)
-        console.log('[PDF] Business case PDF generated successfully, size:', pdfData.length, 'bytes')
-        resolve(pdfData)
-      })
+    doc.setFontSize(12)
+    doc.setTextColor(102, 102, 102) // #666666
+    doc.text('Business case content would go here...', 20, 70)
 
-      // Simple business case content
-      doc.fontSize(24)
-        .fillColor('#1a1a1a')
-        .text('ALIRA.', 50, 50)
-      
-      doc.fontSize(16)
-        .fillColor('#d4af37')
-        .text('Business Case Analysis', 50, 85)
-
-      doc.fontSize(12)
-        .fillColor('#666666')
-        .text('Business case content would go here...', 50, 120)
-
-      doc.end()
-    } catch (error) {
-      console.error('[PDF] Error generating business case PDF:', error)
-      reject(error)
-    }
-  })
+    const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
+    console.log('[PDF] Business case PDF generated successfully with jsPDF, size:', pdfBuffer.length, 'bytes')
+    
+    return Promise.resolve(pdfBuffer)
+  } catch (error) {
+    console.error('[PDF] Error generating business case PDF:', error)
+    return Promise.reject(error)
+  }
 }
