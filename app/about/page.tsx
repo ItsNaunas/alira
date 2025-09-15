@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import Image from 'next/image'
 import Reveal from '@/components/Reveal'
 import CTAButton from '@/components/CTAButton'
 
@@ -177,9 +178,11 @@ export default function AboutPage() {
                                             {/* Founder photo with elegant styling */}
                           <div className="relative">
                             <div className="w-full h-80 rounded-2xl overflow-hidden border border-alira-onyx/10 shadow-lg">
-                              <img 
+                              <Image 
                                 src="/images/assets/founder.jpg" 
                                 alt="ALIRA Founder - Professional headshot"
+                                width={400}
+                                height={320}
                                 className="w-full h-full object-cover object-top"
                               />
                             </div>

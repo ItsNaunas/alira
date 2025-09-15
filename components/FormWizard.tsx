@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -61,9 +61,9 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     if (resumeToken && !initialData) {
       loadDraft(resumeToken)
     }
-  }, [resumeToken, initialData])
+  }, [resumeToken, initialData, loadDraft])
 
-  const loadDraft = async (token: string) => {
+  const loadDraft = useCallback(async (token: string) => {
     try {
       const response = await fetch(`/api/draft/resume/${token}`)
       if (response.ok) {
@@ -86,7 +86,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     } catch (error) {
       console.error('Error loading draft:', error)
     }
-  }
+  }, [setValue])
 
   // Autosave functionality
   useEffect(() => {
@@ -97,9 +97,9 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     }, 2000) // Save after 2 seconds of inactivity
 
     return () => clearTimeout(timeoutId)
-  }, [watchedValues, draftId, currentStep])
+  }, [watchedValues, draftId, currentStep, saveDraft])
 
-  const saveDraft = async () => {
+  const saveDraft = useCallback(async () => {
     if (!draftId) return
     
     setIsSaving(true)
@@ -127,7 +127,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     } finally {
       setIsSaving(false)
     }
-  }
+  }, [draftId, currentStep, watchedValues])
 
   const nextStep = async () => {
     // Validate only the current step's fields

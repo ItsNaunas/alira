@@ -76,6 +76,8 @@ export async function generateBusinessCase(formData: any): Promise<BusinessCaseO
   console.log("=== OPENAI FUNCTION DEBUG ===")
   console.log("Form data received:", JSON.stringify(formData, null, 2))
   console.log("OpenAI API Key present:", !!process.env.OPENAI_API_KEY)
+  console.log("OpenAI API Key length:", process.env.OPENAI_API_KEY?.length || 0)
+  console.log("OpenAI API Key starts with sk-:", process.env.OPENAI_API_KEY?.startsWith('sk-') || false)
   
   try {
     const userPrompt = `
@@ -98,6 +100,8 @@ Project Details:
 `
 
     console.log("Making OpenAI API call...")
+    console.log("User prompt:", userPrompt)
+    
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
@@ -114,20 +118,47 @@ Project Details:
       max_tokens: 1200,
       response_format: { type: 'json_object' }
     })
+    
     console.log("OpenAI API call completed successfully")
+    console.log("Completion object:", {
+      hasChoices: !!completion.choices,
+      choicesLength: completion.choices?.length || 0,
+      hasContent: !!completion.choices?.[0]?.message?.content
+    })
 
     const content = completion.choices[0]?.message?.content
     if (!content) {
       throw new Error('No content received from OpenAI')
     }
 
-    const outline = JSON.parse(content) as BusinessCaseOutline
+    console.log("Raw content from OpenAI:", content)
+    
+    let outline: BusinessCaseOutline
+    try {
+      outline = JSON.parse(content) as BusinessCaseOutline
+      console.log("Parsed outline:", {
+        hasProblemStatement: !!outline.problem_statement,
+        objectivesCount: outline.objectives?.length || 0,
+        solutionsCount: outline.proposed_solution?.length || 0
+      })
+    } catch (parseError) {
+      console.error("JSON parsing error:", parseError)
+      console.error("Content that failed to parse:", content)
+      throw new Error(`Failed to parse OpenAI response as JSON: ${parseError instanceof Error ? parseError.message : 'Unknown error'}`)
+    }
     
     // Validate the response structure
     if (!outline.problem_statement || !outline.objectives || !outline.proposed_solution) {
+      console.error("Invalid response structure:", {
+        hasProblemStatement: !!outline.problem_statement,
+        hasObjectives: !!outline.objectives,
+        hasProposedSolution: !!outline.proposed_solution,
+        outline: outline
+      })
       throw new Error('Invalid response structure from OpenAI')
     }
 
+    console.log("AI analysis generated successfully")
     return outline
   } catch (error) {
     console.error('OpenAI API error:', error)

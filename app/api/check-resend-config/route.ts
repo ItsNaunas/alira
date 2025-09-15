@@ -39,11 +39,13 @@ export async function GET() {
         config: {
           hasApiKey: true,
           fromEmail: fromEmail,
-          domains: domains.data?.map(d => ({
-            name: d.name,
-            status: d.status,
-            region: d.region
-          })) || []
+          domains: Array.isArray(domains.data) 
+            ? domains.data.map(d => ({
+                name: d.name,
+                status: d.status,
+                region: d.region
+              }))
+            : []
         }
       })
     } catch (apiError: any) {

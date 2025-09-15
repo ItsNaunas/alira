@@ -119,12 +119,23 @@ export async function POST(request: NextRequest) {
       }
       
       console.log('[SUBMIT] AI input data:', JSON.stringify(aiInput, null, 2))
+      console.log('[SUBMIT] OpenAI API Key present:', !!process.env.OPENAI_API_KEY)
+      console.log('[SUBMIT] OpenAI API Key length:', process.env.OPENAI_API_KEY?.length || 0)
       
       aiAnalysis = await generateBusinessCase(aiInput)
-      console.log('[SUBMIT] AI analysis generated successfully')
+      console.log('[SUBMIT] AI analysis generated successfully:', {
+        hasProblemStatement: !!aiAnalysis?.problem_statement,
+        objectivesCount: aiAnalysis?.objectives?.length || 0,
+        solutionsCount: aiAnalysis?.proposed_solution?.length || 0
+      })
     } catch (error) {
-      console.error('[SUBMIT] AI analysis failed:', error)
-      // Continue without AI analysis if it fails
+      console.error('[SUBMIT] AI analysis failed:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        raw: error
+      })
+      // Continue without AI analysis if it fails, but log the failure
+      console.warn('[SUBMIT] Continuing without AI analysis due to generation failure')
     }
 
     // Prepare PDF data for enhanced service
@@ -149,7 +160,13 @@ export async function POST(request: NextRequest) {
       hasBusinessIdea: !!pdfData.business_idea,
       hasChallenges: !!pdfData.current_challenges,
       hasGoals: !!pdfData.immediate_goals,
-      serviceCount: pdfData.service_interest?.length || 0
+      serviceCount: pdfData.service_interest?.length || 0,
+      hasAiAnalysis: !!pdfData.aiAnalysis,
+      aiAnalysisDetails: pdfData.aiAnalysis ? {
+        hasProblemStatement: !!pdfData.aiAnalysis.problem_statement,
+        objectivesCount: pdfData.aiAnalysis.objectives?.length || 0,
+        solutionsCount: pdfData.aiAnalysis.proposed_solution?.length || 0
+      } : null
     })
 
     // 4) call email
