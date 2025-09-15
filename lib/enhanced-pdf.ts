@@ -93,6 +93,11 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     const logPosition = (context: string): void => {
       console.log(`[PDF Debug] ${context}: currentY=${currentY}, maxContentHeight=${maxContentHeight}, remaining=${maxContentHeight - currentY}`)
     }
+
+    // Helper to add consistent spacing before major sections
+    const addMajorSectionSpacing = (): void => {
+      currentY += TOKENS.SECTION * 1.5 // 12mm spacing before major sections
+    }
     
     // Helper function to add footer to current page
     const addFooter = (pageNum: number, total: number): void => {
@@ -219,20 +224,20 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     doc.setTextColor(26, 26, 26) // #1a1a1a
     doc.setFont('helvetica', 'bold')
     doc.text('ALIRA.', margin, currentY)
-    currentY += 8
+    currentY += TOKENS.SECTION
     
     doc.setFontSize(10)
     doc.setTextColor(212, 175, 55) // #d4af37
     doc.setFont('helvetica', 'normal')
     doc.text('Strategic Business Solutions', margin, currentY)
-    currentY += 40
+    currentY += TOKENS.SECTION * 5 // Generous spacing before main title
     
     // Main title
     doc.setFontSize(28)
     doc.setTextColor(26, 26, 26)
     doc.setFont('helvetica', 'bold')
     doc.text('Your Personal Plan', margin, currentY)
-    currentY += 35
+    currentY += TOKENS.SECTION * 4 // Proper spacing before client info
     
     // Client info box
     doc.setFillColor(248, 249, 250)
@@ -248,13 +253,13 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     doc.setFont('helvetica', 'normal')
     doc.text(`Generated on ${generatedDate}`, margin + 15, currentY + 35)
     
-    currentY += 80
+    currentY += 60 + TOKENS.SECTION * 2 // Box height + proper spacing
     
     // Confidentiality notice
     doc.setFontSize(8)
     doc.setTextColor(150, 150, 150)
     doc.text('ALIRA. Confidential Business Plan', margin, currentY)
-    currentY += 20
+    currentY += TOKENS.SECTION * 2 // Better spacing before next section
 
     // 2. EXECUTIVE SUMMARY - Professional layout
     // Add section title first
@@ -290,6 +295,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     )
     logPosition('After Strategic Overview')
 
+    // Add major section spacing
+    addMajorSectionSpacing()
+
     // 4. CURRENT POSITION & OPPORTUNITIES
     const currentPosition = data.aiAnalysis?.current_state || 'Early stage business development'
     const opportunities = data.aiAnalysis?.proposed_solution?.map(s => s.pillar) || ['Strategic positioning', 'Operational efficiency', 'Market expansion']
@@ -308,6 +316,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     
     // ALIRA's perspective
     addHighlightBox(`ALIRA's Strategic Perspective:\n\n${aliraView}`, [252, 245, 245])
+
+    // Add major section spacing
+    addMajorSectionSpacing()
 
     // 5. STRATEGIC ROADMAP
     const coreAim = data.aiAnalysis?.objectives?.[0] || 'Establish clear business direction and market position'
@@ -362,6 +373,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         currentY += TOKENS.BASE
       }
     })
+    
+    // Add spacing before Current Tools section
+    currentY += TOKENS.SECTION
     
     // Current tools section
     addSection('Current Tools & Systems', safe(data.current_tools) || 'Standard business tools and processes')
