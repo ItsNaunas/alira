@@ -1,4 +1,6 @@
 import PDFDocument from 'pdfkit'
+import fs from 'node:fs'
+import path from 'node:path'
 
 // ALIRA Brand Colors
 const BRAND_COLORS = {
@@ -8,12 +10,37 @@ const BRAND_COLORS = {
   light: '#f8f9fa'         // Light Background
 }
 
-// Font configuration to avoid Helvetica.afm issues
+// Safe string helper to prevent undefined/null issues
+const safe = (s?: string | null): string => {
+  if (!s || typeof s !== 'string') return '—'
+  return s.toString().trim() || '—'
+}
+
+// Font configuration with TTF fallback
 const FONT_CONFIG = {
   // Use built-in fonts that don't require external files
   regular: 'Helvetica',
   bold: 'Helvetica-Bold',
   italic: 'Helvetica-Oblique'
+}
+
+// Try to register a TTF font if available
+function registerTTFFont(doc: PDFDocument): void {
+  try {
+    // Try to load Inter font from public directory
+    const fontPath = path.join(process.cwd(), 'public', 'fonts', 'Inter-Regular.ttf')
+    if (fs.existsSync(fontPath)) {
+      const fontBuffer = fs.readFileSync(fontPath)
+      doc.registerFont('Inter', fontBuffer)
+      FONT_CONFIG.regular = 'Inter'
+      FONT_CONFIG.bold = 'Inter'
+      console.log('[PDF] Successfully registered Inter TTF font')
+    } else {
+      console.log('[PDF] Inter TTF font not found, using built-in fonts')
+    }
+  } catch (error) {
+    console.warn('[PDF] Failed to register TTF font, using built-in fonts:', error)
+  }
 }
 
 // PDF Data Interface for Personal Plans
@@ -44,10 +71,14 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
           bottom: 60,
           left: 50,
           right: 50
-        },
-        // Use built-in fonts to avoid file system issues
-        font: FONT_CONFIG.regular
+        }
       })
+
+      // Register TTF font if available, otherwise use built-in fonts
+      registerTTFFont(doc)
+      
+      // Set the font after registration
+      doc.font(FONT_CONFIG.regular)
 
       const buffers: Buffer[] = []
       doc.on('data', buffers.push.bind(buffers))
@@ -96,7 +127,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       doc.font(FONT_CONFIG.bold)
         .fontSize(18)
         .fillColor(BRAND_COLORS.primary)
-        .text(`Personal Business Plan for ${data.name}`, 50, 115)
+        .text(`Personal Business Plan for ${safe(data.name)}`, 50, 115)
 
       // Date
       const generatedDate = data.generatedDate || new Date().toLocaleDateString('en-GB', {
@@ -113,15 +144,15 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       let yPosition = 175
 
       // Business Overview Section
-      yPosition = addSection('Business Overview', data.business_idea || 'No business concept provided', yPosition)
+      yPosition = addSection('Business Overview', safe(data.business_idea), yPosition)
       yPosition += 20
 
       // Current Challenges Section
-      yPosition = addSection('Current Challenges', data.current_challenges || 'No challenges specified', yPosition)
+      yPosition = addSection('Current Challenges', safe(data.current_challenges), yPosition)
       yPosition += 20
 
       // Immediate Goals Section
-      yPosition = addSection('Immediate Goals (3-6 months)', data.immediate_goals || 'No goals specified', yPosition)
+      yPosition = addSection('Immediate Goals (3-6 months)', safe(data.immediate_goals), yPosition)
       yPosition += 20
 
       // Service Interest Section
@@ -140,7 +171,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
 
       // Current Tools Section (if provided)
       if (data.current_tools) {
-        yPosition = addSection('Current Tools & Systems', data.current_tools, yPosition)
+        yPosition = addSection('Current Tools & Systems', safe(data.current_tools), yPosition)
         yPosition += 20
       }
 
@@ -166,7 +197,7 @@ Next Steps:
         .fontSize(8)
         .fillColor(BRAND_COLORS.neutral)
         .text('ALIRA. Confidential Business Plan', 50, footerY)
-        .text(`Generated for ${data.name}`, 300, footerY)
+        .text(`Generated for ${safe(data.name)}`, 300, footerY)
         .text(generatedDate, 500, footerY)
 
       doc.end()

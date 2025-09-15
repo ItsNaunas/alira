@@ -13,12 +13,17 @@ const submitDraftSchema = z.object({
 })
 
 export async function POST(request: NextRequest) {
-  console.log('[submit] starting')
-  console.time('[submit] total')
+  console.log('[SUBMIT] Starting form submission')
+  console.time('[SUBMIT] total')
   
   try {
     // 1) validate env early
-    console.log('[submit] RESEND key present?', !!env.RESEND_API_KEY)
+    console.log('[SUBMIT] Environment check:', {
+      hasResendKey: !!env.RESEND_API_KEY,
+      resendKeyLength: env.RESEND_API_KEY?.length || 0,
+      hasFromEmail: !!env.RESEND_FROM_EMAIL,
+      fromEmail: env.RESEND_FROM_EMAIL
+    })
     
     // 2) parse and validate input
     let body: any
@@ -113,7 +118,13 @@ export async function POST(request: NextRequest) {
     })
 
     // 4) call email
-    console.log('[submit] calling sendPersonalPlanEmail')
+    console.log('[SUBMIT] Calling sendPersonalPlanEmail with data:', {
+      to: email,
+      name: pdfData.name,
+      hasPdfData: !!pdfData,
+      mode: 'personal-plan'
+    })
+    
     const emailResult = await sendPersonalPlanEmail({
       to: email,
       name: pdfData.name,
@@ -122,7 +133,11 @@ export async function POST(request: NextRequest) {
     })
 
     if (!emailResult.success) {
-      console.error('[submit] email failed:', emailResult.error)
+      console.error('[SUBMIT_ERROR] Email failed:', {
+        error: emailResult.error,
+        details: emailResult.error,
+        timestamp: new Date().toISOString()
+      })
       return NextResponse.json(
         { 
           error: 'Email failed', 
@@ -178,7 +193,12 @@ export async function POST(request: NextRequest) {
       recipient: email
     })
   } catch (err: any) {
-    console.error('[submit] unhandled error:', err)
+    console.error('[SUBMIT_ERROR] Unhandled error:', {
+      message: err?.message || 'Unknown error',
+      stack: err?.stack || undefined,
+      raw: err,
+      timestamp: new Date().toISOString()
+    })
     
     // Handle validation errors
     if (err instanceof z.ZodError) {

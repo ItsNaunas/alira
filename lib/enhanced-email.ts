@@ -105,8 +105,11 @@ export async function sendPersonalPlanEmail(data: EmailData) {
     const pdfBase64 = getPDFBase64(pdfBuffer)
     
     // Initialize Resend client
-    console.log('Resend API Key available:', !!env.RESEND_API_KEY)
-    console.log('Resend API Key length:', env.RESEND_API_KEY?.length || 0)
+    console.log('[RESEND] Configuration check:', {
+      hasKey: !!env.RESEND_API_KEY,
+      keyLength: env.RESEND_API_KEY?.length || 0,
+      fromEmail: env.RESEND_FROM_EMAIL
+    })
     
     if (!env.RESEND_API_KEY) {
       throw new Error('RESEND_API_KEY is not configured')
@@ -132,8 +135,7 @@ export async function sendPersonalPlanEmail(data: EmailData) {
     })
 
     if (error) {
-      console.error('Resend API error:', error)
-      console.error('Error details:', JSON.stringify(error, null, 2))
+      console.error('[RESEND_ERROR] API error:', JSON.stringify(error, null, 2))
       return { success: false, error: error.message || 'Unknown email error' }
     }
 

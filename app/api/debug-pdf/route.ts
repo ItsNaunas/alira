@@ -1,68 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { generatePersonalPlanPDF } from '@/lib/enhanced-pdf'
 
-export const runtime = 'nodejs'
-
-export async function POST() {
+export async function GET(request: NextRequest) {
   try {
-    console.log('=== PDF GENERATION DEBUG ===')
+    console.log('[DEBUG_PDF] Starting PDF generation test')
     
-    // Test PDF generation
-    let pdfError: string | undefined, pdfBuffer: Buffer | undefined
-    try {
-      const { generatePersonalPlanPDF } = await import('@/lib/enhanced-pdf')
-      
-      const testData = {
-        name: 'Test User',
-        email: 'test@example.com',
-        business_idea: 'Test business idea',
-        current_challenges: 'Test challenges',
-        immediate_goals: 'Test goals',
-        service_interest: ['brand_product'],
-        current_tools: 'Test tools',
-        generatedDate: new Date().toLocaleDateString('en-GB')
-      }
-      
-      console.log('Generating PDF with test data:', testData)
-      pdfBuffer = await generatePersonalPlanPDF(testData)
-      console.log('PDF generated successfully, size:', pdfBuffer.length)
-      
-    } catch (error) {
-      pdfError = error instanceof Error ? error.message : 'Unknown error'
-      console.error('PDF generation error:', pdfError)
+    const testData = {
+      name: 'Test User',
+      email: 'test@example.com',
+      business_idea: 'Test business idea for PDF generation',
+      current_challenges: 'Test challenges for PDF generation',
+      immediate_goals: 'Test goals for PDF generation',
+      service_interest: ['brand_product'],
+      current_tools: 'Test tools and systems',
+      generatedDate: new Date().toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      })
     }
     
-    // Test base64 conversion
-    let base64Error: string | undefined, base64String: string | undefined
-    if (pdfBuffer) {
-      try {
-        const { getPDFBase64 } = await import('@/lib/enhanced-pdf')
-        base64String = getPDFBase64(pdfBuffer)
-        console.log('Base64 conversion successful, length:', base64String.length)
-      } catch (error) {
-        base64Error = error instanceof Error ? error.message : 'Unknown error'
-        console.error('Base64 conversion error:', base64Error)
-      }
-    }
+    console.log('[DEBUG_PDF] Test data prepared:', testData)
     
-    return NextResponse.json({
-      success: true,
-      pdf: {
-        generated: !!pdfBuffer,
-        size: pdfBuffer?.length || 0,
-        error: pdfError
-      },
-      base64: {
-        converted: !!base64String,
-        length: base64String?.length || 0,
-        error: base64Error
+    const pdfBuffer = await generatePersonalPlanPDF(testData)
+    console.log('[DEBUG_PDF] PDF generated successfully, size:', pdfBuffer.length, 'bytes')
+    
+    return new NextResponse(pdfBuffer, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'attachment; filename="debug-test.pdf"',
+        'Content-Length': pdfBuffer.length.toString()
       }
     })
     
   } catch (error) {
-    console.error('PDF debug error:', error)
+    console.error('[DEBUG_PDF_ERROR]', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      raw: error
+    })
+    
     return NextResponse.json({
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    })
+      error: 'PDF generation failed',
+      details: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
+    }, { status: 500 })
   }
 }
