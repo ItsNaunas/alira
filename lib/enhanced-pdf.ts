@@ -146,7 +146,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       }
     }
     
-    // Helper function to add a highlighted box
+    // Helper function to add a highlighted box with better text fitting
     const addHighlightBox = (content: string, background: number[] = [248,249,250]): void => {
       const innerWidth = contentWidth - TOKENS.BOX_PAD_H * 2
       const lines = doc.splitTextToSize(content, innerWidth)
@@ -155,27 +155,34 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       while (idx < lines.length) {
         // take as many lines as fit on this page
         let chunk: string[] = []
-        // Reserve box chrome and footer space
-        const available = maxContentHeight - currentY - TOKENS.BOX_PAD_V * 2 - 15
+        // Reserve more space for box chrome and footer
+        const available = maxContentHeight - currentY - TOKENS.BOX_PAD_V * 2 - 20
         // if nothing fits, go to next page
-        if (available < 10) { 
+        if (available < 15) { 
           forcePageBreak()
           continue 
         }
-        // accumulate lines until height would overflow
+        // accumulate lines until height would overflow - be more conservative
         for (; idx < lines.length; idx++) {
           const tryChunk = [...chunk, lines[idx]]
           const h = measureLines(tryChunk)
-          if (h > available) break
+          if (h > available - 5) break // Leave 5mm buffer
           chunk = tryChunk
         }
-        // draw this chunk's box
+        
+        // Ensure we have at least some content in each chunk
+        if (chunk.length === 0 && idx < lines.length) {
+          chunk = [lines[idx]]
+          idx++
+        }
+        
+        // draw this chunk's box with better sizing
         const textH = measureLines(chunk)
-        const boxH = textH + TOKENS.BOX_PAD_V * 2
+        const boxH = textH + TOKENS.BOX_PAD_V * 2 + 4 // Extra padding for readability
         doc.setFillColor(background[0], background[1], background[2])
         doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'F')
         doc.setFontSize(10).setTextColor(60)
-        doc.text(chunk, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 2)
+        doc.text(chunk, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 4)
         currentY += boxH + TOKENS.BOX_GAP
         // if more lines remain, new page for next chunk
         if (idx < lines.length) forcePageBreak()
@@ -380,30 +387,48 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     // Current tools section
     addSection('Current Tools & Systems', safe(data.current_tools) || 'Standard business tools and processes')
 
-    // 7. RISK ASSESSMENT
+    // === PAGE BREAK: Start Risk Assessment on new page ===
+    forcePageBreak()
+    
+    // 7. RISK ASSESSMENT - Dedicated page with proper structure
+    addSection('Risk Assessment & Mitigation', 'Strategic risk analysis and mitigation strategies', true)
+    
     const risks = [
-      { risk: data.aiAnalysis?.risk_assessment || 'Market competition and resource constraints', mitigation: 'Focus on unique value proposition and efficient resource allocation' },
-      { risk: 'Time management and prioritization challenges', mitigation: 'Implement systematic approach with clear milestones and accountability' },
-      { risk: 'Customer acquisition and retention', mitigation: 'Develop targeted marketing strategy and customer experience optimization' }
+      { 
+        title: 'Market & Competition Risk',
+        risk: data.aiAnalysis?.risk_assessment || 'Market competition and resource constraints may limit growth potential and market share acquisition',
+        mitigation: 'Develop unique value proposition and focus on efficient resource allocation with targeted market positioning'
+      },
+      { 
+        title: 'Operational Risk',
+        risk: 'Time management and prioritization challenges could delay key milestones and reduce execution effectiveness',
+        mitigation: 'Implement systematic approach with clear milestones, accountability frameworks, and regular progress reviews'
+      },
+      { 
+        title: 'Customer Risk',
+        risk: 'Customer acquisition and retention challenges may impact revenue growth and business sustainability',
+        mitigation: 'Develop targeted marketing strategy, optimize customer experience, and implement retention programs'
+      }
     ]
     
-    addSection('Risk Assessment & Mitigation', 'Key risks and strategic mitigation approaches')
-    
     risks.forEach((risk, index) => {
-      addTwoColumn(
-        'Risk',
-        risk.risk,
-        'Mitigation Strategy',
-        risk.mitigation
+      // Add risk in highlight box format for better structure
+      addHighlightBox(
+        `${risk.title}\n\nRisk: ${risk.risk}\n\nMitigation: ${risk.mitigation}`,
+        index % 2 === 0 ? [255, 245, 245] : [245, 245, 255]
       )
+      
       // Add spacing between risk items
       if (index < risks.length - 1) {
-        currentY += TOKENS.SECTION / 2
+        currentY += TOKENS.SECTION
       }
     })
 
-    // 8. REFLECTION & ACTION
-    addSection('Reflection & Action Planning', 'Strategic reflection questions for business development')
+    // === PAGE BREAK: Start Reflection on new page ===
+    forcePageBreak()
+    
+    // 8. REFLECTION & ACTION - Dedicated page
+    addSection('Reflection & Action Planning', 'Strategic reflection questions for business development', true)
     
     const reflectionQuestions = [
       'What excites you most about this plan?',
@@ -413,11 +438,14 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     
     reflectionQuestions.forEach((question, index) => {
       addHighlightBox(question, [252, 252, 252])
-      // Add small gap between reflection questions
+      // Add proper spacing between reflection questions
       if (index < reflectionQuestions.length - 1) {
-        currentY += TOKENS.BASE
+        currentY += TOKENS.SECTION
       }
     })
+
+    // Add generous spacing before principles
+    currentY += TOKENS.SECTION * 2
 
     // 9. ALIRA PRINCIPLES & NEXT STEPS
     addSection('ALIRA Principles', 'Core principles for systematic business development')
