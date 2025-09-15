@@ -27,6 +27,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   const [draftId, setDraftId] = useState<string | null>(propDraftId || null)
   const [showEmailGate, setShowEmailGate] = useState(false)
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
   const [draftData, setDraftData] = useState<any>(null)
 
   const {
@@ -294,13 +295,16 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       const result = await response.json()
       console.log('✅ Plan generation successful:', result)
       
-      // Show success message with proper instructions
-      alert(`✅ Your personalized business plan has been sent to ${email}!\n\n📧 Please check your inbox and spam/junk folder.\n\n📎 Your plan is attached as a PDF file.\n\nIf you don't see the email within a few minutes, please contact us at contact@alirapartners.co.uk`)
+      // Show success state
+      setIsSuccess(true)
       
-      // Reset form
-      setShowEmailGate(false)
-      setCurrentStep(1)
-      setDraftId(null)
+      // Reset form after a delay
+      setTimeout(() => {
+        setShowEmailGate(false)
+        setCurrentStep(1)
+        setDraftId(null)
+        setIsSuccess(false)
+      }, 5000)
     } catch (error) {
       console.error('Error generating plan:', error)
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
@@ -570,6 +574,44 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     )
   }
 
+  // Success Screen
+  if (isSuccess) {
+    return (
+      <div className="max-w-2xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl shadow-xl p-8"
+        >
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-10 h-10 text-green-500" />
+          </div>
+          
+          <h2 className="text-3xl font-bold text-alira-onyx mb-4">
+            Plan Generated Successfully!
+          </h2>
+          
+          <p className="text-lg text-alira-onyx/80 mb-6">
+            Your personalized business plan has been sent to <strong>{draftData?.email}</strong>
+          </p>
+          
+          <div className="bg-alira-gold/10 rounded-lg p-4 mb-6">
+            <p className="text-sm text-alira-onyx">
+              📧 Please check your inbox and spam/junk folder<br/>
+              📎 Your plan is attached as a PDF file<br/>
+              ⏰ If you don't see the email within a few minutes, please contact us at contact@alirapartners.co.uk
+            </p>
+          </div>
+          
+          <div className="animate-pulse text-alira-gold">
+            <p className="text-sm">This form will reset automatically in a few seconds...</p>
+          </div>
+        </motion.div>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-4xl mx-auto">
       {/* Enhanced Progress Bar */}
@@ -745,9 +787,16 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button
-                    type="submit"
+                    type="button"
                     disabled={isSubmitting || isGeneratingPlan}
-                    onClick={() => console.log('Button clicked, current step:', currentStep, 'isSubmitting:', isSubmitting, 'isGeneratingPlan:', isGeneratingPlan)}
+                    onClick={async () => {
+                      console.log('Button clicked, current step:', currentStep, 'isSubmitting:', isSubmitting, 'isGeneratingPlan:', isGeneratingPlan)
+                      if (currentStep === 4) {
+                        // Trigger form submission directly
+                        const formData = watchedValues
+                        await onSubmit(formData)
+                      }
+                    }}
                     className="bg-gradient-to-r from-alira-gold to-alira-gold/90 hover:from-alira-gold/90 hover:to-alira-gold/80 text-alira-onyx px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                   >
                   {isSubmitting || isGeneratingPlan ? (
