@@ -5,7 +5,7 @@ export async function POST() {
     console.log('=== PDF GENERATION DEBUG ===')
     
     // Test PDF generation
-    let pdfError, pdfBuffer
+    let pdfError: string | undefined, pdfBuffer: Buffer | undefined
     try {
       const { generatePersonalPlanPDF } = await import('@/lib/enhanced-pdf')
       
@@ -30,7 +30,7 @@ export async function POST() {
     }
     
     // Test base64 conversion
-    let base64Error, base64String
+    let base64Error: string | undefined, base64String: string | undefined
     if (pdfBuffer) {
       try {
         const { getPDFBase64 } = await import('@/lib/enhanced-pdf')
