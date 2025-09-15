@@ -176,7 +176,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         if (idx < lines.length) forcePageBreak()
       }
       // Add extra spacing after highlight boxes to prevent crowding
-      currentY += TOKENS.SECTION / 2
+      currentY += TOKENS.SECTION
     }
     
     // Helper function to add a two-column layout
@@ -303,6 +303,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     // Opportunities list
     addSection('Key Opportunities', opportunities.map((opp, i) => `${i + 1}. ${opp}`).join('\n'))
     
+    // Add extra spacing before ALIRA's perspective
+    currentY += TOKENS.SECTION
+    
     // ALIRA's perspective
     addHighlightBox(`ALIRA's Strategic Perspective:\n\n${aliraView}`, [252, 245, 245])
 
@@ -379,6 +382,10 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         'Mitigation Strategy',
         risk.mitigation
       )
+      // Add spacing between risk items
+      if (index < risks.length - 1) {
+        currentY += TOKENS.SECTION / 2
+      }
     })
 
     // 8. REFLECTION & ACTION
@@ -413,6 +420,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       principles.join('\n\n'),
       [248, 249, 250]
     )
+    
+    // Add spacing before call to action
+    currentY += TOKENS.SECTION
     
     // Call to action
     addHighlightBox(
