@@ -82,6 +82,12 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         currentY = margin
       }
     }
+
+    // Helper to force a page break
+    const forcePageBreak = (): void => {
+      doc.addPage()
+      currentY = margin
+    }
     
     // Helper function to add footer to current page
     const addFooter = (pageNum: number, total: number): void => {
@@ -125,11 +131,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         const blockH = measureLines(lines)
         // break BEFORE writing if needed
         ensureSpace(blockH + TOKENS.PARA)
-        doc.text(lines, margin, contentY)
-        contentY += blockH + TOKENS.PARA
+        doc.text(lines, margin, currentY + 12)
+        currentY += blockH + TOKENS.PARA
       }
-
-      currentY = contentY
     }
     
     // Helper function to add a highlighted box
@@ -141,11 +145,11 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       while (idx < lines.length) {
         // take as many lines as fit on this page
         let chunk: string[] = []
-        // Reserve box chrome
-        const available = maxContentHeight - currentY - TOKENS.BOX_PAD_V * 2 - 2
+        // Reserve box chrome and footer space
+        const available = maxContentHeight - currentY - TOKENS.BOX_PAD_V * 2 - 10
         // if nothing fits, go to next page
         if (available < 8) { 
-          ensureSpace(9999) 
+          forcePageBreak()
           continue 
         }
         // accumulate lines until height would overflow
@@ -164,7 +168,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         doc.text(chunk, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 2)
         currentY += boxH + TOKENS.BOX_GAP
         // if more lines remain, new page for next chunk
-        if (idx < lines.length) ensureSpace(9999)
+        if (idx < lines.length) forcePageBreak()
       }
     }
     
@@ -245,8 +249,14 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     doc.text('ALIRA. Confidential Business Plan', margin, currentY)
     currentY += 20
 
-    // 2. SNAPSHOT SUMMARY - Professional layout
-    addSection('Executive Summary', '', true)
+    // 2. EXECUTIVE SUMMARY - Professional layout
+    // Add section title first
+    if (!isFirstPage) currentY += TOKENS.SECTION
+    doc.setFontSize(14).setTextColor(26).setFont('helvetica', 'bold')
+    doc.text('Executive Summary', margin, currentY)
+    doc.setDrawColor(212, 175, 55).setLineWidth(0.8)
+    doc.line(margin, currentY + 5, margin + TOKENS.UNDERLINE_W, currentY + 5)
+    currentY += 12
     
     // Create a professional summary box
     const summaryContent = `Business Concept: ${safe(data.business_idea)}\n\n` +
@@ -263,7 +273,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       'Achieve sustainable growth metrics'
     ]
     
-    addSection('Strategic Overview', '')
+    addSection('Strategic Overview', 'Business strategy and target outcomes overview')
     addTwoColumn(
       'Business Purpose',
       purpose,
@@ -276,7 +286,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     const opportunities = data.aiAnalysis?.proposed_solution?.map(s => s.pillar) || ['Strategic positioning', 'Operational efficiency', 'Market expansion']
     const aliraView = data.aiAnalysis?.competitive_advantage || 'Focus on clarity over complexity, small tests over big theories, and systematic execution'
     
-    addSection('Current Position & Opportunities', '')
+    addSection('Current Position & Opportunities', 'Analysis of current business position and growth opportunities')
     
     // Current position box
     addHighlightBox(`Current State: ${currentPosition}`, [245, 248, 250])
@@ -294,7 +304,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     const firstTest = data.aiAnalysis?.next_steps?.[1] || 'Launch a minimum viable product or service offering'
     const timeProtection = data.aiAnalysis?.next_steps?.[2] || 'Establish dedicated weekly business development time'
     
-    addSection('Strategic Roadmap', '')
+    addSection('Strategic Roadmap', 'Step-by-step implementation plan for business development')
     
     // Create a professional roadmap with numbered steps
     const roadmapSteps = [
@@ -323,7 +333,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       serviceMap[service] || `${service}\nStrategic implementation and optimization`
     ) || ['Brand & Product Management\nClarify offer, shape brand, acquire first 100 customers']
     
-    addSection('Recommended ALIRA Services', '')
+    addSection('Recommended ALIRA Services', 'Strategic service recommendations based on business analysis')
     
     selectedServices.forEach((service, index) => {
       const [title, description] = service.split('\n')
@@ -343,7 +353,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       { risk: 'Customer acquisition and retention', mitigation: 'Develop targeted marketing strategy and customer experience optimization' }
     ]
     
-    addSection('Risk Assessment & Mitigation', '')
+    addSection('Risk Assessment & Mitigation', 'Key risks and strategic mitigation approaches')
     
     risks.forEach((risk, index) => {
       addTwoColumn(
@@ -355,7 +365,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     })
 
     // 8. REFLECTION & ACTION
-    addSection('Reflection & Action Planning', '')
+    addSection('Reflection & Action Planning', 'Strategic reflection questions for business development')
     
     const reflectionQuestions = [
       'What excites you most about this plan?',
@@ -368,7 +378,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     })
 
     // 9. ALIRA PRINCIPLES & NEXT STEPS
-    addSection('ALIRA Principles', '')
+    addSection('ALIRA Principles', 'Core principles for systematic business development')
     
     const principles = [
       'Clarity over complexity',
