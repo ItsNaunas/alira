@@ -284,6 +284,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     
     addHighlightBox(summaryContent, [248, 249, 250])
 
+    // === PAGE BREAK: Start Strategic Overview on new page for better layout ===
+    forcePageBreak()
+    
     // 3. STRATEGIC OVERVIEW - Two column layout
     logPosition('Before Strategic Overview')
     const purpose = data.aiAnalysis?.problem_statement || `Building a sustainable business around ${safe(data.business_idea)}`
@@ -293,7 +296,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       'Achieve sustainable growth metrics'
     ]
     
-    addSection('Strategic Overview', 'Business strategy and target outcomes overview')
+    addSection('Strategic Overview', 'Business strategy and target outcomes overview', true)
     addTwoColumn(
       'Business Purpose',
       purpose,
