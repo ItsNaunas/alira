@@ -94,6 +94,7 @@ const personalPlanEmailTemplate = (data: PersonalPlanPDFData) => `
 // Main email sending function
 export async function sendPersonalPlanEmail(data: EmailData) {
   try {
+    console.log('=== EMAIL SENDING STARTED ===')
     console.log('Generating PDF for:', data.name)
     
     // Generate PDF
@@ -104,6 +105,13 @@ export async function sendPersonalPlanEmail(data: EmailData) {
     const pdfBase64 = getPDFBase64(pdfBuffer)
     
     // Initialize Resend client
+    console.log('Resend API Key available:', !!env.RESEND_API_KEY)
+    console.log('Resend API Key length:', env.RESEND_API_KEY?.length || 0)
+    
+    if (!env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not configured')
+    }
+    
     const resend = new Resend(env.RESEND_API_KEY)
     
     // Send email with PDF attachment
@@ -123,7 +131,8 @@ export async function sendPersonalPlanEmail(data: EmailData) {
 
     if (error) {
       console.error('Resend API error:', error)
-      return { success: false, error: error.message }
+      console.error('Error details:', JSON.stringify(error, null, 2))
+      return { success: false, error: error.message || 'Unknown email error' }
     }
 
     console.log('Email sent successfully:', result)
