@@ -88,6 +88,11 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       doc.addPage()
       currentY = margin
     }
+
+    // Debug helper to track positions (can be removed later)
+    const logPosition = (context: string): void => {
+      console.log(`[PDF Debug] ${context}: currentY=${currentY}, maxContentHeight=${maxContentHeight}, remaining=${maxContentHeight - currentY}`)
+    }
     
     // Helper function to add footer to current page
     const addFooter = (pageNum: number, total: number): void => {
@@ -122,7 +127,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
 
       doc.setFontSize(10).setTextColor(60).setFont('helvetica', 'normal')
       const paragraphs = content.split(/\n\s*\n/).map(safe)
-      let contentY = currentY + 12
+      currentY += 12 // Move past title and underline
 
       // Add mid-paragraph page breaks
       for (const p of paragraphs) {
@@ -131,7 +136,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         const blockH = measureLines(lines)
         // break BEFORE writing if needed
         ensureSpace(blockH + TOKENS.PARA)
-        doc.text(lines, margin, currentY + 12)
+        doc.text(lines, margin, currentY)
         currentY += blockH + TOKENS.PARA
       }
     }
@@ -146,9 +151,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         // take as many lines as fit on this page
         let chunk: string[] = []
         // Reserve box chrome and footer space
-        const available = maxContentHeight - currentY - TOKENS.BOX_PAD_V * 2 - 10
+        const available = maxContentHeight - currentY - TOKENS.BOX_PAD_V * 2 - 15
         // if nothing fits, go to next page
-        if (available < 8) { 
+        if (available < 10) { 
           forcePageBreak()
           continue 
         }
@@ -170,6 +175,8 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         // if more lines remain, new page for next chunk
         if (idx < lines.length) forcePageBreak()
       }
+      // Add extra spacing after highlight boxes to prevent crowding
+      currentY += TOKENS.SECTION / 2
     }
     
     // Helper function to add a two-column layout
@@ -180,23 +187,23 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       const rightLines = doc.splitTextToSize(rightContent, columnWidth)
       const leftH = measureLines(leftLines)
       const rightH = measureLines(rightLines)
-      const headH = 6 // title line height
+      const headH = 8 // title line height (increased for better spacing)
       const blockH = Math.max(leftH, rightH) + headH + TOKENS.PARA
-      ensureSpace(blockH)
+      ensureSpace(blockH + TOKENS.SECTION)
 
       // Left column
       doc.setFontSize(12).setTextColor(26).setFont('helvetica', 'bold')
       doc.text(leftTitle, margin, currentY)
       doc.setFontSize(9).setTextColor(60).setFont('helvetica', 'normal')
-      doc.text(leftLines, margin, currentY + 6)
+      doc.text(leftLines, margin, currentY + 8)
 
       // Right column
       doc.setFontSize(12).setTextColor(26).setFont('helvetica', 'bold')
       doc.text(rightTitle, margin + columnWidth + gutter, currentY)
       doc.setFontSize(9).setTextColor(60).setFont('helvetica', 'normal')
-      doc.text(rightLines, margin + columnWidth + gutter, currentY + 6)
+      doc.text(rightLines, margin + columnWidth + gutter, currentY + 8)
 
-      currentY += blockH + TOKENS.PARA  // add a tiny gap after 2-col
+      currentY += blockH + TOKENS.SECTION  // add proper gap after 2-col
     }
 
     // Date
@@ -266,6 +273,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addHighlightBox(summaryContent, [248, 249, 250])
 
     // 3. STRATEGIC OVERVIEW - Two column layout
+    logPosition('Before Strategic Overview')
     const purpose = data.aiAnalysis?.problem_statement || `Building a sustainable business around ${safe(data.business_idea)}`
     const outcomes = data.aiAnalysis?.expected_outcomes?.slice(0, 3) || [
       'Establish market presence and customer base',
@@ -280,6 +288,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       'Target Outcomes (6-12 months)',
       outcomes.map((outcome, i) => `${i + 1}. ${outcome}`).join('\n')
     )
+    logPosition('After Strategic Overview')
 
     // 4. CURRENT POSITION & OPPORTUNITIES
     const currentPosition = data.aiAnalysis?.current_state || 'Early stage business development'
@@ -320,6 +329,10 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         `Step ${index + 1}: ${step.title}\n\n${step.content}`,
         index % 2 === 0 ? [248, 249, 250] : [252, 252, 252]
       )
+      // Add small gap between roadmap steps
+      if (index < roadmapSteps.length - 1) {
+        currentY += TOKENS.BASE
+      }
     })
 
     // 6. ALIRA SERVICE RECOMMENDATIONS
@@ -341,6 +354,10 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         `${title}\n\n${description}`,
         [245, 248, 250]
       )
+      // Add small gap between service boxes
+      if (index < selectedServices.length - 1) {
+        currentY += TOKENS.BASE
+      }
     })
     
     // Current tools section
@@ -375,6 +392,10 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     
     reflectionQuestions.forEach((question, index) => {
       addHighlightBox(question, [252, 252, 252])
+      // Add small gap between reflection questions
+      if (index < reflectionQuestions.length - 1) {
+        currentY += TOKENS.BASE
+      }
     })
 
     // 9. ALIRA PRINCIPLES & NEXT STEPS
