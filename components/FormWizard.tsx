@@ -9,7 +9,7 @@ import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import { Checkbox } from './ui/checkbox'
-import { ArrowRight, ArrowLeft, CheckCircle, Save } from 'lucide-react'
+import { ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react'
 import { conversionEvents } from '@/lib/analytics'
 import { wizardFormSchema, type WizardFormData, serviceInterestOptions, currentToolsOptions } from '@/lib/schema'
 
@@ -22,8 +22,6 @@ interface FormWizardProps {
 export default function FormWizard({ resumeToken, initialData, draftId: propDraftId }: FormWizardProps) {
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle')
   const [draftId, setDraftId] = useState<string | null>(propDraftId || null)
   const [showEmailGate, setShowEmailGate] = useState(false)
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false)
@@ -88,46 +86,6 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     }
   }, [resumeToken, initialData, loadDraft])
 
-  const saveDraft = useCallback(async () => {
-    if (!draftId) return
-    
-    setIsSaving(true)
-    setSaveStatus('saving')
-    
-    try {
-      const response = await fetch('/api/draft/save', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: draftId,
-          step: currentStep,
-          data: watchedValues
-        }),
-      })
-
-      if (response.ok) {
-        setSaveStatus('saved')
-        setTimeout(() => setSaveStatus('idle'), 2000)
-      }
-    } catch (error) {
-      console.error('Error saving draft:', error)
-    } finally {
-      setIsSaving(false)
-    }
-  }, [draftId, currentStep, watchedValues])
-
-  // Autosave functionality
-  useEffect(() => {
-    const timeoutId = setTimeout(async () => {
-      if (draftId && currentStep > 1) {
-        await saveDraft()
-      }
-    }, 2000) // Save after 2 seconds of inactivity
-
-    return () => clearTimeout(timeoutId)
-  }, [watchedValues, draftId, currentStep, saveDraft])
 
   const nextStep = async () => {
     // Validate only the current step's fields
@@ -621,20 +579,6 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
             <span className="text-lg font-semibold text-alira-onyx">
               Step {currentStep} of 4
             </span>
-            <div className="flex items-center space-x-2">
-              {saveStatus === 'saving' && (
-                <>
-                  <Save className="w-4 h-4 text-alira-gold animate-pulse" />
-                  <span className="text-sm text-alira-gold">Saving...</span>
-                </>
-              )}
-              {saveStatus === 'saved' && (
-                <>
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span className="text-sm text-green-500">Saved</span>
-                </>
-              )}
-            </div>
           </div>
         </div>
         
