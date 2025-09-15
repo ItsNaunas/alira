@@ -2,7 +2,7 @@
 
 A production-ready Next.js 14 + TypeScript + Tailwind project for **ALIRA.** - a refined consultancy that delivers clarity, structure, and lasting systems.
 
-<!-- Updated: Fixed PDF font issues for deployment -->
+<!-- Updated: Fixed PDF font issues for deployment - v2 -->
 
 ## Overview
 
