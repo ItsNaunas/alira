@@ -2,6 +2,8 @@
 
 A production-ready Next.js 14 + TypeScript + Tailwind project for **ALIRA.** - a refined consultancy that delivers clarity, structure, and lasting systems.
 
+<!-- Updated: Fixed PDF font issues for deployment -->
+
 ## Overview
 
 This website is **only the first step** of a larger system where every client enquiry automatically generates a structured draft business case (form → engine → output). The build reflects the **purpose, branding, and direction** of ALIRA., and acts as the foundation for expanding into automation, AI-driven document workflows, and long-term retainers.
