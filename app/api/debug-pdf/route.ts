@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     const pdfBuffer = await generatePersonalPlanPDF(testData)
     console.log('[DEBUG_PDF] PDF generated successfully, size:', pdfBuffer.length, 'bytes')
     
-    return new NextResponse(pdfBuffer, {
+    return new Response(pdfBuffer, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
