@@ -56,13 +56,6 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     visible: { scaleX: 1 }
   }
 
-  // Load draft data if resume token provided
-  useEffect(() => {
-    if (resumeToken && !initialData) {
-      loadDraft(resumeToken)
-    }
-  }, [resumeToken, initialData, loadDraft])
-
   const loadDraft = useCallback(async (token: string) => {
     try {
       const response = await fetch(`/api/draft/resume/${token}`)
@@ -87,6 +80,13 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       console.error('Error loading draft:', error)
     }
   }, [setValue])
+
+  // Load draft data if resume token provided
+  useEffect(() => {
+    if (resumeToken && !initialData) {
+      loadDraft(resumeToken)
+    }
+  }, [resumeToken, initialData, loadDraft])
 
   // Autosave functionality
   useEffect(() => {
