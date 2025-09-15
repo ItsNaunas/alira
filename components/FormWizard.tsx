@@ -27,6 +27,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [draftData, setDraftData] = useState<any>(null)
+  const [collectedFormData, setCollectedFormData] = useState<Partial<WizardFormData>>({})
 
   const {
     register,
@@ -67,6 +68,9 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
           Object.keys(result.draft.data || {}).forEach(key => {
             setValue(key as keyof WizardFormData, result.draft.data[key])
           })
+          
+          // Store the loaded data in collectedFormData
+          setCollectedFormData(result.draft.data || {})
           
           // Pre-fill business idea from homepage if available
           if (result.draft.data?.mini_idea_one_liner) {
@@ -113,25 +117,101 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     
     if (isValid) {
       if (currentStep < 4) {
-        // Don't clear fields - keep all user input for final submission
+        // Collect current step's data before moving to next step
+        const currentStepData: Partial<WizardFormData> = {}
+        
+        switch (currentStep) {
+          case 1:
+            currentStepData.business_idea = watchedValues.business_idea
+            break
+          case 2:
+            currentStepData.current_challenges = watchedValues.current_challenges
+            break
+          case 3:
+            currentStepData.immediate_goals = watchedValues.immediate_goals
+            break
+        }
+        
+        // Store the collected data
+        setCollectedFormData(prev => ({ ...prev, ...currentStepData }))
+        
+        // Clear the current step's field for better UX (except pre-filled business idea)
+        switch (currentStep) {
+          case 1:
+            // Don't clear if it was pre-filled from homepage
+            if (!draftData?.data?.mini_idea_one_liner) {
+              setValue('business_idea', '')
+            }
+            break
+          case 2:
+            setValue('current_challenges', '')
+            break
+          case 3:
+            setValue('immediate_goals', '')
+            break
+        }
         
         setCurrentStep(currentStep + 1)
         conversionEvents.stepView(`step_${currentStep + 1}`)
       } else if (currentStep === 4) {
-        // On step 4, trigger form submission
+        // On step 4, collect final step data and submit
         console.log('Step 4 validation passed, triggering form submission')
-        const formData = watchedValues
-        console.log('Form data before submission:', formData)
-        console.log('Current challenges:', formData.current_challenges)
-        console.log('Immediate goals:', formData.immediate_goals)
-        await onSubmit(formData)
+        
+        // Collect final step data
+        const finalStepData: Partial<WizardFormData> = {
+          service_interest: watchedValues.service_interest,
+          current_tools: watchedValues.current_tools,
+          consent: watchedValues.consent
+        }
+        
+        // Combine all collected data
+        const completeFormData = { ...collectedFormData, ...finalStepData }
+        
+        // Ensure all required fields are present
+        const validatedFormData: WizardFormData = {
+          business_idea: completeFormData.business_idea || '',
+          current_challenges: completeFormData.current_challenges || '',
+          immediate_goals: completeFormData.immediate_goals || '',
+          service_interest: completeFormData.service_interest || [],
+          consent: completeFormData.consent || false,
+          name: completeFormData.name,
+          email: completeFormData.email,
+          current_tools: completeFormData.current_tools
+        }
+        
+        console.log('Complete form data for submission:', validatedFormData)
+        console.log('Current challenges:', validatedFormData.current_challenges)
+        console.log('Immediate goals:', validatedFormData.immediate_goals)
+        
+        await onSubmit(validatedFormData)
       }
     }
   }
 
   const prevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1)
+      // Restore the data for the previous step when going back
+      const prevStep = currentStep - 1
+      
+      switch (prevStep) {
+        case 1:
+          if (collectedFormData.business_idea) {
+            setValue('business_idea', collectedFormData.business_idea)
+          }
+          break
+        case 2:
+          if (collectedFormData.current_challenges) {
+            setValue('current_challenges', collectedFormData.current_challenges)
+          }
+          break
+        case 3:
+          if (collectedFormData.immediate_goals) {
+            setValue('immediate_goals', collectedFormData.immediate_goals)
+          }
+          break
+      }
+      
+      setCurrentStep(prevStep)
     }
   }
 
