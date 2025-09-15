@@ -116,8 +116,10 @@ export async function sendPersonalPlanEmail(data: EmailData) {
     
     // Send email with PDF attachment
     console.log('Sending email to:', data.to)
+    console.log('From email:', 'ALIRA <contact@alirapartners.co.uk>')
+    
     const { data: result, error } = await resend.emails.send({
-      from: 'ALIRA <contact@alirapartners.co.uk>',
+      from: 'contact@alirapartners.co.uk', // Simplified format
       to: [data.to],
       subject: `Your Personal Business Plan is Ready - ${data.name}`,
       html: personalPlanEmailTemplate(data.pdfData),
