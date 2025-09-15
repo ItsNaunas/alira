@@ -74,6 +74,14 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         isFirstPage = false
       }
     }
+
+    // Helper to ensure space during writing (mid-flow page breaks)
+    const ensureSpace = (h: number): void => {
+      if (currentY + h > maxContentHeight) {
+        doc.addPage()
+        currentY = margin
+      }
+    }
     
     // Helper function to add footer to current page
     const addFooter = (pageNum: number, total: number): void => {
@@ -85,6 +93,11 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     
     // Helper function to add a professional section
     const addSection = (title: string, content: string, isFirstSection = false): void => {
+      // Skip empty sections to avoid crowding
+      if (!safe(content) || safe(content) === '—') {
+        return
+      }
+
       const contentLines = doc.splitTextToSize(content, contentWidth)
       // Estimate: title block ~ 10mm + underline + spacing
       const titleBlock = 12
@@ -105,13 +118,16 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       const paragraphs = content.split(/\n\s*\n/).map(safe)
       let contentY = currentY + 12
 
-      paragraphs.forEach((p) => {
-        if (p) {
-          const lines = doc.splitTextToSize(p, contentWidth)
-          doc.text(lines, margin, contentY)
-          contentY += measureLines(lines) + TOKENS.PARA
-        }
-      })
+      // Add mid-paragraph page breaks
+      for (const p of paragraphs) {
+        if (!p) continue
+        const lines = doc.splitTextToSize(p, contentWidth)
+        const blockH = measureLines(lines)
+        // break BEFORE writing if needed
+        ensureSpace(blockH + TOKENS.PARA)
+        doc.text(lines, margin, contentY)
+        contentY += blockH + TOKENS.PARA
+      }
 
       currentY = contentY
     }
@@ -120,14 +136,36 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     const addHighlightBox = (content: string, background: number[] = [248,249,250]): void => {
       const innerWidth = contentWidth - TOKENS.BOX_PAD_H * 2
       const lines = doc.splitTextToSize(content, innerWidth)
-      const textH = measureLines(lines)
-      const boxH = textH + TOKENS.BOX_PAD_V * 2
-      checkPageBreak(boxH + TOKENS.BOX_GAP)
-      doc.setFillColor(background[0], background[1], background[2])
-      doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'F')
-      doc.setFontSize(10).setTextColor(60)
-      doc.text(lines, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 2)
-      currentY += boxH + TOKENS.BOX_GAP
+      let idx = 0
+      
+      while (idx < lines.length) {
+        // take as many lines as fit on this page
+        let chunk: string[] = []
+        // Reserve box chrome
+        const available = maxContentHeight - currentY - TOKENS.BOX_PAD_V * 2 - 2
+        // if nothing fits, go to next page
+        if (available < 8) { 
+          ensureSpace(9999) 
+          continue 
+        }
+        // accumulate lines until height would overflow
+        for (; idx < lines.length; idx++) {
+          const tryChunk = [...chunk, lines[idx]]
+          const h = measureLines(tryChunk)
+          if (h > available) break
+          chunk = tryChunk
+        }
+        // draw this chunk's box
+        const textH = measureLines(chunk)
+        const boxH = textH + TOKENS.BOX_PAD_V * 2
+        doc.setFillColor(background[0], background[1], background[2])
+        doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'F')
+        doc.setFontSize(10).setTextColor(60)
+        doc.text(chunk, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 2)
+        currentY += boxH + TOKENS.BOX_GAP
+        // if more lines remain, new page for next chunk
+        if (idx < lines.length) ensureSpace(9999)
+      }
     }
     
     // Helper function to add a two-column layout
@@ -140,7 +178,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       const rightH = measureLines(rightLines)
       const headH = 6 // title line height
       const blockH = Math.max(leftH, rightH) + headH + TOKENS.PARA
-      checkPageBreak(blockH)
+      ensureSpace(blockH)
 
       // Left column
       doc.setFontSize(12).setTextColor(26).setFont('helvetica', 'bold')
@@ -154,7 +192,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       doc.setFontSize(9).setTextColor(60).setFont('helvetica', 'normal')
       doc.text(rightLines, margin + columnWidth + gutter, currentY + 6)
 
-      currentY += blockH
+      currentY += blockH + TOKENS.PARA  // add a tiny gap after 2-col
     }
 
     // Date
