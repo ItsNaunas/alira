@@ -1,46 +1,9 @@
 import PDFDocument from 'pdfkit'
-import fs from 'node:fs'
-import path from 'node:path'
-
-// ALIRA Brand Colors
-const BRAND_COLORS = {
-  primary: '#1a1a1a',      // ALIRA Black
-  accent: '#d4af37',       // ALIRA Gold
-  neutral: '#666666',      // Neutral Gray
-  light: '#f8f9fa'         // Light Background
-}
 
 // Safe string helper to prevent undefined/null issues
 const safe = (s?: string | null): string => {
   if (!s || typeof s !== 'string') return '—'
   return s.toString().trim() || '—'
-}
-
-// Font configuration with TTF fallback
-const FONT_CONFIG = {
-  // Use built-in fonts that don't require external files
-  regular: 'Helvetica',
-  bold: 'Helvetica-Bold',
-  italic: 'Helvetica-Oblique'
-}
-
-// Try to register a TTF font if available
-function registerTTFFont(doc: PDFDocument): void {
-  try {
-    // Try to load Inter font from public directory
-    const fontPath = path.join(process.cwd(), 'public', 'fonts', 'Inter-Regular.ttf')
-    if (fs.existsSync(fontPath)) {
-      const fontBuffer = fs.readFileSync(fontPath)
-      doc.registerFont('Inter', fontBuffer)
-      FONT_CONFIG.regular = 'Inter'
-      FONT_CONFIG.bold = 'Inter'
-      console.log('[PDF] Successfully registered Inter TTF font')
-    } else {
-      console.log('[PDF] Inter TTF font not found, using built-in fonts')
-    }
-  } catch (error) {
-    console.warn('[PDF] Failed to register TTF font, using built-in fonts:', error)
-  }
 }
 
 // PDF Data Interface for Personal Plans
@@ -55,7 +18,7 @@ export interface PersonalPlanPDFData {
   generatedDate?: string
 }
 
-// Enhanced PDF generation with professional styling
+// Enhanced PDF generation with PDFKit (serverless-friendly)
 export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     try {
@@ -64,6 +27,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         return
       }
 
+      console.log('[PDF] Generating PDF with PDFKit (no external fonts)')
+      
+      // Create PDF document without specifying font to avoid file system issues
       const doc = new PDFDocument({
         size: 'A4',
         margins: {
@@ -72,37 +38,31 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
           left: 50,
           right: 50
         }
+        // Don't specify font - let PDFKit use its default
       })
-
-      // Register TTF font if available, otherwise use built-in fonts
-      registerTTFFont(doc)
-      
-      // Set the font after registration
-      doc.font(FONT_CONFIG.regular)
 
       const buffers: Buffer[] = []
       doc.on('data', buffers.push.bind(buffers))
       doc.on('end', () => {
         const pdfData = Buffer.concat(buffers)
+        console.log('[PDF] PDF generated successfully, size:', pdfData.length, 'bytes')
         resolve(pdfData)
       })
 
-      // Helper function to add section with proper spacing
+      // Helper function to add section
       const addSection = (title: string, content: string, yPos: number): number => {
-        // Section title with gold accent
-        doc.font(FONT_CONFIG.bold)
-          .fontSize(16)
-          .fillColor(BRAND_COLORS.primary)
+        // Section title
+        doc.fontSize(16)
+          .fillColor('#1a1a1a')
           .text(title, 50, yPos)
         
         // Gold underline
         doc.rect(50, yPos + 25, 150, 2)
-          .fill(BRAND_COLORS.accent)
+          .fill('#d4af37')
         
-        // Content with proper wrapping
-        doc.font(FONT_CONFIG.regular)
-          .fontSize(11)
-          .fillColor(BRAND_COLORS.neutral)
+        // Content
+        doc.fontSize(11)
+          .fillColor('#666666')
           .text(content, 50, yPos + 40, {
             width: 500,
             align: 'left',
@@ -112,21 +72,18 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         return yPos + 40 + (doc.heightOfString(content, { width: 500 }) + 30)
       }
 
-      // Header with ALIRA branding
-      doc.font(FONT_CONFIG.bold)
-        .fontSize(28)
-        .fillColor(BRAND_COLORS.primary)
+      // Header
+      doc.fontSize(28)
+        .fillColor('#1a1a1a')
         .text('ALIRA.', 50, 50)
       
-      doc.font(FONT_CONFIG.regular)
-        .fontSize(12)
-        .fillColor(BRAND_COLORS.accent)
+      doc.fontSize(12)
+        .fillColor('#d4af37')
         .text('Strategic Business Solutions', 50, 85)
 
-      // Personalized title
-      doc.font(FONT_CONFIG.bold)
-        .fontSize(18)
-        .fillColor(BRAND_COLORS.primary)
+      // Title
+      doc.fontSize(18)
+        .fillColor('#1a1a1a')
         .text(`Personal Business Plan for ${safe(data.name)}`, 50, 115)
 
       // Date
@@ -136,26 +93,23 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
         year: 'numeric'
       })
       
-      doc.font(FONT_CONFIG.regular)
-        .fontSize(10)
-        .fillColor(BRAND_COLORS.neutral)
+      doc.fontSize(10)
+        .fillColor('#666666')
         .text(`Generated on ${generatedDate}`, 50, 145)
 
       let yPosition = 175
 
-      // Business Overview Section
+      // Sections
       yPosition = addSection('Business Overview', safe(data.business_idea), yPosition)
       yPosition += 20
 
-      // Current Challenges Section
       yPosition = addSection('Current Challenges', safe(data.current_challenges), yPosition)
       yPosition += 20
 
-      // Immediate Goals Section
       yPosition = addSection('Immediate Goals (3-6 months)', safe(data.immediate_goals), yPosition)
       yPosition += 20
 
-      // Service Interest Section
+      // Service Interest
       const serviceMap: Record<string, string> = {
         'brand_product': 'Brand & Product Management',
         'content_management': 'Content Management',
@@ -169,13 +123,13 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       yPosition = addSection('Recommended ALIRA Services', selectedServices, yPosition)
       yPosition += 20
 
-      // Current Tools Section (if provided)
+      // Current Tools
       if (data.current_tools) {
         yPosition = addSection('Current Tools & Systems', safe(data.current_tools), yPosition)
         yPosition += 20
       }
 
-      // Strategic Recommendations Section
+      // Recommendations
       const recommendations = `Based on your inputs, we recommend focusing on:
 
 1. Strategic Assessment: Comprehensive analysis of your current business position
@@ -193,15 +147,15 @@ Next Steps:
 
       // Footer
       const footerY = 750
-      doc.font(FONT_CONFIG.regular)
-        .fontSize(8)
-        .fillColor(BRAND_COLORS.neutral)
+      doc.fontSize(8)
+        .fillColor('#666666')
         .text('ALIRA. Confidential Business Plan', 50, footerY)
         .text(`Generated for ${safe(data.name)}`, 300, footerY)
         .text(generatedDate, 500, footerY)
 
       doc.end()
     } catch (error) {
+      console.error('[PDF] Error generating PDF:', error)
       reject(error)
     }
   })
@@ -221,6 +175,8 @@ export function getPDFBase64(pdfBuffer: Buffer): string {
 export function generateBusinessCasePDF(data: any): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     try {
+      console.log('[PDF] Generating business case PDF with PDFKit')
+      
       const doc = new PDFDocument({
         size: 'A4',
         margins: {
@@ -228,37 +184,33 @@ export function generateBusinessCasePDF(data: any): Promise<Buffer> {
           bottom: 60,
           left: 50,
           right: 50
-        },
-        // Use built-in fonts to avoid file system issues
-        font: FONT_CONFIG.regular
+        }
       })
 
       const buffers: Buffer[] = []
       doc.on('data', buffers.push.bind(buffers))
       doc.on('end', () => {
         const pdfData = Buffer.concat(buffers)
+        console.log('[PDF] Business case PDF generated successfully, size:', pdfData.length, 'bytes')
         resolve(pdfData)
       })
 
-      // Professional header
-      doc.font(FONT_CONFIG.bold)
-        .fontSize(24)
-        .fillColor(BRAND_COLORS.primary)
+      // Simple business case content
+      doc.fontSize(24)
+        .fillColor('#1a1a1a')
         .text('ALIRA.', 50, 50)
       
-      doc.font(FONT_CONFIG.regular)
-        .fontSize(16)
-        .fillColor(BRAND_COLORS.accent)
+      doc.fontSize(16)
+        .fillColor('#d4af37')
         .text('Business Case Analysis', 50, 85)
 
-      // Add your business case content here
-      doc.font(FONT_CONFIG.regular)
-        .fontSize(12)
-        .fillColor(BRAND_COLORS.neutral)
+      doc.fontSize(12)
+        .fillColor('#666666')
         .text('Business case content would go here...', 50, 120)
 
       doc.end()
     } catch (error) {
+      console.error('[PDF] Error generating business case PDF:', error)
       reject(error)
     }
   })
