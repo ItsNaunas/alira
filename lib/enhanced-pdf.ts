@@ -105,128 +105,116 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       year: 'numeric'
     })
     
-    // Header (only on first page)
-    doc.setFontSize(28)
+    // 1. COVER PAGE
+    doc.setFontSize(32)
     doc.setTextColor(26, 26, 26) // #1a1a1a
-    doc.text('ALIRA.', margin, currentY)
+    doc.text('Your Personal Plan', margin, currentY)
+    currentY += 25
+    
+    doc.setFontSize(16)
+    doc.setTextColor(212, 175, 55) // #d4af37
+    doc.text(`Prepared for ${safe(data.name)}`, margin, currentY)
     currentY += 15
     
     doc.setFontSize(12)
-    doc.setTextColor(212, 175, 55) // #d4af37
-    doc.text('Strategic Business Solutions', margin, currentY)
-    currentY += 20
-
-    // Title
-    doc.setFontSize(18)
-    doc.setTextColor(26, 26, 26) // #1a1a1a
-    doc.text(`Personal Business Plan for ${safe(data.name)}`, margin, currentY)
-    currentY += 15
-    
-    doc.setFontSize(10)
     doc.setTextColor(102, 102, 102) // #666666
     doc.text(`Generated on ${generatedDate}`, margin, currentY)
     currentY += 20
-
-    // Sections
-    console.log('[PDF] Adding Business Overview section with:', safe(data.business_idea))
-    addSection('Business Overview', safe(data.business_idea))
     
-    console.log('[PDF] Adding Current Challenges section with:', safe(data.current_challenges))
-    addSection('Current Challenges', safe(data.current_challenges))
-    
-    console.log('[PDF] Adding Immediate Goals section with:', safe(data.immediate_goals))
-    addSection('Immediate Goals (3-6 months)', safe(data.immediate_goals))
+    // Confidentiality notice
+    doc.setFontSize(10)
+    doc.setTextColor(150, 150, 150)
+    doc.text('ALIRA. Confidential Business Plan', margin, currentY)
+    currentY += 30
 
-    // Service Interest
+    // 2. SNAPSHOT SUMMARY
+    addSection('Snapshot Summary', 
+      `What you shared → ${safe(data.business_idea)}\n\n` +
+      `What matters most → ${data.aiAnalysis?.objectives?.slice(0, 3).join(', ') || 'Strategic growth and operational efficiency'}\n\n` +
+      `Things to be mindful of → ${data.aiAnalysis?.risk_assessment || 'Market competition and resource allocation'}`)
+
+    // 3. THE BIGGER PICTURE
+    const purpose = data.aiAnalysis?.problem_statement || `Building a sustainable business around ${safe(data.business_idea)}`
+    const outcomes = data.aiAnalysis?.expected_outcomes?.slice(0, 3) || [
+      'Establish market presence and customer base',
+      'Develop efficient operational systems',
+      'Achieve sustainable growth metrics'
+    ]
+    const audience = data.aiAnalysis?.current_state || 'Target market and customer segments to be defined'
+    
+    addSection('The Bigger Picture', 
+      `Purpose → ${purpose}\n\n` +
+      `Desired Outcomes (6-12 months) →\n${outcomes.map((outcome, i) => `• ${outcome}`).join('\n')}\n\n` +
+      `Audience → ${audience}`)
+
+    // 4. INSIGHTS + OPPORTUNITIES
+    const currentPosition = data.aiAnalysis?.current_state || 'Early stage business development'
+    const opportunities = data.aiAnalysis?.proposed_solution?.map(s => s.pillar) || ['Strategic positioning', 'Operational efficiency', 'Market expansion']
+    const aliraView = data.aiAnalysis?.competitive_advantage || 'Focus on clarity over complexity, small tests over big theories, and systematic execution'
+    
+    addSection('Insights + Opportunities', 
+      `Current Position → ${currentPosition}\n\n` +
+      `Opportunities →\n${opportunities.map((opp, i) => `• ${opp}`).join('\n')}\n\n` +
+      `ALIRA's View → ${aliraView}`)
+
+    // 5. RECOMMENDED NEXT STEPS
+    const coreAim = data.aiAnalysis?.objectives?.[0] || 'Establish clear business direction and market position'
+    const obstacles = data.aiAnalysis?.problem_statement || safe(data.current_challenges) || 'Resource allocation and market positioning'
+    const ninetyDayOutcome = data.aiAnalysis?.next_steps?.[0] || safe(data.immediate_goals) || 'Complete initial market validation and customer discovery'
+    const firstTest = data.aiAnalysis?.next_steps?.[1] || 'Launch a minimum viable product or service offering'
+    const timeProtection = data.aiAnalysis?.next_steps?.[2] || 'Establish dedicated weekly business development time'
+    
+    addSection('Recommended Next Steps', 
+      `Step 1: Name the Core Aim → ${coreAim}\n\n` +
+      `Step 2: Face the Obstacles → ${obstacles}\n\n` +
+      `Step 3: Define a 90-Day Outcome → ${ninetyDayOutcome}\n\n` +
+      `Step 4: Create the First Test → ${firstTest}\n\n` +
+      `Step 5: Protect the Time → ${timeProtection}`)
+
+    // 6. HOW ALIRA CAN HELP
     const serviceMap: Record<string, string> = {
-      'brand_product': 'Brand & Product Management',
-      'content_management': 'Content Management',
-      'digital_solutions': 'Digital Solutions & AI Integration'
+      'brand_product': 'Brand & Product Management → Clarify offer, shape brand, first 100 customers',
+      'content_management': 'Content Management → Capture leads, nurture, automate follow-ups',
+      'digital_solutions': 'Digital Solutions & AI Integration → MVP build, website, AI integrations'
     }
     
     const selectedServices = data.service_interest?.map((service: string) => 
-      serviceMap[service] || service
-    ).join(', ') || 'General business improvement'
+      serviceMap[service] || `${service} → Strategic implementation and optimization`
+    ) || ['Brand & Product Management → Clarify offer, shape brand, first 100 customers']
+    
+    addSection('How ALIRA Can Help', 
+      selectedServices.join('\n\n') + '\n\n' +
+      'Current Tools & Systems → ' + (safe(data.current_tools) || 'Standard business tools and processes'))
 
-    addSection('Recommended ALIRA Services', selectedServices)
+    // 7. RISKS & MITIGATIONS
+    const risks = [
+      { risk: data.aiAnalysis?.risk_assessment || 'Market competition and resource constraints', mitigation: 'Focus on unique value proposition and efficient resource allocation' },
+      { risk: 'Time management and prioritization challenges', mitigation: 'Implement systematic approach with clear milestones and accountability' },
+      { risk: 'Customer acquisition and retention', mitigation: 'Develop targeted marketing strategy and customer experience optimization' }
+    ]
+    
+    let risksText = 'Risk | Mitigation\n'
+    risksText += '--- | ---\n'
+    risks.forEach(risk => {
+      risksText += `${risk.risk} | ${risk.mitigation}\n`
+    })
+    
+    addSection('Risks & Mitigations', risksText)
 
-    // Current Tools
-    if (data.current_tools) {
-      addSection('Current Tools & Systems', safe(data.current_tools))
-    }
+    // 8. REFLECTION SPACE
+    addSection('Reflection Space', 
+      'What excites you most about this plan?\n\n' +
+      'What\'s one step you\'ll act on this week?\n\n' +
+      'What happens if you do nothing?')
 
-    // AI Analysis Section (if available)
-    if (data.aiAnalysis) {
-      addSection('ALIRA Strategic Analysis', data.aiAnalysis.problem_statement)
-      
-      // Current State Analysis
-      if (data.aiAnalysis.current_state) {
-        addSection('Current State Assessment', data.aiAnalysis.current_state)
-      }
-      
-      // Objectives
-      if (data.aiAnalysis.objectives && data.aiAnalysis.objectives.length > 0) {
-        const objectivesText = data.aiAnalysis.objectives.map((obj, index) => `${index + 1}. ${obj}`).join('\n')
-        addSection('Strategic Objectives', objectivesText)
-      }
-      
-      // Proposed Solutions with Service Implementation
-      if (data.aiAnalysis.proposed_solution && data.aiAnalysis.proposed_solution.length > 0) {
-        let solutionsText = 'ALIRA Service Implementation Plan:\n\n'
-        
-        data.aiAnalysis.proposed_solution.forEach((solution, index) => {
-          solutionsText += `${index + 1}. ${solution.pillar}\n`
-          solutionsText += `   Impact: ${solution.impact.toUpperCase()} | Effort: ${solution.effort.toUpperCase()}\n`
-          solutionsText += `   Timeline: ${solution.timeline || 'To be determined'}\n`
-          solutionsText += `   Investment: ${solution.investment || 'To be discussed'}\n`
-          solutionsText += `   ALIRA Implementation:\n`
-          solution.actions.forEach(action => {
-            solutionsText += `   • ${action}\n`
-          })
-          solutionsText += '\n'
-        })
-        
-        addSection('ALIRA Service Implementation', solutionsText)
-      }
-      
-      // Expected Outcomes
-      if (data.aiAnalysis.expected_outcomes && data.aiAnalysis.expected_outcomes.length > 0) {
-        const outcomesText = data.aiAnalysis.expected_outcomes.map((outcome, index) => `${index + 1}. ${outcome}`).join('\n')
-        addSection('Expected Business Outcomes', outcomesText)
-      }
-      
-      // Next Steps
-      if (data.aiAnalysis.next_steps && data.aiAnalysis.next_steps.length > 0) {
-        const nextStepsText = data.aiAnalysis.next_steps.map((step, index) => `${index + 1}. ${step}`).join('\n')
-        addSection('Recommended Next Steps', nextStepsText)
-      }
-      
-      // Risk Assessment
-      if (data.aiAnalysis.risk_assessment) {
-        addSection('Risk Assessment', data.aiAnalysis.risk_assessment)
-      }
-      
-      // Competitive Advantage
-      if (data.aiAnalysis.competitive_advantage) {
-        addSection('Competitive Advantage', data.aiAnalysis.competitive_advantage)
-      }
-    } else {
-      // Fallback recommendations if AI analysis is not available
-      const recommendations = `Based on your inputs, we recommend focusing on:
-
-1. Strategic Assessment: Comprehensive analysis of your current business position
-2. Quick Wins: Identify and implement high-impact, low-effort improvements
-3. Resource Optimization: Streamline your current tools and processes
-4. Growth Roadmap: Develop a clear 90-day action plan
-
-Next Steps:
-• Schedule a consultation call to discuss your specific needs
-• Review your current systems and identify optimization opportunities
-• Develop a customized implementation roadmap
-• Begin with high-impact, quick-win initiatives`
-
-      addSection('Strategic Recommendations', recommendations)
-    }
+    // 9. CLOSING PRINCIPLES
+    addSection('Closing Principles', 
+      'Clarity over complexity\n' +
+      'Small tests over big theories\n' +
+      'Focus creates momentum\n' +
+      'Systems that last\n' +
+      'Discipline over distraction\n\n' +
+      'Ready to move forward? Contact ALIRA for strategic implementation support.')
 
     // Add footers to all pages
     const totalPages = doc.getNumberOfPages()
