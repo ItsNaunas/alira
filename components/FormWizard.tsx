@@ -792,9 +792,15 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                     onClick={async () => {
                       console.log('Button clicked, current step:', currentStep, 'isSubmitting:', isSubmitting, 'isGeneratingPlan:', isGeneratingPlan)
                       if (currentStep === 4) {
-                        // Trigger form submission directly
-                        const formData = watchedValues
-                        await onSubmit(formData)
+                        try {
+                          // Trigger form submission directly
+                          const formData = watchedValues
+                          console.log('Form data being submitted:', formData)
+                          await onSubmit(formData)
+                        } catch (error) {
+                          console.error('Button click error:', error)
+                          alert(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`)
+                        }
                       }
                     }}
                     className="bg-gradient-to-r from-alira-gold to-alira-gold/90 hover:from-alira-gold/90 hover:to-alira-gold/80 text-alira-onyx px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200"

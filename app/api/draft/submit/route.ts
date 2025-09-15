@@ -5,15 +5,31 @@ import { z } from 'zod'
 import { sendPersonalPlanEmail } from '@/lib/enhanced-email'
 import { PersonalPlanPDFData } from '@/lib/enhanced-pdf'
 
+export const runtime = 'nodejs'
+
 const submitDraftSchema = z.object({
   id: z.string().uuid(),
   email: z.string().email()
 })
 
 export async function POST(request: NextRequest) {
+  console.log('[submit] starting')
+  console.time('[submit] total')
+  
   try {
-    // Parse and validate request body
-    const body = await request.json()
+    // 1) validate env early
+    console.log('[submit] RESEND key present?', !!env.RESEND_API_KEY)
+    
+    // 2) parse and validate input
+    let body: any
+    try {
+      body = await request.json()
+    } catch {
+      console.error('[submit] No/invalid JSON body')
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+    console.log('[submit] body keys:', Object.keys(body))
+    
     const { id, email } = submitDraftSchema.parse(body)
 
     // Get the draft data
@@ -96,7 +112,8 @@ export async function POST(request: NextRequest) {
       serviceCount: pdfData.service_interest?.length || 0
     })
 
-    // Send email with PDF using enhanced service
+    // 4) call email
+    console.log('[submit] calling sendPersonalPlanEmail')
     const emailResult = await sendPersonalPlanEmail({
       to: email,
       name: pdfData.name,
@@ -105,15 +122,17 @@ export async function POST(request: NextRequest) {
     })
 
     if (!emailResult.success) {
-      console.error('Email sending failed:', emailResult.error)
+      console.error('[submit] email failed:', emailResult.error)
       return NextResponse.json(
         { 
-          error: 'Plan generated but email delivery failed. Please contact support.',
+          error: 'Email failed', 
           details: emailResult.error 
         },
         { status: 500 }
       )
     }
+
+    console.log('[submit] success:', emailResult.messageId)
 
     // Upload PDF to Supabase Storage for backup/access
     try {
@@ -148,7 +167,9 @@ export async function POST(request: NextRequest) {
       // Don't fail the request if storage backup fails
     }
 
-    return NextResponse.json({
+    return NextResponse.json({ 
+      ok: true, 
+      messageId: emailResult.messageId,
       success: true,
       message: 'Personal plan generated and sent successfully',
       email_sent: true,
@@ -156,22 +177,22 @@ export async function POST(request: NextRequest) {
       pdf_size: emailResult.pdfSize,
       recipient: email
     })
-  } catch (error) {
-    console.error('Error in submit draft API:', error)
+  } catch (err: any) {
+    console.error('[submit] unhandled error:', err)
     
     // Handle validation errors
-    if (error instanceof z.ZodError) {
+    if (err instanceof z.ZodError) {
       return NextResponse.json(
         { 
           error: 'Invalid request data',
-          details: error.errors.map(e => `${e.path.join('.')}: ${e.message}`)
+          details: err.errors.map(e => `${e.path.join('.')}: ${e.message}`)
         },
         { status: 400 }
       )
     }
     
     // Handle JSON parsing errors
-    if (error instanceof SyntaxError) {
+    if (err instanceof SyntaxError) {
       return NextResponse.json(
         { error: 'Invalid JSON in request body' },
         { status: 400 }
@@ -179,9 +200,14 @@ export async function POST(request: NextRequest) {
     }
     
     return NextResponse.json(
-      { error: 'Internal server error. Please try again.' },
+      { 
+        error: 'Server error', 
+        details: err?.message || String(err) 
+      },
       { status: 500 }
     )
+  } finally {
+    console.timeEnd('[submit] total')
   }
 }
 

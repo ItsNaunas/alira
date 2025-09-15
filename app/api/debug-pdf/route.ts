@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+export const runtime = 'nodejs'
+
 export async function POST() {
   try {
     console.log('=== PDF GENERATION DEBUG ===')
