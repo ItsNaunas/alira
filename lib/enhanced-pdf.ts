@@ -6,6 +6,9 @@ const safe = (s?: string | null): string => {
   return s.toString().trim() || '—'
 }
 
+// Import the AI analysis interface
+import type { BusinessCaseOutline } from './openai'
+
 // PDF Data Interface for Personal Plans
 export interface PersonalPlanPDFData {
   name: string
@@ -16,6 +19,7 @@ export interface PersonalPlanPDFData {
   service_interest: string[]
   current_tools?: string
   generatedDate?: string
+  aiAnalysis?: BusinessCaseOutline | null
 }
 
 // Enhanced PDF generation with jsPDF (serverless-friendly)
@@ -104,8 +108,52 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       yPosition = addSection('Current Tools & Systems', safe(data.current_tools), yPosition)
     }
 
-    // Recommendations
-    const recommendations = `Based on your inputs, we recommend focusing on:
+    // AI Analysis Section (if available)
+    if (data.aiAnalysis) {
+      yPosition = addSection('ALIRA Strategic Analysis', data.aiAnalysis.problem_statement, yPosition)
+      
+      // Current State Analysis
+      if (data.aiAnalysis.current_state) {
+        yPosition = addSection('Current State Assessment', data.aiAnalysis.current_state, yPosition)
+      }
+      
+      // Objectives
+      if (data.aiAnalysis.objectives && data.aiAnalysis.objectives.length > 0) {
+        const objectivesText = data.aiAnalysis.objectives.map((obj, index) => `${index + 1}. ${obj}`).join('\n')
+        yPosition = addSection('Strategic Objectives', objectivesText, yPosition)
+      }
+      
+      // Proposed Solutions with Service Implementation
+      if (data.aiAnalysis.proposed_solution && data.aiAnalysis.proposed_solution.length > 0) {
+        let solutionsText = 'ALIRA Service Implementation Plan:\n\n'
+        
+        data.aiAnalysis.proposed_solution.forEach((solution, index) => {
+          solutionsText += `${index + 1}. ${solution.pillar}\n`
+          solutionsText += `   Impact: ${solution.impact.toUpperCase()} | Effort: ${solution.effort.toUpperCase()}\n`
+          solutionsText += `   Actions:\n`
+          solution.actions.forEach(action => {
+            solutionsText += `   • ${action}\n`
+          })
+          solutionsText += '\n'
+        })
+        
+        yPosition = addSection('ALIRA Service Implementation', solutionsText, yPosition)
+      }
+      
+      // Expected Outcomes
+      if (data.aiAnalysis.expected_outcomes && data.aiAnalysis.expected_outcomes.length > 0) {
+        const outcomesText = data.aiAnalysis.expected_outcomes.map((outcome, index) => `${index + 1}. ${outcome}`).join('\n')
+        yPosition = addSection('Expected Business Outcomes', outcomesText, yPosition)
+      }
+      
+      // Next Steps
+      if (data.aiAnalysis.next_steps && data.aiAnalysis.next_steps.length > 0) {
+        const nextStepsText = data.aiAnalysis.next_steps.map((step, index) => `${index + 1}. ${step}`).join('\n')
+        yPosition = addSection('Recommended Next Steps', nextStepsText, yPosition)
+      }
+    } else {
+      // Fallback recommendations if AI analysis is not available
+      const recommendations = `Based on your inputs, we recommend focusing on:
 
 1. Strategic Assessment: Comprehensive analysis of your current business position
 2. Quick Wins: Identify and implement high-impact, low-effort improvements
@@ -118,7 +166,8 @@ Next Steps:
 • Develop a customized implementation roadmap
 • Begin with high-impact, quick-win initiatives`
 
-    yPosition = addSection('Strategic Recommendations', recommendations, yPosition)
+      yPosition = addSection('Strategic Recommendations', recommendations, yPosition)
+    }
 
     // Footer
     doc.setFontSize(8)

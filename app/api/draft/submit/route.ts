@@ -93,6 +93,34 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Generate AI business analysis
+    console.log('[SUBMIT] Generating AI business analysis...')
+    let aiAnalysis = null
+    try {
+      const { generateBusinessCase } = await import('@/lib/openai')
+      
+      // Prepare data for AI analysis
+      const aiInput = {
+        businessName: draft.name || 'Business',
+        industry: 'Technology', // Default since we don't collect this
+        stage: 'Early Stage', // Default
+        challenges: draft.data?.current_challenges || 'Challenges not specified',
+        goalsShort: draft.data?.immediate_goals || 'Goals not specified',
+        goalsLong: 'Long-term growth and scaling',
+        resources: draft.data?.current_tools || 'Standard business tools',
+        budget: 'To be discussed',
+        timeline: '3-6 months',
+        service: draft.data?.service_interest?.join(', ') || 'General business improvement',
+        notes: draft.data?.business_idea || 'Business concept not provided'
+      }
+      
+      aiAnalysis = await generateBusinessCase(aiInput)
+      console.log('[SUBMIT] AI analysis generated successfully')
+    } catch (error) {
+      console.error('[SUBMIT] AI analysis failed:', error)
+      // Continue without AI analysis if it fails
+    }
+
     // Prepare PDF data for enhanced service
     const pdfData: PersonalPlanPDFData = {
       name: draft.name || 'Valued Client',
@@ -106,7 +134,8 @@ export async function POST(request: NextRequest) {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric'
-      })
+      }),
+      aiAnalysis: aiAnalysis // Include AI analysis
     }
 
     console.log('PDF data prepared:', {
