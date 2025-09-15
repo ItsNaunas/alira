@@ -88,17 +88,6 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     }
   }, [resumeToken, initialData, loadDraft])
 
-  // Autosave functionality
-  useEffect(() => {
-    const timeoutId = setTimeout(async () => {
-      if (draftId && currentStep > 1) {
-        await saveDraft()
-      }
-    }, 2000) // Save after 2 seconds of inactivity
-
-    return () => clearTimeout(timeoutId)
-  }, [watchedValues, draftId, currentStep, saveDraft])
-
   const saveDraft = useCallback(async () => {
     if (!draftId) return
     
@@ -128,6 +117,17 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       setIsSaving(false)
     }
   }, [draftId, currentStep, watchedValues])
+
+  // Autosave functionality
+  useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      if (draftId && currentStep > 1) {
+        await saveDraft()
+      }
+    }, 2000) // Save after 2 seconds of inactivity
+
+    return () => clearTimeout(timeoutId)
+  }, [watchedValues, draftId, currentStep, saveDraft])
 
   const nextStep = async () => {
     // Validate only the current step's fields
