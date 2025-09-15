@@ -87,7 +87,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       // Add section title with better typography
       doc.setFontSize(18)
       doc.setTextColor(26, 26, 26) // #1a1a1a
-      doc.setFont(undefined, 'bold')
+      doc.setFont('helvetica', 'bold')
       doc.text(title, margin, currentY)
       
       // Professional underline (shorter, more elegant)
@@ -98,7 +98,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       // Add content with better formatting
       doc.setFontSize(10)
       doc.setTextColor(60, 60, 60) // Darker gray for better readability
-      doc.setFont(undefined, 'normal')
+      doc.setFont('helvetica', 'normal')
       
       // Split content into paragraphs for better formatting
       const paragraphs = content.split('\n\n')
@@ -147,23 +147,23 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       // Left column
       doc.setFontSize(12)
       doc.setTextColor(26, 26, 26)
-      doc.setFont(undefined, 'bold')
+      doc.setFont('helvetica', 'bold')
       doc.text(leftTitle, margin, currentY)
       
       doc.setFontSize(9)
       doc.setTextColor(60, 60, 60)
-      doc.setFont(undefined, 'normal')
+      doc.setFont('helvetica', 'normal')
       doc.text(leftLines, margin, currentY + 12)
       
       // Right column
       doc.setFontSize(12)
       doc.setTextColor(26, 26, 26)
-      doc.setFont(undefined, 'bold')
+      doc.setFont('helvetica', 'bold')
       doc.text(rightTitle, margin + columnWidth + 20, currentY)
       
       doc.setFontSize(9)
       doc.setTextColor(60, 60, 60)
-      doc.setFont(undefined, 'normal')
+      doc.setFont('helvetica', 'normal')
       doc.text(rightLines, margin + columnWidth + 20, currentY + 12)
       
       currentY += maxHeight + 20
@@ -180,20 +180,20 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     // Header with logo
     doc.setFontSize(24)
     doc.setTextColor(26, 26, 26) // #1a1a1a
-    doc.setFont(undefined, 'bold')
+    doc.setFont('helvetica', 'bold')
     doc.text('ALIRA.', margin, currentY)
     currentY += 8
     
     doc.setFontSize(10)
     doc.setTextColor(212, 175, 55) // #d4af37
-    doc.setFont(undefined, 'normal')
+    doc.setFont('helvetica', 'normal')
     doc.text('Strategic Business Solutions', margin, currentY)
     currentY += 40
     
     // Main title
     doc.setFontSize(28)
     doc.setTextColor(26, 26, 26)
-    doc.setFont(undefined, 'bold')
+    doc.setFont('helvetica', 'bold')
     doc.text('Your Personal Plan', margin, currentY)
     currentY += 35
     
@@ -203,12 +203,12 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     
     doc.setFontSize(14)
     doc.setTextColor(26, 26, 26)
-    doc.setFont(undefined, 'bold')
+    doc.setFont('helvetica', 'bold')
     doc.text(`Prepared for ${safe(data.name)}`, margin + 15, currentY + 20)
     
     doc.setFontSize(10)
     doc.setTextColor(102, 102, 102)
-    doc.setFont(undefined, 'normal')
+    doc.setFont('helvetica', 'normal')
     doc.text(`Generated on ${generatedDate}`, margin + 15, currentY + 35)
     
     currentY += 80
