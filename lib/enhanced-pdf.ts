@@ -1,9 +1,18 @@
 import jsPDF from 'jspdf'
 
 // Safe string helper to prevent undefined/null issues
-const safe = (s?: string | null): string => {
-  if (!s || typeof s !== 'string') return '—'
-  return s.toString().trim() || '—'
+const safe = (s?: string | null): string => (s && String(s).trim() ? String(s).trim() : '—')
+
+// --- Typographic + spacing tokens (mm) ---
+const TOKENS = {
+  MARGIN: 18,
+  BASE: 4,        // baseline unit
+  SECTION: 8,     // gap before section
+  PARA: 3,        // gap between paragraphs
+  BOX_PAD_V: 6,   // vertical padding inside boxes
+  BOX_PAD_H: 8,   // horizontal padding inside boxes
+  BOX_GAP: 6,     // gap after a box
+  UNDERLINE_W: 40
 }
 
 // Import the AI analysis interface
@@ -41,13 +50,21 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     // Page dimensions and margins
     const pageWidth = 210 // A4 width in mm
     const pageHeight = 297 // A4 height in mm
-    const margin = 20
-    const contentWidth = pageWidth - (margin * 2)
-    const footerHeight = 20
+    const margin = TOKENS.MARGIN
+    const contentWidth = pageWidth - margin * 2
+    const footerHeight = 10
     const maxContentHeight = pageHeight - margin - footerHeight
     
     let currentY = margin
     let isFirstPage = true
+    doc.setLineHeightFactor(1.3)
+
+    // Measure the height of a block of text (lines already split)
+    const measureLines = (lines: string[] | string): number => {
+      const arr = Array.isArray(lines) ? lines : [lines]
+      const dims = doc.getTextDimensions(arr.join('\n'))
+      return dims.h // jsPDF returns height in current units (mm)
+    }
     
     // Helper function to check if we need a new page
     const checkPageBreak = (requiredHeight: number): void => {
@@ -59,114 +76,85 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     }
     
     // Helper function to add footer to current page
-    const addFooter = (): void => {
-      const footerY = pageHeight - 10
-      doc.setFontSize(8)
-      doc.setTextColor(102, 102, 102) // #666666
-      doc.text('ALIRA. Confidential Business Plan', margin, footerY)
-      doc.text(`Generated for ${safe(data.name)}`, pageWidth / 2, footerY)
-      doc.text(generatedDate, pageWidth - margin - 20, footerY)
+    const addFooter = (pageNum: number, total: number): void => {
+      const y = pageHeight - 6
+      doc.setFontSize(8).setTextColor(102)
+      doc.text('ALIRA. Confidential', margin, y)
+      doc.text(`Page ${pageNum}/${total}`, pageWidth - margin, y, { align: 'right' })
     }
     
     // Helper function to add a professional section
-    const addSection = (title: string, content: string, isFirstSection: boolean = false): void => {
-      // Calculate required height for this section
-      const titleHeight = 35 // Title + underline + spacing
+    const addSection = (title: string, content: string, isFirstSection = false): void => {
       const contentLines = doc.splitTextToSize(content, contentWidth)
-      const contentHeight = (contentLines.length * 4.5) + 25 // Better line spacing
-      const totalHeight = titleHeight + contentHeight
-      
-      // Check if we need a new page
+      // Estimate: title block ~ 10mm + underline + spacing
+      const titleBlock = 12
+      const contentHeight = measureLines(contentLines) + TOKENS.PARA
+      const totalHeight = (isFirstSection ? 0 : TOKENS.SECTION) + titleBlock + contentHeight
+
       checkPageBreak(totalHeight)
-      
-      // Add spacing before section (except first)
-      if (!isFirstSection) {
-        currentY += 15
-      }
-      
-      // Add section title with better typography
-      doc.setFontSize(18)
-      doc.setTextColor(26, 26, 26) // #1a1a1a
-      doc.setFont('helvetica', 'bold')
+
+      if (!isFirstSection) currentY += TOKENS.SECTION
+
+      doc.setFontSize(14).setTextColor(26).setFont('helvetica', 'bold')
       doc.text(title, margin, currentY)
-      
-      // Professional underline (shorter, more elegant)
-      doc.setDrawColor(212, 175, 55) // #d4af37
-      doc.setLineWidth(1.5)
-      doc.line(margin, currentY + 6, margin + 60, currentY + 6)
-      
-      // Add content with better formatting
-      doc.setFontSize(10)
-      doc.setTextColor(60, 60, 60) // Darker gray for better readability
-      doc.setFont('helvetica', 'normal')
-      
-      // Split content into paragraphs for better formatting
-      const paragraphs = content.split('\n\n')
-      let contentY = currentY + 20
-      
-      paragraphs.forEach((paragraph, index) => {
-        if (paragraph.trim()) {
-          const lines = doc.splitTextToSize(paragraph.trim(), contentWidth)
+
+      doc.setDrawColor(212, 175, 55).setLineWidth(0.8)
+      doc.line(margin, currentY + 5, margin + TOKENS.UNDERLINE_W, currentY + 5)
+
+      doc.setFontSize(10).setTextColor(60).setFont('helvetica', 'normal')
+      const paragraphs = content.split(/\n\s*\n/).map(safe)
+      let contentY = currentY + 12
+
+      paragraphs.forEach((p) => {
+        if (p) {
+          const lines = doc.splitTextToSize(p, contentWidth)
           doc.text(lines, margin, contentY)
-          contentY += (lines.length * 4.5) + 8 // Better paragraph spacing
+          contentY += measureLines(lines) + TOKENS.PARA
         }
       })
-      
-      // Update current Y position
-      currentY = contentY + 10
+
+      currentY = contentY
     }
     
     // Helper function to add a highlighted box
-    const addHighlightBox = (content: string, backgroundColor: number[] = [248, 249, 250]): void => {
-      const lines = doc.splitTextToSize(content, contentWidth - 20)
-      const boxHeight = (lines.length * 4.5) + 20
-      
-      checkPageBreak(boxHeight + 20)
-      
-      // Draw background
-      doc.setFillColor(backgroundColor[0], backgroundColor[1], backgroundColor[2])
-      doc.roundedRect(margin, currentY, contentWidth, boxHeight, 3, 3, 'F')
-      
-      // Add content
-      doc.setFontSize(10)
-      doc.setTextColor(60, 60, 60)
-      doc.text(lines, margin + 10, currentY + 15)
-      
-      currentY += boxHeight + 15
+    const addHighlightBox = (content: string, background: number[] = [248,249,250]): void => {
+      const innerWidth = contentWidth - TOKENS.BOX_PAD_H * 2
+      const lines = doc.splitTextToSize(content, innerWidth)
+      const textH = measureLines(lines)
+      const boxH = textH + TOKENS.BOX_PAD_V * 2
+      checkPageBreak(boxH + TOKENS.BOX_GAP)
+      doc.setFillColor(background[0], background[1], background[2])
+      doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'F')
+      doc.setFontSize(10).setTextColor(60)
+      doc.text(lines, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 2)
+      currentY += boxH + TOKENS.BOX_GAP
     }
     
     // Helper function to add a two-column layout
     const addTwoColumn = (leftTitle: string, leftContent: string, rightTitle: string, rightContent: string): void => {
-      const columnWidth = (contentWidth - 20) / 2
+      const gutter = 10
+      const columnWidth = (contentWidth - gutter) / 2
       const leftLines = doc.splitTextToSize(leftContent, columnWidth)
       const rightLines = doc.splitTextToSize(rightContent, columnWidth)
-      const maxHeight = Math.max(leftLines.length, rightLines.length) * 4.5 + 40
-      
-      checkPageBreak(maxHeight + 20)
-      
+      const leftH = measureLines(leftLines)
+      const rightH = measureLines(rightLines)
+      const headH = 6 // title line height
+      const blockH = Math.max(leftH, rightH) + headH + TOKENS.PARA
+      checkPageBreak(blockH)
+
       // Left column
-      doc.setFontSize(12)
-      doc.setTextColor(26, 26, 26)
-      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(12).setTextColor(26).setFont('helvetica', 'bold')
       doc.text(leftTitle, margin, currentY)
-      
-      doc.setFontSize(9)
-      doc.setTextColor(60, 60, 60)
-      doc.setFont('helvetica', 'normal')
-      doc.text(leftLines, margin, currentY + 12)
-      
+      doc.setFontSize(9).setTextColor(60).setFont('helvetica', 'normal')
+      doc.text(leftLines, margin, currentY + 6)
+
       // Right column
-      doc.setFontSize(12)
-      doc.setTextColor(26, 26, 26)
-      doc.setFont('helvetica', 'bold')
-      doc.text(rightTitle, margin + columnWidth + 20, currentY)
-      
-      doc.setFontSize(9)
-      doc.setTextColor(60, 60, 60)
-      doc.setFont('helvetica', 'normal')
-      doc.text(rightLines, margin + columnWidth + 20, currentY + 12)
-      
-      currentY += maxHeight + 20
+      doc.setFontSize(12).setTextColor(26).setFont('helvetica', 'bold')
+      doc.text(rightTitle, margin + columnWidth + gutter, currentY)
+      doc.setFontSize(9).setTextColor(60).setFont('helvetica', 'normal')
+      doc.text(rightLines, margin + columnWidth + gutter, currentY + 6)
+
+      currentY += blockH
     }
 
     // Date
@@ -363,11 +351,11 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       [252, 245, 245]
     )
 
-    // Add footers to all pages
+    // Add footers to all pages (small, 6mm from bottom)
     const totalPages = doc.getNumberOfPages()
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i)
-      addFooter()
+      addFooter(i, totalPages)
     }
 
     // Convert to buffer
