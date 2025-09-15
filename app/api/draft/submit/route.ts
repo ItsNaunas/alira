@@ -93,6 +93,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Debug: Log the draft data structure
+    console.log('[SUBMIT] Draft data structure:', JSON.stringify(draft, null, 2))
+    console.log('[SUBMIT] Draft.data:', JSON.stringify(draft.data, null, 2))
+
     // Generate AI business analysis
     console.log('[SUBMIT] Generating AI business analysis...')
     let aiAnalysis = null
@@ -113,6 +117,8 @@ export async function POST(request: NextRequest) {
         service: draft.data?.service_interest?.join(', ') || 'General business improvement',
         notes: draft.data?.business_idea || 'Business concept not provided'
       }
+      
+      console.log('[SUBMIT] AI input data:', JSON.stringify(aiInput, null, 2))
       
       aiAnalysis = await generateBusinessCase(aiInput)
       console.log('[SUBMIT] AI analysis generated successfully')
