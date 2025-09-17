@@ -330,14 +330,14 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     // Add major section spacing
     addMajorSectionSpacing()
 
-    // 5. STRATEGIC ROADMAP
+    // 5. STRATEGIC ROADMAP (How It Works) - Now comes first
     const coreAim = data.aiAnalysis?.objectives?.[0] || 'Establish clear business direction and market position'
     const obstacles = data.aiAnalysis?.problem_statement || safe(data.current_challenges) || 'Resource allocation and market positioning'
     const ninetyDayOutcome = data.aiAnalysis?.next_steps?.[0] || safe(data.immediate_goals) || 'Complete initial market validation and customer discovery'
     const firstTest = data.aiAnalysis?.next_steps?.[1] || 'Launch a minimum viable product or service offering'
     const timeProtection = data.aiAnalysis?.next_steps?.[2] || 'Establish dedicated weekly business development time'
     
-    addSection('Strategic Roadmap', 'Step-by-step implementation plan for business development')
+    addSection('How It Works: Strategic Roadmap', 'Step-by-step implementation plan for business development')
     
     // Create a professional roadmap with numbered steps
     const roadmapSteps = [
@@ -359,7 +359,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       }
     })
 
-    // 6. ALIRA SERVICE RECOMMENDATIONS
+    // 6. ALIRA SERVICE RECOMMENDATIONS (What You Get) - Now comes second
     const serviceMap: Record<string, string> = {
       'brand_product': 'Brand & Product Management\nClarify offer, shape brand, acquire first 100 customers',
       'content_management': 'Content Management\nCapture leads, nurture prospects, automate follow-ups',
@@ -370,7 +370,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       serviceMap[service] || `${service}\nStrategic implementation and optimization`
     ) || ['Brand & Product Management\nClarify offer, shape brand, acquire first 100 customers']
     
-    addSection('Recommended ALIRA Services', 'Strategic service recommendations based on business analysis')
+    addSection('What You Get: ALIRA Services', 'Strategic service recommendations based on business analysis')
     
     selectedServices.forEach((service, index) => {
       const [title, description] = service.split('\n')
