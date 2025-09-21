@@ -100,6 +100,10 @@ body {
   letter-spacing: -0.02em;
 }
 
+.dark .h2 {
+  color: #FDFDFD;
+}
+
 .h3 {
   font-size: 1.5rem;
   line-height: 1.4;
@@ -108,10 +112,19 @@ body {
   letter-spacing: -0.02em;
 }
 
+.dark .h3 {
+  color: #FDFDFD;
+}
+
 .copy {
   font-size: 1rem;
   line-height: 1.5;
   color: #0B0B0B;
+  opacity: 0.8;
+}
+
+.dark .copy {
+  color: #FDFDFD;
   opacity: 0.8;
 }
 
@@ -124,6 +137,15 @@ body {
 }
 
 .card:hover {
+  border-color: rgba(197, 165, 114, 0.3);
+}
+
+.dark .card {
+  background: #1A1A1A;
+  border: 1px solid rgba(253, 253, 253, 0.1);
+}
+
+.dark .card:hover {
   border-color: rgba(197, 165, 114, 0.3);
 }
 
@@ -149,6 +171,17 @@ body {
   border-color: rgba(11, 11, 11, 0.9);
 }
 
+.dark .btn-primary {
+  background: #FDFDFD;
+  color: #0B0B0B;
+  border: 2px solid #FDFDFD;
+}
+
+.dark .btn-primary:hover {
+  background: rgba(253, 253, 253, 0.9);
+  border-color: rgba(253, 253, 253, 0.9);
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -156,6 +189,10 @@ body {
 
 ::-webkit-scrollbar-track {
   background: var(--alira-porcelain);
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--alira-onyx);
 }
 
 ::-webkit-scrollbar-thumb {
