@@ -12,7 +12,7 @@ const navigation = {
 
 export default function Footer() {
   return (
-    <footer className="bg-alira-onyx text-alira-porcelain">
+    <footer className="bg-alira-onyx dark:bg-alira-midnight text-alira-porcelain">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
         <div className="flex flex-col items-center space-y-8">
           {/* Logo */}

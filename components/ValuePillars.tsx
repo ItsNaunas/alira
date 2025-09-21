@@ -34,14 +34,14 @@ export default function ValuePillars() {
       {pillars.map((pillar, index) => {
         const IconComponent = pillar.icon
         return (
-          <Card key={pillar.title} className="border-alira-onyx/10 hover:border-alira-gold/30 transition-all duration-300 hover:shadow-lg group bg-white">
+          <Card key={pillar.title} className="border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/30 transition-all duration-300 hover:shadow-lg group bg-white dark:bg-alira-onyx">
             <CardHeader className="pb-4">
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-alira-gold/20 to-alira-gold/10 flex items-center justify-center group-hover:from-alira-gold/30 group-hover:to-alira-gold/20 transition-all duration-300 border border-alira-gold/20">
                   <IconComponent className="h-8 w-8 text-alira-gold" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl alira-heading text-alira-onyx">
+                  <CardTitle className="text-xl alira-heading text-alira-onyx dark:text-alira-porcelain">
                     {pillar.title}
                     <span className="text-alira-gold font-normal"> {pillar.subtitle}</span>
                   </CardTitle>
