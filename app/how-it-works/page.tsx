@@ -70,78 +70,109 @@ export default function HowItWorksPage() {
             <Reveal delay={200}>
               <div className="text-center mb-16">
                 <h1 id="how-it-works-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx dark:text-alira-porcelain leading-[0.95] tracking-tight mb-8">
-                  How it <span className="text-alira-gold">works</span>
+                  Three steps to your <span className="text-alira-gold">business plan</span>
                 </h1>
-                
-                {/* Subheadline */}
-                <p className="text-2xl md:text-3xl text-alira-onyx dark:text-alira-porcelain font-serif italic font-light max-w-[60ch] mx-auto leading-tight mb-8">
-                  Simple steps to get your plan ready in minutes.
-                </p>
               </div>
             </Reveal>
             
             {/* Process Flow */}
             <Reveal delay={300}>
-              <div className="max-w-5xl mx-auto mb-16">
+              <div className="max-w-6xl mx-auto mb-16">
                 {/* Horizontal Process Flow */}
-                <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-16 relative">
+                <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-8 relative">
                   
-                  {/* Step 1: Complete the Form */}
+                  {/* Step 1: Sign up & load funds */}
                   <div className="flex flex-col items-center text-center group flex-1">
-                    <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20 mb-6 group-hover:border-alira-gold/40 transition-colors duration-300">
-                      <svg className="w-8 h-8 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </div>
+                  {/* Large Step Number */}
+                  <div className="mb-6">
+                    <span className="text-6xl font-bold text-alira-gold/80 group-hover:text-alira-gold transition-colors duration-300">1</span>
+                  </div>
+                    
                     <h3 className="text-xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-4 group-hover:text-alira-gold transition-colors duration-300">
-                      Tell us a little about your idea or business
+                      Answer questions
                     </h3>
-                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed max-w-xs">
-                      Quick questions to understand where you are.
+                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed mb-8">
+                      Tell us about your idea or business through our quick, structured questionnaire.
                     </p>
+                    
+                    {/* Device Illustration - Larger */}
+                    <div className="w-72 h-54 flex items-center justify-center">
+                      <Image 
+                        src="/images/how-it-works/step1-signup.png" 
+                        alt="Step 1: Answer questions"
+                        width={288}
+                        height={216}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                   </div>
 
-                  {/* Connecting Arrow 1 */}
-                  <div className="hidden lg:flex items-center justify-center w-16 h-16 relative">
-                    <div className="w-12 h-px bg-alira-onyx/30 group-hover:bg-alira-gold transition-colors duration-300"></div>
-                    <div className="absolute right-0 w-2 h-2 bg-alira-onyx/30 group-hover:bg-alira-gold border-r-2 border-t-2 border-current transform rotate-45 transition-colors duration-300"></div>
+                  {/* Connecting Arrow 1 - Improved */}
+                  <div className="hidden lg:flex items-center justify-center w-16 h-12 relative">
+                    <svg className="w-16 h-12 text-alira-gold" viewBox="0 0 64 48" fill="none">
+                      <path d="M4 24 Q32 6 60 24" stroke="currentColor" strokeWidth="2.5" strokeDasharray="5,3" fill="none"/>
+                      <path d="M54 20 L60 24 L54 28" stroke="currentColor" strokeWidth="2.5" fill="none"/>
+                    </svg>
                   </div>
 
-                  {/* Step 2: Engine Processing */}
+                  {/* Step 2: Set your spending rules */}
                   <div className="flex flex-col items-center text-center group flex-1">
-                    <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20 mb-6 group-hover:border-alira-gold/40 transition-colors duration-300">
-                      <svg className="w-8 h-8 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                    {/* Large Step Number */}
+                    <div className="mb-6">
+                      <span className="text-6xl font-bold text-alira-gold/80 group-hover:text-alira-gold transition-colors duration-300">2</span>
                     </div>
+                    
                     <h3 className="text-xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-4 group-hover:text-alira-gold transition-colors duration-300">
-                      We shape it into a clear plan
+                      AI analysis
                     </h3>
-                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed max-w-xs">
-                      Our system transforms your answers into actionable steps.
+                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed mb-8">
+                      Our AI processes your information using strategic frameworks to create actionable insights.
                     </p>
+                    
+                    {/* Device Illustration - Larger */}
+                    <div className="w-72 h-54 flex items-center justify-center">
+                      <Image 
+                        src="/images/how-it-works/step3-invite-team.png" 
+                        alt="Step 2: AI analysis"
+                        width={288}
+                        height={216}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                   </div>
 
-                  {/* Connecting Arrow 2 */}
-                  <div className="hidden lg:flex items-center justify-center w-16 h-16 relative">
-                    <div className="w-12 h-px bg-alira-onyx/30 group-hover:bg-alira-gold transition-colors duration-300"></div>
-                    <div className="absolute right-0 w-2 h-2 bg-alira-onyx/30 group-hover:bg-alira-gold border-r-2 border-t-2 border-current transform rotate-45 transition-colors duration-300"></div>
+                  {/* Connecting Arrow 2 - Improved */}
+                  <div className="hidden lg:flex items-center justify-center w-20 h-16 relative">
+                    <svg className="w-20 h-16 text-alira-gold" viewBox="0 0 80 64" fill="none">
+                      <path d="M5 32 Q40 8 75 32" stroke="currentColor" strokeWidth="3" strokeDasharray="6,4" fill="none"/>
+                      <path d="M68 26 L75 32 L68 38" stroke="currentColor" strokeWidth="3" fill="none"/>
+                    </svg>
                   </div>
 
-                  {/* Step 3: Receive Your Draft */}
+                  {/* Step 3: Invite your team */}
                   <div className="flex flex-col items-center text-center group flex-1">
-                    <div className="w-16 h-16 bg-alira-gold/10 rounded-2xl flex items-center justify-center mx-auto border border-alira-gold/20 mb-6 group-hover:border-alira-gold/40 transition-colors duration-300">
-                      <svg className="w-8 h-8 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
+                    {/* Large Step Number */}
+                    <div className="mb-6">
+                      <span className="text-6xl font-bold text-alira-gold/80 group-hover:text-alira-gold transition-colors duration-300">3</span>
                     </div>
+                    
                     <h3 className="text-xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-4 group-hover:text-alira-gold transition-colors duration-300">
-                      You get it in minutes — ready to use
+                      Get your plan
                     </h3>
-                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed max-w-xs">
-                      A simple PDF plan delivered instantly to your inbox.
+                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed mb-8">
+                      Receive a comprehensive PDF business plan tailored to your specific situation and goals.
                     </p>
+                    
+                    {/* Device Illustration - Larger */}
+                    <div className="w-72 h-54 flex items-center justify-center">
+                      <Image 
+                        src="/images/how-it-works/step2-spending-rules.png" 
+                        alt="Step 3: Get your plan"
+                        width={288}
+                        height={216}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                   </div>
 
                 </div>
