@@ -1,0 +1,26 @@
+Mini Form (Homepage)
+Purpose: Capture leads instantly without scaring them.
+
+Fields:
+
+- First Name
+- Email
+- (Optional) Tell us your idea in one line (short text box)
+
+CTA Button: [Start My Plan]
+Full Form (For PDF Generation)
+Purpose: Gather enough context for a tailored PDF while collecting solid leads.
+
+Fields/Prompts:
+
+1. What’s your idea or business about? (Open text with guiding examples)
+
+2. What’s the biggest challenge holding you back? (Prompted text)
+
+3. What’s your goal in the next 90 days? (Prompted text)
+
+4. What resources do you already have? (Multi-choice + 'Other' free text)
+
+5. Contact details: Name + Email
+
+CTA Button: [Generate My Plan]
