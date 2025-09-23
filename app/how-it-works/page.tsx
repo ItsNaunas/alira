@@ -107,11 +107,11 @@ export default function HowItWorksPage() {
                     </div>
                   </div>
 
-                  {/* Connecting Arrow 1 - Improved */}
+                  {/* Connecting Arrow 1 - Clean */}
                   <div className="hidden lg:flex items-center justify-center w-16 h-12 relative">
                     <svg className="w-16 h-12 text-alira-gold" viewBox="0 0 64 48" fill="none">
-                      <path d="M4 24 Q32 6 60 24" stroke="currentColor" strokeWidth="2.5" strokeDasharray="5,3" fill="none"/>
-                      <path d="M54 20 L60 24 L54 28" stroke="currentColor" strokeWidth="2.5" fill="none"/>
+                      <path d="M8 24 Q32 8 56 24" stroke="currentColor" strokeWidth="2" strokeDasharray="4,4" fill="none"/>
+                      <path d="M52 20 L56 24 L52 28" stroke="currentColor" strokeWidth="2" fill="none"/>
                     </svg>
                   </div>
 
@@ -141,11 +141,11 @@ export default function HowItWorksPage() {
                     </div>
                   </div>
 
-                  {/* Connecting Arrow 2 - Improved */}
-                  <div className="hidden lg:flex items-center justify-center w-20 h-16 relative">
-                    <svg className="w-20 h-16 text-alira-gold" viewBox="0 0 80 64" fill="none">
-                      <path d="M5 32 Q40 8 75 32" stroke="currentColor" strokeWidth="3" strokeDasharray="6,4" fill="none"/>
-                      <path d="M68 26 L75 32 L68 38" stroke="currentColor" strokeWidth="3" fill="none"/>
+                  {/* Connecting Arrow 2 - Clean */}
+                  <div className="hidden lg:flex items-center justify-center w-16 h-12 relative">
+                    <svg className="w-16 h-12 text-alira-gold" viewBox="0 0 64 48" fill="none">
+                      <path d="M8 24 Q32 8 56 24" stroke="currentColor" strokeWidth="2" strokeDasharray="4,4" fill="none"/>
+                      <path d="M52 20 L56 24 L52 28" stroke="currentColor" strokeWidth="2" fill="none"/>
                     </svg>
                   </div>
 

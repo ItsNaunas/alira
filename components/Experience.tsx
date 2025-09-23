@@ -1,4 +1,5 @@
 import Reveal from './Reveal'
+import ArchitecturalGrid from './ArchitecturalGrid'
 import { TrendingUp, Users, Target, DollarSign, Calendar, Award, Building, Shield } from 'lucide-react'
 
 const experiences = [
@@ -51,14 +52,12 @@ const experiences = [
 export default function Experience() {
   return (
     <section className="py-24 bg-alira-porcelain/30 dark:bg-alira-onyx/30 relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.02]">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(to right, #0B0B0B 1px, transparent 1px),
-                           linear-gradient(to bottom, #0B0B0B 1px, transparent 1px)`,
-          backgroundSize: '40px 40px'
-        }} />
-      </div>
+      {/* Architectural grid background */}
+      <ArchitecturalGrid 
+        variant="subtle" 
+        opacity={0.25}
+        size="md"
+      />
       
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         {/* Section Header */}

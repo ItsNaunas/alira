@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Reveal from './Reveal'
+import ArchitecturalGrid from './ArchitecturalGrid'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
 export default function FAQ() {
@@ -31,8 +32,14 @@ export default function FAQ() {
   }
 
   return (
-    <section className="py-24 bg-alira-porcelain/40 dark:bg-alira-onyx/40">
-      <div className="container mx-auto px-6 lg:px-8">
+    <section className="py-24 bg-alira-porcelain/40 dark:bg-alira-onyx/40 relative overflow-hidden">
+      {/* Architectural grid background */}
+      <ArchitecturalGrid 
+        variant="minimal" 
+        opacity={0.15}
+        size="lg"
+      />
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <Reveal>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">

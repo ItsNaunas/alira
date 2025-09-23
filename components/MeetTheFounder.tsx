@@ -124,7 +124,7 @@ export default function MeetTheTeam() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2M9 8h6m-6 4h6m-6 4h6" />
                     </svg>
                   </div>
-                  <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Mariam – Marketing Lead</h4>
+                  <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Etomi – Marketing Lead</h4>
                   <p className="text-alira-onyx dark:text-alira-porcelain/80 leading-relaxed mb-6">
                     Knows how to make your brand impossible to ignore.
                   </p>
@@ -148,7 +148,7 @@ export default function MeetTheTeam() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
-                  <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Alex – Systems Engineer</h4>
+                  <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Naufal – Systems Engineer</h4>
                   <p className="text-alira-onyx dark:text-alira-porcelain/80 leading-relaxed mb-6">
                     Builds the tools and processes that unlock growth.
                   </p>

@@ -1,4 +1,5 @@
 import Reveal from './Reveal'
+import ArchitecturalGrid from './ArchitecturalGrid'
 import { TrendingUp, Users, Target, DollarSign, Calendar, Award, CheckCircle, Building } from 'lucide-react'
 
 const results = [
@@ -39,8 +40,14 @@ const keyAchievements = [
 
 export default function ClientResults() {
   return (
-    <section className="py-24 bg-white dark:bg-alira-onyx/20">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="py-24 bg-white dark:bg-alira-onyx/20 relative overflow-hidden">
+      {/* Architectural grid background */}
+      <ArchitecturalGrid 
+        variant="minimal" 
+        opacity={0.2}
+        size="sm"
+      />
+      <div className="max-w-6xl mx-auto px-4 relative z-10">
         <Reveal>
           <div className="text-center mb-16">
             <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-medium">

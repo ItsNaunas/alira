@@ -1,10 +1,17 @@
 import Reveal from './Reveal'
+import ArchitecturalGrid from './ArchitecturalGrid'
 import Image from 'next/image'
 
 export default function HowItWorks() {
   return (
-    <section className="py-24 bg-white dark:bg-alira-onyx/20">
-      <div className="container mx-auto px-6 lg:px-8">
+    <section className="py-24 bg-white dark:bg-alira-onyx/20 relative overflow-hidden">
+      {/* Architectural grid background */}
+      <ArchitecturalGrid 
+        variant="subtle" 
+        opacity={0.2}
+        size="md"
+      />
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <div className="text-center mb-16">
@@ -49,11 +56,11 @@ export default function HowItWorks() {
                   </div>
                 </div>
 
-                {/* Connecting Arrow 1 - Improved */}
+                {/* Connecting Arrow 1 - Clean */}
                 <div className="hidden lg:flex items-center justify-center w-16 h-12 relative">
                   <svg className="w-16 h-12 text-alira-gold" viewBox="0 0 64 48" fill="none">
-                    <path d="M4 24 Q32 6 60 24" stroke="currentColor" strokeWidth="2.5" strokeDasharray="5,3" fill="none"/>
-                    <path d="M54 20 L60 24 L54 28" stroke="currentColor" strokeWidth="2.5" fill="none"/>
+                    <path d="M8 24 Q32 8 56 24" stroke="currentColor" strokeWidth="2" strokeDasharray="4,4" fill="none"/>
+                    <path d="M52 20 L56 24 L52 28" stroke="currentColor" strokeWidth="2" fill="none"/>
                   </svg>
                 </div>
 
@@ -83,11 +90,11 @@ export default function HowItWorks() {
                   </div>
                 </div>
 
-                {/* Connecting Arrow 2 - Improved */}
+                {/* Connecting Arrow 2 - Clean */}
                 <div className="hidden lg:flex items-center justify-center w-16 h-12 relative">
                   <svg className="w-16 h-12 text-alira-gold" viewBox="0 0 64 48" fill="none">
-                    <path d="M4 24 Q32 6 60 24" stroke="currentColor" strokeWidth="2.5" strokeDasharray="5,3" fill="none"/>
-                    <path d="M54 20 L60 24 L54 28" stroke="currentColor" strokeWidth="2.5" fill="none"/>
+                    <path d="M8 24 Q32 8 56 24" stroke="currentColor" strokeWidth="2" strokeDasharray="4,4" fill="none"/>
+                    <path d="M52 20 L56 24 L52 28" stroke="currentColor" strokeWidth="2" fill="none"/>
                   </svg>
                 </div>
 
