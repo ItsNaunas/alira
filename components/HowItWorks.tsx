@@ -3,6 +3,7 @@ import ArchitecturalGrid from './ArchitecturalGrid'
 import Image from 'next/image'
 
 export default function HowItWorks() {
+  // Force deployment update
   return (
     <section className="py-24 bg-white dark:bg-alira-onyx/20 relative overflow-hidden">
       {/* Architectural grid background */}

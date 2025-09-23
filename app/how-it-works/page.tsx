@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Reveal from '@/components/Reveal'
 import CTAButton from '@/components/CTAButton'
 import Link from 'next/link'
