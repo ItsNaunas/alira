@@ -34,7 +34,9 @@ export default function HowItWorks() {
                 <div className="flex flex-col items-center text-center group flex-1">
                   {/* Large Step Number */}
                   <div className="mb-6">
-                    <span className="text-6xl font-bold text-alira-gold/80 group-hover:text-alira-gold transition-colors duration-300">1</span>
+                    <svg className="w-24 h-24 text-alira-gold/80 group-hover:text-alira-gold transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-110" viewBox="0 0 100 100" fill="none">
+                      <text x="50" y="65" textAnchor="middle" fontSize="72" fontWeight="bold" stroke="currentColor" strokeWidth="2.5" fill="none">1</text>
+                    </svg>
                   </div>
                   
                   <h3 className="text-xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-4 group-hover:text-alira-gold transition-colors duration-300">
@@ -68,7 +70,9 @@ export default function HowItWorks() {
                 <div className="flex flex-col items-center text-center group flex-1">
                   {/* Large Step Number */}
                   <div className="mb-6">
-                    <span className="text-6xl font-bold text-alira-gold/80 group-hover:text-alira-gold transition-colors duration-300">2</span>
+                    <svg className="w-24 h-24 text-alira-gold/80 group-hover:text-alira-gold transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-110" viewBox="0 0 100 100" fill="none">
+                      <text x="50" y="65" textAnchor="middle" fontSize="72" fontWeight="bold" stroke="currentColor" strokeWidth="2.5" fill="none">2</text>
+                    </svg>
                   </div>
                   
                   <h3 className="text-xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-4 group-hover:text-alira-gold transition-colors duration-300">
@@ -102,7 +106,9 @@ export default function HowItWorks() {
                 <div className="flex flex-col items-center text-center group flex-1">
                   {/* Large Step Number */}
                   <div className="mb-6">
-                    <span className="text-6xl font-bold text-alira-gold/80 group-hover:text-alira-gold transition-colors duration-300">3</span>
+                    <svg className="w-24 h-24 text-alira-gold/80 group-hover:text-alira-gold transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-110" viewBox="0 0 100 100" fill="none">
+                      <text x="50" y="65" textAnchor="middle" fontSize="72" fontWeight="bold" stroke="currentColor" strokeWidth="2.5" fill="none">3</text>
+                    </svg>
                   </div>
                   
                   <h3 className="text-xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-4 group-hover:text-alira-gold transition-colors duration-300">
