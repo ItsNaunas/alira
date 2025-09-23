@@ -58,12 +58,16 @@ export default function HowItWorks() {
                   </div>
                 </div>
 
-                {/* Connecting Arrow 1 - Clean */}
-                <div className="hidden lg:flex items-center justify-center w-16 h-12 relative">
-                  <svg className="w-16 h-12 text-alira-gold" viewBox="0 0 64 48" fill="none">
-                    <path d="M8 24 Q32 8 56 24" stroke="currentColor" strokeWidth="2" strokeDasharray="4,4" fill="none"/>
-                    <path d="M52 20 L56 24 L52 28" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  </svg>
+                {/* Connecting Arrow 1 - Custom Image */}
+                <div className="hidden lg:flex items-center justify-center w-20 h-16 relative">
+                  <Image 
+                    src="/images/how-it-works/arrow.png" 
+                    alt="Arrow connecting steps"
+                    width={200}
+                    height={150}
+                    className="object-contain max-w-none"
+                    style={{ width: '200px', height: '150px' }}
+                  />
                 </div>
 
                 {/* Step 2: AI analysis */}
@@ -94,12 +98,16 @@ export default function HowItWorks() {
                   </div>
                 </div>
 
-                {/* Connecting Arrow 2 - Clean */}
-                <div className="hidden lg:flex items-center justify-center w-16 h-12 relative">
-                  <svg className="w-16 h-12 text-alira-gold" viewBox="0 0 64 48" fill="none">
-                    <path d="M8 24 Q32 8 56 24" stroke="currentColor" strokeWidth="2" strokeDasharray="4,4" fill="none"/>
-                    <path d="M52 20 L56 24 L52 28" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  </svg>
+                {/* Connecting Arrow 2 - Custom Image */}
+                <div className="hidden lg:flex items-center justify-center w-20 h-16 relative">
+                  <Image 
+                    src="/images/how-it-works/arrow.png" 
+                    alt="Arrow connecting steps"
+                    width={200}
+                    height={150}
+                    className="object-contain max-w-none"
+                    style={{ width: '200px', height: '150px' }}
+                  />
                 </div>
 
                 {/* Step 3: Get your plan */}
