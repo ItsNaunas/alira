@@ -100,14 +100,7 @@ export default function HomeServices() {
                 </div>
                 
                 <div className="mt-auto">
-                  <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">{services[0].duration}</p>
-                  <CTAButton 
-                    href="#start-form" 
-                    variant="aliraOutline"
-                    className="w-full py-2 text-sm"
-                  >
-                    {services[0].cta}
-                  </CTAButton>
+                  <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs">{services[0].duration}</p>
                 </div>
               </div>
             </Reveal>
@@ -139,14 +132,7 @@ export default function HomeServices() {
                 </div>
                 
                 <div className="mt-auto">
-                  <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">{services[1].duration}</p>
-                  <CTAButton 
-                    href="#start-form" 
-                    variant="aliraOutline"
-                    className="w-full py-2 text-sm"
-                  >
-                    {services[1].cta}
-                  </CTAButton>
+                  <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs">{services[1].duration}</p>
                 </div>
               </div>
             </Reveal>
@@ -183,14 +169,7 @@ export default function HomeServices() {
                 </div>
                 
                 <div className="mt-auto">
-                  <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">{services[2].duration}</p>
-                  <CTAButton 
-                    href="#start-form" 
-                    variant="alira"
-                    className="w-full py-2 text-sm"
-                  >
-                    {services[2].cta}
-                  </CTAButton>
+                  <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs">{services[2].duration}</p>
                 </div>
               </div>
             </Reveal>

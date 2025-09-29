@@ -102,14 +102,7 @@ export default function Services() {
                   </div>
                   
                   <div className="mt-auto">
-                    <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">2-4 weeks</p>
-                    <CTAButton 
-                      href="#start-form" 
-                      variant="aliraOutline"
-                      className="w-full py-2 text-sm"
-                    >
-                      Start Content Strategy
-                    </CTAButton>
+                    <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs">2-4 weeks</p>
                   </div>
                 </div>
               </Reveal>
@@ -149,14 +142,7 @@ export default function Services() {
                   </div>
                   
                   <div className="mt-auto">
-                    <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">3-6 weeks</p>
-                    <CTAButton 
-                      href="#start-form" 
-                      variant="aliraOutline"
-                      className="w-full py-2 text-sm"
-                    >
-                      Build My Systems
-                    </CTAButton>
+                    <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs">3-6 weeks</p>
                   </div>
                 </div>
               </Reveal>
@@ -205,14 +191,7 @@ export default function Services() {
                   </div>
                   
                   <div className="mt-auto">
-                    <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">4-8 weeks</p>
-                    <CTAButton 
-                      href="#start-form" 
-                      variant="alira"
-                      className="w-full py-2 text-sm"
-                    >
-                      Get Complete Package
-                    </CTAButton>
+                    <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs">4-8 weeks</p>
                   </div>
                 </div>
               </Reveal>
