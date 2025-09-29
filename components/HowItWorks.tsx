@@ -50,7 +50,7 @@ export default function HowItWorks() {
                   {/* Device Illustration - Larger */}
                   <div className="w-72 h-54 flex items-center justify-center">
                     <Image 
-                      src="/images/how-it-works/step1-signup.png" 
+                      src="/images/how-it-works/step-1.png" 
                       alt="Step 1: Answer questions"
                       width={288}
                       height={216}
@@ -130,7 +130,7 @@ export default function HowItWorks() {
                   {/* Device Illustration - Larger */}
                   <div className="w-72 h-54 flex items-center justify-center">
                     <Image 
-                      src="/images/how-it-works/step2-spending-rules.png" 
+                      src="/images/how-it-works/step-3.png" 
                       alt="Step 3: Get your plan"
                       width={288}
                       height={216}

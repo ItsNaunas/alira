@@ -47,48 +47,72 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto text-center">
-            {/* Hero Brand Seal - Extra Large */}
+          <div className="max-w-7xl mx-auto">
+            {/* Two-column layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              
+              {/* Left Column - Text Content */}
+              <div className="text-center lg:text-left">
+                {/* Hero Brand Seal */}
             <Reveal>
-              <div className="mb-20">
-                <span className="block text-7xl md:text-9xl lg:text-[10rem] tracking-[0.2em] uppercase text-alira-onyx dark:text-alira-porcelain font-heading mb-8">
-                  ALIRA
+                  <div className="mb-12 lg:mb-16">
+                    <span className="block text-4xl md:text-5xl lg:text-6xl tracking-[0.2em] uppercase text-alira-onyx dark:text-alira-porcelain font-heading mb-6">
+                      ALIRA
                 </span>
-                <div className="w-40 h-[5px] bg-alira-gold mx-auto mb-16"></div>
+                    <div className="w-24 h-[2px] bg-alira-gold mx-auto lg:mx-0 mb-8"></div>
               </div>
             </Reveal>
             
-            {/* New Headline */}
+            {/* Headline */}
             <Reveal delay={200}>
-              <h1 id="hero-heading" className="text-5xl md:text-7xl font-heading text-alira-onyx dark:text-alira-porcelain leading-[0.95] tracking-tight mb-8">
-                We turn your ideas into <span className="text-alira-gold">clear business plans</span> you can act on today
+                  <h1 id="hero-heading" className="text-3xl md:text-4xl lg:text-5xl font-heading text-alira-onyx dark:text-alira-porcelain leading-[0.95] tracking-tight mb-8">
+                    We turn your ideas into <span className="text-alira-gold">clear business plans</span> you can act on today
               </h1>
             </Reveal>
             
-            {/* New Subheadline */}
+            {/* Subheadline */}
             <Reveal delay={250}>
-              <p className="text-2xl md:text-3xl text-alira-onyx dark:text-alira-porcelain font-body italic font-light max-w-[65ch] mx-auto leading-tight mb-12">
-                Tell us about your idea, and we'll instantly generate a free, tailored plan — ready to use in minutes.
+                  <p className="text-lg md:text-xl lg:text-2xl text-alira-onyx dark:text-alira-porcelain font-body italic font-light max-w-[65ch] mx-auto lg:mx-0 leading-tight mb-12">
+                    Tell us about your idea, and we'll instantly generate a free, tailored plan — ready to use in minutes.
               </p>
             </Reveal>
             
-            {/* Single CTA Button */}
+                {/* CTA Button */}
             <Reveal delay={300}>
-              <div className="space-y-6">
-                <CTAButton 
-                  href="#start-form" 
-                  variant="alira"
-                  className="px-12 py-6 text-xl font-medium"
-                  location="hero"
-                >
-                  Start My Plan
-                </CTAButton>
-                <p className="text-lg text-alira-onyx dark:text-alira-porcelain/70 font-medium">
+                  <div className="space-y-6">
+                    <CTAButton 
+                      href="#start-form" 
+                      variant="alira"
+                      className="px-12 py-6 text-xl font-medium"
+                      location="hero"
+                    >
+                      Start My Plan
+                    </CTAButton>
+                    <p className="text-lg text-alira-onyx dark:text-alira-porcelain/70 font-medium">
                   Free • Private • No card required • Delivered in minutes
                 </p>
               </div>
             </Reveal>
-          </div>
+                </div>
+
+              {/* Right Column - Hero Mockup */}
+              <Reveal delay={400}>
+                <div className="flex justify-center lg:justify-end">
+                  <div className="w-full max-w-[560px] h-[400px] relative">
+                    <Image 
+                      src="/images/hero/laptop-mockup.png" 
+                      alt="ALIRA Platform - Laptop Mockup"
+                      width={560}
+                      height={400}
+                      className="rounded-2xl object-cover w-full h-full"
+                      priority
+                    />
+                  </div>
+                </div>
+              </Reveal>
+
+            </div>
+            </div>
         </div>
       </section>
 
@@ -109,26 +133,26 @@ export default function Home() {
       <section id="start-form" className="py-24 bg-white dark:bg-alira-onyx">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
-            <Reveal>
+              <Reveal>
               <div className="text-center mb-12">
                 <h2 className="text-4xl md:text-5xl font-heading text-alira-onyx dark:text-alira-porcelain mb-6">
                   Start Your Plan
-                </h2>
-                <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
+                  </h2>
+                  <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
                 <p className="text-xl text-alira-onyx dark:text-alira-porcelain/70 max-w-2xl mx-auto">
                   Tell us about your idea and get your personalized business plan in minutes.
-                </p>
-              </div>
-            </Reveal>
-            
+                  </p>
+                </div>
+              </Reveal>
+
             <Reveal delay={200}>
               <div className="bg-white dark:bg-alira-onyx/80 p-8 rounded-2xl border border-alira-onyx/10 shadow-xl">
                 <MiniForm />
-              </div>
-            </Reveal>
+                  </div>
+                </Reveal>
           </div>
         </div>
-      </section>
+                    </section>
       
       {/* Sticky CTA for Mobile */}
       <StickyCTA />
