@@ -42,7 +42,7 @@ export default function ResultsPage() {
   ]
 
   const keyAchievements = [
-    "Reduced operational costs by £11,000 through stakeholder negotiations and process optimization",
+    "Reduced operational costs by £11,000 through stakeholder negotiations and process optimisation",
     "Achieved £10,000+ savings by reviewing vendor contracts and agency spending",
     "Redesigned flagship training workflow, increasing sign-ups by 25% and improving user experience",
     "Designed and delivered comprehensive training and compliance systems across large organizations",
@@ -75,14 +75,14 @@ export default function ResultsPage() {
     {
       title: "Enterprise Training System Redesign",
       challenge: "Complex training system with low engagement and high dropout rates",
-      solution: "Streamlined user journey, improved UI/UX, and optimized workflow processes",
+      solution: "Streamlined user journey, improved UI/UX, and optimised workflow processes",
       result: "25% increase in sign-ups, improved completion rates, and enhanced user satisfaction",
       impact: "1,000+ staff trained with new system"
     },
     {
       title: "Cost Optimization Programme",
       challenge: "Rising operational costs and inefficient vendor relationships",
-      solution: "Comprehensive vendor review, stakeholder negotiations, and process optimization",
+      solution: "Comprehensive vendor review, stakeholder negotiations, and process optimisation",
       result: "£21,000 total annual savings across multiple cost centers",
       impact: "Sustainable cost reduction framework implemented"
     },

@@ -60,7 +60,7 @@ export default function SuccessPage() {
                 <ul className="text-sm text-alira-onyx/80 space-y-1">
                   <li>• Strategic assessment of your current position</li>
                   <li>• Clear next steps for the next 90 days</li>
-                  <li>• Resource optimization recommendations</li>
+                  <li>• Resource optimisation recommendations</li>
                   <li>• Implementation roadmap</li>
                 </ul>
               </div>

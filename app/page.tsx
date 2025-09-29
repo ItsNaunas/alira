@@ -51,8 +51,8 @@ export default function Home() {
             {/* ALIRA Logo Centered at Top */}
             <Reveal>
               <div className="text-center mb-16">
-                <span className="block text-4xl md:text-5xl lg:text-6xl tracking-[0.2em] uppercase text-alira-onyx dark:text-alira-porcelain font-heading mb-6">
-                  ALIRA
+                <span className="block text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tight text-alira-onyx dark:text-alira-porcelain mb-6">
+                  ALIRA<span className="text-alira-gold">.</span>
                 </span>
                 <div className="w-24 h-[2px] bg-alira-gold mx-auto mb-8"></div>
               </div>

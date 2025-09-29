@@ -367,7 +367,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     }
     
     const selectedServices = data.service_interest?.map((service: string) => 
-      serviceMap[service] || `${service}\nStrategic implementation and optimization`
+      serviceMap[service] || `${service}\nStrategic implementation and optimisation`
     ) || ['Brand & Product Management\nClarify offer, shape brand, acquire first 100 customers']
     
     addSection('What You Get: ALIRA Services', 'Strategic service recommendations based on business analysis')
@@ -410,7 +410,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       { 
         title: 'Customer Risk',
         risk: 'Customer acquisition and retention challenges may impact revenue growth and business sustainability',
-        mitigation: 'Develop targeted marketing strategy, optimize customer experience, and implement retention programs'
+        mitigation: 'Develop targeted marketing strategy, optimise customer experience, and implement retention programmes'
       }
     ]
     

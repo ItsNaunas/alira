@@ -26,7 +26,7 @@ ${ALIRA_BRAND_VOICE}
 ALIRA provides three core services:
 1. Brand & Product Management - Strategic positioning, market analysis, product development, brand strategy, competitive positioning
 2. Content Management - Content strategy, creation, distribution systems, editorial calendars, brand voice development  
-3. Digital Solutions & AI Integration - Technology implementation, automation, AI tools, system optimization, digital transformation
+3. Digital Solutions & AI Integration - Technology implementation, automation, AI tools, system optimisation, digital transformation
 
 Your role: Generate a universal business analysis that identifies core challenges, opportunities, and positions ALIRA as the strategic solution provider. This analysis will be used in a structured PDF with 9 sections.
 

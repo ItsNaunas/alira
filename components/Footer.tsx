@@ -16,7 +16,7 @@ const navigation = {
 
 export default function Footer() {
   return (
-    <footer className="bg-alira-onyx dark:bg-alira-midnight text-alira-porcelain">
+    <footer className="bg-alira-onyx dark:bg-alira-onyx text-alira-porcelain">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-16 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
           {/* Left: ALIRA logo + copyright */}

@@ -219,7 +219,7 @@ export default function HowItWorksPage() {
                       Every business case we generate is built on proven strategic frameworks, tailored to your specific industry, stage, and challenges. No generic templates - just sharp, actionable insights.
                     </p>
                     <p className="copy text-lg leading-relaxed">
-                      Our engine processes your information through multiple lenses: market analysis, competitive positioning, resource optimization, and growth potential. The result is a document that speaks directly to your situation.
+                      Our engine processes your information through multiple lenses: market analysis, competitive positioning, resource optimisation, and growth potential. The result is a document that speaks directly to your situation.
                     </p>
                   </div>
                 </div>

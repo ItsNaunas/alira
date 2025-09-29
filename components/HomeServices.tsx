@@ -43,9 +43,9 @@ const services = [
     features: [
       "Content strategy & campaigns",
       "Systems automation & dashboards",
-      "Process optimization",
+      "Process optimisation",
       "Growth tracking & analytics",
-      "Ongoing support & optimization"
+      "Ongoing support & optimisation"
     ]
   }
 ]

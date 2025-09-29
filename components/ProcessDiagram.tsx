@@ -15,7 +15,7 @@ const processSteps = [
     id: 'engine', 
     title: 'Engine',
     description: 'Strategic frameworks process complexity into actionable clarity.',
-    detailedDescription: 'Our proprietary engine analyzes your inputs through multiple strategic lenses: market positioning, competitive analysis, resource optimization, and growth potential.',
+    detailedDescription: 'Our proprietary engine analyses your inputs through multiple strategic lenses: market positioning, competitive analysis, resource optimisation, and growth potential.',
     icon: Settings
   },
   {
