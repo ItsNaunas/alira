@@ -82,20 +82,20 @@ export default function MeetTheTeam() {
             {/* Right column - Photo */}
             <Reveal delay={400}>
               <div className="space-y-8">
-                {/* Founder photo with elegant styling */}
-                <div className="relative">
-                  <div className="w-full h-80 rounded-2xl overflow-hidden border border-alira-onyx/10 shadow-lg">
+                {/* Founder photo with oval styling */}
+                <div className="relative flex justify-center">
+                  <div className="w-80 h-80 overflow-hidden border-4 border-alira-gold/30 shadow-2xl relative" style={{borderRadius: '50%'}}>
                     <Image 
                       src="/images/assets/founder.jpg" 
                       alt="ALIRA Founder - Professional headshot"
-                      width={400}
+                      width={320}
                       height={320}
                       className="w-full h-full object-cover object-top"
                     />
                   </div>
                   {/* Decorative elements */}
-                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-alira-gold/20 rounded-full"></div>
-                  <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-alira-gold/30 rounded-full"></div>
+                  <div className="absolute -top-6 -right-6 w-12 h-12 bg-alira-gold/20 rounded-full"></div>
+                  <div className="absolute -bottom-6 -left-6 w-8 h-8 bg-alira-gold/30 rounded-full"></div>
                 </div>
               </div>
             </Reveal>
@@ -119,10 +119,13 @@ export default function MeetTheTeam() {
                   {/* Accent bar */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-alira-gold to-alira-gold/60"></div>
                   
-                  <div className="w-24 h-24 bg-gradient-to-br from-alira-gold/10 to-alira-gold/5 rounded-full mx-auto mb-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-12 h-12 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2M9 8h6m-6 4h6m-6 4h6" />
-                    </svg>
+                  {/* Oval placeholder for specialist photo */}
+                  <div className="w-32 h-32 mx-auto mb-8 overflow-hidden border-3 border-alira-gold/30 shadow-lg relative" style={{borderRadius: '50%'}}>
+                    <div className="w-full h-full bg-gradient-to-br from-alira-gold/10 to-alira-gold/5 flex items-center justify-center">
+                      <svg className="w-16 h-16 text-alira-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
                   </div>
                   <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Etomi – Marketing Lead</h4>
                   <p className="text-alira-onyx dark:text-alira-porcelain/80 leading-relaxed mb-6">
@@ -142,11 +145,13 @@ export default function MeetTheTeam() {
                   {/* Accent bar */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-alira-gold to-alira-gold/60"></div>
                   
-                  <div className="w-24 h-24 bg-gradient-to-br from-alira-gold/10 to-alira-gold/5 rounded-full mx-auto mb-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-12 h-12 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                  {/* Oval placeholder for specialist photo */}
+                  <div className="w-32 h-32 mx-auto mb-8 overflow-hidden border-3 border-alira-gold/30 shadow-lg relative" style={{borderRadius: '50%'}}>
+                    <div className="w-full h-full bg-gradient-to-br from-alira-gold/10 to-alira-gold/5 flex items-center justify-center">
+                      <svg className="w-16 h-16 text-alira-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
                   </div>
                   <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Naufal – Systems Engineer</h4>
                   <p className="text-alira-onyx dark:text-alira-porcelain/80 leading-relaxed mb-6">
