@@ -48,25 +48,25 @@ export default function Home() {
         
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-7xl mx-auto">
+            {/* ALIRA Logo Centered at Top */}
+            <Reveal>
+              <div className="text-center mb-16">
+                <span className="block text-4xl md:text-5xl lg:text-6xl tracking-[0.2em] uppercase text-alira-onyx dark:text-alira-porcelain font-heading mb-6">
+                  ALIRA
+                </span>
+                <div className="w-24 h-[2px] bg-alira-gold mx-auto mb-8"></div>
+              </div>
+            </Reveal>
+            
             {/* Two-column layout */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               
               {/* Left Column - Text Content */}
               <div className="text-center lg:text-left">
-                {/* Hero Brand Seal */}
-            <Reveal>
-                  <div className="mb-12 lg:mb-16">
-                    <span className="block text-4xl md:text-5xl lg:text-6xl tracking-[0.2em] uppercase text-alira-onyx dark:text-alira-porcelain font-heading mb-6">
-                      ALIRA
-                </span>
-                    <div className="w-24 h-[2px] bg-alira-gold mx-auto lg:mx-0 mb-8"></div>
-              </div>
-            </Reveal>
-            
             {/* Headline */}
             <Reveal delay={200}>
                   <h1 id="hero-heading" className="text-3xl md:text-4xl lg:text-5xl font-heading text-alira-onyx dark:text-alira-porcelain leading-[0.95] tracking-tight mb-8">
-                    We turn your ideas into <span className="text-alira-gold">clear business plans</span> you can act on today
+                    Services that help you grow — <span className="text-alira-gold">strategy, content, and systems</span> that scale
               </h1>
             </Reveal>
             
@@ -107,9 +107,9 @@ export default function Home() {
                       className="rounded-2xl object-cover w-full h-full"
                       priority
                     />
-                  </div>
-                </div>
-              </Reveal>
+              </div>
+            </div>
+          </Reveal>
 
             </div>
             </div>
@@ -126,7 +126,7 @@ export default function Home() {
       {/* Meet the Team Section */}
       <MeetTheTeam />
 
-              {/* FAQ Section */}
+      {/* FAQ Section */}
       <FAQ />
 
       {/* Form Section */}

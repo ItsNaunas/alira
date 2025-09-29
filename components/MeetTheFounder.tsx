@@ -4,15 +4,7 @@ import CTAButton from './CTAButton'
 
 export default function MeetTheTeam() {
   return (
-    <section className="py-24 bg-gradient-to-br from-alira-porcelain/20 via-white to-alira-porcelain/10 dark:from-alira-onyx/20 dark:via-alira-onyx dark:to-alira-onyx/10 relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.02]">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(to right, #0B0B0B 1px, transparent 1px),
-                           linear-gradient(to bottom, #0B0B0B 1px, transparent 1px)`,
-          backgroundSize: '60px 60px'
-        }} />
-      </div>
+    <section className="py-24 bg-white dark:bg-alira-onyx relative overflow-hidden">
 
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">

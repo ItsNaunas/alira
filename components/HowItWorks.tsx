@@ -5,13 +5,7 @@ import Image from 'next/image'
 export default function HowItWorks() {
   // Force deployment update
   return (
-    <section className="py-24 bg-white dark:bg-alira-onyx/20 relative overflow-hidden">
-      {/* Architectural grid background */}
-      <ArchitecturalGrid 
-        variant="subtle" 
-        opacity={0.2}
-        size="md"
-      />
+    <section className="py-24 bg-white dark:bg-alira-onyx relative overflow-hidden">
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">
           <Reveal>

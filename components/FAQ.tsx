@@ -23,6 +23,18 @@ export default function FAQ() {
     {
       q: "Is this only for new ideas?",
       a: "No. It works whether you are starting, building, or already running something."
+    },
+    {
+      q: "What's included in your services?",
+      a: "Our Content & Growth service includes strategy, campaigns, copywriting, and distribution systems. Our Systems & Automation service covers process automation, dashboards, tool integration, and operational efficiency improvements."
+    },
+    {
+      q: "Do you work with established businesses?",
+      a: "Absolutely. Whether you're a startup or an established business looking to optimise your operations, our services are designed to scale with your needs."
+    },
+    {
+      q: "How do you ensure quality?",
+      a: "We focus on measurable outcomes and clear deliverables. Every project includes regular check-ins, progress tracking, and final documentation to ensure you get maximum value."
     }
   ]
 
@@ -40,8 +52,8 @@ export default function FAQ() {
                 Frequently Asked Questions
               </h2>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
-              <p className="text-xl text-alira-onyx/70 max-w-2xl mx-auto">
-                Everything you need to know about getting your simple plan.
+              <p className="text-xl text-alira-onyx/80 max-w-2xl mx-auto">
+                Everything you need to know about our services and how we can help you grow.
               </p>
             </div>
             
@@ -71,7 +83,7 @@ export default function FAQ() {
                       }`}
                     >
                       <div className="px-6 pb-6">
-                        <p className="text-alira-onyx/80 leading-relaxed">
+                        <p className="text-alira-onyx/90 leading-relaxed text-base">
                           {faq.a}
                         </p>
                       </div>
