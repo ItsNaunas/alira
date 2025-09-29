@@ -41,13 +41,13 @@ export default function HowItWorks() {
                     Tell us about your idea or business through our quick, structured questionnaire.
                   </p>
                   
-                  {/* Device Illustration - Consistent Size */}
-                  <div className="w-64 h-48 flex items-center justify-center mx-auto">
+                  {/* Device Illustration - Larger Size */}
+                  <div className="w-80 h-60 flex items-center justify-center mx-auto">
                     <Image 
                       src="/images/how-it-works/step-1.png" 
                       alt="Step 1: Answer questions"
-                      width={256}
-                      height={192}
+                      width={320}
+                      height={240}
                       className="w-full h-full object-contain"
                     />
                   </div>
@@ -81,13 +81,13 @@ export default function HowItWorks() {
                     Our AI processes your information using strategic frameworks to create actionable insights.
                   </p>
                   
-                  {/* Device Illustration - Consistent Size */}
-                  <div className="w-64 h-48 flex items-center justify-center mx-auto">
+                  {/* Device Illustration - Larger Size */}
+                  <div className="w-80 h-60 flex items-center justify-center mx-auto">
                     <Image 
-                      src="/images/how-it-works/step3-invite-team.png" 
+                      src="/images/how-it-works/step-2.png" 
                       alt="Step 2: AI analysis"
-                      width={256}
-                      height={192}
+                      width={320}
+                      height={240}
                       className="w-full h-full object-contain"
                     />
                   </div>
@@ -121,13 +121,13 @@ export default function HowItWorks() {
                     Receive a comprehensive PDF business plan tailored to your specific situation and goals.
                   </p>
                   
-                  {/* Device Illustration - Consistent Size */}
-                  <div className="w-64 h-48 flex items-center justify-center mx-auto">
+                  {/* Device Illustration - Larger Size */}
+                  <div className="w-80 h-60 flex items-center justify-center mx-auto">
                     <Image 
                       src="/images/how-it-works/step-3.png" 
                       alt="Step 3: Get your plan"
-                      width={256}
-                      height={192}
+                      width={320}
+                      height={240}
                       className="w-full h-full object-contain"
                     />
                   </div>
