@@ -75,15 +75,15 @@ export default function HomeServices() {
             
             {/* Content & Growth */}
             <Reveal delay={200}>
-              <div className="bg-white dark:bg-alira-onyx p-6 rounded-xl border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
-                <div className="mb-6">
+              <div className="bg-white dark:bg-alira-onyx p-6 rounded-xl border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center flex flex-col h-full">
+                <div className="mb-4">
                   <h4 className="text-xl font-heading text-alira-onyx dark:text-alira-porcelain mb-3">{services[0].title}</h4>
                   <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">
                     {services[0].price}
                   </span>
                 </div>
-                <h5 className="font-bold text-alira-onyx dark:text-alira-porcelain mb-4">{services[0].highlight}</h5>
-                <p className="text-alira-onyx dark:text-alira-porcelain/80 mb-4 text-sm">{services[0].description}</p>
+                <h5 className="font-bold text-alira-onyx dark:text-alira-porcelain mb-3">{services[0].highlight}</h5>
+                <p className="text-alira-onyx dark:text-alira-porcelain/80 mb-4 text-sm flex-grow">{services[0].description}</p>
                 
                 {/* Features List */}
                 <div className="mb-4">
@@ -97,28 +97,30 @@ export default function HomeServices() {
                   </ul>
                 </div>
                 
-                <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">{services[0].duration}</p>
-                <CTAButton 
-                  href="#start-form" 
-                  variant="aliraOutline"
-                  className="w-full py-2 text-sm"
-                >
-                  {services[0].cta}
-                </CTAButton>
+                <div className="mt-auto">
+                  <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">{services[0].duration}</p>
+                  <CTAButton 
+                    href="#start-form" 
+                    variant="aliraOutline"
+                    className="w-full py-2 text-sm"
+                  >
+                    {services[0].cta}
+                  </CTAButton>
+                </div>
               </div>
             </Reveal>
 
             {/* Systems & Automation */}
             <Reveal delay={300}>
-              <div className="bg-white dark:bg-alira-onyx p-6 rounded-xl border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
-                <div className="mb-6">
+              <div className="bg-white dark:bg-alira-onyx p-6 rounded-xl border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center flex flex-col h-full">
+                <div className="mb-4">
                   <h4 className="text-xl font-heading text-alira-onyx dark:text-alira-porcelain mb-3">{services[1].title}</h4>
                   <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">
                     {services[1].price}
                   </span>
                 </div>
-                <h5 className="font-bold text-alira-onyx dark:text-alira-porcelain mb-4">{services[1].highlight}</h5>
-                <p className="text-alira-onyx dark:text-alira-porcelain/80 mb-4 text-sm">{services[1].description}</p>
+                <h5 className="font-bold text-alira-onyx dark:text-alira-porcelain mb-3">{services[1].highlight}</h5>
+                <p className="text-alira-onyx dark:text-alira-porcelain/80 mb-4 text-sm flex-grow">{services[1].description}</p>
                 
                 {/* Features List */}
                 <div className="mb-4">
@@ -132,39 +134,41 @@ export default function HomeServices() {
                   </ul>
                 </div>
                 
-                <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">{services[1].duration}</p>
-                <CTAButton 
-                  href="#start-form" 
-                  variant="aliraOutline"
-                  className="w-full py-2 text-sm"
-                >
-                  {services[1].cta}
-                </CTAButton>
+                <div className="mt-auto">
+                  <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">{services[1].duration}</p>
+                  <CTAButton 
+                    href="#start-form" 
+                    variant="aliraOutline"
+                    className="w-full py-2 text-sm"
+                  >
+                    {services[1].cta}
+                  </CTAButton>
+                </div>
               </div>
             </Reveal>
 
             {/* Complete Growth Package - Featured */}
             <Reveal delay={400}>
-              <div className="bg-gradient-to-br from-alira-gold/12 to-white p-8 rounded-xl border-2 border-alira-gold/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative text-center">
+              <div className="bg-gradient-to-br from-alira-gold/12 to-white p-6 rounded-xl border-2 border-alira-gold/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative text-center flex flex-col h-full">
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <span className="bg-alira-gold text-white px-4 py-1 rounded-full text-xs font-bold">
                     MOST POPULAR
                   </span>
                 </div>
-                <div className="mb-6">
-                  <h4 className="text-2xl font-heading text-alira-onyx dark:text-alira-porcelain mb-3">{services[2].title}</h4>
-                  <span className="bg-alira-gold text-white px-4 py-2 rounded-full text-sm font-medium">
+                <div className="mb-4">
+                  <h4 className="text-xl font-heading text-alira-onyx dark:text-alira-porcelain mb-3">{services[2].title}</h4>
+                  <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">
                     {services[2].price}
                   </span>
                 </div>
-                <h5 className="font-bold text-alira-onyx dark:text-alira-porcelain mb-4 text-lg">{services[2].highlight}</h5>
-                <p className="text-alira-onyx dark:text-alira-porcelain/80 mb-6">{services[2].description}</p>
+                <h5 className="font-bold text-alira-onyx dark:text-alira-porcelain mb-3">{services[2].highlight}</h5>
+                <p className="text-alira-onyx dark:text-alira-porcelain/80 mb-4 text-sm flex-grow">{services[2].description}</p>
                 
                 {/* Features List */}
-                <div className="mb-6">
-                  <ul className="text-left space-y-2">
+                <div className="mb-4">
+                  <ul className="text-left space-y-1">
                     {services[2].features.map((feature, index) => (
-                      <li key={index} className="flex items-center gap-2 text-sm text-alira-onyx dark:text-alira-porcelain/80">
+                      <li key={index} className="flex items-center gap-2 text-xs text-alira-onyx dark:text-alira-porcelain/80">
                         <span className="text-alira-gold font-bold">✓</span>
                         <span>{feature}</span>
                       </li>
@@ -172,14 +176,16 @@ export default function HomeServices() {
                   </ul>
                 </div>
                 
-                <p className="text-alira-onyx dark:text-alira-porcelain/60 text-sm mb-6">{services[2].duration}</p>
-                <CTAButton 
-                  href="#start-form" 
-                  variant="alira"
-                  className="w-full py-3"
-                >
-                  {services[2].cta}
-                </CTAButton>
+                <div className="mt-auto">
+                  <p className="text-alira-onyx dark:text-alira-porcelain/60 text-xs mb-4">{services[2].duration}</p>
+                  <CTAButton 
+                    href="#start-form" 
+                    variant="alira"
+                    className="w-full py-2 text-sm"
+                  >
+                    {services[2].cta}
+                  </CTAButton>
+                </div>
               </div>
             </Reveal>
           </div>
