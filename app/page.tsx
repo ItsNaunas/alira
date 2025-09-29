@@ -104,7 +104,7 @@ export default function Home() {
                       alt="ALIRA Platform - Laptop Mockup"
                       width={560}
                       height={400}
-                      className="rounded-2xl object-cover w-full h-full"
+                      className="rounded-2xl object-contain w-full h-full"
                       priority
                     />
               </div>
