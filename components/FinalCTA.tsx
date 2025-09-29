@@ -20,7 +20,7 @@ export default function FinalCTA() {
               
               <div className="space-y-4">
                 <CTAButton 
-                  href="/form" 
+                  href="#start-form" 
                   variant="aliraOutline"
                 />
                 <p className="text-sm text-white/70 dark:text-alira-onyx/70">

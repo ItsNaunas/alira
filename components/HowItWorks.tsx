@@ -15,7 +15,7 @@ export default function HowItWorks() {
                 How it works
               </div>
               <h2 className="text-4xl md:text-5xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
-                Three steps to your <span className="text-alira-gold">business plan</span>
+                Steps to your <span className="text-alira-gold">next move</span>
               </h2>
             </div>
           </Reveal>
@@ -24,10 +24,10 @@ export default function HowItWorks() {
           <Reveal delay={300}>
             <div className="max-w-6xl mx-auto mb-16">
               {/* Horizontal Process Flow */}
-              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-8 relative">
+              <div className="flex flex-col lg:flex-row items-center justify-center lg:items-start gap-6 lg:gap-8 relative">
                 
                 {/* Step 1: Answer questions */}
-                <div className="flex flex-col items-center text-center group flex-1">
+                <div className="flex flex-col items-center text-center group flex-1 max-w-sm">
                   {/* Large Step Number */}
                   <div className="mb-6">
                     <svg className="w-24 h-24 text-alira-gold/80 group-hover:text-alira-gold transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-110" viewBox="0 0 100 100" fill="none">
@@ -67,7 +67,7 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Step 2: AI analysis */}
-                <div className="flex flex-col items-center text-center group flex-1">
+                <div className="flex flex-col items-center text-center group flex-1 max-w-sm">
                   {/* Large Step Number */}
                   <div className="mb-6">
                     <svg className="w-24 h-24 text-alira-gold/80 group-hover:text-alira-gold transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-110" viewBox="0 0 100 100" fill="none">
@@ -107,7 +107,7 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Step 3: Get your plan */}
-                <div className="flex flex-col items-center text-center group flex-1">
+                <div className="flex flex-col items-center text-center group flex-1 max-w-sm">
                   {/* Large Step Number */}
                   <div className="mb-6">
                     <svg className="w-24 h-24 text-alira-gold/80 group-hover:text-alira-gold transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-110" viewBox="0 0 100 100" fill="none">

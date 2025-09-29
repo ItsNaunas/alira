@@ -23,7 +23,7 @@ export default function StickyCTA() {
       <div className="flex items-center justify-between max-w-md mx-auto">
         <div className="flex-1">
           <CTAButton 
-            href="/form" 
+            href="#start-form" 
             variant="alira"
             className="w-full"
           />
