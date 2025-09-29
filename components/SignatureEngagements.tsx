@@ -76,7 +76,7 @@ export default function SignatureEngagements() {
         Signature Engagements
       </SectionHeading>
       
-      <p className="mt-6 text-center text-alira-onyx/70 max-w-2xl mx-auto">
+      <p className="mt-6 text-center text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-2xl mx-auto">
         Four distinct approaches to deliver clarity, structure, and systems that last.
       </p>
 
@@ -96,21 +96,21 @@ export default function SignatureEngagements() {
               
               {/* Tag */}
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-xs font-semibold tracking-wide uppercase text-alira-gold">
+                <span className="text-xs font-sans font-semibold tracking-wide uppercase text-alira-gold">
                   {service.tag}
                 </span>
                 <Icon className="h-3 w-3 text-alira-gold" aria-hidden />
               </div>
               
               {/* Title */}
-              <h3 className="text-2xl font-serif font-bold text-alira-onyx mb-3 underline-grow">
+              <h3 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-3 underline-grow">
                 <a href={service.href || "/contact"}>
                   {service.title}
                 </a>
               </h3>
               
               {/* Tagline */}
-              <p className="text-alira-onyx/70 italic mb-6 leading-relaxed">
+              <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 italic mb-6 leading-relaxed">
                 {service.tagline}
               </p>
               

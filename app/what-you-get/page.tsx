@@ -87,10 +87,10 @@ export default function WhatYouGetPage() {
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
               <div className="mb-12">
-                <span className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-medium block">
+                <span className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-medium block">
                   WHAT YOU GET
                 </span>
-                <h1 className="text-5xl md:text-6xl font-bold text-alira-onyx dark:text-alira-porcelain leading-tight mb-6">
+                <h1 className="text-5xl md:text-6xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain leading-tight mb-6">
                   Your Complete Business Plan
                 </h1>
                 <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
@@ -109,7 +109,7 @@ export default function WhatYouGetPage() {
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                   Three Things You Get Immediately
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto"></div>
@@ -126,7 +126,7 @@ export default function WhatYouGetPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="w-12 h-[2px] bg-alira-gold mb-4"></div>
-                        <h3 className="text-lg font-semibold text-alira-onyx dark:text-alira-porcelain mb-3 leading-tight">
+                        <h3 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3 leading-tight">
                           {title}
                         </h3>
                         <p className="text-alira-onyx dark:text-alira-porcelain/70 leading-relaxed">
@@ -143,17 +143,17 @@ export default function WhatYouGetPage() {
             <Reveal delay={400}>
               <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-12 text-center bg-alira-porcelain/20 dark:bg-alira-porcelain/5 rounded-2xl p-8">
                 <div className="flex flex-col items-center">
-                  <span className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain">Ready in minutes</span>
+                  <span className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">Ready in minutes</span>
                   <span className="text-sm text-alira-onyx dark:text-alira-porcelain/60 mt-1">delivered instantly</span>
                 </div>
                 <div className="hidden md:block w-px h-8 bg-alira-onyx/20"></div>
                 <div className="flex flex-col items-center">
-                  <span className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain">100% custom</span>
+                  <span className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">100% custom</span>
                   <span className="text-sm text-alira-onyx dark:text-alira-porcelain/60 mt-1">tailored to your business</span>
                 </div>
                 <div className="hidden md:block w-px h-8 bg-alira-onyx/20"></div>
                 <div className="flex flex-col items-center">
-                  <span className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain">Ready to use</span>
+                  <span className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">Ready to use</span>
                   <span className="text-sm text-alira-onyx dark:text-alira-porcelain/60 mt-1">implement immediately</span>
                 </div>
               </div>
@@ -168,7 +168,7 @@ export default function WhatYouGetPage() {
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                   What's Inside Your Plan
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
@@ -189,7 +189,7 @@ export default function WhatYouGetPage() {
                           <IconComponent className="w-6 h-6 text-alira-gold" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-alira-onyx dark:text-alira-porcelain">
+                          <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">
                             {feature.title}
                           </h3>
                         </div>
@@ -219,13 +219,13 @@ export default function WhatYouGetPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-alira-onyx dark:bg-alira-midnight">
+      <section className="py-20 bg-gradient-to-br from-alira-onyx via-alira-onyx to-alira-gold/20">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                  <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
                     Ready to get your plan?
                   </h2>
                   <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
@@ -238,7 +238,7 @@ export default function WhatYouGetPage() {
                   <CTAButton 
                     href="/#form-section" 
                     variant="aliraOutline"
-                    className="px-12 py-6 text-xl font-medium"
+                    className="px-12 py-6 text-xl font-sans font-medium"
                     location="what-you-get-cta"
                   >
                     Start My Plan

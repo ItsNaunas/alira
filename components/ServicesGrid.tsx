@@ -56,7 +56,7 @@ export default function ServicesGrid() {
                         <CardTitle className="text-3xl alira-heading text-alira-onyx dark:text-alira-porcelain group-hover:text-alira-gold transition-colors duration-300">
                           {service.label}
                         </CardTitle>
-                        <p className="text-lg text-alira-gold font-medium italic">
+                        <p className="text-lg text-alira-gold font-sans font-medium italic">
                           {details.tagline}
                         </p>
                       </div>
@@ -66,7 +66,7 @@ export default function ServicesGrid() {
                   <CardContent className="space-y-6">
                     {/* Outcome */}
                     <div className="space-y-3">
-                      <h4 className="text-sm font-semibold text-alira-onyx/60 dark:text-alira-porcelain/60 uppercase tracking-wide">
+                      <h4 className="text-sm font-sans font-semibold text-alira-onyx/60 dark:text-alira-porcelain/60 uppercase tracking-wide">
                         What You Get
                       </h4>
                       <p className="text-lg text-alira-onyx dark:text-alira-porcelain leading-relaxed">
@@ -92,7 +92,7 @@ export default function ServicesGrid() {
                       <IconComponent className="w-12 h-12 text-alira-gold" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-semibold text-alira-onyx dark:text-alira-porcelain">
+                      <h3 className="text-2xl font-serif font-semibold text-alira-onyx dark:text-alira-porcelain">
                         {service.label}
                       </h3>
                       <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-sm">
@@ -110,11 +110,11 @@ export default function ServicesGrid() {
       {/* Why ALIRA Services Section */}
       <div className="mt-24 text-center">
         <div className="max-w-4xl mx-auto space-y-8">
-          <h3 className="text-2xl font-semibold text-alira-onyx dark:text-alira-porcelain">
+          <h3 className="text-2xl font-serif font-semibold text-alira-onyx dark:text-alira-porcelain">
             Why ALIRA Services?
           </h3>
           <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed">
-            Every engagement is designed to cut through complexity and leave you with <em className="text-alira-gold font-medium">lasting clarity</em>. Whether you're resetting, scaling, adopting AI, or seeking long-term guidance - the outcome is always systems that endure.
+            Every engagement is designed to cut through complexity and leave you with <em className="text-alira-gold font-sans font-medium">lasting clarity</em>. Whether you're resetting, scaling, adopting AI, or seeking long-term guidance - the outcome is always systems that endure.
           </p>
         </div>
       </div>

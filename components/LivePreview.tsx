@@ -107,7 +107,7 @@ export default function LivePreview({ data }: LivePreviewProps) {
             </svg>
           </div>
           <div>
-            <CardTitle className="text-lg font-semibold text-alira-onyx dark:text-alira-porcelain">
+            <CardTitle className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain">
               Your Plan Preview
             </CardTitle>
             <p className="text-xs text-alira-onyx/60 dark:text-alira-porcelain/60">
@@ -124,19 +124,19 @@ export default function LivePreview({ data }: LivePreviewProps) {
           </h4>
           <div className="space-y-3">
             <div className="p-3 bg-alira-onyx/5 dark:bg-alira-onyx/20 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10">
-              <h5 className="text-xs font-medium text-alira-gold mb-1">Your Business</h5>
+              <h5 className="text-xs font-sans font-medium text-alira-gold mb-1">Your Business</h5>
               <p className="text-xs text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed line-clamp-3">
                 {preview.currentSituation.business}
               </p>
             </div>
             <div className="p-3 bg-alira-onyx/5 dark:bg-alira-onyx/20 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10">
-              <h5 className="text-xs font-medium text-alira-gold mb-1">Current Challenges</h5>
+              <h5 className="text-xs font-sans font-medium text-alira-gold mb-1">Current Challenges</h5>
               <p className="text-xs text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed line-clamp-3">
                 {preview.currentSituation.challenges}
               </p>
             </div>
             <div className="p-3 bg-alira-onyx/5 dark:bg-alira-onyx/20 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10">
-              <h5 className="text-xs font-medium text-alira-gold mb-1">Growth Goals</h5>
+              <h5 className="text-xs font-sans font-medium text-alira-gold mb-1">Growth Goals</h5>
               <p className="text-xs text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed line-clamp-3">
                 {preview.currentSituation.goals}
               </p>
@@ -151,19 +151,19 @@ export default function LivePreview({ data }: LivePreviewProps) {
           </h4>
           <div className="space-y-2">
             <div className="p-2 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800/30">
-              <h5 className="text-xs font-medium text-red-700 dark:text-red-400 mb-1">Key Problems</h5>
+              <h5 className="text-xs font-sans font-medium text-red-700 dark:text-red-400 mb-1">Key Problems</h5>
               <p className="text-xs text-red-600 dark:text-red-300 leading-relaxed line-clamp-2">
                 {preview.identifiedGaps.problems}
               </p>
             </div>
             <div className="p-2 bg-alira-onyx/5 dark:bg-alira-onyx/20 rounded border border-alira-onyx/10 dark:border-alira-porcelain/10">
-              <h5 className="text-xs font-medium text-alira-gold mb-1">Current Tools</h5>
+              <h5 className="text-xs font-sans font-medium text-alira-gold mb-1">Current Tools</h5>
               <p className="text-xs text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed line-clamp-2">
                 {preview.identifiedGaps.currentTools}
               </p>
             </div>
             <div className="p-2 bg-alira-onyx/5 dark:bg-alira-onyx/20 rounded border border-alira-onyx/10 dark:border-alira-porcelain/10">
-              <h5 className="text-xs font-medium text-alira-gold mb-1">Service Focus</h5>
+              <h5 className="text-xs font-sans font-medium text-alira-gold mb-1">Service Focus</h5>
               <p className="text-xs text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed line-clamp-2">
                 {preview.identifiedGaps.serviceFocus}
               </p>
@@ -178,19 +178,19 @@ export default function LivePreview({ data }: LivePreviewProps) {
           </h4>
           <div className="space-y-2">
             <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800/30">
-              <h5 className="text-xs font-medium text-green-700 dark:text-green-400 mb-1">Recommended Services</h5>
+              <h5 className="text-xs font-sans font-medium text-green-700 dark:text-green-400 mb-1">Recommended Services</h5>
               <p className="text-xs text-green-600 dark:text-green-300 leading-relaxed line-clamp-2">
                 {preview.aliraSolutions.recommendedServices}
               </p>
             </div>
             <div className="p-2 bg-alira-gold/5 dark:bg-alira-gold/10 rounded border border-alira-gold/20">
-              <h5 className="text-xs font-medium text-alira-gold mb-1">Our Approach</h5>
+              <h5 className="text-xs font-sans font-medium text-alira-gold mb-1">Our Approach</h5>
               <p className="text-xs text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed line-clamp-2">
                 {preview.aliraSolutions.implementationApproach}
               </p>
             </div>
             <div className="p-2 bg-alira-gold/5 dark:bg-alira-gold/10 rounded border border-alira-gold/20">
-              <h5 className="text-xs font-medium text-alira-gold mb-1">Expected Results</h5>
+              <h5 className="text-xs font-sans font-medium text-alira-gold mb-1">Expected Results</h5>
               <p className="text-xs text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed line-clamp-2">
                 {preview.aliraSolutions.expectedOutcomes}
               </p>

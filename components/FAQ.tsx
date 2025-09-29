@@ -43,16 +43,17 @@ export default function FAQ() {
   }
 
   return (
-    <section className="py-24 bg-gradient-to-br from-alira-gold/5 via-alira-gold/8 to-alira-gold/5 dark:from-alira-onyx/90 dark:via-alira-onyx dark:to-alira-onyx/90">
+    <section className="py-16 md:py-24 bg-gradient-to-br from-alira-light-gold/15 via-alira-gold/8 to-alira-light-gold/15 dark:from-alira-onyx/90 dark:via-alira-onyx dark:to-alira-onyx/90 relative overflow-hidden">
+      {/* Enhanced pattern overlay */}
       <div className="container mx-auto px-6 lg:px-8">
         <Reveal>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-heading text-alira-onyx dark:text-alira-porcelain mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                 Frequently Asked Questions
               </h2>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
-              <p className="text-xl text-alira-onyx/80 dark:text-alira-porcelain/80 max-w-2xl mx-auto">
+              <p className="text-xl text-alira-onyx/80 dark:text-alira-porcelain/80 max-w-2xl mx-auto font-serif italic font-light">
                 Everything you need to know about our services and how we can help you grow.
               </p>
             </div>
@@ -65,7 +66,7 @@ export default function FAQ() {
                       onClick={() => toggleFAQ(index)}
                       className="w-full p-6 text-left flex items-center justify-between hover:bg-alira-porcelain/20 dark:hover:bg-alira-onyx/60 transition-colors duration-200"
                     >
-                      <h3 className="text-lg font-heading text-alira-onyx dark:text-alira-porcelain pr-4 text-left">
+                      <h3 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain pr-4 text-left">
                         {faq.q}
                       </h3>
                       <div className="flex-shrink-0">
@@ -83,9 +84,9 @@ export default function FAQ() {
                       }`}
                     >
                       <div className="px-6 pb-6">
-                        <p className="text-alira-onyx/90 dark:text-alira-porcelain/90 leading-relaxed text-base text-left">
-                          {faq.a}
-                        </p>
+                <p className="text-alira-onyx/90 dark:text-alira-porcelain/90 leading-relaxed text-base text-left font-sans">
+                  {faq.a}
+                </p>
                       </div>
                     </div>
                   </div>

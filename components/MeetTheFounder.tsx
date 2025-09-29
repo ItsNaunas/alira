@@ -4,13 +4,13 @@ import CTAButton from './CTAButton'
 
 export default function MeetTheTeam() {
   return (
-    <section className="py-24 bg-white dark:bg-alira-onyx relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-white dark:bg-alira-onyx relative overflow-hidden">
 
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                 Meet the Team
               </h2>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
@@ -28,15 +28,15 @@ export default function MeetTheTeam() {
                     I started ALIRA because I know what it feels like to have ambition but no clear path.
                   </p>
                   
-                  <p className="text-lg text-alira-onyx dark:text-alira-porcelain/70 leading-relaxed">
+                  <p className="text-lg text-alira-onyx dark:text-alira-porcelain/70 leading-relaxed font-sans">
                     For years I worked in project management and operations, leading teams, fixing systems, and delivering projects that saved organisations time and money.
                   </p>
                   
-                  <p className="text-lg text-alira-onyx dark:text-alira-porcelain/70 leading-relaxed">
+                  <p className="text-lg text-alira-onyx dark:text-alira-porcelain/70 leading-relaxed font-sans">
                     What I kept seeing was the same problem — people overcomplicate. Ideas stall, businesses get stuck, and potential gets wasted.
                   </p>
                   
-                  <p className="text-lg text-alira-onyx dark:text-alira-porcelain/70 leading-relaxed">
+                  <p className="text-lg text-alira-onyx dark:text-alira-porcelain/70 leading-relaxed font-sans">
                     That's why I built ALIRA. To strip away the noise and give people what they actually need: a simple plan, clear steps, and the confidence to move forward.
                   </p>
                 </div>
@@ -45,15 +45,15 @@ export default function MeetTheTeam() {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                    <span className="text-alira-onyx dark:text-alira-porcelain/80 font-medium">10+ years in project management</span>
+                    <span className="text-alira-onyx dark:text-alira-porcelain/80 font-sans font-medium">10+ years in project management</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                    <span className="text-alira-onyx dark:text-alira-porcelain/80 font-medium">Experience leading teams across multiple industries</span>
+                    <span className="text-alira-onyx dark:text-alira-porcelain/80 font-sans font-medium">Experience leading teams across multiple industries</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                    <span className="text-alira-onyx dark:text-alira-porcelain/80 font-medium">Delivered projects that saved organisations time and money</span>
+                    <span className="text-alira-onyx dark:text-alira-porcelain/80 font-sans font-medium">Delivered projects that saved organisations time and money</span>
                   </div>
                 </div>
 
@@ -62,7 +62,7 @@ export default function MeetTheTeam() {
                   <CTAButton 
                     href="/contact" 
                     variant="alira"
-                    className="px-8 py-4 text-lg font-medium"
+                    className="px-8 py-4 text-lg font-sans font-medium"
                     location="founder-section"
                   >
                     Contact Us
@@ -97,62 +97,87 @@ export default function MeetTheTeam() {
           <div className="mt-20">
             <Reveal delay={600}>
               <div className="text-center mb-12">
-                <h3 className="text-3xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Meet Our Specialists</h3>
-                <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-2xl mx-auto">
+                <h3 className="text-3xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Meet Our Specialists</h3>
+                <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-2xl mx-auto font-serif italic font-light">
                   Two experts working together to deliver reach and systems that work.
                 </p>
               </div>
             </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {/* The Marketing Lead */}
               <Reveal delay={800}>
-                <div className="bg-white/80 dark:bg-alira-onyx/80 backdrop-blur-sm p-10 rounded-2xl border border-alira-onyx/10 hover:border-alira-gold/30 hover:shadow-2xl hover:bg-alira-gold/5 transition-all duration-500 text-center group relative overflow-hidden">
+                <div className="bg-white/80 dark:bg-alira-onyx/80 backdrop-blur-sm p-10 rounded-2xl border-r-4 border-r-alira-gold/40 border border-alira-onyx/10 hover:border-alira-gold/30 hover:shadow-2xl hover:bg-alira-gold/5 transition-all duration-500 text-center group relative">
                   {/* Accent bar */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-alira-gold to-alira-gold/60"></div>
                   
-                  {/* Oval placeholder for specialist photo */}
-                  <div className="w-32 h-32 mx-auto mb-8 overflow-hidden border-3 border-alira-gold/30 shadow-lg relative" style={{borderRadius: '50%'}}>
+                  {/* Oval placeholder with meaningful icon */}
+                  <div className="w-32 h-32 mx-auto mb-6 overflow-hidden border-3 border-alira-gold/30 shadow-lg relative" style={{borderRadius: '50%'}}>
                     <div className="w-full h-full bg-gradient-to-br from-alira-gold/10 to-alira-gold/5 flex items-center justify-center">
-                      <svg className="w-16 h-16 text-alira-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      {/* Megaphone icon for Marketing */}
+                      <svg className="w-16 h-16 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
                       </svg>
                     </div>
                   </div>
-                  <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Etomi – Marketing Lead</h4>
-                  <p className="text-alira-onyx dark:text-alira-porcelain/80 leading-relaxed mb-6">
+                  
+                  <h4 className="text-2xl font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Etomi – Marketing Lead</h4>
+                  <p className="text-base md:text-lg text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed mb-8 font-sans">
                     Knows how to make your brand impossible to ignore.
                   </p>
-                  <div className="text-sm text-alira-onyx dark:text-alira-porcelain/70 space-y-3 text-left">
-                    <p><span className="font-semibold text-alira-onyx dark:text-alira-porcelain">Improves your social media content</span> and campaigns for better engagement</p>
-                    <p><span className="font-semibold text-alira-onyx dark:text-alira-porcelain">Builds content calendars</span> to grow visibility and reach</p>
-                    <p><span className="font-semibold text-alira-onyx dark:text-alira-porcelain">Helps you reach the right customers</span> with clear, compelling messaging</p>
+                  
+                  <div className="space-y-4 text-center">
+                    <div>
+                      <h5 className="text-base font-serif font-bold text-alira-gold mb-1">Social Media Content</h5>
+                      <p className="text-sm md:text-base text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed font-sans">Campaigns designed to grab attention and drive engagement.</p>
+                    </div>
+                    <div>
+                      <h5 className="text-base font-serif font-bold text-alira-gold mb-1">Content Calendars</h5>
+                      <p className="text-sm md:text-base text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed font-sans">Consistent visibility and reach that builds momentum.</p>
+                    </div>
+                    <div>
+                      <h5 className="text-base font-serif font-bold text-alira-gold mb-1">Targeted Messaging</h5>
+                      <p className="text-sm md:text-base text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed font-sans">Clear, compelling copy that reaches the right customers.</p>
+                    </div>
                   </div>
                 </div>
               </Reveal>
 
               {/* The Systems Engineer */}
               <Reveal delay={700}>
-                <div className="bg-white/80 dark:bg-alira-onyx/80 backdrop-blur-sm p-10 rounded-2xl border border-alira-onyx/10 hover:border-alira-gold/30 hover:shadow-2xl hover:bg-alira-gold/5 transition-all duration-500 text-center group relative overflow-hidden">
+                <div className="bg-white/80 dark:bg-alira-onyx/80 backdrop-blur-sm p-10 rounded-2xl border-l-4 border-l-alira-gold/40 border border-alira-onyx/10 hover:border-alira-gold/30 hover:shadow-2xl hover:bg-alira-gold/5 transition-all duration-500 text-center group relative">
                   {/* Accent bar */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-alira-gold to-alira-gold/60"></div>
                   
-                  {/* Oval placeholder for specialist photo */}
-                  <div className="w-32 h-32 mx-auto mb-8 overflow-hidden border-3 border-alira-gold/30 shadow-lg relative" style={{borderRadius: '50%'}}>
+                  {/* Oval placeholder with meaningful icon */}
+                  <div className="w-32 h-32 mx-auto mb-6 overflow-hidden border-3 border-alira-gold/30 shadow-lg relative" style={{borderRadius: '50%'}}>
                     <div className="w-full h-full bg-gradient-to-br from-alira-gold/10 to-alira-gold/5 flex items-center justify-center">
-                      <svg className="w-16 h-16 text-alira-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      {/* Cog/Settings icon for Systems */}
+                      <svg className="w-16 h-16 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </div>
                   </div>
-                  <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Naufal – Systems Engineer</h4>
-                  <p className="text-alira-onyx dark:text-alira-porcelain/80 leading-relaxed mb-6">
+                  
+                  <h4 className="text-2xl font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Naufal – Systems Engineer</h4>
+                  <p className="text-base md:text-lg text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed mb-8 font-sans">
                     Builds the tools and processes that unlock growth.
                   </p>
-                  <div className="text-sm text-alira-onyx dark:text-alira-porcelain/70 space-y-3 text-left">
-                    <p><span className="font-semibold text-alira-onyx dark:text-alira-porcelain">Designs and launches websites</span> and online platforms that convert</p>
-                    <p><span className="font-semibold text-alira-onyx dark:text-alira-porcelain">Integrates AI into daily workflows</span> to boost efficiency and insights</p>
-                    <p><span className="font-semibold text-alira-onyx dark:text-alira-porcelain">Automates repetitive tasks</span> to free up time and reduce chaos</p>
+                  
+                  <div className="space-y-4 text-center">
+                    <div>
+                      <h5 className="text-base font-serif font-bold text-alira-gold mb-1">Websites & Platforms</h5>
+                      <p className="text-sm md:text-base text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed font-sans">Online presences designed and launched to convert visitors.</p>
+                    </div>
+                    <div>
+                      <h5 className="text-base font-serif font-bold text-alira-gold mb-1">AI Integration</h5>
+                      <p className="text-sm md:text-base text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed font-sans">Smart workflows that boost efficiency and unlock insights.</p>
+                    </div>
+                    <div>
+                      <h5 className="text-base font-serif font-bold text-alira-gold mb-1">Task Automation</h5>
+                      <p className="text-sm md:text-base text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed font-sans">Repetitive work eliminated to free up time and reduce chaos.</p>
+                    </div>
                   </div>
                 </div>
               </Reveal>

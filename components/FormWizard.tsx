@@ -343,33 +343,34 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         const hasPreFilledIdea = draftData?.data?.mini_idea_one_liner
         return (
           <div className="space-y-6">
+            {hasPreFilledIdea && (
+              <div className="inline-flex items-center gap-2 rounded-lg border border-alira-onyx/20 dark:border-alira-porcelain/20 bg-alira-onyx/10 dark:bg-alira-onyx/80 px-3 py-1.5 text-xs text-alira-onyx/80 dark:text-alira-porcelain/80">
+                <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                We pre-filled this from the homepage. You can edit it.
+              </div>
+            )}
+            
             <div>
-              <label className="block text-lg font-semibold text-alira-onyx mb-3">
+              <label htmlFor="business_idea" className="block text-sm md:text-base font-medium text-alira-onyx/90 dark:text-alira-porcelain/90 mb-3">
                 What is your business idea or current venture?
               </label>
-              {hasPreFilledIdea && (
-                <div className="mb-3 p-3 bg-alira-gold/10 border border-alira-gold/20 rounded-lg">
-                  <p className="text-sm text-alira-onyx/80">
-                    ✅ We've pre-filled this with your idea from the homepage. You can edit it or click "Next Step" to continue.
-                  </p>
-                </div>
-              )}
               <Textarea
+                id="business_idea"
                 {...register('business_idea')}
-                placeholder="Describe your business concept, what you offer, and who you serve..."
-                rows={6}
-                className="w-full border-2 border-alira-onyx/20 rounded-xl px-4 py-3 text-base focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none"
+                placeholder="e.g., a marketing agency that helps creators launch offers"
+                rows={4}
+                className="w-full rounded-xl border border-alira-onyx/20 dark:border-alira-porcelain/20 bg-alira-onyx/10 dark:bg-alira-onyx/80 px-4 py-3 text-alira-onyx dark:text-alira-porcelain placeholder:text-alira-onyx/40 dark:placeholder:text-alira-porcelain/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none"
               />
-              <div className="mt-3 p-3 bg-alira-gold/5 rounded-lg border border-alira-gold/20">
-                <p className="text-sm text-alira-onyx/70">
-                  <strong>💡 Example:</strong> "A SaaS platform helping freelancers manage client projects" or "A consulting service helping restaurants implement online ordering systems"
+              
+              <div className="mt-4 rounded-xl border border-alira-onyx/20 dark:border-alira-porcelain/20 bg-alira-onyx/5 dark:bg-alira-onyx/80 p-4">
+                <p className="text-xs md:text-sm text-alira-onyx/75 dark:text-alira-porcelain/75">
+                  <span className="mr-2">💡</span>
+                  Example: "A SaaS for freelancers to manage projects" or "A service helping restaurants set up online ordering"
                 </p>
               </div>
+              
               {errors.business_idea && (
-                <p className="text-red-500 text-sm mt-2 flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                <p className="mt-2 text-xs text-red-400">
                   {errors.business_idea.message}
                 </p>
               )}
@@ -381,25 +382,24 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         return (
           <div className="space-y-6">
             <div>
-              <label className="block text-lg font-semibold text-alira-onyx mb-3">
+              <label htmlFor="current_challenges" className="block text-sm md:text-base font-medium text-alira-onyx/90 dark:text-alira-porcelain/90 mb-3">
                 What are your biggest operational challenges right now?
               </label>
               <Textarea
+                id="current_challenges"
                 {...register('current_challenges')}
-                placeholder="What's slowing you down or preventing growth? Think about systems, processes, tools, or clarity issues..."
-                rows={6}
-                className="w-full border-2 border-alira-onyx/20 rounded-xl px-4 py-3 text-base focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none"
+                placeholder="What's slowing you down or preventing growth?"
+                rows={4}
+                className="w-full rounded-xl border border-alira-onyx/20 dark:border-alira-porcelain/20 bg-alira-onyx/10 dark:bg-alira-onyx/80 px-4 py-3 text-alira-onyx dark:text-alira-porcelain placeholder:text-alira-onyx/40 dark:placeholder:text-alira-porcelain/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none"
               />
-              <div className="mt-3 p-3 bg-alira-gold/5 rounded-lg border border-alira-gold/20">
-                <p className="text-sm text-alira-onyx/70">
-                  <strong>⚠️ Common challenges:</strong> Unclear messaging, scattered customer data, manual processes, poor website conversion, or lack of automation
+              <div className="mt-4 rounded-xl border border-alira-onyx/20 dark:border-alira-porcelain/20 bg-alira-onyx/5 dark:bg-alira-onyx/80 p-4">
+                <p className="text-xs md:text-sm text-alira-onyx/75 dark:text-alira-porcelain/75">
+                  <span className="mr-2">⚠️</span>
+                  Common challenges: Unclear messaging, scattered customer data, manual processes, poor website conversion, or lack of automation
                 </p>
               </div>
               {errors.current_challenges && (
-                <p className="text-red-500 text-sm mt-2 flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                <p className="mt-2 text-xs text-red-400">
                   {errors.current_challenges.message}
                 </p>
               )}
@@ -411,25 +411,24 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         return (
           <div className="space-y-6">
             <div>
-              <label className="block text-lg font-semibold text-alira-onyx mb-3">
+              <label htmlFor="immediate_goals" className="block text-sm md:text-base font-medium text-alira-onyx/90 dark:text-alira-porcelain/90 mb-3">
                 What do you want to achieve in the next 3-6 months?
               </label>
               <Textarea
+                id="immediate_goals"
                 {...register('immediate_goals')}
-                placeholder="What specific outcomes do you want to see? Think about growth, efficiency, or clarity goals..."
-                rows={6}
-                className="w-full border-2 border-alira-onyx/20 rounded-xl px-4 py-3 text-base focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none"
+                placeholder="What specific outcomes do you want to see?"
+                rows={4}
+                className="w-full rounded-xl border border-alira-onyx/20 dark:border-alira-porcelain/20 bg-alira-onyx/10 dark:bg-alira-onyx/80 px-4 py-3 text-alira-onyx dark:text-alira-porcelain placeholder:text-alira-onyx/40 dark:placeholder:text-alira-porcelain/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none"
               />
-              <div className="mt-3 p-3 bg-alira-gold/5 rounded-lg border border-alira-gold/20">
-                <p className="text-sm text-alira-onyx/70">
-                  <strong>🎯 Example goals:</strong> Increase conversion rates by 25%, automate lead follow-up, clarify brand positioning, or streamline customer onboarding
+              <div className="mt-4 rounded-xl border border-alira-onyx/20 dark:border-alira-porcelain/20 bg-alira-onyx/5 dark:bg-alira-onyx/80 p-4">
+                <p className="text-xs md:text-sm text-alira-onyx/75 dark:text-alira-porcelain/75">
+                  <span className="mr-2">🎯</span>
+                  Example goals: Increase conversion rates by 25%, automate lead follow-up, clarify brand positioning, or streamline customer onboarding
                 </p>
               </div>
               {errors.immediate_goals && (
-                <p className="text-red-500 text-sm mt-2 flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                <p className="mt-2 text-xs text-red-400">
                   {errors.immediate_goals.message}
                 </p>
               )}
@@ -441,7 +440,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         return (
           <div className="space-y-6">
             <div>
-              <label className="block text-lg font-semibold text-alira-onyx mb-4">
+              <label className="block text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-4">
                 Which ALIRA service areas interest you most?
               </label>
               <div className="space-y-3 mb-6">
@@ -454,7 +453,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                       className="mt-1 rounded border-alira-onyx/20"
                     />
                     <div>
-                      <span className="text-sm font-medium text-alira-onyx block">{option.label}</span>
+                      <span className="text-sm font-sans font-medium text-alira-onyx dark:text-alira-porcelain block">{option.label}</span>
                       <span className="text-xs text-alira-onyx/60">{option.description}</span>
                     </div>
                   </label>
@@ -466,7 +465,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-alira-onyx mb-3">
+              <label className="block text-sm font-sans font-medium text-alira-onyx dark:text-alira-porcelain mb-3">
                 What tools and systems do you currently use?
               </label>
               <div className="grid grid-cols-2 gap-2 mb-4">
@@ -488,18 +487,18 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
             <div className="bg-alira-porcelain/30 p-4 rounded-lg border border-alira-onyx/10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-alira-onyx/70 mb-1">
+                  <label className="block text-sm font-sans font-medium text-alira-onyx/70 dark:text-alira-porcelain/70 mb-1">
                     Full Name
                   </label>
-                  <p className="text-alira-onyx font-medium">
+                  <p className="text-alira-onyx dark:text-alira-porcelain font-sans font-medium">
                     {draftData?.name || 'Not provided'}
                   </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-alira-onyx/70 mb-1">
+                  <label className="block text-sm font-sans font-medium text-alira-onyx/70 dark:text-alira-porcelain/70 mb-1">
                     Email
                   </label>
-                  <p className="text-alira-onyx font-medium">
+                  <p className="text-alira-onyx dark:text-alira-porcelain font-sans font-medium">
                     {draftData?.email || 'Not provided'}
                   </p>
                 </div>
@@ -526,7 +525,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 onCheckedChange={(checked) => setValue('consent', checked as boolean)}
               />
               <div className="space-y-1">
-                <label htmlFor="consent" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                <label htmlFor="consent" className="text-sm font-sans font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   I agree to the terms and conditions *
                 </label>
                 <p className="text-sm text-muted-foreground">
@@ -570,10 +569,10 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
             <CardContent className="p-8">
               <div className="space-y-6">
                 <div className="text-center">
-                  <h3 className="text-xl font-semibold text-alira-onyx mb-3">
+                  <h3 className="text-xl font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">
                     🎯 We've identified key opportunities for your business{draftData?.name ? `, ${draftData.name}` : ''}
                   </h3>
-                  <p className="text-alira-onyx/70 leading-relaxed">
+                  <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed">
                     Based on your inputs, we've created a comprehensive analysis with specific recommendations 
                     for your business growth. {draftData?.email ? 'We\'ll send your personalized plan to your email.' : 'Enter your email below to receive your personalized plan.'}
                   </p>
@@ -607,11 +606,11 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
             <CheckCircle className="w-10 h-10 text-green-500" />
           </div>
           
-          <h2 className="text-3xl font-bold text-alira-onyx mb-4">
+          <h2 className="text-3xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">
             Plan Generated Successfully!
           </h2>
           
-          <p className="text-lg text-alira-onyx/80 mb-6">
+          <p className="text-lg text-alira-onyx/80 dark:text-alira-porcelain/80 mb-6">
             Your personalized business plan has been sent to <strong>{draftData?.email}</strong>
           </p>
           
@@ -632,87 +631,48 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      {/* Enhanced Progress Bar */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <span className="text-lg font-semibold text-alira-onyx">
-              Step {currentStep} of 4
-            </span>
+    <div className="max-w-3xl mx-auto">
+      {/* Progress Track */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-medium text-alira-onyx dark:text-alira-porcelain/70">
+            Step {currentStep} of 4
+          </span>
+          <div className="flex items-center space-x-2">
+            {[1, 2, 3, 4].map((step) => (
+              <div key={step} className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-300 ${
+                step <= currentStep 
+                  ? 'bg-alira-gold text-alira-onyx' 
+                  : 'bg-alira-onyx/20 dark:bg-alira-porcelain/20 text-alira-onyx/50 dark:text-alira-porcelain/50'
+              }`}>
+                {step < currentStep ? '✓' : step}
+              </div>
+            ))}
           </div>
         </div>
-        
-        {/* Step Indicators */}
-        <div className="flex items-center justify-between mb-4">
-          {[1, 2, 3, 4].map((step) => (
-            <div key={step} className="flex flex-col items-center">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
-                step <= currentStep 
-                  ? 'bg-alira-gold text-white shadow-lg' 
-                  : 'bg-alira-onyx/10 text-alira-onyx/50'
-              }`}>
-                {step < currentStep ? (
-                  <CheckCircle className="w-5 h-5" />
-                ) : (
-                  step
-                )}
-              </div>
-              <span className={`text-xs mt-2 font-medium ${
-                step <= currentStep ? 'text-alira-onyx' : 'text-alira-onyx/50'
-              }`}>
-                {step === 1 && 'Idea'}
-                {step === 2 && 'Challenge'}
-                {step === 3 && 'Goal'}
-                {step === 4 && 'Contact'}
-              </span>
-            </div>
-          ))}
-        </div>
-        
-        {/* Progress Bar */}
-        <div className="w-full bg-alira-onyx/10 rounded-full h-3 shadow-inner">
-          <div
-            className="bg-gradient-to-r from-alira-gold to-alira-gold/80 h-3 rounded-full transition-all duration-500 shadow-sm"
+        <div className="h-1.5 w-full rounded-full bg-alira-onyx/20 dark:bg-alira-porcelain/20">
+          <div 
+            className="h-1.5 rounded-full bg-alira-gold transition-all duration-500" 
             style={{ width: `${(currentStep / 4) * 100}%` }}
-          />
+          ></div>
         </div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} onSubmitCapture={(e) => console.log('Form submit event triggered', e)}>
-        <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-alira-onyx/5 to-alira-gold/5 border-b border-alira-onyx/10">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-alira-gold/10 rounded-xl flex items-center justify-center">
-                {currentStep === 1 && (
-                  <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                )}
-                {currentStep === 2 && (
-                  <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                  </svg>
-                )}
-                {currentStep === 3 && (
-                  <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                )}
-                {currentStep === 4 && (
-                  <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                )}
-              </div>
+        <Card className="border border-alira-onyx/20 dark:border-alira-porcelain/20 bg-alira-onyx/5 dark:bg-alira-onyx/70 backdrop-blur shadow-[0_10px_30px_rgba(0,0,0,0.35)] rounded-2xl">
+          <CardHeader className="border-b border-alira-onyx/10 dark:border-alira-porcelain/10 bg-alira-porcelain/5 dark:bg-alira-porcelain/5 rounded-t-2xl px-6 py-5">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-alira-gold text-alira-onyx text-sm font-semibold">
+                {currentStep}
+              </span>
               <div>
-                <CardTitle className="text-2xl alira-heading text-alira-onyx">
+                <CardTitle className="text-lg md:text-xl font-semibold text-alira-onyx dark:text-alira-porcelain">
                   {currentStep === 1 && "Your Business"}
                   {currentStep === 2 && "Current Challenges"}
                   {currentStep === 3 && "Growth Goals"}
                   {currentStep === 4 && "Service Interest & Contact"}
                 </CardTitle>
-                <p className="text-alira-onyx/60 text-sm mt-1">
+                <p className="text-xs md:text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">
                   {currentStep === 1 && "Help us understand your business"}
                   {currentStep === 2 && "What's slowing you down?"}
                   {currentStep === 3 && "Where do you want to be?"}
@@ -721,7 +681,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               </div>
             </div>
           </CardHeader>
-          <CardContent className="p-8">
+          <CardContent className="px-6 py-6 md:px-8 md:py-8 space-y-6">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -759,10 +719,10 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   variant="outline"
                   onClick={prevStep}
                   disabled={currentStep === 1}
-                  className="px-6 py-3 border-2 border-alira-onyx/20 hover:border-alira-onyx/40 transition-all duration-200"
+                  className="text-sm md:text-base text-alira-onyx/80 dark:text-alira-porcelain/80 hover:text-alira-onyx dark:hover:text-alira-porcelain border-0 bg-transparent hover:bg-transparent"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Previous
+                  ← Previous
                 </Button>
               </motion.div>
             </motion.div>
@@ -780,10 +740,9 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   <Button
                     type="button"
                     onClick={nextStep}
-                    className="bg-gradient-to-r from-alira-onyx to-alira-onyx/90 hover:from-alira-onyx/90 hover:to-alira-onyx/80 px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+                    className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-alira-onyx dark:bg-alira-onyx text-alira-porcelain dark:text-alira-porcelain px-5 font-medium ring-2 ring-alira-onyx/20 dark:ring-alira-porcelain/20 hover:bg-alira-onyx/90 dark:hover:bg-alira-onyx/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200"
                   >
-                    Next Step
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    Next Step →
                   </Button>
                 </motion.div>
               ) : (
@@ -808,7 +767,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                         }
                       }
                     }}
-                    className="bg-gradient-to-r from-alira-gold to-alira-gold/90 hover:from-alira-gold/90 hover:to-alira-gold/80 text-alira-onyx px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+                    className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-alira-gold text-alira-onyx px-5 font-medium ring-2 ring-alira-gold/20 hover:bg-alira-gold/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200"
                   >
                   {isSubmitting || isGeneratingPlan ? (
                     <>
@@ -862,7 +821,7 @@ function EmailGateForm({ onSubmit, isGenerating, existingName, existingEmail }: 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-alira-onyx mb-2">
+        <label className="block text-sm font-sans font-medium text-alira-onyx dark:text-alira-porcelain mb-2">
           Email Address
         </label>
         <Input
@@ -871,7 +830,7 @@ function EmailGateForm({ onSubmit, isGenerating, existingName, existingEmail }: 
           onChange={handleEmailChange}
           placeholder="your@email.com"
           disabled={!!existingEmail}
-          className={`w-full border-2 border-alira-onyx/20 rounded-xl px-4 py-3 text-base focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 ${existingEmail ? 'bg-alira-onyx/5 cursor-not-allowed' : ''}`}
+          className={`w-full border-2 border-alira-onyx/20 dark:border-alira-porcelain/20 rounded-xl px-4 py-3 text-base text-alira-onyx dark:text-alira-porcelain placeholder:text-alira-onyx/40 dark:placeholder:text-alira-porcelain/40 bg-white dark:bg-alira-onyx/50 focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 ${existingEmail ? 'bg-alira-onyx/5 dark:bg-alira-onyx/20 cursor-not-allowed' : ''}`}
           required
         />
         <p className="text-xs text-alira-onyx/60 mt-1">
@@ -889,7 +848,7 @@ function EmailGateForm({ onSubmit, isGenerating, existingName, existingEmail }: 
         <Button
           type="submit"
           disabled={!isValid || isGenerating}
-          className="w-full bg-gradient-to-r from-alira-gold to-alira-gold/90 hover:from-alira-gold/90 hover:to-alira-gold/80 text-alira-onyx px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-gradient-to-r from-alira-gold to-alira-gold/90 hover:from-alira-gold/90 hover:to-alira-gold/80 text-alira-onyx dark:text-alira-porcelain px-8 py-4 text-lg font-serif font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
         {isGenerating ? (
           <>

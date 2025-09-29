@@ -31,7 +31,7 @@ export default function ProofOfClarity() {
           {proofPoints.map((proof, index) => (
             <Reveal key={index} delay={index * 150}>
               <div className="card">
-                <p className="copy font-medium mb-4">
+                <p className="copy font-sans font-medium mb-4">
                   {proof.transformation}
                 </p>
                 <p className="text-sm text-alira-ink/60">

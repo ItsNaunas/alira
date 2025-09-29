@@ -16,7 +16,7 @@ export default function SectionHeading({ children, className, subtleLabel, id }:
           {subtleLabel}
         </div>
       )}
-      <h2 id={id} className="mt-2 text-3xl md:text-4xl font-semibold tracking-tight text-alira-onyx dark:text-alira-porcelain">
+      <h2 id={id} className="mt-2 text-3xl md:text-4xl font-serif font-semibold tracking-tight text-alira-onyx dark:text-alira-porcelain">
         {children}
       </h2>
       <div className="mx-auto mt-3 h-[2px] w-12 bg-alira-gold/80 rounded-full" />

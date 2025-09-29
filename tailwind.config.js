@@ -54,16 +54,22 @@ module.exports = {
         alira: {
           onyx: "#0B0B0B",
           porcelain: "#FDFDFD",
-          gold: "#C5A572",
+          gold: "#C9A96E",        // Warmer, more elegant primary gold
+          'gold-light': '#E6C659', // Lighter accent gold
+          'gold-dark': '#B8941F',  // Darker accent gold
+          'gold-warm': '#C5A572',  // Original gold for compatibility
           midnight: "#1A2238",
           ink: "#0B0B0B",
+          cream: "#FDF9F0",        // Rich cream base
+          'warm-white': "#FEFCF7",  // Warm white
+          'light-gold': "#F7F0E3", // Light gold background
         },
       },
       fontFamily: {
-        serif: ["DM Serif Display", "Times New Roman", "serif"],
-        sans: ["CUSTOM_BODY_FONT", "Inter", "Helvetica Neue", "sans-serif"],
-        heading: ["DM Serif Display", "Times New Roman", "serif"],
-        body: ["CUSTOM_BODY_FONT", "Inter", "Helvetica Neue", "sans-serif"],
+        serif: ["Playfair Display", "Times New Roman", "serif"],
+        sans: ["Lato", "Inter", "Helvetica Neue", "sans-serif"],
+        heading: ["Playfair Display", "Times New Roman", "serif"],
+        body: ["Lato", "Inter", "Helvetica Neue", "sans-serif"],
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1.5' }],

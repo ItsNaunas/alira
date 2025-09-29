@@ -103,10 +103,10 @@ export default function ResultsPage() {
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
               <div className="mb-12">
-                <span className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-medium block">
+                <span className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-medium block">
                   PROVEN RESULTS
                 </span>
-                <h1 className="text-5xl md:text-6xl font-bold text-alira-onyx dark:text-alira-porcelain leading-tight mb-6">
+                <h1 className="text-5xl md:text-6xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain leading-tight mb-6">
                   Enterprise Transformation Results
                 </h1>
                 <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
@@ -125,7 +125,7 @@ export default function ResultsPage() {
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                   Measurable Impact
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto"></div>
@@ -136,7 +136,7 @@ export default function ResultsPage() {
               {results.map((category, index) => (
                 <Reveal key={index} delay={index * 150}>
                   <div className="bg-alira-porcelain/30 dark:bg-alira-porcelain/5 rounded-2xl p-8 border border-alira-onyx/5 hover:border-alira-gold/20 transition-all duration-300">
-                    <h3 className="text-xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6 text-center">
+                    <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6 text-center">
                       {category.category}
                     </h3>
                     <div className="space-y-4">
@@ -148,7 +148,7 @@ export default function ResultsPage() {
                               <IconComponent className="w-5 h-5 text-alira-gold" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="text-xl font-bold text-alira-onyx dark:text-alira-porcelain">
+                              <div className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">
                                 {metric.value}
                               </div>
                               <div className="text-sm text-alira-onyx dark:text-alira-porcelain/70">
@@ -168,7 +168,7 @@ export default function ResultsPage() {
             <Reveal delay={600}>
               <div className="text-center">
                 <div className="inline-block bg-alira-gold/10 rounded-2xl px-12 py-8 border border-alira-gold/20">
-                  <div className="text-3xl font-bold text-alira-onyx dark:text-alira-porcelain mb-2">
+                  <div className="text-3xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-2">
                     £21,000 Total Annual Savings
                   </div>
                   <div className="text-lg text-alira-onyx dark:text-alira-porcelain/70">
@@ -187,9 +187,9 @@ export default function ResultsPage() {
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
-                  Key Achievements
-                </h2>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                Key Achievements
+              </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto"></div>
               </div>
             </Reveal>
@@ -220,7 +220,7 @@ export default function ResultsPage() {
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                   Case Studies
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
@@ -236,18 +236,18 @@ export default function ResultsPage() {
                   <div className="bg-white dark:bg-alira-onyx/80 rounded-2xl p-8 border border-alira-onyx/10 hover:border-alira-gold/20 hover:shadow-xl transition-all duration-300">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                       <div>
-                        <h3 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">
+                        <h3 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">
                           {study.title}
                         </h3>
                         <div className="space-y-4">
                           <div>
-                            <h4 className="font-semibold text-alira-gold mb-2">Challenge</h4>
+                            <h4 className="font-serif font-semibold text-alira-gold mb-2">Challenge</h4>
                             <p className="text-alira-onyx dark:text-alira-porcelain/80 text-sm">
                               {study.challenge}
                             </p>
                           </div>
                           <div>
-                            <h4 className="font-semibold text-alira-gold mb-2">Solution</h4>
+                            <h4 className="font-serif font-semibold text-alira-gold mb-2">Solution</h4>
                             <p className="text-alira-onyx dark:text-alira-porcelain/80 text-sm">
                               {study.solution}
                             </p>
@@ -256,13 +256,13 @@ export default function ResultsPage() {
                       </div>
                       <div className="space-y-4">
                         <div className="bg-alira-gold/5 rounded-xl p-6">
-                          <h4 className="font-semibold text-alira-gold mb-2">Result</h4>
+                          <h4 className="font-serif font-semibold text-alira-gold mb-2">Result</h4>
                           <p className="text-alira-onyx dark:text-alira-porcelain/80 text-sm mb-4">
                             {study.result}
                           </p>
                           <div className="border-t border-alira-gold/20 pt-4">
-                            <h4 className="font-semibold text-alira-gold mb-2">Impact</h4>
-                            <p className="text-alira-onyx dark:text-alira-porcelain/80 text-sm font-medium">
+                            <h4 className="font-serif font-semibold text-alira-gold mb-2">Impact</h4>
+                            <p className="text-alira-onyx dark:text-alira-porcelain/80 text-sm font-sans font-medium">
                               {study.impact}
                             </p>
                           </div>
@@ -283,7 +283,7 @@ export default function ResultsPage() {
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                   Client Testimonials
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto"></div>
@@ -313,7 +313,7 @@ export default function ResultsPage() {
                     
                     {/* Author */}
                     <div className="border-t border-alira-onyx/10 pt-4">
-                      <div className="font-semibold text-alira-onyx dark:text-alira-porcelain">
+                      <div className="font-serif font-semibold text-alira-onyx dark:text-alira-porcelain">
                         {testimonial.author}
                       </div>
                       <div className="text-sm text-alira-onyx dark:text-alira-porcelain/60">
@@ -329,13 +329,13 @@ export default function ResultsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-alira-onyx dark:bg-alira-midnight">
+      <section className="py-20 bg-gradient-to-br from-alira-onyx via-alira-onyx to-alira-gold/20">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                  <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
                     Ready to achieve similar results?
                   </h2>
                   <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
@@ -348,7 +348,7 @@ export default function ResultsPage() {
                   <CTAButton 
                     href="/#form-section" 
                     variant="aliraOutline"
-                    className="px-12 py-6 text-xl font-medium"
+                    className="px-12 py-6 text-xl font-sans font-medium"
                     location="results-cta"
                   >
                     Start My Plan

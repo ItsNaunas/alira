@@ -23,10 +23,10 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="max-w-5xl mx-auto text-center">
-              <div className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-medium">
+              <div className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-medium">
                 About Us
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold text-alira-onyx dark:text-alira-porcelain mb-8">
+              <h1 className="text-4xl md:text-6xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-8">
                 Our Story
               </h1>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
@@ -72,7 +72,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <Reveal>
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                     Our Mission
                   </h2>
                   <div className="w-12 h-px bg-alira-gold mb-6"></div>
@@ -89,7 +89,7 @@ export default function AboutPage() {
               
               <Reveal delay={200}>
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                     Our Vision
                   </h2>
                   <div className="w-12 h-px bg-alira-gold mb-6"></div>
@@ -123,7 +123,7 @@ export default function AboutPage() {
             <div className="max-w-6xl mx-auto">
               <Reveal>
                 <div className="text-center mb-20">
-                  <h2 id="team-heading" className="text-4xl md:text-5xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                  <h2 id="team-heading" className="text-4xl md:text-5xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                     Meet the Team
                   </h2>
                   <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
@@ -134,7 +134,7 @@ export default function AboutPage() {
             <div className="mb-16">
               <Reveal delay={100}>
                 <div className="text-center mb-12">
-                  <h3 className="text-3xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Our Founder</h3>
+                  <h3 className="text-3xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Our Founder</h3>
                   <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-2xl mx-auto">
                     ALIRA began with one person's frustration: seeing brilliant ideas stall in complexity.
                   </p>
@@ -195,15 +195,15 @@ export default function AboutPage() {
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-alira-onyx/80 dark:text-alira-porcelain/80 font-medium">10+ years in project management</span>
+                      <span className="text-alira-onyx/80 dark:text-alira-porcelain/80 font-sans font-medium">10+ years in project management</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-alira-onyx/80 dark:text-alira-porcelain/80 font-medium">Experience leading teams across multiple industries</span>
+                      <span className="text-alira-onyx/80 dark:text-alira-porcelain/80 font-sans font-medium">Experience leading teams across multiple industries</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-alira-onyx/80 dark:text-alira-porcelain/80 font-medium">Delivered projects that saved organisations time and money</span>
+                      <span className="text-alira-onyx/80 dark:text-alira-porcelain/80 font-sans font-medium">Delivered projects that saved organisations time and money</span>
                     </div>
                   </div>
 
@@ -212,7 +212,7 @@ export default function AboutPage() {
                     <CTAButton 
                       href="/contact" 
                       variant="alira"
-                      className="px-8 py-4 text-lg font-medium"
+                      className="px-8 py-4 text-lg font-sans font-medium"
                       location="founder-section"
                     >
                       Contact Us
@@ -227,7 +227,7 @@ export default function AboutPage() {
             <div className="mt-20">
               <Reveal delay={600}>
                 <div className="text-center mb-12">
-                  <h3 className="text-3xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Our Team Capabilities</h3>
+                  <h3 className="text-3xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Our Team Capabilities</h3>
                   <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-2xl mx-auto">
                     Three specialists working together to deliver clarity, reach, and systems that work.
                   </p>
@@ -261,7 +261,7 @@ export default function AboutPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                       </svg>
                     </div>
-                    <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">The Strategist</h4>
+                    <h4 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">The Strategist</h4>
                     <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed mb-6">
                       Sees the bigger picture and turns ideas into steps you can act on.
                     </p>
@@ -275,7 +275,7 @@ export default function AboutPage() {
                     <div className={`mt-6 transition-all duration-300 ${
                       activeTeamMember === 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                     }`}>
-                      <button className="text-alira-gold text-sm font-medium hover:text-alira-onyx dark:hover:text-alira-porcelain transition-colors">
+                      <button className="text-alira-gold text-sm font-sans font-medium hover:text-alira-onyx dark:text-alira-porcelain dark:hover:text-alira-porcelain transition-colors">
                         See How We Work →
                       </button>
                     </div>
@@ -308,7 +308,7 @@ export default function AboutPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2M9 8h6m-6 4h6m-6 4h6" />
                       </svg>
                     </div>
-                    <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">The Marketing Lead</h4>
+                    <h4 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">The Marketing Lead</h4>
                     <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed mb-6">
                       Knows how to make your brand impossible to ignore.
                     </p>
@@ -322,7 +322,7 @@ export default function AboutPage() {
                     <div className={`mt-6 transition-all duration-300 ${
                       activeTeamMember === 1 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                     }`}>
-                      <button className="text-alira-gold text-sm font-medium hover:text-alira-onyx dark:hover:text-alira-porcelain transition-colors">
+                      <button className="text-alira-gold text-sm font-sans font-medium hover:text-alira-onyx dark:text-alira-porcelain dark:hover:text-alira-porcelain transition-colors">
                         See How We Work →
                       </button>
                     </div>
@@ -356,7 +356,7 @@ export default function AboutPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </div>
-                    <h4 className="text-2xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">The Systems Engineer</h4>
+                    <h4 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">The Systems Engineer</h4>
                     <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed mb-6">
                       Builds the tools and processes that unlock growth.
                     </p>
@@ -370,7 +370,7 @@ export default function AboutPage() {
                     <div className={`mt-6 transition-all duration-300 ${
                       activeTeamMember === 2 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                     }`}>
-                      <button className="text-alira-gold text-sm font-medium hover:text-alira-onyx dark:hover:text-alira-porcelain transition-colors">
+                      <button className="text-alira-gold text-sm font-sans font-medium hover:text-alira-onyx dark:text-alira-porcelain dark:hover:text-alira-porcelain transition-colors">
                         See How We Work →
                       </button>
                     </div>
@@ -383,7 +383,7 @@ export default function AboutPage() {
             <div className="mt-20">
               <Reveal delay={1000}>
                 <div className="text-center mb-12">
-                  <h3 className="text-3xl font-bold text-alira-onyx dark:text-alira-porcelain mb-4">How We Work Together</h3>
+                  <h3 className="text-3xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">How We Work Together</h3>
                   <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-2xl mx-auto">
                     Our collaborative approach ensures you get the best of all three specializations working in harmony.
                   </p>
@@ -395,19 +395,19 @@ export default function AboutPage() {
                   <div className="bg-white/60 dark:bg-alira-onyx/60 backdrop-blur-sm p-8 rounded-2xl border border-alira-onyx/10 dark:border-alira-porcelain/10">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                       <div>
-                        <h4 className="text-lg font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Strategy First</h4>
+                        <h4 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Strategy First</h4>
                         <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 text-sm">
                           Every project begins with clear objectives and a roadmap that makes sense for your situation.
                         </p>
                       </div>
                       <div>
-                        <h4 className="text-lg font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Marketing Integration</h4>
+                        <h4 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Marketing Integration</h4>
                         <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 text-sm">
                           Your message and reach are built into the plan from day one, not added as an afterthought.
                         </p>
                       </div>
                       <div>
-                        <h4 className="text-lg font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Systems That Scale</h4>
+                        <h4 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Systems That Scale</h4>
                         <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 text-sm">
                           Everything we build is designed to grow with you and reduce complexity over time.
                         </p>
@@ -426,7 +426,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                 Our Principles
               </h2>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
@@ -458,7 +458,7 @@ export default function AboutPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-alira-onyx dark:text-alira-porcelain mb-3">Clarity over complexity</h3>
+                      <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-3">Clarity over complexity</h3>
                       <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
                         Simple solutions win over complicated frameworks every time. We believe in stripping away the noise to reveal what actually works.
                       </p>
@@ -487,7 +487,7 @@ export default function AboutPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-alira-onyx dark:text-alira-porcelain mb-3">Small tests beat big theories</h3>
+                      <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-3">Small tests beat big theories</h3>
                       <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
                         Progress is proven in action, not speculation. We prefer quick experiments over lengthy planning sessions.
                       </p>
@@ -516,7 +516,7 @@ export default function AboutPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-alira-onyx dark:text-alira-porcelain mb-3">Focus creates movement</h3>
+                      <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-3">Focus creates movement</h3>
                       <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
                         Clear priorities are what drive results. We help you identify what matters most and eliminate distractions.
                       </p>
@@ -546,7 +546,7 @@ export default function AboutPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-alira-onyx dark:text-alira-porcelain mb-3">Systems should serve you</h3>
+                      <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-3">Systems should serve you</h3>
                       <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
                         Work smarter, not harder. We build tools and processes that free up your time and reduce chaos.
                       </p>
@@ -565,7 +565,7 @@ export default function AboutPage() {
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                   Trust & Credibility
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
@@ -583,7 +583,7 @@ export default function AboutPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Company Registration</h3>
+                  <h3 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Company Registration</h3>
                   <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 text-sm">
                     ALIRA Capital Ventures Ltd<br />
                     Registered in England & Wales<br />
@@ -599,7 +599,7 @@ export default function AboutPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Privacy & Security</h3>
+                  <h3 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Privacy & Security</h3>
                   <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 text-sm">
                     All client information is kept strictly confidential. We use secure systems and never share your data without permission.
                   </p>
@@ -613,7 +613,7 @@ export default function AboutPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Our Commitment</h3>
+                  <h3 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">Our Commitment</h3>
                   <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 text-sm">
                     We're committed to delivering clear value in every interaction. No hidden fees, no complicated contracts, just straightforward results.
                   </p>
@@ -629,16 +629,16 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-white dark:text-alira-onyx mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-white dark:text-alira-onyx mb-6">
                 Ready to work with us?
               </h2>
               <p className="text-xl text-white/80 dark:text-alira-onyx/80 mb-8 leading-relaxed">
                 Let's turn your ambition into clear action. Start with a simple plan and build from there.
               </p>
               <CTAButton 
-                href="/contact" 
+                href="#start-form" 
                 variant="alira"
-                className="px-8 py-4 text-lg font-medium"
+                className="px-8 py-4 text-lg font-sans font-medium"
               >
                 Get Started Today
               </CTAButton>

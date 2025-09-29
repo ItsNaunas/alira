@@ -21,7 +21,7 @@ export default function MaintenanceMessage() {
         </CardHeader>
         <CardContent className="text-center space-y-6">
           <div className="space-y-4">
-            <p className="text-alira-onyx/80 leading-relaxed">
+            <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
               We're currently updating our simple plan form to provide you with an even better experience. 
               Our team is working hard to bring you enhanced features and improved functionality.
             </p>
@@ -33,10 +33,10 @@ export default function MaintenanceMessage() {
           </div>
 
           <div className="bg-alira-onyx/5 rounded-lg p-4 border border-alira-onyx/10">
-            <h3 className="font-semibold text-alira-onyx mb-2">
+            <h3 className="font-semibold text-alira-onyx dark:text-alira-porcelain mb-2">
               Need immediate assistance?
             </h3>
-            <p className="text-sm text-alira-onyx/70 mb-4">
+            <p className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70 mb-4">
               Our team is still available to help with your planning needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">

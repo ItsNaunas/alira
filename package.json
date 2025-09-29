@@ -11,6 +11,8 @@
     "audit": "npm audit",
     "audit:fix": "npm audit fix",
     "check-all": "npm run type-check && npm run lint && npm run build",
+    "fonts:check": "node scripts/standardize-fonts.mjs",
+    "fonts:fix": "node scripts/standardize-fonts.mjs",
     "prepare": "husky"
   },
   "dependencies": {

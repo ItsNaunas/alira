@@ -8,7 +8,7 @@ export default function MiniCaseStudy() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg p-8 shadow-sm border border-alira-onyx/10">
               <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-alira-onyx mb-4">
+                <h2 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">
                   Case Study: NHS Training Transformation
                 </h2>
                 <p className="text-alira-onyx/70">
@@ -18,21 +18,21 @@ export default function MiniCaseStudy() {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center">
-                  <h3 className="font-semibold text-alira-onyx mb-2">Challenge</h3>
+                  <h3 className="font-semibold text-alira-onyx dark:text-alira-porcelain mb-2">Challenge</h3>
                   <p className="text-sm text-alira-onyx/70">
                     NHS training sign-ups stagnating
                   </p>
                 </div>
                 
                 <div className="text-center">
-                  <h3 className="font-semibold text-alira-onyx mb-2">Solution</h3>
+                  <h3 className="font-semibold text-alira-onyx dark:text-alira-porcelain mb-2">Solution</h3>
                   <p className="text-sm text-alira-onyx/70">
                     Workflow redesign
                   </p>
                 </div>
                 
                 <div className="text-center">
-                  <h3 className="font-semibold text-alira-onyx mb-2">Outcome</h3>
+                  <h3 className="font-semibold text-alira-onyx dark:text-alira-porcelain mb-2">Outcome</h3>
                   <p className="text-sm text-alira-onyx/70">
                     +25% sign-ups, £10k savings
                   </p>

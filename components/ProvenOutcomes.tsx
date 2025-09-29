@@ -94,10 +94,10 @@ export default function ProvenOutcomes() {
           <div className="max-w-6xl mx-auto">
                          {/* Header */}
              <div className="text-center mb-16">
-               <h2 className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-medium">
+               <h2 className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-medium">
                  Proven Outcomes
                </h2>
-               <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-alira-onyx dark:text-alira-porcelain leading-tight mb-6">
+               <h3 className="text-3xl md:text-4xl font-serif font-bold tracking-tight text-alira-onyx dark:text-alira-porcelain leading-tight mb-6">
                  Generated in minutes — not days.
                </h3>
              </div>
@@ -106,7 +106,7 @@ export default function ProvenOutcomes() {
              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
                {stats.map((stat, index) => (
                  <div key={index} className="text-center relative">
-                   <div className="text-3xl font-bold text-alira-gold mb-2">
+                   <div className="text-3xl font-serif font-bold text-alira-gold mb-2">
                      <span className="inline-block">
                        {stat.prefix || ''}{displayValues[index]}{stat.suffix}
                      </span>
@@ -125,7 +125,7 @@ export default function ProvenOutcomes() {
                          {/* Divider Tagline */}
              <div className="text-center mb-16">
                <div className="w-16 h-px bg-alira-gold/30 mx-auto mb-4"></div>
-                               <p className="text-sm tracking-wide uppercase text-alira-onyx dark:text-alira-porcelain font-medium">
+                               <p className="text-sm tracking-wide uppercase text-alira-onyx dark:text-alira-porcelain font-sans font-medium">
                   All from just 10 minutes of your input.
                 </p>
                <div className="w-16 h-px bg-alira-gold/30 mx-auto mt-4"></div>

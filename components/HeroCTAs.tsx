@@ -8,7 +8,7 @@ export default function HeroCTAs() {
       <CTAButton 
         href="/form" 
         variant="alira"
-        className="px-8 py-3 text-sm font-medium"
+        className="px-8 py-3 text-sm font-sans font-medium"
       />
     </div>
   )

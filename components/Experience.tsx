@@ -63,10 +63,10 @@ export default function Experience() {
         {/* Section Header */}
         <Reveal>
           <div className="text-center mb-20">
-            <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-medium">
+            <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-medium">
               PROVEN RESULTS
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
               Measurable Impact
             </h2>
             <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
@@ -93,13 +93,13 @@ export default function Experience() {
                   
                   {/* Content */}
                   <div className={`lg:w-5/12 ${index % 2 === 0 ? 'lg:pr-12 lg:text-right' : 'lg:pl-12 lg:text-left'} ml-16 lg:ml-0`}>
-                    <div className="text-sm font-medium text-alira-gold mb-3 tracking-wide">
+                    <div className="text-sm font-sans font-medium text-alira-gold mb-3 tracking-wide">
                       {experience.period}
                     </div>
-                    <h3 className="text-xl font-bold text-alira-onyx dark:text-alira-porcelain mb-2">
+                    <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-2">
                       {experience.title}
                     </h3>
-                    <div className="text-base font-medium text-alira-onyx/80 dark:text-alira-porcelain/80 italic mb-3">
+                    <div className="text-base font-sans font-medium text-alira-onyx/80 dark:text-alira-porcelain/80 italic mb-3">
                       {experience.context}
                     </div>
                     <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed mb-6">
@@ -141,10 +141,10 @@ export default function Experience() {
         <Reveal delay={600}>
           <div className="mt-20 text-center">
             <div className="bg-white dark:bg-alira-onyx/30 rounded-2xl p-8 lg:p-12 border border-alira-onyx/10 dark:border-alira-porcelain/10 shadow-lg">
-              <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-medium">
+              <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-medium">
                 CLIENT SPOTLIGHT
               </div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+              <h3 className="text-2xl lg:text-3xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
                 Enterprise Transformation Success
               </h3>
               <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 mb-8 max-w-3xl mx-auto">
@@ -153,19 +153,19 @@ export default function Experience() {
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-alira-gold mb-2">£21,000</div>
+                  <div className="text-2xl font-serif font-bold text-alira-gold mb-2">£21,000</div>
                   <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">Total annual savings</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-alira-gold mb-2">3,000+</div>
+                  <div className="text-2xl font-serif font-bold text-alira-gold mb-2">3,000+</div>
                   <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">Staff onboarded</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-alira-gold mb-2">25%</div>
+                  <div className="text-2xl font-serif font-bold text-alira-gold mb-2">25%</div>
                   <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">Sign-up increase</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-alira-gold mb-2">10+</div>
+                  <div className="text-2xl font-serif font-bold text-alira-gold mb-2">10+</div>
                   <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">Years experience</div>
                 </div>
               </div>

@@ -30,9 +30,9 @@ export default function EnhancedProof() {
             <div className="text-center">
               <p className="text-sm text-alira-onyx/50 mb-4">Trusted by</p>
               <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-                <span className="text-sm font-medium text-alira-onyx/70">NHS</span>
-                <span className="text-sm font-medium text-alira-onyx/70">ELFT</span>
-                <span className="text-sm font-medium text-alira-onyx/70">HMPPS</span>
+                <span className="text-sm font-sans font-medium text-alira-onyx/70">NHS</span>
+                <span className="text-sm font-sans font-medium text-alira-onyx/70">ELFT</span>
+                <span className="text-sm font-sans font-medium text-alira-onyx/70">HMPPS</span>
               </div>
             </div>
           </div>

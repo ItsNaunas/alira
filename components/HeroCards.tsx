@@ -48,14 +48,14 @@ export default function HeroCards() {
       <div className="relative text-center">
         {/* Subheading Section */}
         <div className="mb-12 lg:mb-16">
-          <h2 className="text-3xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">
+          <h2 className="text-3xl font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3">
             What you get
           </h2>
           
           {/* Gold divider */}
           <div className="w-16 h-px bg-alira-gold/30 mx-auto mb-4"></div>
           
-          <p className="text-lg md:text-xl font-medium text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-[60ch] mx-auto">
+          <p className="text-lg md:text-xl font-sans font-medium text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-[60ch] mx-auto">
             Every business case draft contains these four building blocks, delivered with instant clarity.
           </p>
         </div>
@@ -105,7 +105,7 @@ export default function HeroCards() {
                     {/* Card body */}
                     <div className="p-6 lg:p-7 space-y-3">
                       {/* Eyebrow */}
-                      <span className="tracking-wide text-[11px] font-medium text-alira-onyx/50 dark:text-alira-porcelain/50 uppercase">
+                      <span className="tracking-wide text-[11px] font-sans font-medium text-alira-onyx/50 dark:text-alira-porcelain/50 uppercase">
                         {card.model}
                       </span>
                       
@@ -129,7 +129,7 @@ export default function HeroCards() {
           <div className="mt-12 text-center">
             <Link
               href="#how-it-works"
-              className="inline-flex items-center rounded-full bg-alira-onyx dark:bg-alira-porcelain text-white dark:text-alira-onyx px-5 py-2.5 text-sm font-medium border border-transparent hover:border-alira-gold hover:shadow-lg hover:shadow-black/10 transition-all duration-200"
+              className="inline-flex items-center rounded-full bg-alira-onyx dark:bg-alira-porcelain text-white dark:text-alira-onyx px-5 py-2.5 text-sm font-sans font-medium border border-transparent hover:border-alira-gold hover:shadow-lg hover:shadow-black/10 transition-all duration-200"
             >
               See How It Works
               <ArrowRight className="ml-2 w-4 h-4" />

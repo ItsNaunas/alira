@@ -42,22 +42,22 @@ export default function SuccessPage() {
             <div className="mx-auto mb-4">
               <CheckCircle className="w-16 h-16 text-alira-gold" />
             </div>
-            <CardTitle className="text-3xl font-bold text-alira-onyx">
+            <CardTitle className="text-3xl font-serif font-bold text-alira-onyx">
               Your Personal Plan is Ready!
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 text-center">
-            <p className="text-alira-onyx/80 text-lg">
+            <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 text-lg">
               We've analyzed your inputs and created a comprehensive plan tailored to your specific situation. 
               Your plan has been sent to your email and is ready for download.
             </p>
 
             <div className="space-y-4">
               <div className="bg-alira-gold/10 rounded-lg p-4 border border-alira-gold/20">
-                <h3 className="font-semibold text-alira-onyx mb-2">
+                <h3 className="font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-2">
                   What's in your plan:
                 </h3>
-                <ul className="text-sm text-alira-onyx/80 space-y-1">
+                <ul className="text-sm text-alira-onyx/80 dark:text-alira-porcelain/80 space-y-1">
                   <li>• Strategic assessment of your current position</li>
                   <li>• Clear next steps for the next 90 days</li>
                   <li>• Resource optimisation recommendations</li>
@@ -96,7 +96,7 @@ export default function SuccessPage() {
             <div className="pt-4">
               <Link
                 href="/"
-                className="inline-flex items-center text-alira-onyx/70 hover:text-alira-onyx transition-colors"
+                className="inline-flex items-center text-alira-onyx/70 hover:text-alira-onyx dark:text-alira-porcelain transition-colors"
               >
                 <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
                 Back to Home

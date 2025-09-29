@@ -63,7 +63,7 @@ export default function ProcessDiagram() {
                       role="img"
                       aria-label={`${step.title} step`}
                     >
-                      <IconComponent className="w-8 h-8 text-alira-onyx transition-colors duration-200 group-hover:text-alira-gold" />
+                      <IconComponent className="w-8 h-8 text-alira-onyx dark:text-alira-porcelain transition-colors duration-200 group-hover:text-alira-gold" />
                     </div>
                     {/* Info indicator */}
                     <div className="absolute -top-2 -right-2 w-6 h-6 bg-alira-gold/10 rounded-full flex items-center justify-center border border-alira-gold/20">
@@ -83,7 +83,7 @@ export default function ProcessDiagram() {
                     {/* Detailed description on hover */}
                     {isHovered && (
                       <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-80 bg-white border border-alira-onyx/10 rounded-lg shadow-lg p-4 z-20">
-                        <div className="text-sm text-alira-onyx/80 leading-relaxed">
+                        <div className="text-sm text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
                           {step.detailedDescription}
                         </div>
                         {/* Arrow pointing up */}
@@ -130,7 +130,7 @@ export default function ProcessDiagram() {
                       role="img"
                       aria-label={`${step.title} step`}
                     >
-                      <IconComponent className="w-6 h-6 text-alira-onyx transition-colors duration-200 group-hover:text-alira-gold" />
+                      <IconComponent className="w-6 h-6 text-alira-onyx dark:text-alira-porcelain transition-colors duration-200 group-hover:text-alira-gold" />
                     </div>
                     {/* Info indicator */}
                     <div className="absolute -top-1 -right-1 w-5 h-5 bg-alira-gold/10 rounded-full flex items-center justify-center border border-alira-gold/20">
@@ -150,7 +150,7 @@ export default function ProcessDiagram() {
                     {/* Detailed description on hover */}
                     {isHovered && (
                       <div className="mt-4 p-4 bg-alira-onyx/5 rounded-lg border border-alira-onyx/10">
-                        <div className="text-sm text-alira-onyx/80 leading-relaxed">
+                        <div className="text-sm text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
                           {step.detailedDescription}
                         </div>
                       </div>

@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       to: ['test@example.com'], // Change this to your email for testing
       subject: 'Test Email from ALIRA',
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="font-family: Lato, Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h1 style="color: #1a1a1a;">ALIRA. Test Email</h1>
           <p>This is a simple test email to verify Resend configuration.</p>
           <p>If you receive this, your email setup is working!</p>

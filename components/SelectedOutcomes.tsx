@@ -16,7 +16,7 @@ export default function SelectedOutcomes() {
         <Reveal>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-2xl font-bold text-alira-onyx mb-4">
+              <h2 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">
                 Selected Outcomes
               </h2>
               <p className="text-alira-onyx/70">
@@ -27,7 +27,7 @@ export default function SelectedOutcomes() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
               {outcomes.map((outcome, index) => (
                 <div key={index} className="text-center">
-                  <div className="text-2xl font-bold text-alira-gold mb-2">
+                  <div className="text-2xl font-serif font-bold text-alira-gold mb-2">
                     {outcome.metric}
                   </div>
                   <div className="text-sm text-alira-onyx/70">

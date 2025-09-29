@@ -19,6 +19,9 @@ interface CTAButtonProps {
   children?: React.ReactNode
 }
 
+// Default CTA styling - centralized for consistency
+const DEFAULT_CTA_CLASSES = 'px-8 py-6'
+
 export default function CTAButton({ 
   href, 
   variant = 'alira', 
@@ -70,11 +73,14 @@ export default function CTAButton({
     }
   }
 
+  // Merge default classes with custom classes
+  const finalClassName = className || DEFAULT_CTA_CLASSES
+
   return (
     <Link href={href} className="inline-block group" onClick={handleClick}>
       <Button 
         variant={variant} 
-        className={className}
+        className={finalClassName}
       >
         {children || buttonText}
         {showArrow && (

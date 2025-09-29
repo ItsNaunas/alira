@@ -1,282 +1,251 @@
+'use client'
+
 import React from 'react'
-import Image from 'next/image'
+import { FileText, Compass, MapPin, CheckCircle, Clock, Target, Lightbulb, TrendingUp } from "lucide-react"
 import Reveal from '@/components/Reveal'
 import CTAButton from '@/components/CTAButton'
-import WhatYouGet from '@/components/WhatYouGet'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { conversionEvents } from '@/lib/analytics'
 
-export default function HowItWorksPage() {
+export default function WhatYouGetPage() {
+  // Track page view
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      conversionEvents.pageView('what-you-get')
+    }
+  }, [])
+
+  const mainBenefits = [
+    {
+      icon: FileText,
+      title: "A clear plan",
+      desc: "Simple, actionable steps you can follow immediately.",
+    },
+    {
+      icon: Compass,
+      title: "Next steps",
+      desc: "Know exactly what to do first to move forward.",
+    },
+    {
+      icon: MapPin,
+      title: "Direction you can use today",
+      desc: "No waiting, no confusion — just clear direction.",
+    },
+  ]
+
+  const detailedFeatures = [
+    {
+      icon: Target,
+      title: "Problem Statement & Objectives",
+      description: "Clear definition of what you're solving and what success looks like",
+      details: [
+        "Core problem identification",
+        "Success metrics defined",
+        "Target audience clarified",
+        "Key assumptions outlined"
+      ]
+    },
+    {
+      icon: Lightbulb,
+      title: "Proposed Solution",
+      description: "Practical approach tailored to your specific situation",
+      details: [
+        "Solution framework",
+        "Implementation approach",
+        "Resource requirements",
+        "Risk mitigation strategies"
+      ]
+    },
+    {
+      icon: TrendingUp,
+      title: "90-Day Action Plan",
+      description: "Immediate steps to get started and build momentum",
+      details: [
+        "Week 1-4: Foundation setup",
+        "Month 2: Core implementation",
+        "Month 3: Testing & refinement",
+        "Key milestones & checkpoints"
+      ]
+    },
+    {
+      icon: CheckCircle,
+      title: "Next Steps & Resources",
+      description: "Everything you need to continue beyond the initial 90 days",
+      details: [
+        "Priority action items",
+        "Recommended tools & resources",
+        "Follow-up opportunities",
+        "Long-term growth pathway"
+      ]
+    }
+  ]
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section 
-        className="min-h-screen flex items-center justify-center bg-alira-porcelain dark:bg-alira-onyx relative overflow-hidden"
-        aria-labelledby="how-it-works-heading"
-      >
-        {/* Minimal Background */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Architectural grid background */}
-          <svg
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full"
-          >
-            <defs>
-              <pattern
-                id="alira-grid-how-it-works"
-                width="40"
-                height="40"
-                patternUnits="userSpaceOnUse"
-              >
-                <path 
-                  d="M 40 0 L 0 0 0 40" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="0.5" 
-                />
-              </pattern>
-            </defs>
-            <rect
-              width="100%"
-              height="100%"
-              fill="url(#alira-grid-how-it-works)"
-              className="text-alira-onyx/10"
-              opacity="0.35"
-            />
-            {/* Subtle major lines */}
-            <g className="text-alira-onyx/15" opacity="0.25">
-              <path d="M0 80 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M0 160 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M120 0 V100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M240 0 V100%" stroke="currentColor" strokeWidth="0.6" />
-            </g>
-          </svg>
-          
-          {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 opacity-[0.01] bg-gradient-to-br from-alira-onyx via-transparent to-alira-gold"></div>
-        </div>
-        
-        <div className="container mx-auto px-6 lg:px-8 relative z-10">
-          <div className="max-w-6xl mx-auto">
-            {/* Brand Seal */}
-            <Reveal>
-              <div className="mb-16 text-center">
-                <span className="block text-3xl tracking-[0.2em] uppercase text-alira-onyx dark:text-alira-porcelain font-bold mb-4 font-serif">
-                  ALIRA.
-                </span>
-                <div className="w-20 h-[3px] bg-alira-gold mx-auto mb-12"></div>
-              </div>
-            </Reveal>
-            
-            {/* Headline */}
-            <Reveal delay={200}>
-              <div className="text-center mb-16">
-                <h1 id="how-it-works-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx dark:text-alira-porcelain leading-[0.95] tracking-tight mb-8">
-                  Three steps to your <span className="text-alira-gold">business plan</span>
-                </h1>
-              </div>
-            </Reveal>
-            
-            {/* Process Flow */}
-            <Reveal delay={300}>
-              <div className="max-w-6xl mx-auto mb-16">
-                {/* Horizontal Process Flow */}
-                <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-8 relative">
-                  
-                  {/* Step 1: Sign up & load funds */}
-                  <div className="flex flex-col items-center text-center group flex-1">
-                  {/* Large Step Number */}
-                  <div className="mb-6">
-                    <span className="text-6xl font-bold text-alira-gold/80 group-hover:text-alira-gold transition-colors duration-300">1</span>
-                  </div>
-                    
-                    <h3 className="text-xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-4 group-hover:text-alira-gold transition-colors duration-300">
-                      Answer questions
-                    </h3>
-                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed mb-8">
-                      Tell us about your idea or business through our quick, structured questionnaire.
-                    </p>
-                    
-                    {/* Device Illustration - Larger */}
-                    <div className="w-72 h-54 flex items-center justify-center">
-                      <Image 
-                        src="/images/how-it-works/step1-signup.png" 
-                        alt="Step 1: Answer questions"
-                        width={288}
-                        height={216}
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Connecting Arrow 1 - Clean */}
-                  <div className="hidden lg:flex items-center justify-center w-16 h-12 relative">
-                    <svg className="w-16 h-12 text-alira-gold" viewBox="0 0 64 48" fill="none">
-                      <path d="M8 24 Q32 8 56 24" stroke="currentColor" strokeWidth="2" strokeDasharray="4,4" fill="none"/>
-                      <path d="M52 20 L56 24 L52 28" stroke="currentColor" strokeWidth="2" fill="none"/>
-                    </svg>
-                  </div>
-
-                  {/* Step 2: Set your spending rules */}
-                  <div className="flex flex-col items-center text-center group flex-1">
-                    {/* Large Step Number */}
-                    <div className="mb-6">
-                      <span className="text-6xl font-bold text-alira-gold/80 group-hover:text-alira-gold transition-colors duration-300">2</span>
-                    </div>
-                    
-                    <h3 className="text-xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-4 group-hover:text-alira-gold transition-colors duration-300">
-                      AI analysis
-                    </h3>
-                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed mb-8">
-                      Our AI processes your information using strategic frameworks to create actionable insights.
-                    </p>
-                    
-                    {/* Device Illustration - Larger */}
-                    <div className="w-72 h-54 flex items-center justify-center">
-                      <Image 
-                        src="/images/how-it-works/step3-invite-team.png" 
-                        alt="Step 2: AI analysis"
-                        width={288}
-                        height={216}
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Connecting Arrow 2 - Clean */}
-                  <div className="hidden lg:flex items-center justify-center w-16 h-12 relative">
-                    <svg className="w-16 h-12 text-alira-gold" viewBox="0 0 64 48" fill="none">
-                      <path d="M8 24 Q32 8 56 24" stroke="currentColor" strokeWidth="2" strokeDasharray="4,4" fill="none"/>
-                      <path d="M52 20 L56 24 L52 28" stroke="currentColor" strokeWidth="2" fill="none"/>
-                    </svg>
-                  </div>
-
-                  {/* Step 3: Invite your team */}
-                  <div className="flex flex-col items-center text-center group flex-1">
-                    {/* Large Step Number */}
-                    <div className="mb-6">
-                      <span className="text-6xl font-bold text-alira-gold/80 group-hover:text-alira-gold transition-colors duration-300">3</span>
-                    </div>
-                    
-                    <h3 className="text-xl font-semibold text-alira-onyx dark:text-alira-porcelain mb-4 group-hover:text-alira-gold transition-colors duration-300">
-                      Get your plan
-                    </h3>
-                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed mb-8">
-                      Receive a comprehensive PDF business plan tailored to your specific situation and goals.
-                    </p>
-                    
-                    {/* Device Illustration - Larger */}
-                    <div className="w-72 h-54 flex items-center justify-center">
-                      <Image 
-                        src="/images/how-it-works/step2-spending-rules.png" 
-                        alt="Step 3: Get your plan"
-                        width={288}
-                        height={216}
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </Reveal>
-
-            {/* CTA Button */}
-            <Reveal delay={400}>
-              <div className="text-center space-y-4">
-                <CTAButton 
-                  href="/form" 
-                  variant="alira"
-                  className="px-8 py-4 text-lg font-medium"
-                  location="how-it-works-hero"
-                >
-                  Start Your Simple Plan
-                </CTAButton>
-                <p className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70 font-medium">
-                  Free • Private • No card required • Delivered in minutes
-                </p>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Detailed Explanation Section */}
-      <section className="py-24 bg-white dark:bg-alira-onyx/20">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <Reveal>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div className="space-y-8">
-                  <div>
-                    <h2 className="h2 mb-6">
-                      From Form to Framework
-                    </h2>
-                    <div className="w-16 h-px bg-alira-gold mb-8"></div>
-                  </div>
-                  <div className="space-y-6">
-                    <p className="copy text-lg leading-relaxed">
-                      Every business case we generate is built on proven strategic frameworks, tailored to your specific industry, stage, and challenges. No generic templates - just sharp, actionable insights.
-                    </p>
-                    <p className="copy text-lg leading-relaxed">
-                      Our engine processes your information through multiple lenses: market analysis, competitive positioning, resource optimisation, and growth potential. The result is a document that speaks directly to your situation.
-                    </p>
-                  </div>
-                </div>
-                <div className="bg-alira-onyx/5 dark:bg-alira-porcelain/5 p-8 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10">
-                  <h3 className="h3 mb-6">
-                    What You Get
-                  </h3>
-                  <ul className="space-y-4">
-                    <li className="flex items-start space-x-4">
-                      <span className="text-alira-gold font-bold text-lg">•</span>
-                      <span className="copy">Comprehensive problem statement and objectives</span>
-                    </li>
-                    <li className="flex items-start space-x-4">
-                      <span className="text-alira-gold font-bold text-lg">•</span>
-                      <span className="copy">Strategic recommendations based on your service choice</span>
-                    </li>
-                    <li className="flex items-start space-x-4">
-                      <span className="text-alira-gold font-bold text-lg">•</span>
-                      <span className="copy">Expected outcomes and success metrics</span>
-                    </li>
-                    <li className="flex items-start space-x-4">
-                      <span className="text-alira-gold font-bold text-lg">•</span>
-                      <span className="copy">Clear next steps and implementation roadmap</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* What You Get Section */}
-      <WhatYouGet />
-
-      {/* CTA Section */}
-      <section className="py-24 bg-alira-onyx dark:bg-alira-porcelain">
+      <section className="py-24 bg-gradient-to-br from-alira-gold/5 via-white to-alira-gold/10 dark:from-alira-gold/10 dark:via-alira-onyx dark:to-alira-gold/5">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
-              <div className="space-y-12">
-                <div className="relative">
-                  <h2 className="text-4xl md:text-5xl font-bold text-white dark:text-alira-onyx mb-6 leading-tight">
-                    Ready to See It in Action?
+              <div className="mb-12">
+                <span className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-medium block">
+                  WHAT YOU GET
+                </span>
+                <h1 className="text-5xl md:text-6xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain leading-tight mb-6">
+                  Your Complete Business Plan
+                </h1>
+                <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
+                <p className="text-xl md:text-2xl text-alira-onyx dark:text-alira-porcelain/70 max-w-3xl mx-auto leading-relaxed">
+                  In minutes, you'll receive a comprehensive PDF that shows everything you need to move forward with confidence.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Benefits */}
+      <section className="py-20 bg-gradient-to-br from-alira-gold/3 via-alira-gold/5 to-alira-gold/8 dark:from-alira-gold/8 dark:via-alira-onyx dark:to-alira-gold/3">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <Reveal>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                  Three Things You Get Immediately
+                </h2>
+                <div className="w-16 h-px bg-alira-gold mx-auto"></div>
+              </div>
+            </Reveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-16">
+              {mainBenefits.map(({ icon: Icon, title, desc }, index) => (
+                <Reveal key={title} delay={index * 100}>
+                  <article className="group rounded-2xl border border-alira-onyx/5 dark:border-alira-porcelain/5 bg-white dark:bg-alira-onyx/80 p-8 lg:p-10 transition-all duration-300 hover:-translate-y-1 hover:border-alira-gold/20 hover:shadow-xl">
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0 h-12 w-12 flex items-center justify-center rounded-xl bg-alira-gold/10 text-alira-gold">
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="w-12 h-[2px] bg-alira-gold mb-4"></div>
+                        <h3 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-3 leading-tight">
+                          {title}
+                        </h3>
+                        <p className="text-alira-onyx dark:text-alira-porcelain/70 leading-relaxed">
+                          {desc}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+
+            {/* Quick Stats */}
+            <Reveal delay={400}>
+              <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-12 text-center bg-alira-porcelain/20 dark:bg-alira-porcelain/5 rounded-2xl p-8">
+                <div className="flex flex-col items-center">
+                  <span className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">Ready in minutes</span>
+                  <span className="text-sm text-alira-onyx dark:text-alira-porcelain/60 mt-1">delivered instantly</span>
+                </div>
+                <div className="hidden md:block w-px h-8 bg-alira-onyx/20"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">100% custom</span>
+                  <span className="text-sm text-alira-onyx dark:text-alira-porcelain/60 mt-1">tailored to your business</span>
+                </div>
+                <div className="hidden md:block w-px h-8 bg-alira-onyx/20"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">Ready to use</span>
+                  <span className="text-sm text-alira-onyx dark:text-alira-porcelain/60 mt-1">implement immediately</span>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Detailed Features */}
+      <section className="py-20 bg-white dark:bg-alira-onyx">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <Reveal>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+                  What's Inside Your Plan
+                </h2>
+                <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
+                <p className="text-xl text-alira-onyx dark:text-alira-porcelain/70 max-w-3xl mx-auto">
+                  Every plan is structured to give you maximum clarity and actionable next steps.
+                </p>
+              </div>
+            </Reveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {detailedFeatures.map((feature, index) => {
+                const IconComponent = feature.icon
+                return (
+                  <Reveal key={index} delay={index * 150}>
+                    <div className="bg-white dark:bg-alira-onyx/80 rounded-2xl p-8 border border-alira-onyx/10 hover:border-alira-gold/20 hover:shadow-xl transition-all duration-300">
+                      <div className="flex items-center mb-6">
+                        <div className="w-12 h-12 bg-alira-gold/10 rounded-xl flex items-center justify-center mr-4">
+                          <IconComponent className="w-6 h-6 text-alira-gold" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">
+                            {feature.title}
+                          </h3>
+                        </div>
+                      </div>
+                      
+                      <p className="text-alira-onyx dark:text-alira-porcelain/80 mb-6 leading-relaxed">
+                        {feature.description}
+                      </p>
+
+                      <ul className="space-y-3">
+                        {feature.details.map((detail, detailIndex) => (
+                          <li key={detailIndex} className="flex items-start space-x-3">
+                            <div className="w-2 h-2 bg-alira-gold rounded-full mt-2 flex-shrink-0"></div>
+                            <span className="text-alira-onyx dark:text-alira-porcelain/70 text-sm">
+                              {detail}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </Reveal>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-alira-onyx via-alira-onyx to-alira-gold/20">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <Reveal>
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
+                    Ready to get your plan?
                   </h2>
-                  <div className="w-20 h-px bg-alira-gold mx-auto"></div>
+                  <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+                    Answer a few quick questions and receive your personalized business plan in minutes.
+                  </p>
+                  <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
                 </div>
                 
-                <p className="text-xl text-white/80 dark:text-alira-onyx/80 max-w-2xl mx-auto leading-relaxed">
-                  Complete our intake form and receive your personalized Draft Business Case within minutes.
-                </p>
-                
-                <div className="inline-block group">
+                <div className="space-y-4">
                   <CTAButton 
-                    href="/form" 
+                    href="/#form-section" 
                     variant="aliraOutline"
-                  />
+                    className="px-12 py-6 text-xl font-sans font-medium"
+                    location="what-you-get-cta"
+                  >
+                    Start My Plan
+                  </CTAButton>
+                  <p className="text-sm text-white/70">
+                    Free • Private • No card required • Delivered in minutes
+                  </p>
                 </div>
               </div>
             </Reveal>

@@ -19,8 +19,8 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // ALIRA-specific variants
-        alira: "inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-white dark:text-alira-onyx bg-alira-onyx dark:bg-alira-porcelain rounded-full hover:bg-alira-onyx/90 dark:hover:bg-alira-porcelain/90 focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl border-2 border-alira-onyx dark:border-alira-porcelain hover:border-alira-gold",
-        aliraOutline: "inline-flex items-center justify-center px-12 py-5 text-lg font-semibold text-alira-gold border-2 border-alira-gold rounded-full hover:bg-alira-gold hover:text-alira-onyx focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl",
+        alira: "inline-flex items-center justify-center text-lg font-semibold text-white dark:text-alira-onyx bg-alira-onyx dark:bg-alira-porcelain rounded-full hover:bg-alira-onyx/90 dark:hover:bg-alira-porcelain/90 focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl border-2 border-alira-onyx dark:border-alira-porcelain hover:border-alira-gold",
+        aliraOutline: "inline-flex items-center justify-center text-lg font-semibold text-alira-gold border-2 border-alira-gold rounded-full hover:bg-alira-gold hover:text-alira-onyx dark:text-alira-porcelain focus:outline-none focus:ring-4 focus:ring-alira-gold/20 focus:ring-offset-2 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl",
       },
       size: {
         default: "h-10 px-4 py-2",

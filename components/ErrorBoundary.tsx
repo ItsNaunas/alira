@@ -49,11 +49,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
               <AlertTriangle className="w-8 h-8 text-red-600" />
             </div>
             
-            <h2 className="text-2xl font-bold text-alira-onyx mb-4">
+            <h2 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">
               Something went wrong
             </h2>
             
-            <p className="text-alira-onyx/70 mb-6">
+            <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 mb-6">
               We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.
             </p>
             

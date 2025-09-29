@@ -4,16 +4,17 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import LogoMark from './LogoMark'
-import { Button } from './ui/button'
+import CTAButton from './CTAButton'
 import { cn } from '@/lib/utils'
 import DarkModeToggle from './DarkModeToggle'
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'How It Works', href: '/how-it-works' },
+  { name: 'What You Get', href: '/how-it-works' },
   { name: 'Services', href: '/services' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
+  { name: 'Results', href: '/results' },
 ]
 
 export default function Header() {
@@ -42,7 +43,7 @@ export default function Header() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm font-medium leading-6 text-alira-onyx dark:text-alira-porcelain hover:text-alira-gold transition-colors"
+              className="text-sm font-sans font-medium leading-6 text-alira-onyx dark:text-alira-porcelain hover:text-alira-gold transition-colors"
             >
               {item.name}
             </Link>
@@ -50,11 +51,14 @@ export default function Header() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-4">
           <DarkModeToggle />
-          <Button asChild>
-            <Link href="/contact">
-              Contact Us
-            </Link>
-          </Button>
+          <CTAButton 
+            href="/contact" 
+            variant="aliraOutline"
+            showArrow={false}
+            location="navbar"
+          >
+            Contact Us
+          </CTAButton>
         </div>
       </nav>
       
@@ -86,7 +90,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium leading-7 text-alira-onyx dark:text-alira-porcelain hover:bg-alira-onyx/5 dark:hover:bg-alira-porcelain/5"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-sans font-medium leading-7 text-alira-onyx dark:text-alira-porcelain hover:bg-alira-onyx/5 dark:hover:bg-alira-porcelain/5"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
@@ -94,11 +98,15 @@ export default function Header() {
                 ))}
               </div>
               <div className="py-6">
-                <Button asChild className="w-full">
-                  <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-                    Contact Us
-                  </Link>
-                </Button>
+                <CTAButton 
+                  href="/contact" 
+                  variant="aliraOutline"
+                  className="w-full"
+                  showArrow={false}
+                  location="mobile-navbar"
+                >
+                  Contact Us
+                </CTAButton>
               </div>
             </div>
           </div>
