@@ -130,7 +130,7 @@ export default function Home() {
       <FAQ />
 
       {/* Form Section */}
-      <section id="start-form" className="py-24 bg-white dark:bg-alira-onyx">
+      <section id="start-form" className="py-24 bg-white dark:bg-alira-onyx/95">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
               <Reveal>
