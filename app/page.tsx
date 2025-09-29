@@ -37,120 +37,98 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section 
-        className="min-h-screen flex items-center justify-center bg-alira-porcelain dark:bg-alira-onyx relative overflow-hidden"
+        className="min-h-screen flex items-center justify-center bg-gradient-to-br from-alira-gold/5 via-white to-alira-gold/10 dark:from-alira-gold/10 dark:via-alira-onyx dark:to-alira-gold/5 relative overflow-hidden"
         aria-labelledby="hero-heading"
       >
-        {/* Minimal Background */}
+        {/* Clean Background */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Architectural grid background */}
-          <svg
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full"
-          >
-            <defs>
-              <pattern
-                id="alira-grid"
-                width="40"
-                height="40"
-                patternUnits="userSpaceOnUse"
-              >
-                <path 
-                  d="M 40 0 L 0 0 0 40" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="0.5" 
-                />
-              </pattern>
-            </defs>
-            <rect
-              width="100%"
-              height="100%"
-              fill="url(#alira-grid)"
-              className="text-alira-onyx dark:text-alira-porcelain/10 dark:text-alira-porcelain/10"
-              opacity="0.35"
-            />
-            {/* Subtle major lines */}
-            <g className="text-alira-onyx dark:text-alira-porcelain/15 dark:text-alira-porcelain/15" opacity="0.25">
-              <path d="M0 80 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M0 160 H100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M120 0 V100%" stroke="currentColor" strokeWidth="0.6" />
-              <path d="M240 0 V100%" stroke="currentColor" strokeWidth="0.6" />
-            </g>
-          </svg>
-          
-          {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 opacity-[0.01] bg-gradient-to-br from-alira-onyx via-transparent to-alira-gold"></div>
+          {/* Soft gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-alira-gold/3 via-white/50 to-alira-gold/5 dark:from-alira-gold/5 dark:via-alira-onyx/80 dark:to-alira-gold/3"></div>
         </div>
         
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Brand Seal */}
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Hero Brand Seal - Extra Large */}
             <Reveal>
-              <div className="mb-16">
-                <span className="block text-3xl tracking-[0.2em] uppercase text-alira-onyx dark:text-alira-porcelain font-bold mb-4 font-serif">
-                  ALIRA.
+              <div className="mb-20">
+                <span className="block text-7xl md:text-9xl lg:text-[10rem] tracking-[0.2em] uppercase text-alira-onyx dark:text-alira-porcelain font-heading mb-8">
+                  ALIRA
                 </span>
-                <div className="w-20 h-[3px] bg-alira-gold mx-auto mb-12"></div>
+                <div className="w-40 h-[5px] bg-alira-gold mx-auto mb-16"></div>
               </div>
             </Reveal>
             
-            {/* Headline */}
+            {/* New Headline */}
             <Reveal delay={200}>
-              <h1 id="hero-heading" className="text-5xl md:text-7xl font-bold text-alira-onyx dark:text-alira-porcelain leading-[0.95] tracking-tight mb-8">
-                Get a <span className="text-alira-gold">simple plan</span> for your idea or business in minutes.
+              <h1 id="hero-heading" className="text-5xl md:text-7xl font-heading text-alira-onyx dark:text-alira-porcelain leading-[0.95] tracking-tight mb-8">
+                We turn your ideas into <span className="text-alira-gold">clear business plans</span> you can act on today
               </h1>
             </Reveal>
             
-            {/* Subheadline */}
+            {/* New Subheadline */}
             <Reveal delay={250}>
-              <p className="text-2xl md:text-3xl text-alira-onyx dark:text-alira-porcelain font-serif italic font-light max-w-[60ch] mx-auto leading-tight mb-8">
-                Answer a few quick questions and receive a clear PDF plan with next steps. Free, private, no card required.
+              <p className="text-2xl md:text-3xl text-alira-onyx dark:text-alira-porcelain font-body italic font-light max-w-[65ch] mx-auto leading-tight mb-12">
+                Tell us about your idea, and we'll instantly generate a free, tailored plan — ready to use in minutes.
               </p>
             </Reveal>
             
-            {/* Mini Form */}
+            {/* Single CTA Button */}
             <Reveal delay={300}>
-              <div className="space-y-4">
-                <MiniForm />
-                <p className="text-sm text-alira-onyx dark:text-alira-porcelain/70 font-medium">
+              <div className="space-y-6">
+                <CTAButton 
+                  href="#start-form" 
+                  variant="alira"
+                  className="px-12 py-6 text-xl font-medium"
+                  location="hero"
+                >
+                  Start My Plan
+                </CTAButton>
+                <p className="text-lg text-alira-onyx dark:text-alira-porcelain/70 font-medium">
                   Free • Private • No card required • Delivered in minutes
                 </p>
               </div>
             </Reveal>
-
           </div>
         </div>
       </section>
 
-      {/* What You Get Section */}
-      <WhatYouGet />
 
       {/* How It Works Section */}
       <HowItWorks />
 
-      {/* Home Services Section */}
+      {/* Choose Your Service Section */}
       <HomeServices />
 
       {/* Meet the Team Section */}
       <MeetTheTeam />
 
-      {/* Experience Section */}
-      <Experience />
-
-      {/* Client Results Section */}
-      <ClientResults />
-
-      {/* Proven Outcomes Section */}
-      <ProvenOutcomes />
-
               {/* FAQ Section */}
       <FAQ />
 
-        {/* Our Philosophy Section */}
-      <OurPhilosophy />
-
-      {/* Final CTA Section */}
-      <FinalCTA />
+      {/* Form Section */}
+      <section id="start-form" className="py-24 bg-white dark:bg-alira-onyx">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto">
+            <Reveal>
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-heading text-alira-onyx dark:text-alira-porcelain mb-6">
+                  Start Your Plan
+                </h2>
+                <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
+                <p className="text-xl text-alira-onyx dark:text-alira-porcelain/70 max-w-2xl mx-auto">
+                  Tell us about your idea and get your personalized business plan in minutes.
+                </p>
+              </div>
+            </Reveal>
+            
+            <Reveal delay={200}>
+              <div className="bg-white dark:bg-alira-onyx/80 p-8 rounded-2xl border border-alira-onyx/10 shadow-xl">
+                <MiniForm />
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
       
       {/* Sticky CTA for Mobile */}
       <StickyCTA />

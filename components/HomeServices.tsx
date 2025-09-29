@@ -51,14 +51,14 @@ const services = [
 
 export default function HomeServices() {
   return (
-    <section className="py-24 bg-alira-porcelain/40 dark:bg-alira-onyx/40">
+    <section className="py-24 bg-gradient-to-br from-alira-gold/3 via-alira-gold/5 to-alira-gold/8 dark:from-alira-gold/8 dark:via-alira-onyx dark:to-alira-gold/3">
       <div className="container mx-auto px-6 lg:px-8">
         <Reveal>
           <div className="text-center mb-16">
             <div className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-medium">
               What We Offer
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+            <h2 className="text-4xl md:text-5xl font-heading text-alira-onyx dark:text-alira-porcelain mb-6">
               Choose Your Service
             </h2>
             <p className="text-xl text-alira-onyx dark:text-alira-porcelain/70 max-w-2xl mx-auto mb-8">
@@ -73,8 +73,8 @@ export default function HomeServices() {
           
           {/* Decision Helper */}
           <Reveal>
-            <div className="bg-alira-onyx/5 dark:bg-alira-onyx/20 p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 mb-8 text-center">
-              <h3 className="text-lg font-bold text-alira-onyx dark:text-alira-porcelain mb-4">Which service is right for you?</h3>
+            <div className="bg-alira-onyx/5 dark:bg-alira-porcelain/5 p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 mb-8 text-center">
+              <h3 className="text-lg font-heading text-alira-onyx dark:text-alira-porcelain mb-4">Which service is right for you?</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm max-w-4xl mx-auto">
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-alira-gold font-bold">•</span>
@@ -113,9 +113,9 @@ export default function HomeServices() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {/* Quick Chat - Free */}
               <Reveal delay={200}>
-                <div className="bg-white dark:bg-alira-onyx/20 p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
+                <div className="bg-white dark:bg-alira-onyx p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
                   <div className="mb-4">
-                    <h4 className="text-lg font-bold text-alira-onyx dark:text-alira-porcelain mb-2">{services[0].title}</h4>
+                    <h4 className="text-lg font-heading text-alira-onyx dark:text-alira-porcelain mb-2">{services[0].title}</h4>
                     <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
                       {services[0].price}
                     </span>
@@ -135,14 +135,14 @@ export default function HomeServices() {
 
               {/* Clarity Session - Featured & Dominant */}
               <Reveal delay={300}>
-                <div className="bg-gradient-to-br from-alira-gold/12 to-white dark:from-alira-gold/20 dark:to-alira-onyx/30 p-8 rounded-xl border-2 border-alira-gold/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative text-center">
+                <div className="bg-gradient-to-br from-alira-gold/12 to-white p-8 rounded-xl border-2 border-alira-gold/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative text-center">
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <span className="bg-alira-gold text-white px-4 py-1 rounded-full text-xs font-bold">
                       MOST POPULAR
                     </span>
                   </div>
                   <div className="mb-4">
-                    <h4 className="text-xl font-bold text-alira-onyx dark:text-alira-porcelain mb-2">{services[1].title}</h4>
+                    <h4 className="text-xl font-heading text-alira-onyx dark:text-alira-porcelain mb-2">{services[1].title}</h4>
                     <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">
                       From £150
                     </span>
@@ -165,9 +165,9 @@ export default function HomeServices() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Idea to Action */}
               <Reveal delay={400}>
-                <div className="bg-white dark:bg-alira-onyx/20 p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
+                <div className="bg-white dark:bg-alira-onyx p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
                   <div className="mb-4">
-                    <h4 className="text-lg font-bold text-alira-onyx dark:text-alira-porcelain mb-2">{services[2].title}</h4>
+                    <h4 className="text-lg font-heading text-alira-onyx dark:text-alira-porcelain mb-2">{services[2].title}</h4>
                     <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">
                       From £950
                     </span>
@@ -187,9 +187,9 @@ export default function HomeServices() {
 
               {/* Operational Reset */}
               <Reveal delay={500}>
-                <div className="bg-white dark:bg-alira-onyx/20 p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
+                <div className="bg-white dark:bg-alira-onyx p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
                   <div className="mb-4">
-                    <h4 className="text-lg font-bold text-alira-onyx dark:text-alira-porcelain mb-2">{services[3].title}</h4>
+                    <h4 className="text-lg font-heading text-alira-onyx dark:text-alira-porcelain mb-2">{services[3].title}</h4>
                     <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">
                       From £1,500
                     </span>
@@ -209,9 +209,9 @@ export default function HomeServices() {
 
               {/* Build With Us */}
               <Reveal delay={600}>
-                <div className="bg-white dark:bg-alira-onyx/20 p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
+                <div className="bg-white dark:bg-alira-onyx p-6 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 hover:shadow-lg transition-all duration-300 text-center">
                   <div className="mb-4">
-                    <h4 className="text-lg font-bold text-alira-onyx dark:text-alira-porcelain mb-2">{services[4].title}</h4>
+                    <h4 className="text-lg font-heading text-alira-onyx dark:text-alira-porcelain mb-2">{services[4].title}</h4>
                     <span className="bg-alira-gold text-white px-3 py-1 rounded-full text-sm font-medium">
                       From £2,000
                     </span>

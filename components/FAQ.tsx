@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Reveal from './Reveal'
-import ArchitecturalGrid from './ArchitecturalGrid'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
 export default function FAQ() {
@@ -32,22 +31,16 @@ export default function FAQ() {
   }
 
   return (
-    <section className="py-24 bg-alira-porcelain/40 dark:bg-alira-onyx/40 relative overflow-hidden">
-      {/* Architectural grid background */}
-      <ArchitecturalGrid 
-        variant="minimal" 
-        opacity={0.15}
-        size="lg"
-      />
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
+    <section className="py-24 bg-gradient-to-br from-alira-gold/3 via-alira-gold/5 to-alira-gold/8 dark:from-alira-gold/8 dark:via-alira-onyx dark:to-alira-gold/3">
+      <div className="container mx-auto px-6 lg:px-8">
         <Reveal>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+              <h2 className="text-4xl md:text-5xl font-heading text-alira-onyx mb-6">
                 Frequently Asked Questions
               </h2>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
-              <p className="text-xl text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-2xl mx-auto">
+              <p className="text-xl text-alira-onyx/70 max-w-2xl mx-auto">
                 Everything you need to know about getting your simple plan.
               </p>
             </div>
@@ -55,19 +48,19 @@ export default function FAQ() {
             <div className="max-w-3xl mx-auto space-y-4">
               {faqs.map((faq, index) => (
                 <Reveal key={index} delay={index * 100}>
-                  <div className="bg-white dark:bg-alira-onyx/20 rounded-2xl border border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/20 transition-all duration-300 overflow-hidden">
+                  <div className="bg-white rounded-2xl border border-alira-onyx/10 hover:border-alira-gold/20 transition-all duration-300 overflow-hidden">
                     <button
                       onClick={() => toggleFAQ(index)}
-                      className="w-full p-6 text-left flex items-center justify-between hover:bg-alira-porcelain/20 dark:hover:bg-alira-onyx/20 transition-colors duration-200"
+                      className="w-full p-6 text-left flex items-center justify-between hover:bg-alira-porcelain/20 transition-colors duration-200"
                     >
-                      <h3 className="text-lg font-bold text-alira-onyx dark:text-alira-porcelain pr-4">
+                      <h3 className="text-lg font-heading text-alira-onyx pr-4">
                         {faq.q}
                       </h3>
                       <div className="flex-shrink-0">
                         {openIndex === index ? (
                           <ChevronUp className="w-5 h-5 text-alira-gold" />
                         ) : (
-                          <ChevronDown className="w-5 h-5 text-alira-onyx/60 dark:text-alira-porcelain/60" />
+                          <ChevronDown className="w-5 h-5 text-alira-onyx/60" />
                         )}
                       </div>
                     </button>
@@ -78,7 +71,7 @@ export default function FAQ() {
                       }`}
                     >
                       <div className="px-6 pb-6">
-                        <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
+                        <p className="text-alira-onyx/80 leading-relaxed">
                           {faq.a}
                         </p>
                       </div>

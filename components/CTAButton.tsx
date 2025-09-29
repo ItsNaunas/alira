@@ -45,10 +45,29 @@ export default function CTAButton({
     }
   }, [testVariants, testKey])
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
     // Track CTA click
     const finalText = typeof children === 'string' ? children : buttonText
     conversionEvents.ctaClicked(location, finalText)
+    
+    // Handle smooth scrolling for anchor links
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      const targetId = href.substring(1)
+      const targetElement = document.getElementById(targetId)
+      
+      if (targetElement) {
+        // Calculate offset to show form header fully visible
+        const headerOffset = 80 // Adjust this value as needed for your header height
+        const elementPosition = targetElement.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      }
+    }
   }
 
   return (

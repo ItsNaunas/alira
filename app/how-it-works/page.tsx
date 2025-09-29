@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Reveal from '@/components/Reveal'
 import CTAButton from '@/components/CTAButton'
+import WhatYouGet from '@/components/WhatYouGet'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
@@ -250,6 +251,9 @@ export default function HowItWorksPage() {
           </div>
         </div>
       </section>
+
+      {/* What You Get Section */}
+      <WhatYouGet />
 
       {/* CTA Section */}
       <section className="py-24 bg-alira-onyx dark:bg-alira-porcelain">

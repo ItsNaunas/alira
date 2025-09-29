@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -59,17 +61,17 @@
 body {
   color: hsl(var(--foreground));
   background: hsl(var(--background));
-  font-family: 'Inter', sans-serif;
+  font-family: 'CUSTOM_BODY_FONT', 'Inter', sans-serif;
 }
 
 /* ALIRA. Typography */
 .alira-heading {
-  font-family: 'Times New Roman', serif;
+  font-family: 'DM Serif Display', serif;
   letter-spacing: -0.02em;
 }
 
 .alira-body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'CUSTOM_BODY_FONT', 'Inter', sans-serif;
 }
 
 /* ALIRA. Design System Utilities */
@@ -93,9 +95,10 @@ body {
 }
 
 .h2 {
+  font-family: 'DM Serif Display', serif;
   font-size: 2.25rem;
   line-height: 1.2;
-  font-weight: 700;
+  font-weight: 400;
   color: #0B0B0B;
   letter-spacing: -0.02em;
 }
@@ -105,9 +108,10 @@ body {
 }
 
 .h3 {
+  font-family: 'DM Serif Display', serif;
   font-size: 1.5rem;
   line-height: 1.4;
-  font-weight: 600;
+  font-weight: 400;
   color: #0B0B0B;
   letter-spacing: -0.02em;
 }

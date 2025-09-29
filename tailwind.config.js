@@ -60,8 +60,10 @@ module.exports = {
         },
       },
       fontFamily: {
-        serif: ["Times New Roman", "serif"],
-        sans: ["Inter", "Helvetica Neue", "sans-serif"],
+        serif: ["DM Serif Display", "Times New Roman", "serif"],
+        sans: ["CUSTOM_BODY_FONT", "Inter", "Helvetica Neue", "sans-serif"],
+        heading: ["DM Serif Display", "Times New Roman", "serif"],
+        body: ["CUSTOM_BODY_FONT", "Inter", "Helvetica Neue", "sans-serif"],
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1.5' }],
