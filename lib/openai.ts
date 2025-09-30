@@ -156,7 +156,7 @@ Project Details:
     
     const completion = await retryWithBackoff(async () => {
       return await openai.chat.completions.create({
-        model: 'gpt-4.1-mini',
+        model: 'gpt-4o-mini',
         messages: [
           {
             role: 'system',
