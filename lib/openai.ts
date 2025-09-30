@@ -84,6 +84,33 @@ export interface BusinessCaseOutline {
   competitive_advantage: string
 }
 
+// Retry function with exponential backoff
+async function retryWithBackoff<T>(
+  fn: () => Promise<T>,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<T> {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn()
+    } catch (error: any) {
+      console.log(`Attempt ${attempt} failed:`, error.message)
+      
+      // If it's a rate limit error and we have retries left
+      if (error.status === 429 && attempt < maxRetries) {
+        const delay = baseDelay * Math.pow(2, attempt - 1) // Exponential backoff
+        console.log(`Rate limited. Retrying in ${delay}ms...`)
+        await new Promise(resolve => setTimeout(resolve, delay))
+        continue
+      }
+      
+      // If it's not a rate limit error or we're out of retries, throw
+      throw error
+    }
+  }
+  throw new Error('Max retries exceeded')
+}
+
 export async function generateBusinessCase(formData: any): Promise<BusinessCaseOutline> {
   console.log("=== OPENAI FUNCTION DEBUG ===")
   console.log("Form data received:", JSON.stringify(formData, null, 2))
@@ -111,25 +138,27 @@ Project Details:
 - Additional Notes: ${formData.notes || 'None provided'}
 `
 
-    console.log("Making OpenAI API call...")
+    console.log("Making OpenAI API call with retry logic...")
     console.log("User prompt:", userPrompt)
     
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        {
-          role: 'system',
-          content: BUSINESS_CASE_PROMPT
-        },
-        {
-          role: 'user',
-          content: userPrompt
-        }
-      ],
-      temperature: 0.3,
-      max_tokens: 2000,
-      response_format: { type: 'json_object' }
-    })
+    const completion = await retryWithBackoff(async () => {
+      return await openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: BUSINESS_CASE_PROMPT
+          },
+          {
+            role: 'user',
+            content: userPrompt
+          }
+        ],
+        temperature: 0.3,
+        max_tokens: 2000,
+        response_format: { type: 'json_object' }
+      })
+    }, 3, 2000) // 3 retries, 2 second base delay
     
     console.log("OpenAI API call completed successfully")
     console.log("Completion object:", {
