@@ -4,6 +4,14 @@ import jsPDF from 'jspdf'
 // Safe string helper to prevent undefined/null issues
 const safe = (s?: string | null): string => (s && String(s).trim() ? String(s).trim() : '—')
 
+// Calendly booking URL
+const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/alira-capital'
+
+// Footer notes for specific pages
+const FOOTER_NOTES: Record<number, string> = {
+  2: 'This page is not here to answer questions. It is here to make your current position visible, because clarity begins with seeing things as they are.'
+}
+
 // --- Typographic + spacing tokens (mm) with proper buffers ---
 const TOKENS = {
   MARGIN: 18,
@@ -99,8 +107,19 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       doc.rect(0, 0, pageWidth, pageHeight, 'F')
     }
 
-    const addFooter = (pageNum: number, total: number): void => {
-      const y = pageHeight - 6
+    const addFooter = (pageNum: number, total: number, note?: string): void => {
+      let y = pageHeight - 6
+      
+      // If there's a note, draw it centered above the footer line
+      if (note) {
+        const noteY = pageHeight - 12
+        doc.setFont('helvetica', 'normal').setFontSize(8).setTextColor(...THEME.textMuted)
+        const noteLines = doc.splitTextToSize(note, contentWidth - 20)
+        noteLines.forEach((line: string, i: number) => {
+          doc.text(line, pageWidth / 2, noteY - (noteLines.length - 1 - i) * 3, { align: 'center' })
+        })
+      }
+      
       doc.setFont('helvetica', 'normal').setFontSize(8).setTextColor(...THEME.footer)
       doc.text('ALIRA. Confidential', margin, y)
       doc.text(`Page ${pageNum}/${total}`, pageWidth - margin, y, { align: 'right' })
@@ -118,6 +137,12 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       currentY = margin
       paintBackground()
       addHeader()
+    }
+
+    // Keep-together helper: ensures content doesn't get split awkwardly
+    const writeKeepTogether = (requiredHeight: number, writer: () => void): void => {
+      if (room() < requiredHeight) nextPage()
+      writer()
     }
 
     // ===== Buffered Text Writers =====
@@ -178,6 +203,76 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
 
       currentY += titleH
       spacer(TOKENS.TITLE_BOTTOM)
+    }
+
+    const addCenteredPageTitle = (title: string): void => {
+      if (currentY > TOKENS.MARGIN + 0.5) spacer(TOKENS.TITLE_TOP)
+
+      const titleH = 12
+      ensureSpace(titleH + TOKENS.TITLE_BOTTOM)
+
+      doc.setFont('helvetica', 'bold').setFontSize(16).setTextColor(...THEME.text)
+      doc.text(title, pageWidth / 2, currentY, { align: 'center' })
+      doc.setDrawColor(...THEME.gold).setLineWidth(0.8)
+      const underlineStart = pageWidth / 2 - TOKENS.UNDERLINE_W / 2
+      const underlineEnd = pageWidth / 2 + TOKENS.UNDERLINE_W / 2
+      doc.line(underlineStart, currentY + 5, underlineEnd, currentY + 5)
+
+      currentY += titleH
+      spacer(TOKENS.TITLE_BOTTOM)
+    }
+
+    const addCenteredLabel = (label: string): void => {
+      const h = 6
+      ensureSpace(h + TOKENS.PARA)
+      
+      doc.setFont('helvetica', 'bold').setFontSize(9).setTextColor(...THEME.gold)
+      doc.text(label, pageWidth / 2, currentY, { align: 'center' })
+      
+      currentY += h
+      spacer(TOKENS.PARA)
+    }
+
+    const addCenteredBody = (text: string, opts?: { top?: number; bottom?: number }): void => {
+      const top = opts?.top ?? TOKENS.PARA
+      const bottom = opts?.bottom ?? TOKENS.PARA
+
+      const lines = doc.splitTextToSize(text, contentWidth)
+      const textH = measureLines(lines)
+
+      ensureSpace(top + textH + bottom)
+
+      spacer(top)
+      doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+      lines.forEach((line: string, i: number) => {
+        doc.text(line, pageWidth / 2, currentY + i * (textH / lines.length), { align: 'center' })
+      })
+      currentY += textH
+      spacer(bottom)
+    }
+
+    const addCenteredQuote = (text: string, subtitle?: string): void => {
+      const lines = doc.splitTextToSize(text, contentWidth - 40)
+      const textH = measureLines(lines)
+      const subtitleH = subtitle ? 5 : 0
+      
+      ensureSpace(TOKENS.PARA + textH + subtitleH + TOKENS.PARA)
+
+      spacer(TOKENS.PARA)
+      doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+      lines.forEach((line: string, i: number) => {
+        doc.text(line, pageWidth / 2, currentY + i * (textH / lines.length), { align: 'center' })
+      })
+      currentY += textH
+      
+      if (subtitle) {
+        spacer(2)
+        doc.setFont('helvetica', 'italic').setFontSize(9)
+        doc.text(subtitle, pageWidth / 2, currentY, { align: 'center' })
+        currentY += subtitleH
+      }
+      
+      spacer(TOKENS.PARA)
     }
 
     const addSubheading = (label: string): void => {
@@ -565,7 +660,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     const totalPages = doc.getNumberOfPages()
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i)
-      addFooter(i, totalPages)
+      addFooter(i, totalPages, FOOTER_NOTES[i])
     }
 
     // Buffer out
