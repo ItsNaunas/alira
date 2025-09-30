@@ -456,16 +456,16 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addBody(safe(data.business_idea))
 
     addSubheading('What matters most to you')
-    addCenteredLabel('AI Analysis')
-    const keyGoals = (data.aiAnalysis?.objectives?.slice(0, 3) ?? []).map((goal, i) => `Key Goal ${i + 1}: ${goal}`)
+    addBody('Based on the AI\'s analysis of your business idea, the key strategic priorities identified are:')
+    const keyGoals = (data.aiAnalysis?.objectives?.slice(0, 3) ?? []).map(String)
     addBullets(keyGoals)
 
     addSubheading('Things to be mindful of')
-    addCenteredLabel('AI Analysis')
+    addBody('The AI has identified the following strategic considerations and potential risks to be mindful of as you move forward:')
     const mindful = data.aiAnalysis?.risk_assessment
-      ? data.aiAnalysis?.risk_assessment.split(/[.;]\s+/).slice(0, 3).map((risk, i) => `Risk ${i + 1}: ${risk}`)
-      : (data.aiAnalysis?.expected_outcomes ?? []).slice(0, 3).map((risk, i) => `Risk ${i + 1}: ${risk}`)
-    addBullets(mindful)
+      ? data.aiAnalysis?.risk_assessment.split(/[.;]\s+/).slice(0, 3).filter(Boolean)
+      : (data.aiAnalysis?.expected_outcomes ?? []).slice(0, 3)
+    addBullets(mindful.map(String))
 
     // Note: The paragraph "This page is not here to answer questions..." is now in the page 2 footer (see FOOTER_NOTES)
 
@@ -475,11 +475,11 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addBody('Every idea, project, or business begins with a reason. A plan exists to connect that reason to the people who need it.')
 
     addSubheading('Purpose')
-    addCenteredLabel('AI Analysis')
+    addBody('The AI analysis has identified the following core business purpose and problem you are addressing:')
     addBody(safe(data.aiAnalysis?.problem_statement) || `Building around ${safe(data.business_idea)}`)
 
     addSubheading('Desired Outcomes (6–12 Months)')
-    addCenteredLabel('AI Analysis')
+    addBody('Based on your business idea, the AI projects these key outcomes within the next 6-12 months:')
     addBullets((data.aiAnalysis?.expected_outcomes ?? []).slice(0, 3).map(String))
 
     addSubheading('Summary')
@@ -491,11 +491,11 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addBody('Every stage has its reality. The point of a plan is to see it clearly, then create movement.')
 
     addSubheading('Current Position')
-    addCenteredLabel('AI Analysis')
+    addBody('The AI has assessed your current business position as follows:')
     addBody(safe(data.aiAnalysis?.current_state) || 'Early stage business development')
 
     addSubheading('Opportunities')
-    addCenteredLabel('AI Analysis')
+    addBody('Based on this analysis, the AI has identified these strategic opportunity areas for growth:')
     addBullets((data.aiAnalysis?.proposed_solution?.map(s => s.pillar) ?? ['Strategic positioning', 'Operational efficiency', 'Market expansion']).slice(0, 3))
 
     addSubheading('How ALIRA Sees It')
