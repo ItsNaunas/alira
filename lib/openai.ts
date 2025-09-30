@@ -1,12 +1,22 @@
 import OpenAI from 'openai'
 
+// Comprehensive API key validation
+if (!process.env.OPENAI_API_KEY) {
+  console.error('[OPENAI] ❌ OPENAI_API_KEY is missing from environment variables!')
+  console.error('[OPENAI] Available env vars:', Object.keys(process.env).filter(k => k.includes('OPEN')))
+  throw new Error('Missing OPENAI_API_KEY environment variable')
+}
+
+console.log('[OPENAI] ✅ OPENAI_API_KEY found:', {
+  present: true,
+  length: process.env.OPENAI_API_KEY.length,
+  startsWithSk: process.env.OPENAI_API_KEY.startsWith('sk-'),
+  preview: `${process.env.OPENAI_API_KEY.substring(0, 10)}...`
+})
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
-
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error('Missing OPENAI_API_KEY environment variable')
-}
 
 // ALIRA brand voice tokens
 const ALIRA_BRAND_VOICE = `
@@ -112,11 +122,14 @@ async function retryWithBackoff<T>(
 }
 
 export async function generateBusinessCase(formData: any): Promise<BusinessCaseOutline> {
-  console.log("=== OPENAI FUNCTION DEBUG ===")
+  console.log("========================================")
+  console.log("🚀 OPENAI: generateBusinessCase() CALLED")
+  console.log("========================================")
   console.log("Form data received:", JSON.stringify(formData, null, 2))
   console.log("OpenAI API Key present:", !!process.env.OPENAI_API_KEY)
   console.log("OpenAI API Key length:", process.env.OPENAI_API_KEY?.length || 0)
   console.log("OpenAI API Key starts with sk-:", process.env.OPENAI_API_KEY?.startsWith('sk-') || false)
+  console.log("Current timestamp:", new Date().toISOString())
   
   try {
     const userPrompt = `
