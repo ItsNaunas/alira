@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase-server'
 import { z } from 'zod'
 import { sendPersonalPlanEmail, EmailData } from '@/lib/enhanced-email'
 import { PersonalPlanPDFData } from '@/lib/enhanced-pdf'
+import { generateBusinessCase } from '@/lib/openai'
 
 const submitDraftSchema = z.object({
   id: z.string().uuid(),
@@ -62,6 +63,45 @@ export async function POST(request: NextRequest) {
       hasData: !!draft.data 
     })
 
+    // Generate AI analysis
+    let aiAnalysis = null
+    try {
+      console.log('[SUBMIT-ENHANCED] Generating AI analysis...')
+      
+      const aiInput = {
+        businessName: draft.name || 'Business',
+        industry: draft.data?.service_interest?.join(', ') || 'General business',
+        stage: 'Early stage',
+        challenges: draft.data?.current_challenges || 'Business development challenges',
+        goalsShort: draft.data?.immediate_goals || 'Short-term business goals',
+        goalsLong: 'Long-term business growth and sustainability',
+        resources: draft.data?.current_tools || 'Available business resources',
+        budget: 'To be determined',
+        timeline: 'Flexible timeline',
+        service: draft.data?.service_interest?.join(', ') || 'General business improvement',
+        notes: draft.data?.business_idea || 'Business concept not provided'
+      }
+      
+      console.log('[SUBMIT-ENHANCED] AI input data:', JSON.stringify(aiInput, null, 2))
+      console.log('[SUBMIT-ENHANCED] OpenAI API Key present:', !!process.env.OPENAI_API_KEY)
+      console.log('[SUBMIT-ENHANCED] OpenAI API Key length:', process.env.OPENAI_API_KEY?.length || 0)
+      
+      aiAnalysis = await generateBusinessCase(aiInput)
+      console.log('[SUBMIT-ENHANCED] AI analysis generated successfully:', {
+        hasProblemStatement: !!aiAnalysis?.problem_statement,
+        objectivesCount: aiAnalysis?.objectives?.length || 0,
+        solutionsCount: aiAnalysis?.proposed_solution?.length || 0
+      })
+    } catch (error) {
+      console.error('[SUBMIT-ENHANCED] AI analysis failed:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        raw: error
+      })
+      // Continue without AI analysis if it fails, but log the failure
+      console.warn('[SUBMIT-ENHANCED] Continuing without AI analysis due to generation failure')
+    }
+
     // Update draft status to submitted and email
     const { error: updateError } = await supabase
       .from('intake_forms')
@@ -93,7 +133,8 @@ export async function POST(request: NextRequest) {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric'
-      })
+      }),
+      aiAnalysis: aiAnalysis // Include AI analysis
     }
 
     console.log('PDF data prepared:', {
@@ -101,7 +142,13 @@ export async function POST(request: NextRequest) {
       hasBusinessIdea: !!pdfData.business_idea,
       hasChallenges: !!pdfData.current_challenges,
       hasGoals: !!pdfData.immediate_goals,
-      serviceCount: pdfData.service_interest?.length || 0
+      serviceCount: pdfData.service_interest?.length || 0,
+      hasAiAnalysis: !!pdfData.aiAnalysis,
+      aiAnalysisDetails: pdfData.aiAnalysis ? {
+        hasProblemStatement: !!pdfData.aiAnalysis.problem_statement,
+        objectivesCount: pdfData.aiAnalysis.objectives?.length || 0,
+        solutionsCount: pdfData.aiAnalysis.proposed_solution?.length || 0
+      } : null
     })
 
     // Send email with PDF using enhanced service
