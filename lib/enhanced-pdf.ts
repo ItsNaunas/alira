@@ -51,9 +51,32 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
   try {
     if (!data) throw new Error('No data provided for PDF generation')
 
+    // ===== DEBUG LOGGING FOR AI ANALYSIS =====
+    console.log('========================================')
+    console.log('PDF GENERATION - AI ANALYSIS DEBUG')
+    console.log('========================================')
+    console.log('Has AI Analysis?', !!data.aiAnalysis)
+    console.log('AI Analysis Object:', JSON.stringify(data.aiAnalysis, null, 2))
+    
+    if (data.aiAnalysis) {
+      console.log('✅ AI Analysis exists!')
+      console.log('  - problem_statement:', data.aiAnalysis.problem_statement)
+      console.log('  - current_state:', data.aiAnalysis.current_state)
+      console.log('  - objectives count:', data.aiAnalysis.objectives?.length)
+      console.log('  - objectives:', data.aiAnalysis.objectives)
+      console.log('  - expected_outcomes count:', data.aiAnalysis.expected_outcomes?.length)
+      console.log('  - expected_outcomes:', data.aiAnalysis.expected_outcomes)
+      console.log('  - proposed_solution count:', data.aiAnalysis.proposed_solution?.length)
+      console.log('  - proposed_solution:', data.aiAnalysis.proposed_solution)
+      console.log('  - risk_assessment:', data.aiAnalysis.risk_assessment)
+    } else {
+      console.log('❌ NO AI ANALYSIS DATA!')
+    }
+    console.log('========================================')
+    
     // Create PDF document
     const doc = new jsPDF('p', 'mm', 'a4')
-
+    
     // Page dimensions and margins
     const pageWidth = 210
     const pageHeight = 297
@@ -61,7 +84,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     const contentWidth = pageWidth - margin * 2
     const footerHeight = 10
     const maxContentHeight = pageHeight - margin - footerHeight - TOKENS.FOOTER_SAFE
-
+    
     let currentY = margin
     doc.setLineHeightFactor(1.3)
 
@@ -124,7 +147,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       doc.text('ALIRA. Confidential', margin, y)
       doc.text(`Page ${pageNum}/${total}`, pageWidth - margin, y, { align: 'right' })
     }
-
+    
     const addHeader = (): void => {
       doc.setDrawColor(...THEME.line).setLineWidth(0.2)
       doc.line(margin, margin - 8, pageWidth - margin, margin - 8)
@@ -329,14 +352,14 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       const innerWidth = contentWidth - TOKENS.BOX_PAD_H * 2
       const allLines = doc.splitTextToSize(content || ' ', innerWidth)
       let idx = 0
-
+      
       while (idx < allLines.length) {
         const fill = alt ? THEME.panelAlt : THEME.panel
         const available = maxContentHeight - currentY - (TOKENS.BOX_PAD_V * 2 + 4)
         
         if (available < Math.max(minH, TOKENS.MIN_BLOCK)) {
           nextPage()
-          continue
+          continue 
         }
 
         let chunk: string[] = []
@@ -350,7 +373,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
           chunk = [allLines[idx]]
           idx++
         }
-
+        
         const textH = Math.max(measureLines(chunk), minH)
         const boxH = textH + TOKENS.BOX_PAD_V * 2 + 4
         ensureSpace(boxH)
@@ -698,13 +721,13 @@ export function getPDFBase64(pdfBuffer: Buffer): string {
 
 // Optional: simple business case PDF (kept for compatibility)
 export function generateBusinessCasePDF(data: any): Promise<Buffer> {
-  const doc = new jsPDF('p', 'mm', 'a4')
+    const doc = new jsPDF('p', 'mm', 'a4')
   doc.setFontSize(24).setTextColor(235,235,235)
   doc.setFillColor(12,12,12); doc.rect(0,0,210,297,'F')
-  doc.text('ALIRA.', 20, 30)
+    doc.text('ALIRA.', 20, 30)
   doc.setFontSize(16).setTextColor(212,175,55)
-  doc.text('Business Case Analysis', 20, 50)
+    doc.text('Business Case Analysis', 20, 50)
   doc.setFontSize(12).setTextColor(170,170,170)
-  doc.text('Business case content would go here...', 20, 70)
+    doc.text('Business case content would go here...', 20, 70)
   return Promise.resolve(Buffer.from(doc.output('arraybuffer')))
 }
