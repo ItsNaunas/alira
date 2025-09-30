@@ -464,9 +464,6 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addSubheading('Important Notice')
     addBody('This document has been generated directly from the information you submitted. It has not been reviewed or altered by any individual. Its purpose is to give structure to your ideas, highlight areas of focus, and support reflection and forward planning.')
 
-    addSubheading('Confidentiality & Legal Disclaimer')
-    addBody('This document is confidential and intended solely for the recipient named above. The content is based entirely on your submitted responses and does not constitute professional, legal, financial, or investment advice. The structure, format, and underlying system remain the intellectual property of ALIRA Capital Ventures Ltd. No part of this document may be copied, redistributed, or reused for commercial purposes without prior written consent.')
-
     addSubheading('Company Information')
     addBody('ALIRA Capital Ventures Ltd\nRegistered in England & Wales\nCompany Registration No: 16419663\nRegistered Office: 4th Floor, Silverstream House, 45 Fitzroy Street, Fitzrovia, London, W1T 6EB, United Kingdom\n© ALIRA Capital Ventures Ltd. All rights reserved.')
 
