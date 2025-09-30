@@ -445,16 +445,16 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               </label>
               <div className="space-y-3 mb-6">
                 {serviceInterestOptions.map((option) => (
-                  <label key={option.value} className="flex items-start space-x-3 cursor-pointer p-3 border border-alira-onyx/20 rounded-lg hover:border-alira-gold/40 transition-colors">
+                  <label key={option.value} className="flex items-start space-x-3 cursor-pointer p-3 border border-alira-onyx/20 dark:border-alira-porcelain/20 rounded-lg hover:border-alira-gold/40 dark:hover:border-alira-gold/60 transition-colors">
                     <input
                       type="checkbox"
                       value={option.value}
                       {...register('service_interest')}
-                      className="mt-1 rounded border-alira-onyx/20"
+                      className="mt-1 rounded border-alira-onyx/20 dark:border-alira-porcelain/30"
                     />
                     <div>
                       <span className="text-sm font-sans font-medium text-alira-onyx dark:text-alira-porcelain block">{option.label}</span>
-                      <span className="text-xs text-alira-onyx/60">{option.description}</span>
+                      <span className="text-xs text-alira-onyx/60 dark:text-alira-porcelain/60">{option.description}</span>
                     </div>
                   </label>
                 ))}
@@ -470,21 +470,21 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               </label>
               <div className="grid grid-cols-2 gap-2 mb-4">
                 {currentToolsOptions.map((option) => (
-                  <label key={option.value} className="flex items-center space-x-2 cursor-pointer p-2 border border-alira-onyx/10 rounded hover:border-alira-gold/20 transition-colors">
+                  <label key={option.value} className="flex items-center space-x-2 cursor-pointer p-2 border border-alira-onyx/10 dark:border-alira-porcelain/20 rounded hover:border-alira-gold/20 dark:hover:border-alira-gold/40 transition-colors">
                     <input
                       type="radio"
                       value={option.value}
                       {...register('current_tools')}
-                      className="rounded border-alira-onyx/20"
+                      className="rounded border-alira-onyx/20 dark:border-alira-porcelain/30"
                     />
-                    <span className="text-xs text-alira-onyx">{option.label}</span>
+                    <span className="text-xs text-alira-onyx dark:text-alira-porcelain">{option.label}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             {/* Display saved user info */}
-            <div className="bg-alira-porcelain/30 p-4 rounded-lg border border-alira-onyx/10">
+            <div className="bg-alira-porcelain/30 dark:bg-alira-onyx-900/70 p-4 rounded-lg border border-alira-onyx/10 dark:border-alira-onyx-700">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-sans font-medium text-alira-onyx/70 dark:text-alira-porcelain/70 mb-1">
@@ -504,13 +504,13 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 </div>
               </div>
               {(!draftData?.name || !draftData?.email) && (
-                <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                  <p className="text-amber-800 text-sm">
+                <div className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 rounded-lg">
+                  <p className="text-amber-800 dark:text-amber-200 text-sm">
                     ⚠️ Missing contact information. Please start from the homepage to provide your name and email.
                   </p>
                   <a 
                     href="/" 
-                    className="inline-block mt-2 text-amber-700 underline text-sm hover:text-amber-900"
+                    className="inline-block mt-2 text-amber-700 dark:text-amber-300 underline text-sm hover:text-amber-900 dark:hover:text-amber-100"
                   >
                     Go to homepage to start over
                   </a>
@@ -525,16 +525,16 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 onCheckedChange={(checked) => setValue('consent', checked as boolean)}
               />
               <div className="space-y-1">
-                <label htmlFor="consent" className="text-sm font-sans font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                <label htmlFor="consent" className="text-sm font-sans font-medium leading-none text-alira-onyx dark:text-alira-porcelain peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   I agree to the terms and conditions *
                 </label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-alira-onyx/60 dark:text-alira-porcelain/60">
                   By submitting this form, you agree to our privacy policy and consent to being contacted about your business case.
                 </p>
               </div>
             </div>
             {errors.consent && (
-              <p className="text-red-500 text-sm">{errors.consent.message}</p>
+              <p className="text-red-400 dark:text-red-400 text-sm">{errors.consent.message}</p>
             )}
           </div>
         )

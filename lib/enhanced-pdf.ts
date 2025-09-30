@@ -1,3 +1,4 @@
+// lib/enhanced-pdf.ts
 import jsPDF from 'jspdf'
 
 // Safe string helper to prevent undefined/null issues
@@ -6,12 +7,12 @@ const safe = (s?: string | null): string => (s && String(s).trim() ? String(s).t
 // --- Typographic + spacing tokens (mm) ---
 const TOKENS = {
   MARGIN: 18,
-  BASE: 4,        // baseline unit
-  SECTION: 8,     // gap before section
-  PARA: 3,        // gap between paragraphs
-  BOX_PAD_V: 6,   // vertical padding inside boxes
-  BOX_PAD_H: 8,   // horizontal padding inside boxes
-  BOX_GAP: 6,     // gap after a box
+  BASE: 4,
+  SECTION: 8,
+  PARA: 3,
+  BOX_PAD_V: 6,
+  BOX_PAD_H: 8,
+  BOX_GAP: 6,
   UNDERLINE_W: 40
 }
 
@@ -31,461 +32,438 @@ export interface PersonalPlanPDFData {
   aiAnalysis?: BusinessCaseOutline | null
 }
 
-// Enhanced PDF generation with jsPDF (serverless-friendly)
+// Enhanced PDF generation with jsPDF (dark theme)
 export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buffer> {
   try {
-    if (!data) {
-      throw new Error('No data provided for PDF generation')
-    }
+    if (!data) throw new Error('No data provided for PDF generation')
 
-    console.log('[PDF] Generating PDF with jsPDF (serverless-friendly)')
-    console.log('[PDF] Received data:', JSON.stringify(data, null, 2))
-    console.log('[PDF] Business idea:', data.business_idea)
-    console.log('[PDF] Current challenges:', data.current_challenges)
-    console.log('[PDF] Immediate goals:', data.immediate_goals)
-    
     // Create PDF document
     const doc = new jsPDF('p', 'mm', 'a4')
-    
+
     // Page dimensions and margins
-    const pageWidth = 210 // A4 width in mm
-    const pageHeight = 297 // A4 height in mm
+    const pageWidth = 210
+    const pageHeight = 297
     const margin = TOKENS.MARGIN
     const contentWidth = pageWidth - margin * 2
     const footerHeight = 10
     const maxContentHeight = pageHeight - margin - footerHeight
-    
+
     let currentY = margin
-    let isFirstPage = true
     doc.setLineHeightFactor(1.3)
 
-    // Measure the height of a block of text (lines already split)
+    // ===== THEME (Dark) =====
+    type RGB = [number, number, number]
+    const THEME = {
+      bg: [12, 12, 12] as RGB,          // page background
+      panel: [18, 18, 18] as RGB,       // standard panel
+      panelAlt: [24, 24, 24] as RGB,    // alt panel
+      text: [235, 235, 235] as RGB,     // primary text
+      textMuted: [170, 170, 170] as RGB,// secondary
+      gold: [212, 175, 55] as RGB,      // accent
+      line: [44, 44, 44] as RGB,        // subtle dividers
+      footer: [150, 150, 150] as RGB    // footer text
+    }
+
+    // ===== Utils =====
     const measureLines = (lines: string[] | string): number => {
       const arr = Array.isArray(lines) ? lines : [lines]
       const dims = doc.getTextDimensions(arr.join('\n'))
-      return dims.h // jsPDF returns height in current units (mm)
-    }
-    
-    // Helper function to check if we need a new page
-    const checkPageBreak = (requiredHeight: number): void => {
-      if (currentY + requiredHeight > maxContentHeight) {
-        doc.addPage()
-        currentY = margin
-        isFirstPage = false
-      }
+      return dims.h
     }
 
-    // Helper to ensure space during writing (mid-flow page breaks)
     const ensureSpace = (h: number): void => {
       if (currentY + h > maxContentHeight) {
-        doc.addPage()
-        currentY = margin
+        nextPage()
       }
     }
 
-    // Helper to force a page break
-    const forcePageBreak = (): void => {
-      doc.addPage()
-      currentY = margin
+    const paintBackground = (): void => {
+      // fill entire page bg
+      doc.setFillColor(...THEME.bg)
+      doc.rect(0, 0, pageWidth, pageHeight, 'F')
     }
 
-    // Debug helper to track positions (can be removed later)
-    const logPosition = (context: string): void => {
-      console.log(`[PDF Debug] ${context}: currentY=${currentY}, maxContentHeight=${maxContentHeight}, remaining=${maxContentHeight - currentY}`)
-    }
-
-    // Helper to add consistent spacing before major sections
-    const addMajorSectionSpacing = (): void => {
-      currentY += TOKENS.SECTION * 1.5 // 12mm spacing before major sections
-    }
-    
-    // Helper function to add footer to current page
     const addFooter = (pageNum: number, total: number): void => {
       const y = pageHeight - 6
-      doc.setFontSize(8).setTextColor(102)
+      doc.setFont('helvetica', 'normal').setFontSize(8).setTextColor(...THEME.footer)
       doc.text('ALIRA. Confidential', margin, y)
       doc.text(`Page ${pageNum}/${total}`, pageWidth - margin, y, { align: 'right' })
     }
-    
-    // Helper function to add a professional section
-    const addSection = (title: string, content: string, isFirstSection = false): void => {
-      // Skip empty sections to avoid crowding
-      if (!safe(content) || safe(content) === '—') {
-        return
-      }
 
-      const contentLines = doc.splitTextToSize(content, contentWidth)
-      // Estimate: title block ~ 10mm + underline + spacing
-      const titleBlock = 12
-      const contentHeight = measureLines(contentLines) + TOKENS.PARA
-      const totalHeight = (isFirstSection ? 0 : TOKENS.SECTION) + titleBlock + contentHeight
+    const addHeader = (): void => {
+      // subtle header line
+      doc.setDrawColor(...THEME.line).setLineWidth(0.2)
+      doc.line(margin, margin - 8, pageWidth - margin, margin - 8)
+      // brand tag
+      doc.setFont('helvetica', 'bold').setFontSize(11).setTextColor(...THEME.text)
+      doc.text('ALIRA.', margin, margin - 10)
+    }
 
-      checkPageBreak(totalHeight)
-
-      if (!isFirstSection) currentY += TOKENS.SECTION
-
-      doc.setFontSize(14).setTextColor(26).setFont('helvetica', 'bold')
+    const addPageTitle = (title: string): void => {
+      doc.setFont('helvetica', 'bold').setFontSize(16).setTextColor(...THEME.text)
       doc.text(title, margin, currentY)
-
-      doc.setDrawColor(212, 175, 55).setLineWidth(0.8)
+      doc.setDrawColor(...THEME.gold).setLineWidth(0.8)
       doc.line(margin, currentY + 5, margin + TOKENS.UNDERLINE_W, currentY + 5)
+      currentY += 12
+    }
 
-      doc.setFontSize(10).setTextColor(60).setFont('helvetica', 'normal')
-      const paragraphs = content.split(/\n\s*\n/).map(safe)
-      currentY += 12 // Move past title and underline
+    const addSubheading = (label: string): void => {
+      ensureSpace(10)
+      doc.setFont('helvetica', 'bold').setFontSize(12).setTextColor(...THEME.text)
+      doc.text(label, margin, currentY)
+      currentY += 8
+    }
 
-      // Add mid-paragraph page breaks
-      for (const p of paragraphs) {
-        if (!p) continue
-        const lines = doc.splitTextToSize(p, contentWidth)
-        const blockH = measureLines(lines)
-        // break BEFORE writing if needed
-        ensureSpace(blockH + TOKENS.PARA)
+    const addBody = (text: string): void => {
+      const lines = doc.splitTextToSize(text, contentWidth)
+      doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+      ensureSpace(measureLines(lines) + TOKENS.PARA)
+      doc.text(lines, margin, currentY)
+      currentY += measureLines(lines) + TOKENS.PARA
+    }
+
+    const addBullets = (items: string[]): void => {
+      doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+      for (const it of items.filter(Boolean)) {
+        const bullet = `• ${it}`
+        const lines = doc.splitTextToSize(bullet, contentWidth)
+        ensureSpace(measureLines(lines) + TOKENS.PARA)
         doc.text(lines, margin, currentY)
-        currentY += blockH + TOKENS.PARA
+        currentY += measureLines(lines) + TOKENS.PARA
       }
     }
-    
-    // Helper function to add a highlighted box with better text fitting
-    const addHighlightBox = (content: string, background: number[] = [248,249,250]): void => {
+
+    const addHighlightBox = (content: string, alt = false): void => {
       const innerWidth = contentWidth - TOKENS.BOX_PAD_H * 2
       const lines = doc.splitTextToSize(content, innerWidth)
-      let idx = 0
-      
-      while (idx < lines.length) {
-        // take as many lines as fit on this page
-        let chunk: string[] = []
-        // Reserve more space for box chrome and footer
-        const available = maxContentHeight - currentY - TOKENS.BOX_PAD_V * 2 - 20
-        // if nothing fits, go to next page
-        if (available < 15) { 
-          forcePageBreak()
-          continue 
-        }
-        // accumulate lines until height would overflow - be more conservative
-        for (; idx < lines.length; idx++) {
-          const tryChunk = [...chunk, lines[idx]]
-          const h = measureLines(tryChunk)
-          if (h > available - 5) break // Leave 5mm buffer
-          chunk = tryChunk
-        }
-        
-        // Ensure we have at least some content in each chunk
-        if (chunk.length === 0 && idx < lines.length) {
-          chunk = [lines[idx]]
-          idx++
-        }
-        
-        // draw this chunk's box with better sizing
-        const textH = measureLines(chunk)
-        const boxH = textH + TOKENS.BOX_PAD_V * 2 + 4 // Extra padding for readability
-        doc.setFillColor(background[0], background[1], background[2])
-        doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'F')
-        doc.setFontSize(10).setTextColor(60)
-        doc.text(chunk, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 4)
-        currentY += boxH + TOKENS.BOX_GAP
-        // if more lines remain, new page for next chunk
-        if (idx < lines.length) forcePageBreak()
-      }
-      // Add extra spacing after highlight boxes to prevent crowding
-      currentY += TOKENS.SECTION
+      const textH = measureLines(lines)
+      const boxH = textH + TOKENS.BOX_PAD_V * 2 + 4
+      ensureSpace(boxH + TOKENS.BOX_GAP)
+
+      const fill = alt ? THEME.panelAlt : THEME.panel
+      doc.setFillColor(...fill)
+      doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'F')
+
+      doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+      doc.text(lines, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 4)
+
+      currentY += boxH + TOKENS.BOX_GAP
     }
-    
-    // Helper function to add a two-column layout
+
     const addTwoColumn = (leftTitle: string, leftContent: string, rightTitle: string, rightContent: string): void => {
       const gutter = 10
       const columnWidth = (contentWidth - gutter) / 2
+
       const leftLines = doc.splitTextToSize(leftContent, columnWidth)
       const rightLines = doc.splitTextToSize(rightContent, columnWidth)
-      const leftH = measureLines(leftLines)
-      const rightH = measureLines(rightLines)
-      const headH = 8 // title line height (increased for better spacing)
-      const blockH = Math.max(leftH, rightH) + headH + TOKENS.PARA
+      const headH = 8
+      const blockH = Math.max(measureLines(leftLines), measureLines(rightLines)) + headH + TOKENS.PARA
       ensureSpace(blockH + TOKENS.SECTION)
 
-      // Left column
-      doc.setFontSize(12).setTextColor(26).setFont('helvetica', 'bold')
+      // Left header
+      doc.setFont('helvetica', 'bold').setFontSize(12).setTextColor(...THEME.text)
       doc.text(leftTitle, margin, currentY)
-      doc.setFontSize(9).setTextColor(60).setFont('helvetica', 'normal')
+      // Left body
+      doc.setFont('helvetica', 'normal').setFontSize(9).setTextColor(...THEME.textMuted)
       doc.text(leftLines, margin, currentY + 8)
 
-      // Right column
-      doc.setFontSize(12).setTextColor(26).setFont('helvetica', 'bold')
+      // Right header
+      doc.setFont('helvetica', 'bold').setFontSize(12).setTextColor(...THEME.text)
       doc.text(rightTitle, margin + columnWidth + gutter, currentY)
-      doc.setFontSize(9).setTextColor(60).setFont('helvetica', 'normal')
+      // Right body
+      doc.setFont('helvetica', 'normal').setFontSize(9).setTextColor(...THEME.textMuted)
       doc.text(rightLines, margin + columnWidth + gutter, currentY + 8)
 
-      currentY += blockH + TOKENS.SECTION  // add proper gap after 2-col
+      currentY += blockH + TOKENS.SECTION
     }
+
+    const addReflectionBox = (title = 'Reflection Space'): void => {
+      addSubheading(`'${title}'`)
+      addHighlightBox('', true)
+    }
+
+    const addCTA = (label: string, url: string): void => {
+      const boxH = 14
+      ensureSpace(boxH + TOKENS.SECTION)
+      doc.setFillColor(...THEME.panelAlt)
+      doc.setDrawColor(...THEME.gold).setLineWidth(0.4)
+      doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'FD')
+      doc.setFont('helvetica', 'bold').setFontSize(10).setTextColor(...THEME.text)
+      doc.textWithLink(label, margin + TOKENS.BOX_PAD_H, currentY + 9, { url })
+      currentY += boxH + TOKENS.SECTION
+    }
+
+    const nextPage = (): void => {
+      // Footer for current page
+      const total = doc.getNumberOfPages()
+      doc.setPage(total)
+      addFooter(total, total)
+
+      // New page
+      doc.addPage()
+      currentY = margin
+      paintBackground()
+      addHeader()
+    }
+
+    // ===== Page chrome for first page =====
+    paintBackground()
+    addHeader()
 
     // Date
     const generatedDate = data.generatedDate || new Date().toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
+      day: '2-digit', month: '2-digit', year: 'numeric'
     })
-    
-    // 1. PROFESSIONAL COVER PAGE
-    // Header with logo
-    doc.setFontSize(24)
-    doc.setTextColor(26, 26, 26) // #1a1a1a
-    doc.setFont('helvetica', 'bold')
-    doc.text('ALIRA.', margin, currentY)
-    currentY += TOKENS.SECTION
-    
-    doc.setFontSize(10)
-    doc.setTextColor(212, 175, 55) // #d4af37
-    doc.setFont('helvetica', 'normal')
+
+    // ====== CONTENT ORDER (Master) ======
+
+    // PAGE 1 — COVER
+    doc.setFont('helvetica', 'bold').setFontSize(22).setTextColor(...THEME.text)
+    doc.text('ALIRA.', margin, currentY); currentY += TOKENS.SECTION
+
+    doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.gold)
     doc.text('Strategic Business Solutions', margin, currentY)
-    currentY += TOKENS.SECTION * 5 // Generous spacing before main title
-    
-    // Main title
-    doc.setFontSize(28)
-    doc.setTextColor(26, 26, 26)
-    doc.setFont('helvetica', 'bold')
-    doc.text('Your Personal Plan', margin, currentY)
-    currentY += TOKENS.SECTION * 4 // Proper spacing before client info
-    
-    // Client info box
-    doc.setFillColor(248, 249, 250)
-    doc.roundedRect(margin, currentY, contentWidth, 60, 5, 5, 'F')
-    
-    doc.setFontSize(14)
-    doc.setTextColor(26, 26, 26)
-    doc.setFont('helvetica', 'bold')
-    doc.text(`Prepared for ${safe(data.name)}`, margin + 15, currentY + 20)
-    
-    doc.setFontSize(10)
-    doc.setTextColor(102, 102, 102)
-    doc.setFont('helvetica', 'normal')
-    doc.text(`Generated on ${generatedDate}`, margin + 15, currentY + 35)
-    
-    currentY += 60 + TOKENS.SECTION * 2 // Box height + proper spacing
-    
-    // Confidentiality notice
-    doc.setFontSize(8)
-    doc.setTextColor(150, 150, 150)
-    doc.text('ALIRA. Confidential Business Plan', margin, currentY)
-    currentY += TOKENS.SECTION * 2 // Better spacing before next section
+    currentY += TOKENS.SECTION * 4
 
-    // 2. EXECUTIVE SUMMARY - Professional layout
-    // Add section title first
-    if (!isFirstPage) currentY += TOKENS.SECTION
-    doc.setFontSize(14).setTextColor(26).setFont('helvetica', 'bold')
-    doc.text('Executive Summary', margin, currentY)
-    doc.setDrawColor(212, 175, 55).setLineWidth(0.8)
-    doc.line(margin, currentY + 5, margin + TOKENS.UNDERLINE_W, currentY + 5)
-    currentY += 12
-    
-    // Create a professional summary box
-    const summaryContent = `Business Concept: ${safe(data.business_idea)}\n\n` +
-      `Key Objectives: ${data.aiAnalysis?.objectives?.slice(0, 3).join(' • ') || 'Strategic growth and operational efficiency'}\n\n` +
-      `Primary Considerations: ${data.aiAnalysis?.risk_assessment || 'Market competition and resource allocation'}`
-    
-    addHighlightBox(summaryContent, [248, 249, 250])
+    doc.setFont('helvetica', 'bold').setFontSize(22).setTextColor(...THEME.text)
+    doc.text('Your Personal Plan', margin, currentY); currentY += TOKENS.SECTION * 2
 
-    // === PAGE BREAK: Start Strategic Overview on new page for better layout ===
-    forcePageBreak()
-    
-    // 3. STRATEGIC OVERVIEW - Two column layout
-    logPosition('Before Strategic Overview')
-    const purpose = data.aiAnalysis?.problem_statement || `Building a sustainable business around ${safe(data.business_idea)}`
-    const outcomes = data.aiAnalysis?.expected_outcomes?.slice(0, 3) || [
-      'Establish market presence and customer base',
-      'Develop efficient operational systems', 
-      'Achieve sustainable growth metrics'
-    ]
-    
-    addSection('Strategic Overview', 'Business strategy and target outcomes overview', true)
-    addTwoColumn(
-      'Business Purpose',
-      purpose,
-      'Target Outcomes (6-12 months)',
-      outcomes.map((outcome, i) => `${i + 1}. ${outcome}`).join('\n')
-    )
-    logPosition('After Strategic Overview')
+    // Prepared For + Date card
+    doc.setFillColor(...THEME.panel)
+    doc.roundedRect(margin, currentY, contentWidth, 28, 4, 4, 'F')
+    doc.setFont('helvetica', 'bold').setFontSize(12).setTextColor(...THEME.text)
+    doc.text(`Prepared For ${safe(data.name)}`, margin + 10, currentY + 11)
+    doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+    doc.text(`Date of Issue ${generatedDate}`, margin + 10, currentY + 20)
+    currentY += 28 + TOKENS.SECTION
 
-    // Add major section spacing
-    addMajorSectionSpacing()
+    addSubheading('Important Notice')
+    addBody('This document has been generated directly from the information you submitted. It has not been reviewed or altered by any individual. Its purpose is to give structure to your ideas, highlight areas of focus, and support reflection and forward planning.')
 
-    // 4. CURRENT POSITION & OPPORTUNITIES
-    const currentPosition = data.aiAnalysis?.current_state || 'Early stage business development'
-    const opportunities = data.aiAnalysis?.proposed_solution?.map(s => s.pillar) || ['Strategic positioning', 'Operational efficiency', 'Market expansion']
-    const aliraView = data.aiAnalysis?.competitive_advantage || 'Focus on clarity over complexity, small tests over big theories, and systematic execution'
-    
-    addSection('Current Position & Opportunities', 'Analysis of current business position and growth opportunities')
-    
-    // Current position box
-    addHighlightBox(`Current State: ${currentPosition}`, [245, 248, 250])
-    
-    // Opportunities list
-    addSection('Key Opportunities', opportunities.map((opp, i) => `${i + 1}. ${opp}`).join('\n'))
-    
-    // Add extra spacing before ALIRA's perspective
-    currentY += TOKENS.SECTION
-    
-    // ALIRA's perspective
-    addHighlightBox(`ALIRA's Strategic Perspective:\n\n${aliraView}`, [252, 245, 245])
+    addSubheading('Confidentiality & Legal Disclaimer')
+    addBody('This document is confidential and intended solely for the recipient named above. The content is based entirely on your submitted responses and does not constitute professional, legal, financial, or investment advice. The structure, format, and underlying system remain the intellectual property of ALIRA Capital Ventures Ltd. No part of this document may be copied, redistributed, or reused for commercial purposes without prior written consent.')
 
-    // Add major section spacing
-    addMajorSectionSpacing()
+    addSubheading('Company Information')
+    addBody('ALIRA Capital Ventures Ltd\nRegistered in England & Wales\nCompany Registration No: 16419663\nRegistered Office: 4th Floor, Silverstream House, 45 Fitzroy Street, Fitzrovia, London, W1T 6EB, United Kingdom\n© ALIRA Capital Ventures Ltd. All rights reserved.')
 
-    // 5. STRATEGIC ROADMAP (How It Works) - Now comes first
-    const coreAim = data.aiAnalysis?.objectives?.[0] || 'Establish clear business direction and market position'
-    const obstacles = data.aiAnalysis?.problem_statement || safe(data.current_challenges) || 'Resource allocation and market positioning'
-    const ninetyDayOutcome = data.aiAnalysis?.next_steps?.[0] || safe(data.immediate_goals) || 'Complete initial market validation and customer discovery'
-    const firstTest = data.aiAnalysis?.next_steps?.[1] || 'Launch a minimum viable product or service offering'
-    const timeProtection = data.aiAnalysis?.next_steps?.[2] || 'Establish dedicated weekly business development time'
-    
-    addSection('How It Works: Strategic Roadmap', 'Step-by-step implementation plan for business development')
-    
-    // Create a professional roadmap with numbered steps
-    const roadmapSteps = [
-      { title: 'Define Core Aim', content: coreAim },
-      { title: 'Address Key Obstacles', content: obstacles },
-      { title: 'Set 90-Day Target', content: ninetyDayOutcome },
-      { title: 'Create First Test', content: firstTest },
-      { title: 'Protect Development Time', content: timeProtection }
-    ]
-    
-    roadmapSteps.forEach((step, index) => {
-      addHighlightBox(
-        `Step ${index + 1}: ${step.title}\n\n${step.content}`,
-        index % 2 === 0 ? [248, 249, 250] : [252, 252, 252]
-      )
-      // Add small gap between roadmap steps
-      if (index < roadmapSteps.length - 1) {
-        currentY += TOKENS.BASE
-      }
-    })
+    // PAGE 2 — SNAPSHOT SUMMARY
+    nextPage()
+    addPageTitle('Snapshot Summary')
+    addBody('This page reflects what you shared, your starting point, what matters most, and what may need clarity before you move forward.')
 
-    // 6. ALIRA SERVICE RECOMMENDATIONS (What You Get) - Now comes second
-    const serviceMap: Record<string, string> = {
-      'brand_product': 'Brand & Product Management\nClarify offer, shape brand, acquire first 100 customers',
-      'content_management': 'Content Management\nCapture leads, nurture prospects, automate follow-ups',
-      'digital_solutions': 'Digital Solutions & AI Integration\nBuild MVP, develop website, implement AI tools'
-    }
-    
-    const selectedServices = data.service_interest?.map((service: string) => 
-      serviceMap[service] || `${service}\nStrategic implementation and optimisation`
-    ) || ['Brand & Product Management\nClarify offer, shape brand, acquire first 100 customers']
-    
-    addSection('What You Get: ALIRA Services', 'Strategic service recommendations based on business analysis')
-    
-    selectedServices.forEach((service, index) => {
-      const [title, description] = service.split('\n')
-      addHighlightBox(
-        `${title}\n\n${description}`,
-        [245, 248, 250]
-      )
-      // Add small gap between service boxes
-      if (index < selectedServices.length - 1) {
-        currentY += TOKENS.BASE
-      }
-    })
-    
-    // Add spacing before Current Tools section
-    currentY += TOKENS.SECTION
-    
-    // Current tools section
-    addSection('Current Tools & Systems', safe(data.current_tools) || 'Standard business tools and processes')
+    addSubheading('What you shared')
+    addBody(safe(data.business_idea))
 
-    // === PAGE BREAK: Start Risk Assessment on new page ===
-    forcePageBreak()
-    
-    // 7. RISK ASSESSMENT - Dedicated page with proper structure
-    addSection('Risk Assessment & Mitigation', 'Strategic risk analysis and mitigation strategies', true)
-    
-    const risks = [
-      { 
-        title: 'Market & Competition Risk',
-        risk: data.aiAnalysis?.risk_assessment || 'Market competition and resource constraints may limit growth potential and market share acquisition',
-        mitigation: 'Develop unique value proposition and focus on efficient resource allocation with targeted market positioning'
-      },
-      { 
-        title: 'Operational Risk',
-        risk: 'Time management and prioritization challenges could delay key milestones and reduce execution effectiveness',
-        mitigation: 'Implement systematic approach with clear milestones, accountability frameworks, and regular progress reviews'
-      },
-      { 
-        title: 'Customer Risk',
-        risk: 'Customer acquisition and retention challenges may impact revenue growth and business sustainability',
-        mitigation: 'Develop targeted marketing strategy, optimise customer experience, and implement retention programmes'
-      }
-    ]
-    
-    risks.forEach((risk, index) => {
-      // Add risk in highlight box format for better structure
-      addHighlightBox(
-        `${risk.title}\n\nRisk: ${risk.risk}\n\nMitigation: ${risk.mitigation}`,
-        index % 2 === 0 ? [255, 245, 245] : [245, 245, 255]
-      )
-      
-      // Add spacing between risk items
-      if (index < risks.length - 1) {
-        currentY += TOKENS.SECTION
-      }
-    })
+    addSubheading('What matters most to you')
+    addBullets((data.aiAnalysis?.objectives?.slice(0, 3) ?? []).map(String))
 
-    // === PAGE BREAK: Start Reflection on new page ===
-    forcePageBreak()
-    
-    // 8. REFLECTION & ACTION - Dedicated page
-    addSection('Reflection & Action Planning', 'Strategic reflection questions for business development', true)
-    
-    const reflectionQuestions = [
-      'What excites you most about this plan?',
-      'What\'s one step you\'ll act on this week?',
+    addSubheading('Things to be mindful of')
+    const mindful = data.aiAnalysis?.risk_assessment
+      ? data.aiAnalysis?.risk_assessment.split(/[.;]\s+/).slice(0, 3)
+      : (data.aiAnalysis?.expected_outcomes ?? []).slice(0, 3)
+    addBullets((mindful ?? []).map(String))
+
+    addHighlightBox('This page is not here to answer questions.\n\nIt is here to make your current position visible, because clarity begins with seeing things as they are.')
+
+    // PAGE 3 — THE BIGGER PICTURE
+    nextPage()
+    addPageTitle('The Bigger Picture')
+    addBody('Every idea, project, or business begins with a reason. A plan exists to connect that reason to the people who need it.')
+
+    addSubheading('Purpose')
+    addBody(safe(data.aiAnalysis?.problem_statement) || `Building around ${safe(data.business_idea)}`)
+
+    addSubheading('Desired Outcomes (6–12 Months)')
+    addBullets((data.aiAnalysis?.expected_outcomes ?? []).slice(0, 3).map(String))
+
+    addSubheading('Audience')
+    addBody('Primary audience: (Not provided)')
+
+    addHighlightBox('The bigger picture is not about dreaming. It is about alignment. The distance between what you believe and what you do each week defines your results.')
+
+    // PAGE 4 — INSIGHTS + OPPORTUNITIES
+    nextPage()
+    addPageTitle('Insights + Opportunities')
+    addBody('Every stage has its reality. The point of a plan is to see it clearly, then create movement.')
+
+    addSubheading('Current Position')
+    addBody(safe(data.aiAnalysis?.current_state) || 'Early stage business development')
+
+    addSubheading('Opportunities')
+    addBullets((data.aiAnalysis?.proposed_solution?.map(s => s.pillar) ?? ['Strategic positioning', 'Operational efficiency', 'Market expansion']).slice(0, 3))
+
+    addSubheading('How ALIRA Sees It')
+    addBody('Ideas often stall through endless conversations or scattered tasks. Progress comes from cutting through to what matters.')
+
+    addSubheading('Summary')
+    addBody('Your position is not a problem. It is a platform. The next steps exist and can be tested quickly.')
+
+    // PAGE 5 — RECOMMENDED NEXT STEPS
+    nextPage()
+    addPageTitle('Recommended Next Steps')
+    addBody('Clarity without movement is wasted. These are practical, near-term steps drawn from your words, reframed into action.')
+
+    addSubheading('1. Name the Core Aim')
+    addBody(data.aiAnalysis?.objectives?.[0] || safe(data.immediate_goals))
+
+    addSubheading('2. Face the Obstacles')
+    addBullets([safe(data.current_challenges)])
+
+    addSubheading('3. Define a 90-Day Outcome')
+    addBody(data.aiAnalysis?.next_steps?.[0] || 'Define one measurable outcome to reach in 90 days.')
+
+    addSubheading('4. Create the First Test')
+    addBody(data.aiAnalysis?.next_steps?.[1] || 'Design a small, real-world test like a pilot offer, landing page, or targeted outreach.')
+
+    addSubheading('5. Protect the Time')
+    addBody(data.aiAnalysis?.next_steps?.[2] || 'Block two 60-minute build slots weekly and defend them.')
+
+    addReflectionBox()
+    addSubheading('Affirmation for You')
+    addBody('Momentum beats perfection. I choose movement.')
+
+    addSubheading('Closing Note')
+    addBody('Completing this plan was your first move. Keep it visible. Act on the next smallest step.')
+
+    // PAGE 6 — ABOUT ALIRA
+    nextPage()
+    addPageTitle('About ALIRA')
+    addBody('Every idea carries potential. With clear systems and steady focus, that potential can become something real.')
+
+    addSubheading('What We Believe')
+    addBullets([
+      'Clarity is stronger than complexity.',
+      'Systems should serve people, not trap them.',
+      'Every idea deserves a fair chance to be real.',
+      'Focus creates movement.'
+    ])
+
+    addSubheading('Our Story')
+    addBody('ALIRA was built to help people cross the gap between thought and action with practical support and clean execution.')
+
+    addSubheading('Examples From Our Work')
+    addBullets([
+      'From words to action: one-line pitch with a pilot launched within weeks.',
+      'From chaos to focus: three measurable priorities that moved the needle in 90 days.'
+    ])
+
+    addSubheading('Why It Matters For You')
+    addBody('This plan reflects your words and turns them into steps that you can execute week by week.')
+
+    // PAGE 7 — PRIVACY & OWNERSHIP
+    nextPage()
+    addPageTitle('Privacy & Ownership')
+    addBody('When you shared your words, you shared something personal. That deserves care.')
+
+    addSubheading('Your Privacy')
+    addBody('What you write stays yours. Your information is not shared without consent.')
+
+    addSubheading('Your Ownership')
+    addBody('This plan reflects you. Treat it as a record of what you said and where you chose to go next.')
+
+    addSubheading('Our Responsibility')
+    addBody('The framework belongs to ALIRA but your words are yours. We are custodians of the process, not owners of your story.')
+
+    addSubheading('Why This Matters')
+    addBody('Too often, systems take more than they give. This aims to give you clarity and control.')
+
+    addReflectionBox()
+    addSubheading('Affirmation for You')
+    addBody('My story is mine. My words carry weight.')
+
+    // PAGE 8 — NOTES & REFLECTIONS
+    nextPage()
+    addPageTitle('Notes & Reflections')
+    addBody('A plan grows when you return to it and write what you learn.')
+
+    addSubheading('Prompts to Guide You')
+    addBullets([
+      'What line in this plan made you stop and think?',
+      'What truth do you see here that you have been avoiding?',
+      'What single step feels urgent now?',
+      'What would make the next 90 days a win?',
       'What happens if you do nothing?'
-    ]
-    
-    reflectionQuestions.forEach((question, index) => {
-      addHighlightBox(question, [252, 252, 252])
-      // Add proper spacing between reflection questions
-      if (index < reflectionQuestions.length - 1) {
-        currentY += TOKENS.SECTION
-      }
-    })
+    ])
 
-    // Add generous spacing before principles
-    currentY += TOKENS.SECTION * 2
+    addSubheading('Quote of the Day')
+    addBody('"Momentum beats perfection."')
 
-    // 9. ALIRA PRINCIPLES & NEXT STEPS
-    addSection('ALIRA Principles', 'Core principles for systematic business development')
-    
-    const principles = [
-      'Clarity over complexity',
-      'Small tests over big theories', 
-      'Focus creates momentum',
-      'Systems that last',
-      'Discipline over distraction'
-    ]
-    
-    addHighlightBox(
-      principles.join('\n\n'),
-      [248, 249, 250]
-    )
-    
-    // Add spacing before call to action
-    currentY += TOKENS.SECTION
-    
-    // Call to action
-    addHighlightBox(
-      'Ready to move forward?\n\nContact ALIRA for strategic implementation support and begin your systematic business development journey.',
-      [252, 245, 245]
-    )
+    addReflectionBox()
+    addSubheading('How to Use This Page')
+    addBullets([
+      'Write freely. This is for you.',
+      'Circle words that stand out.',
+      'Return later. Add updates. Cross things out. Write wins.'
+    ])
 
-    // Add footers to all pages (small, 6mm from bottom)
+    addSubheading('Affirmation for You')
+    addBody('Momentum beats perfection. I choose movement.')
+
+    // PAGE 9 — WAYS WE CAN WORK TOGETHER
+    nextPage()
+    addPageTitle('Ways We Can Work Together')
+
+    addSubheading('One Conversation')
+    addBody('A 90-minute clarity session to break the deadlock and leave with direction.')
+
+    addSubheading('A Short Guided Journey')
+    addBody('Idea to Action. Two to three weeks from thought to traction.')
+
+    addSubheading('Building Side by Side')
+    addBody('Build With Us. Co-create tools, offers, and launch readiness.')
+
+    addSubheading('Resetting What Exists')
+    addBody('Operational Reset. Thirty-day reset to clear bottlenecks and restore momentum.')
+
+    addSubheading('If You Are Unsure Where to Begin')
+    addBody('We also offer a free 15-minute check-in. No agenda. No pressure. Just clarity.')
+
+    addCTA('Click here to book your free check-in call', 'https://www.aliracapital.co.uk')
+    addReflectionBox()
+    addSubheading('Affirmation for You')
+    addBody('The right choice is the one that keeps me moving.')
+
+    // PAGE 10 — CLOSING PRINCIPLES
+    nextPage()
+    addPageTitle('Closing Principles')
+    addBody('This plan was created from your words. Clarity is here. Action is next.')
+
+    addSubheading('The ALIRA Principles')
+    addBullets([
+      'Clarity is stronger than complexity. If you cannot explain it simply, you do not understand it.',
+      'Small tests beat big theories. Progress comes from evidence, not endless discussion.',
+      'Focus creates movement. Scatter your energy and you will stall. Direct it and you will grow.',
+      'Systems should serve you, not trap you. Build what frees your time.',
+      'Every idea deserves the chance to be real. If you do nothing, you will never know.'
+    ])
+
+    addSubheading('Your Choice')
+    addBody('You asked for clarity. You now have it. The question is whether you act.')
+
+    addReflectionBox()
+    addSubheading('Affirmation for You')
+    addBody('I asked for clarity. Now I choose action.')
+
+    addSubheading('Your Next Step')
+    addCTA('Click here to book your free check-in call', 'https://www.aliracapital.co.uk')
+
+    // CONTACT — FINAL
+    nextPage()
+    addPageTitle('Contact Us')
+    addBody('Email: enquiries@aliracapital.co.uk\nWebsite: www.aliracapital.co.uk')
+
+    addSubheading('Company Information')
+    addBody('ALIRA Capital Ventures Ltd\nRegistered in England & Wales\nCompany Registration No: 16419663\nRegistered Office: 4th Floor, Silverstream House, 45 Fitzroy Street, Fitzrovia, London, W1T 6EB, United Kingdom\n© ALIRA Capital Ventures Ltd. All rights reserved.')
+
+    // Footers on all pages
     const totalPages = doc.getNumberOfPages()
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i)
       addFooter(i, totalPages)
     }
 
-    // Convert to buffer
+    // Buffer out
     const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
-    console.log('[PDF] PDF generated successfully with jsPDF, size:', pdfBuffer.length, 'bytes, pages:', totalPages)
-    
     return Promise.resolve(pdfBuffer)
   } catch (error) {
     console.error('[PDF] Error generating PDF:', error)
@@ -503,32 +481,15 @@ export function getPDFBase64(pdfBuffer: Buffer): string {
   return pdfBuffer.toString('base64')
 }
 
-// Enhanced business case PDF (if needed for other use cases)
+// Optional: simple business case PDF (kept for compatibility)
 export function generateBusinessCasePDF(data: any): Promise<Buffer> {
-  try {
-    console.log('[PDF] Generating business case PDF with jsPDF')
-    
-    const doc = new jsPDF('p', 'mm', 'a4')
-    
-    // Simple business case content
-    doc.setFontSize(24)
-    doc.setTextColor(26, 26, 26) // #1a1a1a
-    doc.text('ALIRA.', 20, 30)
-    
-    doc.setFontSize(16)
-    doc.setTextColor(212, 175, 55) // #d4af37
-    doc.text('Business Case Analysis', 20, 50)
-
-    doc.setFontSize(12)
-    doc.setTextColor(102, 102, 102) // #666666
-    doc.text('Business case content would go here...', 20, 70)
-
-    const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
-    console.log('[PDF] Business case PDF generated successfully with jsPDF, size:', pdfBuffer.length, 'bytes')
-    
-    return Promise.resolve(pdfBuffer)
-  } catch (error) {
-    console.error('[PDF] Error generating business case PDF:', error)
-    return Promise.reject(error)
-  }
+  const doc = new jsPDF('p', 'mm', 'a4')
+  doc.setFontSize(24).setTextColor(235,235,235)
+  doc.setFillColor(12,12,12); doc.rect(0,0,210,297,'F')
+  doc.text('ALIRA.', 20, 30)
+  doc.setFontSize(16).setTextColor(212,175,55)
+  doc.text('Business Case Analysis', 20, 50)
+  doc.setFontSize(12).setTextColor(170,170,170)
+  doc.text('Business case content would go here...', 20, 70)
+  return Promise.resolve(Buffer.from(doc.output('arraybuffer')))
 }
