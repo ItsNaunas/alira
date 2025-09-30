@@ -4,16 +4,22 @@ import jsPDF from 'jspdf'
 // Safe string helper to prevent undefined/null issues
 const safe = (s?: string | null): string => (s && String(s).trim() ? String(s).trim() : '—')
 
-// --- Typographic + spacing tokens (mm) ---
+// --- Typographic + spacing tokens (mm) with proper buffers ---
 const TOKENS = {
   MARGIN: 18,
-  BASE: 4,
-  SECTION: 8,
-  PARA: 3,
-  BOX_PAD_V: 6,
-  BOX_PAD_H: 8,
-  BOX_GAP: 6,
-  UNDERLINE_W: 40
+  BASE: 4,          // baseline unit
+  SECTION: 10,      // gap between major sections
+  PARA: 4,          // gap between paragraphs
+  BOX_PAD_V: 7,     // vertical padding inside boxes
+  BOX_PAD_H: 9,     // horizontal padding inside boxes
+  BOX_GAP: 8,       // gap after a box
+  UNDERLINE_W: 42,  // title underline width
+  TITLE_TOP: 2,     // extra space before a page title
+  TITLE_BOTTOM: 8,  // after page title
+  SUB_TOP: 6,       // before subheading
+  SUB_BOTTOM: 4,    // after subheading
+  FOOTER_SAFE: 2,   // extra safety above footer
+  MIN_BLOCK: 12     // minimum block to keep on a page
 }
 
 // Import the AI analysis interface
@@ -32,7 +38,7 @@ export interface PersonalPlanPDFData {
   aiAnalysis?: BusinessCaseOutline | null
 }
 
-// Enhanced PDF generation with jsPDF (dark theme)
+// Enhanced PDF generation with jsPDF (dark theme with proper spacing)
 export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buffer> {
   try {
     if (!data) throw new Error('No data provided for PDF generation')
@@ -46,7 +52,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     const margin = TOKENS.MARGIN
     const contentWidth = pageWidth - margin * 2
     const footerHeight = 10
-    const maxContentHeight = pageHeight - margin - footerHeight
+    const maxContentHeight = pageHeight - margin - footerHeight - TOKENS.FOOTER_SAFE
 
     let currentY = margin
     doc.setLineHeightFactor(1.3)
@@ -64,21 +70,31 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       footer: [150, 150, 150] as RGB    // footer text
     }
 
-    // ===== Utils =====
+    // ===== Flow Control Utils =====
     const measureLines = (lines: string[] | string): number => {
       const arr = Array.isArray(lines) ? lines : [lines]
       const dims = doc.getTextDimensions(arr.join('\n'))
       return dims.h
     }
 
+    const room = (): number => maxContentHeight - currentY
+
+    const spacer = (mm: number): void => {
+      if (mm <= 0) return
+      if (room() < mm) nextPage()
+      currentY += mm
+    }
+
     const ensureSpace = (h: number): void => {
-      if (currentY + h > maxContentHeight) {
-        nextPage()
-      }
+      if (h < 0) h = 0
+      if (currentY + h > maxContentHeight) nextPage()
+    }
+
+    const sectionStart = (): void => {
+      if (currentY > TOKENS.MARGIN + 0.5) spacer(TOKENS.SECTION)
     }
 
     const paintBackground = (): void => {
-      // fill entire page bg
       doc.setFillColor(...THEME.bg)
       doc.rect(0, 0, pageWidth, pageHeight, 'F')
     }
@@ -91,119 +107,223 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     }
 
     const addHeader = (): void => {
-      // subtle header line
       doc.setDrawColor(...THEME.line).setLineWidth(0.2)
       doc.line(margin, margin - 8, pageWidth - margin, margin - 8)
-      // brand tag
       doc.setFont('helvetica', 'bold').setFontSize(11).setTextColor(...THEME.text)
       doc.text('ALIRA.', margin, margin - 10)
     }
 
+    const nextPage = (): void => {
+      doc.addPage()
+      currentY = margin
+      paintBackground()
+      addHeader()
+    }
+
+    // ===== Buffered Text Writers =====
+    const addBrandTitle = (text = 'ALIRA.'): void => {
+      sectionStart()
+      const h = 10
+      ensureSpace(h + TOKENS.PARA)
+      doc.setFont('helvetica', 'bold').setFontSize(22).setTextColor(...THEME.text)
+      doc.text(text, margin, currentY)
+      currentY += h
+      spacer(TOKENS.PARA)
+    }
+
+    const addKicker = (text: string): void => {
+      const h = 6
+      ensureSpace(h + TOKENS.PARA * 4)
+      doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.gold)
+      doc.text(text, margin, currentY)
+      currentY += h
+      spacer(TOKENS.PARA * 4)
+    }
+
+    const addDisplayTitle = (text: string): void => {
+      const h = 10
+      ensureSpace(h + TOKENS.SECTION)
+      doc.setFont('helvetica', 'bold').setFontSize(22).setTextColor(...THEME.text)
+      doc.text(text, margin, currentY)
+      currentY += h
+      spacer(TOKENS.SECTION)
+    }
+
+    const addInfoCard = (name: string, date: string): void => {
+      const cardH = 28
+      sectionStart()
+      ensureSpace(cardH + TOKENS.SECTION)
+      doc.setFillColor(...THEME.panel)
+      doc.roundedRect(margin, currentY, contentWidth, cardH, 4, 4, 'F')
+
+      doc.setFont('helvetica', 'bold').setFontSize(12).setTextColor(...THEME.text)
+      doc.text(`Prepared For ${safe(name)}`, margin + 10, currentY + 11)
+      doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+      doc.text(`Date of Issue ${date}`, margin + 10, currentY + 20)
+
+      currentY += cardH
+      spacer(TOKENS.SECTION)
+    }
+
     const addPageTitle = (title: string): void => {
+      if (currentY > TOKENS.MARGIN + 0.5) spacer(TOKENS.TITLE_TOP)
+
+      const titleH = 12
+      ensureSpace(titleH + TOKENS.TITLE_BOTTOM)
+
       doc.setFont('helvetica', 'bold').setFontSize(16).setTextColor(...THEME.text)
       doc.text(title, margin, currentY)
       doc.setDrawColor(...THEME.gold).setLineWidth(0.8)
       doc.line(margin, currentY + 5, margin + TOKENS.UNDERLINE_W, currentY + 5)
-      currentY += 12
+
+      currentY += titleH
+      spacer(TOKENS.TITLE_BOTTOM)
     }
 
     const addSubheading = (label: string): void => {
-      ensureSpace(10)
+      const headH = 8
+      sectionStart()
+      ensureSpace(headH + TOKENS.SUB_BOTTOM)
+
       doc.setFont('helvetica', 'bold').setFontSize(12).setTextColor(...THEME.text)
       doc.text(label, margin, currentY)
-      currentY += 8
+      currentY += headH
+
+      spacer(TOKENS.SUB_BOTTOM)
     }
 
-    const addBody = (text: string): void => {
+    const addBody = (text: string, opts?: { top?: number; bottom?: number }): void => {
+      const top = opts?.top ?? TOKENS.PARA
+      const bottom = opts?.bottom ?? TOKENS.PARA
+
       const lines = doc.splitTextToSize(text, contentWidth)
+      const textH = measureLines(lines)
+
+      ensureSpace(top + textH + bottom)
+
+      spacer(top)
       doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
-      ensureSpace(measureLines(lines) + TOKENS.PARA)
       doc.text(lines, margin, currentY)
-      currentY += measureLines(lines) + TOKENS.PARA
+      currentY += textH
+      spacer(bottom)
     }
 
-    const addBullets = (items: string[]): void => {
+    const addBullets = (items: string[], opts?: { gap?: number }): void => {
+      const gap = opts?.gap ?? TOKENS.PARA
       doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+
       for (const it of items.filter(Boolean)) {
         const bullet = `• ${it}`
         const lines = doc.splitTextToSize(bullet, contentWidth)
-        ensureSpace(measureLines(lines) + TOKENS.PARA)
+        const h = measureLines(lines)
+        ensureSpace(h + gap)
         doc.text(lines, margin, currentY)
-        currentY += measureLines(lines) + TOKENS.PARA
+        currentY += h
+        spacer(gap)
       }
     }
 
-    const addHighlightBox = (content: string, alt = false): void => {
+    const addHighlightBox = (
+      content: string,
+      alt = false,
+      opts?: { minHeight?: number; afterGap?: number }
+    ): void => {
+      const minH = Math.max(opts?.minHeight ?? 0, 0)
+      const afterGap = opts?.afterGap ?? TOKENS.BOX_GAP
+
       const innerWidth = contentWidth - TOKENS.BOX_PAD_H * 2
-      const lines = doc.splitTextToSize(content, innerWidth)
-      const textH = measureLines(lines)
-      const boxH = textH + TOKENS.BOX_PAD_V * 2 + 4
-      ensureSpace(boxH + TOKENS.BOX_GAP)
+      const allLines = doc.splitTextToSize(content || ' ', innerWidth)
+      let idx = 0
 
-      const fill = alt ? THEME.panelAlt : THEME.panel
-      doc.setFillColor(...fill)
-      doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'F')
+      while (idx < allLines.length) {
+        const fill = alt ? THEME.panelAlt : THEME.panel
+        const available = maxContentHeight - currentY - (TOKENS.BOX_PAD_V * 2 + 4)
+        
+        if (available < Math.max(minH, TOKENS.MIN_BLOCK)) {
+          nextPage()
+          continue
+        }
 
-      doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
-      doc.text(lines, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 4)
+        let chunk: string[] = []
+        for (; idx < allLines.length; idx++) {
+          const tryChunk = [...chunk, allLines[idx]]
+          const h = measureLines(tryChunk)
+          if (h > available - 3) break
+          chunk = tryChunk
+        }
+        if (chunk.length === 0) {
+          chunk = [allLines[idx]]
+          idx++
+        }
 
-      currentY += boxH + TOKENS.BOX_GAP
+        const textH = Math.max(measureLines(chunk), minH)
+        const boxH = textH + TOKENS.BOX_PAD_V * 2 + 4
+        ensureSpace(boxH)
+
+        doc.setFillColor(...fill)
+        doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'F')
+
+        doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+        doc.text(chunk, margin + TOKENS.BOX_PAD_H, currentY + TOKENS.BOX_PAD_V + 4)
+
+        currentY += boxH
+
+        if (idx < allLines.length) {
+          nextPage()
+        } else {
+          spacer(afterGap)
+        }
+      }
     }
 
-    const addTwoColumn = (leftTitle: string, leftContent: string, rightTitle: string, rightContent: string): void => {
+    const addTwoColumn = (
+      leftTitle: string, leftContent: string,
+      rightTitle: string, rightContent: string
+    ): void => {
       const gutter = 10
       const columnWidth = (contentWidth - gutter) / 2
 
       const leftLines = doc.splitTextToSize(leftContent, columnWidth)
       const rightLines = doc.splitTextToSize(rightContent, columnWidth)
       const headH = 8
-      const blockH = Math.max(measureLines(leftLines), measureLines(rightLines)) + headH + TOKENS.PARA
+      const bodyH = Math.max(measureLines(leftLines), measureLines(rightLines))
+      const blockH = headH + bodyH + TOKENS.PARA
+
+      sectionStart()
       ensureSpace(blockH + TOKENS.SECTION)
 
-      // Left header
       doc.setFont('helvetica', 'bold').setFontSize(12).setTextColor(...THEME.text)
       doc.text(leftTitle, margin, currentY)
-      // Left body
       doc.setFont('helvetica', 'normal').setFontSize(9).setTextColor(...THEME.textMuted)
-      doc.text(leftLines, margin, currentY + 8)
+      doc.text(leftLines, margin, currentY + headH)
 
-      // Right header
       doc.setFont('helvetica', 'bold').setFontSize(12).setTextColor(...THEME.text)
       doc.text(rightTitle, margin + columnWidth + gutter, currentY)
-      // Right body
       doc.setFont('helvetica', 'normal').setFontSize(9).setTextColor(...THEME.textMuted)
-      doc.text(rightLines, margin + columnWidth + gutter, currentY + 8)
+      doc.text(rightLines, margin + columnWidth + gutter, currentY + headH)
 
-      currentY += blockH + TOKENS.SECTION
+      currentY += blockH
+      spacer(TOKENS.SECTION)
     }
 
-    const addReflectionBox = (title = 'Reflection Space'): void => {
+    const addReflectionBox = (title = 'Reflection Space', minHeight = 36): void => {
       addSubheading(`'${title}'`)
-      addHighlightBox('', true)
+      addHighlightBox('', true, { minHeight })
     }
 
     const addCTA = (label: string, url: string): void => {
-      const boxH = 14
+      const boxH = 16
       ensureSpace(boxH + TOKENS.SECTION)
+
       doc.setFillColor(...THEME.panelAlt)
       doc.setDrawColor(...THEME.gold).setLineWidth(0.4)
       doc.roundedRect(margin, currentY, contentWidth, boxH, 3, 3, 'FD')
+
       doc.setFont('helvetica', 'bold').setFontSize(10).setTextColor(...THEME.text)
-      doc.textWithLink(label, margin + TOKENS.BOX_PAD_H, currentY + 9, { url })
-      currentY += boxH + TOKENS.SECTION
-    }
+      doc.textWithLink(label, margin + TOKENS.BOX_PAD_H, currentY + 11, { url })
 
-    const nextPage = (): void => {
-      // Footer for current page
-      const total = doc.getNumberOfPages()
-      doc.setPage(total)
-      addFooter(total, total)
-
-      // New page
-      doc.addPage()
-      currentY = margin
-      paintBackground()
-      addHeader()
+      currentY += boxH
+      spacer(TOKENS.SECTION)
     }
 
     // ===== Page chrome for first page =====
@@ -218,24 +338,10 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     // ====== CONTENT ORDER (Master) ======
 
     // PAGE 1 — COVER
-    doc.setFont('helvetica', 'bold').setFontSize(22).setTextColor(...THEME.text)
-    doc.text('ALIRA.', margin, currentY); currentY += TOKENS.SECTION
-
-    doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.gold)
-    doc.text('Strategic Business Solutions', margin, currentY)
-    currentY += TOKENS.SECTION * 4
-
-    doc.setFont('helvetica', 'bold').setFontSize(22).setTextColor(...THEME.text)
-    doc.text('Your Personal Plan', margin, currentY); currentY += TOKENS.SECTION * 2
-
-    // Prepared For + Date card
-    doc.setFillColor(...THEME.panel)
-    doc.roundedRect(margin, currentY, contentWidth, 28, 4, 4, 'F')
-    doc.setFont('helvetica', 'bold').setFontSize(12).setTextColor(...THEME.text)
-    doc.text(`Prepared For ${safe(data.name)}`, margin + 10, currentY + 11)
-    doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
-    doc.text(`Date of Issue ${generatedDate}`, margin + 10, currentY + 20)
-    currentY += 28 + TOKENS.SECTION
+    addBrandTitle('ALIRA.')
+    addKicker('Strategic Business Solutions')
+    addDisplayTitle('Your Personal Plan')
+    addInfoCard(data.name, generatedDate)
 
     addSubheading('Important Notice')
     addBody('This document has been generated directly from the information you submitted. It has not been reviewed or altered by any individual. Its purpose is to give structure to your ideas, highlight areas of focus, and support reflection and forward planning.')
