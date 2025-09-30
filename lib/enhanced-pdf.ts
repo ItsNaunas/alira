@@ -4,8 +4,8 @@ import jsPDF from 'jspdf'
 // Safe string helper to prevent undefined/null issues
 const safe = (s?: string | null): string => (s && String(s).trim() ? String(s).trim() : '—')
 
-// Calendly booking URL
-const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/alira-capital'
+// Calendly booking URL (same as used in emails)
+const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/its-naunas/30min'
 
 // Footer notes for specific pages
 const FOOTER_NOTES: Record<number, string> = {
@@ -456,41 +456,46 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addBody(safe(data.business_idea))
 
     addSubheading('What matters most to you')
-    addBullets((data.aiAnalysis?.objectives?.slice(0, 3) ?? []).map(String))
+    addCenteredLabel('AI Analysis')
+    const keyGoals = (data.aiAnalysis?.objectives?.slice(0, 3) ?? []).map((goal, i) => `Key Goal ${i + 1}: ${goal}`)
+    addBullets(keyGoals)
 
     addSubheading('Things to be mindful of')
+    addCenteredLabel('AI Analysis')
     const mindful = data.aiAnalysis?.risk_assessment
-      ? data.aiAnalysis?.risk_assessment.split(/[.;]\s+/).slice(0, 3)
-      : (data.aiAnalysis?.expected_outcomes ?? []).slice(0, 3)
-    addBullets((mindful ?? []).map(String))
+      ? data.aiAnalysis?.risk_assessment.split(/[.;]\s+/).slice(0, 3).map((risk, i) => `Risk ${i + 1}: ${risk}`)
+      : (data.aiAnalysis?.expected_outcomes ?? []).slice(0, 3).map((risk, i) => `Risk ${i + 1}: ${risk}`)
+    addBullets(mindful)
 
-    addHighlightBox('This page is not here to answer questions.\n\nIt is here to make your current position visible, because clarity begins with seeing things as they are.')
+    // Note: The paragraph "This page is not here to answer questions..." is now in the page 2 footer (see FOOTER_NOTES)
 
     // PAGE 3 — THE BIGGER PICTURE
     nextPage()
-    addPageTitle('The Bigger Picture')
+    addCenteredPageTitle('The Bigger Picture')
     addBody('Every idea, project, or business begins with a reason. A plan exists to connect that reason to the people who need it.')
 
     addSubheading('Purpose')
+    addCenteredLabel('AI Analysis')
     addBody(safe(data.aiAnalysis?.problem_statement) || `Building around ${safe(data.business_idea)}`)
 
     addSubheading('Desired Outcomes (6–12 Months)')
+    addCenteredLabel('AI Analysis')
     addBullets((data.aiAnalysis?.expected_outcomes ?? []).slice(0, 3).map(String))
 
-    addSubheading('Audience')
-    addBody('Primary audience: (Not provided)')
-
-    addHighlightBox('The bigger picture is not about dreaming. It is about alignment. The distance between what you believe and what you do each week defines your results.')
+    addSubheading('Summary')
+    addBody('The bigger picture is not about dreaming. It is about alignment. The distance between what you believe and what you do each week defines your results.')
 
     // PAGE 4 — INSIGHTS + OPPORTUNITIES
     nextPage()
-    addPageTitle('Insights + Opportunities')
+    addCenteredPageTitle('Insights + Opportunities')
     addBody('Every stage has its reality. The point of a plan is to see it clearly, then create movement.')
 
     addSubheading('Current Position')
+    addCenteredLabel('AI Analysis')
     addBody(safe(data.aiAnalysis?.current_state) || 'Early stage business development')
 
     addSubheading('Opportunities')
+    addCenteredLabel('AI Analysis')
     addBullets((data.aiAnalysis?.proposed_solution?.map(s => s.pillar) ?? ['Strategic positioning', 'Operational efficiency', 'Market expansion']).slice(0, 3))
 
     addSubheading('How ALIRA Sees It')
@@ -501,7 +506,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
 
     // PAGE 5 — RECOMMENDED NEXT STEPS
     nextPage()
-    addPageTitle('Recommended Next Steps')
+    addCenteredPageTitle('Recommended Next Steps')
     addBody('Clarity without movement is wasted. These are practical, near-term steps drawn from your words, reframed into action.')
 
     addSubheading('1. Name the Core Aim')
@@ -520,15 +525,21 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addBody(data.aiAnalysis?.next_steps?.[2] || 'Block two 60-minute build slots weekly and defend them.')
 
     addReflectionBox()
-    addSubheading('Affirmation for You')
-    addBody('Momentum beats perfection. I choose movement.')
+    
+    // Keep affirmation with its content (no orphaned headings)
+    writeKeepTogether(20, () => {
+      addSubheading('Affirmation for You')
+      addBody('Momentum beats perfection. I choose movement.')
+    })
 
-    addSubheading('Closing Note')
-    addBody('Completing this plan was your first move. Keep it visible. Act on the next smallest step.')
+    writeKeepTogether(20, () => {
+      addSubheading('Closing Note')
+      addBody('Completing this plan was your first move. Keep it visible. Act on the next smallest step.')
+    })
 
     // PAGE 6 — ABOUT ALIRA
     nextPage()
-    addPageTitle('About ALIRA')
+    addCenteredPageTitle('About ALIRA')
     addBody('Every idea carries potential. With clear systems and steady focus, that potential can become something real.')
 
     addSubheading('What We Believe')
@@ -586,8 +597,8 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       'What happens if you do nothing?'
     ])
 
-    addSubheading('Quote of the Day')
-    addBody('"Momentum beats perfection."')
+    addCenteredLabel('Quote of the Day')
+    addCenteredQuote('"Momentum beats perfection."')
 
     addReflectionBox()
     addSubheading('How to Use This Page')
@@ -597,8 +608,11 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
       'Return later. Add updates. Cross things out. Write wins.'
     ])
 
-    addSubheading('Affirmation for You')
-    addBody('Momentum beats perfection. I choose movement.')
+    // Keep affirmation together
+    writeKeepTogether(20, () => {
+      addSubheading('Affirmation for You')
+      addBody('Momentum beats perfection. I choose movement.')
+    })
 
     // PAGE 9 — WAYS WE CAN WORK TOGETHER
     nextPage()
@@ -619,7 +633,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addSubheading('If You Are Unsure Where to Begin')
     addBody('We also offer a free 15-minute check-in. No agenda. No pressure. Just clarity.')
 
-    addCTA('Click here to book your free check-in call', 'https://www.aliracapital.co.uk')
+    addCTA('Click here to book your free check-in call', CALENDLY_URL)
     addReflectionBox()
     addSubheading('Affirmation for You')
     addBody('The right choice is the one that keeps me moving.')
@@ -646,7 +660,7 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addBody('I asked for clarity. Now I choose action.')
 
     addSubheading('Your Next Step')
-    addCTA('Click here to book your free check-in call', 'https://www.aliracapital.co.uk')
+    addCTA('Click here to book your free check-in call', CALENDLY_URL)
 
     // CONTACT — FINAL
     nextPage()
