@@ -33,7 +33,7 @@ export const GenerateInputSchema = z.object({
     errorMap: () => ({ message: 'Type must be one of: plan, content, analysis' }),
   }),
   prompt: z.string().optional(),
-  context: z.record(z.any()).optional(),
+  context: z.record(z.string(), z.any()).optional(),
 });
 
 export type GenerateInput = z.infer<typeof GenerateInputSchema>;
@@ -113,7 +113,7 @@ export type ContactForm = z.infer<typeof ContactFormSchema>;
  * Used for: /api/draft/create
  */
 export const CreateDraftSchema = z.object({
-  formData: z.record(z.any()),
+  formData: z.record(z.string(), z.any()),
   sessionId: z.string().optional(),
   metadata: z.object({
     version: z.string().optional(),
@@ -132,7 +132,7 @@ export const SubmitDraftSchema = z.object({
   consent: z.boolean().refine((val) => val === true, {
     message: 'You must agree to the terms and conditions',
   }),
-  finalData: z.record(z.any()).optional(),
+  finalData: z.record(z.string(), z.any()).optional(),
 });
 
 export type SubmitDraft = z.infer<typeof SubmitDraftSchema>;
@@ -153,7 +153,7 @@ export type ResumeDraft = z.infer<typeof ResumeDraftSchema>;
  */
 export const SaveDraftSchema = z.object({
   draftId: validators.uuid.optional(),
-  formData: z.record(z.any()),
+  formData: z.record(z.string(), z.any()),
   email: validators.email,
   currentStep: z.number().int().min(0).optional(),
 });
@@ -165,7 +165,9 @@ export type SaveDraft = z.infer<typeof SaveDraftSchema>;
  * Used for: /api/generate-plan
  */
 export const GeneratePlanSchema = z.object({
-  answers: z.record(z.any()).min(1, 'Answers object cannot be empty'),
+  answers: z.record(z.string(), z.any()).refine((obj) => Object.keys(obj).length > 0, {
+    message: 'Answers object cannot be empty',
+  }),
   userId: validators.uuid.optional(),
   preferences: z.object({
     format: z.enum(['pdf', 'html', 'markdown']).optional(),

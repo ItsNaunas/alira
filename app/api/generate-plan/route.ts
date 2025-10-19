@@ -51,14 +51,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Step 4: Get form data from validated answers
-    const formData = validatedData.answers;
+    const formData = validatedData.answers as Record<string, any>;
     
     // Step 5: Generate business plan using AI
     // TODO: Implement generateBusinessPlan in lib/openai.ts
     // For now, return a placeholder structure
     const businessPlan = {
-      problem_statement: formData.current_challenges || 'Challenge analysis pending',
-      objectives: [formData.immediate_goals || 'Goals to be defined'],
+      problem_statement: formData['current_challenges'] || 'Challenge analysis pending',
+      objectives: [formData['immediate_goals'] || 'Goals to be defined'],
       proposed_solution: [
         {
           pillar: 'Strategy',
@@ -73,18 +73,18 @@ export async function POST(request: NextRequest) {
     
     // Uncomment when generateBusinessPlan is implemented:
     // const businessPlan = await generateBusinessPlan({
-    //   business_idea: formData.business_idea,
-    //   current_challenges: formData.current_challenges,
-    //   immediate_goals: formData.immediate_goals,
-    //   service_interest: formData.service_interest,
-    //   current_tools: formData.current_tools
+    //   business_idea: formData['business_idea'],
+    //   current_challenges: formData['current_challenges'],
+    //   immediate_goals: formData['immediate_goals'],
+    //   service_interest: formData['service_interest'],
+    //   current_tools: formData['current_tools']
     // });
 
     // Step 6: Store the generated plan in the database
     const supabase = getServiceClient();
     
     // Create or get dashboard ID
-    const dashboardId = formData.dashboardId;
+    const dashboardId = formData['dashboardId'];
     
     if (dashboardId) {
       // Verify ownership of existing dashboard
