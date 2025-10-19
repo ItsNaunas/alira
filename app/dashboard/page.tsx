@@ -3,9 +3,20 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient, auth } from '@/lib/supabase-client';
-import { FileText, Download, Plus, LogOut, RefreshCw } from 'lucide-react';
+import { 
+  FileText, 
+  Download, 
+  Plus, 
+  RefreshCw, 
+  MoreVertical,
+  Lightbulb,
+  Target,
+  AlertCircle,
+  Eye,
+  ChevronDown
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import DashboardLayout from '@/components/DashboardLayout';
 
 interface BusinessPlan {
@@ -94,27 +105,34 @@ export default function DashboardPage() {
     );
   }
 
+  // Get the most recent plan for the main grid
+  const currentPlan = plans[0];
+  const totalPlans = plans.length;
+  const inProgress = plans.filter(p => !p.pdf_url).length;
+  const completed = plans.filter(p => p.pdf_url).length;
+
   return (
     <DashboardLayout>
-      {/* Dashboard Header */}
+      {/* Page Header */}
       <div className="border-b border-white/10 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="px-6 py-6">
+        <div className="px-4 md:px-6 py-4 md:py-5">
           <div className="flex items-center justify-between max-w-7xl mx-auto">
-            <div>
-              <h1 className="text-3xl font-serif font-normal text-alira-white mb-1">
-                Dashboard
-              </h1>
-              <p className="text-sm text-alira-white/60 font-light">
-                Welcome back, {user?.user_metadata?.full_name || user?.email}
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
+            <h1 className="text-3xl md:text-4xl font-serif font-normal text-alira-white">
+              Dashboard
+            </h1>
+            <div className="flex items-center gap-2 md:gap-3">
               <Button
                 onClick={handleNewPlan}
-                className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium"
+                className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium px-4 md:px-6 text-sm md:text-base"
               >
-                <Plus className="w-4 h-4 mr-2" />
                 New Plan
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-alira-white/60 hover:text-alira-white hover:bg-white/5"
+              >
+                <MoreVertical className="w-5 h-5" />
               </Button>
             </div>
           </div>
@@ -122,177 +140,293 @@ export default function DashboardPage() {
       </div>
 
       {/* Main Content */}
-      <main className="px-6 py-8 w-full">
-        <div className="max-w-7xl mx-auto">
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <Card className="bg-gradient-to-br from-alira-gold/10 to-alira-gold/5 border-alira-gold/20 hover:border-alira-gold/40 transition-all">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-alira-white/60 font-light mb-1">Total Plans</p>
-                    <p className="text-4xl font-serif font-normal text-alira-white">{plans.length}</p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-alira-gold/20">
-                    <FileText className="w-7 h-7 text-alira-gold" />
-                  </div>
+      <main className="px-4 md:px-6 py-6 md:py-8 w-full pb-32">
+        <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
+          
+          {/* Top Summary Strip */}
+          <div className="bg-white/[0.02] border border-white/10 rounded-lg px-4 md:px-6 py-4">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center divide-x divide-white/10">
+                <div className="pr-4 md:pr-8">
+                  <div className="text-2xl md:text-3xl font-serif text-alira-white mb-0.5">{totalPlans}</div>
+                  <div className="text-xs text-alira-white/50 font-light whitespace-nowrap">Total Plans</div>
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border-emerald-500/20 hover:border-emerald-500/40 transition-all">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-alira-white/60 font-light mb-1">Completed</p>
-                    <p className="text-4xl font-serif font-normal text-alira-white">
-                      {plans.filter(p => p.pdf_url).length}
-                    </p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-emerald-500/20">
-                    <Download className="w-7 h-7 text-emerald-400" />
-                  </div>
+                <div className="px-4 md:px-8">
+                  <div className="text-2xl md:text-3xl font-serif text-alira-white mb-0.5">{inProgress}</div>
+                  <div className="text-xs text-alira-white/50 font-light whitespace-nowrap">In Progress</div>
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/20 hover:border-blue-500/40 transition-all">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-alira-white/60 font-light mb-1">In Progress</p>
-                    <p className="text-4xl font-serif font-normal text-alira-white">
-                      {plans.filter(p => !p.pdf_url).length}
-                    </p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-blue-500/20">
-                    <RefreshCw className="w-7 h-7 text-blue-400" />
-                  </div>
+                <div className="pl-4 md:pl-8">
+                  <div className="text-2xl md:text-3xl font-serif text-alira-white mb-0.5">{completed}</div>
+                  <div className="text-xs text-alira-white/50 font-light whitespace-nowrap">Completed</div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Plans List */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-2xl font-serif font-normal text-alira-white mb-1">
-                  Your Business Plans
-                </h2>
-                <p className="text-sm text-alira-white/60">
-                  View and manage your strategic plans
-                </p>
               </div>
               <Button
                 onClick={loadPlans}
-                variant="outline"
-                size="sm"
-                className="border-white/20 text-alira-white hover:bg-white/10"
+                variant="ghost"
+                size="icon"
+                className="text-alira-white/40 hover:text-alira-white hover:bg-white/5 flex-shrink-0"
                 disabled={isLoadingPlans}
               >
-                <RefreshCw className={`w-4 h-4 mr-2 ${isLoadingPlans ? 'animate-spin' : ''}`} />
-                Refresh
+                <RefreshCw className={`w-4 h-4 ${isLoadingPlans ? 'animate-spin' : ''}`} />
               </Button>
             </div>
+          </div>
 
-            {plans.length === 0 ? (
-              <Card className="bg-gradient-to-br from-white/5 to-white/[0.02] border-white/10">
-                <CardContent className="p-16 text-center">
-                  <div className="p-6 rounded-full bg-alira-gold/10 w-fit mx-auto mb-6">
-                    <FileText className="w-16 h-16 text-alira-gold" />
-                  </div>
-                  <h3 className="text-2xl font-serif font-normal text-alira-white mb-3">
-                    No plans yet
-                  </h3>
-                  <p className="text-alira-white/60 mb-8 max-w-md mx-auto">
-                    Start by creating your first business plan and unlock strategic insights for your business
-                  </p>
-                  <Button 
-                    onClick={handleNewPlan} 
-                    className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium"
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    Create Your First Plan
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="grid gap-4">
-                {plans.map((plan) => (
-                  <Card key={plan.id} className="bg-gradient-to-br from-white/5 to-white/[0.02] border-white/10 hover:border-alira-gold/30 hover:shadow-lg hover:shadow-alira-gold/5 transition-all group">
-                    <CardContent className="p-8">
-                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                        <div className="flex-1 space-y-4">
-                          {/* Header */}
-                          <div className="flex items-start gap-3">
-                            <div className="p-2 rounded-lg bg-alira-gold/10 mt-1">
-                              <FileText className="w-5 h-5 text-alira-gold" />
-                            </div>
-                            <div className="flex-1">
-                              <h3 className="text-xl font-serif font-normal text-alira-white mb-2 group-hover:text-alira-gold transition-colors">
-                                {plan.business_name?.substring(0, 80) || 'Business Plan'}
-                                {plan.business_name && plan.business_name.length > 80 ? '...' : ''}
-                              </h3>
-                              <p className="text-sm text-alira-white/50">
-                                Created {new Date(plan.created_at).toLocaleDateString('en-GB', {
-                                  day: 'numeric',
-                                  month: 'long',
-                                  year: 'numeric'
-                                })}
-                              </p>
+          {plans.length === 0 ? (
+            /* Empty State */
+            <Card className="bg-white/[0.02] border-white/10">
+              <CardContent className="p-16 text-center">
+                <div className="p-6 rounded-full bg-alira-gold/10 w-fit mx-auto mb-6">
+                  <FileText className="w-16 h-16 text-alira-gold" />
+                </div>
+                <h3 className="text-2xl font-serif font-normal text-alira-white mb-3">
+                  Tell us what you're building
+                </h3>
+                <p className="text-alira-white/60 mb-8 max-w-md mx-auto">
+                  Create your first plan to get started
+                </p>
+                <Button 
+                  onClick={handleNewPlan} 
+                  className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium"
+                >
+                  New Plan
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <>
+              {/* Main Grid - Row 1 */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                {/* Your Current Inputs */}
+                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-serif text-alira-white mb-4">Your Current Inputs</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <div className="text-xs text-alira-white/40 mb-1">Name</div>
+                        <div className="text-sm text-alira-white/90">
+                          {currentPlan?.business_name || 'Not provided'}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-alira-white/40 mb-1">Latest Challenge</div>
+                        <div className="text-sm text-alira-white/90 leading-relaxed">
+                          {currentPlan?.current_challenges 
+                            ? currentPlan.current_challenges.substring(0, 100) + (currentPlan.current_challenges.length > 100 ? '...' : '')
+                            : 'Not provided'}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-alira-white/40 mb-1">90-Day Goal</div>
+                        <div className="text-sm text-alira-white/90">
+                          {currentPlan?.immediate_goals || 'Not provided'}
+                        </div>
+                      </div>
+                      <div className="pt-2 border-t border-white/5">
+                        <div className="text-xs text-alira-white/30">Step 1 of 1</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* AI Summary */}
+                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="text-lg font-serif text-alira-white">AI Summary</h3>
+                      {currentPlan?.generations && currentPlan.generations.length > 0 ? (
+                        <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs">
+                          Ready
+                        </span>
+                      ) : (
+                        <span className="px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs">
+                          In Progress
+                        </span>
+                      )}
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex gap-3">
+                        <Lightbulb className="w-4 h-4 text-alira-gold/70 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm text-alira-white/80 leading-relaxed">
+                          {currentPlan?.generations?.[0]?.content?.problem_statement 
+                            ? currentPlan.generations[0].content.problem_statement.substring(0, 80) + '...'
+                            : 'Analyzing your business context'}
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <Target className="w-4 h-4 text-alira-gold/70 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm text-alira-white/80 leading-relaxed">
+                          {currentPlan?.generations?.[0]?.content?.objectives?.[0]
+                            ? currentPlan.generations[0].content.objectives[0].substring(0, 80) + (currentPlan.generations[0].content.objectives[0].length > 80 ? '...' : '')
+                            : 'Identifying key objectives'}
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <AlertCircle className="w-4 h-4 text-alira-gold/70 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm text-alira-white/80 leading-relaxed">
+                          Review generated insights carefully
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Main Grid - Row 2 */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                {/* Generated Plan Preview */}
+                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-serif text-alira-white mb-4">Generated Plan Preview</h3>
+                    <div className="space-y-4">
+                      {currentPlan?.pdf_url ? (
+                        <>
+                          <div className="aspect-[8.5/11] bg-white/5 border border-alira-gold/30 rounded-lg flex items-center justify-center">
+                            <FileText className="w-16 h-16 text-alira-gold/40" />
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full border-white/20 text-alira-white hover:bg-white/5"
+                            onClick={() => window.open(currentPlan.pdf_url!, '_blank')}
+                          >
+                            Preview Plan
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <div className="aspect-[8.5/11] bg-white/5 border border-white/10 rounded-lg flex items-center justify-center">
+                            <div className="text-center">
+                              <RefreshCw className="w-12 h-12 text-alira-white/20 animate-spin mx-auto mb-3" />
+                              <div className="text-xs text-alira-white/40">Generating...</div>
                             </div>
                           </div>
-                          
-                          {/* Challenge */}
-                          {plan.current_challenges && (
-                            <div className="pl-14">
-                              <p className="text-sm text-alira-white/70 leading-relaxed">
-                                <span className="text-alira-gold font-medium">Challenge: </span>
-                                {plan.current_challenges.substring(0, 120)}
-                                {plan.current_challenges.length > 120 ? '...' : ''}
-                              </p>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full border-white/20 text-alira-white/50"
+                            disabled
+                          >
+                            Preview Plan
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Next Steps */}
+                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-serif text-alira-white mb-4">Next Steps</h3>
+                    <div className="space-y-3 mb-4">
+                      {currentPlan?.generations?.[0]?.content?.next_steps ? (
+                        currentPlan.generations[0].content.next_steps.slice(0, 3).map((step: string, idx: number) => (
+                          <div key={idx} className="flex gap-3">
+                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0">{idx + 1}</div>
+                            <div className="text-sm text-alira-white/80 leading-relaxed">
+                              {step.substring(0, 100)}{step.length > 100 ? '...' : ''}
                             </div>
-                          )}
-                          
-                          {/* AI Analysis */}
-                          {plan.generations && plan.generations.length > 0 && plan.generations[0].content?.problem_statement && (
-                            <div className="pl-14">
-                              <p className="text-xs text-alira-white/50 leading-relaxed">
-                                <span className="text-alira-gold font-medium">AI Analysis: </span>
-                                {plan.generations[0].content.problem_statement.substring(0, 160)}
-                                {plan.generations[0].content.problem_statement.length > 160 ? '...' : ''}
-                              </p>
+                          </div>
+                        ))
+                      ) : (
+                        <>
+                          <div className="flex gap-3">
+                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0">1</div>
+                            <div className="text-sm text-alira-white/80 leading-relaxed">
+                              Complete your plan inputs
                             </div>
-                          )}
-                          
-                          {/* Tags */}
-                          {plan.service_interest && plan.service_interest.length > 0 && (
-                            <div className="pl-14 flex flex-wrap gap-2">
-                              {plan.service_interest.slice(0, 4).map((service: string) => (
-                                <span
-                                  key={service}
-                                  className="px-3 py-1 rounded-full bg-alira-gold/10 border border-alira-gold/20 text-alira-gold text-xs font-light"
-                                >
-                                  {service.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                          </div>
+                          <div className="flex gap-3">
+                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0">2</div>
+                            <div className="text-sm text-alira-white/80 leading-relaxed">
+                              Review AI-generated insights
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0">3</div>
+                            <div className="text-sm text-alira-white/80 leading-relaxed">
+                              Download your strategic plan
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <button className="text-xs text-alira-white/40 hover:text-alira-gold transition-colors">
+                      Show more
+                    </button>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Plans List */}
+              <div className="space-y-4 pt-8">
+                <h2 className="text-xl font-serif text-alira-white">All Plans</h2>
+                <div className="space-y-3">
+                  {plans.map((plan) => (
+                    <Card 
+                      key={plan.id} 
+                      className="bg-white/[0.02] border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-black/20 transition-all cursor-pointer group hover:-translate-y-0.5"
+                      onClick={() => {
+                        if (plan.generations && plan.generations.length > 0) {
+                          const content = plan.generations[0].content;
+                          const contentText = `
+Business Plan Analysis:
+
+Problem Statement:
+${content.problem_statement || 'Not available'}
+
+Objectives:
+${content.objectives?.join('\n• ') || 'Not available'}
+
+Proposed Solution:
+${content.proposed_solution?.map((s: any) => `${s.pillar}: ${s.actions?.join(', ')}`).join('\n') || 'Not available'}
+
+Expected Outcomes:
+${content.expected_outcomes?.join('\n• ') || 'Not available'}
+
+Next Steps:
+${content.next_steps?.join('\n• ') || 'Not available'}
+                          `;
+                          alert(contentText);
+                        }
+                      }}
+                    >
+                      <CardContent className="p-5">
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-base font-serif text-alira-white mb-1 truncate group-hover:text-alira-gold transition-colors">
+                              {plan.business_name || 'Business Plan'}
+                            </h3>
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <span className="text-xs text-alira-white/40">
+                                {new Date(plan.created_at).toLocaleDateString('en-US', { 
+                                  month: 'short', 
+                                  day: 'numeric',
+                                  year: 'numeric' 
+                                })}
+                              </span>
+                              {plan.current_challenges && (
+                                <span className="px-2 py-0.5 rounded-full bg-alira-gold/10 border border-alira-gold/20 text-alira-gold text-xs">
+                                  Challenge
                                 </span>
-                              ))}
-                              {plan.service_interest.length > 4 && (
-                                <span className="px-3 py-1 rounded-full bg-white/5 text-alira-white/50 text-xs">
-                                  +{plan.service_interest.length - 4} more
+                              )}
+                              {plan.generations && plan.generations.length > 0 && (
+                                <span className="px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs">
+                                  AI Analysis
                                 </span>
                               )}
                             </div>
-                          )}
-                        </div>
-                        
-                        {/* Actions */}
-                        <div className="flex flex-row lg:flex-col gap-2 lg:ml-6 lg:min-w-[140px]">
-                          {plan.generations && plan.generations.length > 0 ? (
-                            <Button
-                              onClick={() => {
-                                // Show the AI-generated content in a modal or new page
-                                if (!plan.generations || plan.generations.length === 0) return;
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-white/20 text-alira-white hover:bg-white/5 flex-shrink-0"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (plan.generations && plan.generations.length > 0) {
                                 const content = plan.generations[0].content;
                                 const contentText = `
 Business Plan Analysis:
@@ -313,46 +447,46 @@ Next Steps:
 ${content.next_steps?.join('\n• ') || 'Not available'}
                                 `;
                                 alert(contentText);
-                              }}
-                              className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium w-full lg:w-auto"
-                              size="sm"
-                            >
-                              <FileText className="w-4 h-4 mr-2" />
-                              View Plan
-                            </Button>
-                          ) : (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              disabled
-                              className="border-white/20 text-alira-white/50 w-full lg:w-auto"
-                            >
-                              <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                              Processing...
-                            </Button>
-                          )}
-                          
-                          {plan.pdf_url && (
-                            <Button
-                              onClick={() => window.open(plan.pdf_url!, '_blank')}
-                              variant="outline"
-                              size="sm"
-                              className="border-alira-gold/30 text-alira-gold hover:bg-alira-gold/10 hover:border-alira-gold/50 w-full lg:w-auto"
-                            >
-                              <Download className="w-4 h-4 mr-2" />
-                              Download
-                            </Button>
-                          )}
+                              }
+                            }}
+                          >
+                            View
+                          </Button>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
-            )}
-          </div>
+            </>
+          )}
         </div>
       </main>
+
+      {/* Sticky Action Bar */}
+      {plans.length > 0 && currentPlan && (
+        <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-20">
+          {currentPlan.pdf_url ? (
+            <Button
+              onClick={() => window.open(currentPlan.pdf_url!, '_blank')}
+              className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium px-6 md:px-8 py-4 md:py-6 text-sm md:text-base shadow-2xl shadow-alira-gold/20"
+              size="lg"
+            >
+              <Download className="w-4 md:w-5 h-4 md:h-5 mr-2" />
+              Download PDF
+            </Button>
+          ) : (
+            <Button
+              className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium px-6 md:px-8 py-4 md:py-6 text-sm md:text-base shadow-2xl shadow-alira-gold/20"
+              size="lg"
+              disabled
+            >
+              <RefreshCw className="w-4 md:w-5 h-4 md:h-5 mr-2 animate-spin" />
+              Generate Plan
+            </Button>
+          )}
+        </div>
+      )}
     </DashboardLayout>
   );
 }
