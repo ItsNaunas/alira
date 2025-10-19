@@ -17,7 +17,7 @@ Follow these steps to integrate the conversational form with your existing datab
 
 ### Copy and Run Migration
 
-1. Open `db/migrations/003_integrate_existing_schema.sql` in your code editor
+1. Open `db/migrations/003_integrate_existing_schema_clean.sql` in your code editor
 2. Copy **all contents** (Ctrl+A, Ctrl+C)
 3. Paste into Supabase SQL Editor
 4. Click **Run** (or press Ctrl+Enter)
@@ -122,7 +122,7 @@ ORDER BY column_name;
 - Links to dashboard via `dashboard_id`
 - Uses type: 'business_plan'
 
-#### `db/migrations/003_integrate_existing_schema.sql`
+#### `db/migrations/003_integrate_existing_schema_clean.sql`
 - Adds columns to existing `dashboards` table
 - Sets up RLS policies
 - Creates auto-profile trigger with 3 free credits
@@ -149,7 +149,7 @@ ORDER BY column_name;
 
 ### ❌ Error: "column current_challenges does not exist"
 **Solution:** Migration didn't run
-- Double-check you ran 003_integrate_existing_schema.sql
+- Double-check you ran 003_integrate_existing_schema_clean.sql
 - Verify in Supabase: Table Editor → dashboards → should see new columns
 
 ### ❌ Error: "permission denied for table dashboards"

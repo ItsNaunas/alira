@@ -104,7 +104,7 @@ Link to download PDF (if exists)
 
 2. **Copy & Run**
    ```
-   db/migrations/003_integrate_existing_schema.sql
+   db/migrations/003_integrate_existing_schema_clean.sql
    ```
 
 3. **Verify Success**

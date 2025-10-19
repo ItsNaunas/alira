@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { auth, createClient } from '@/lib/supabase-client';
 import ConversationalForm from '@/components/ConversationalForm';
+import AdaptiveQuestioning from '@/components/AdaptiveQuestioning';
 
 function FormChatContent() {
   const router = useRouter();
@@ -50,8 +51,6 @@ function FormChatContent() {
         .insert({
           user_id: user.id,
           business_name: formData.business_idea?.substring(0, 100) || 'Untitled Business',
-          primary_goal: formData.immediate_goals,
-          biggest_challenge: formData.current_challenges,
           current_challenges: formData.current_challenges,
           immediate_goals: formData.immediate_goals,
           service_interest: formData.service_interest || [],
@@ -64,14 +63,16 @@ function FormChatContent() {
 
       if (error) {
         console.error('❌ Database error:', error);
+        console.error('❌ Error details:', JSON.stringify(error, null, 2));
         
-        // Check if it's a migration issue
-        if (error.message.includes('column') || error.message.includes('current_challenges') || error.code === '42703') {
-          alert('⚠️ Database Setup Required!\n\nThe database needs to be updated. Please:\n\n1. Go to Supabase Dashboard (app.supabase.com)\n2. Open SQL Editor\n3. Run the migration from:\n   db/migrations/003_integrate_existing_schema.sql\n\nThis will add the necessary columns to your existing tables.');
+        // Check if it's specifically a missing column error
+        if (error.code === '42703' && error.message && error.message.includes('current_challenges')) {
+          alert('⚠️ Database Setup Required!\n\nThe database needs to be updated. Please:\n\n1. Go to Supabase Dashboard (app.supabase.com)\n2. Open SQL Editor\n3. Run the migration from:\n   db/migrations/003_integrate_existing_schema_clean.sql\n\nThis will add the necessary columns to your existing tables.');
           throw new Error('Migration required');
         }
         
-        alert(`Database Error: ${error.message}\n\nPlease check the console for details.`);
+        // Show the actual error for debugging
+        alert(`Database Error: ${error.message || 'Unknown error'}\n\nError Code: ${error.code || 'No code'}\n\nPlease check the console for details.`);
         throw error;
       }
 
@@ -149,7 +150,7 @@ function FormChatContent() {
 
       {/* Conversational Form */}
       <main className="container mx-auto px-6 py-8">
-        <ConversationalForm
+        <AdaptiveQuestioning
           userId={user.id}
           initialData={initialIdea ? { business_idea: initialIdea } : undefined}
           onComplete={handleFormComplete}

@@ -17,6 +17,12 @@ interface BusinessPlan {
   form_data?: any;
   pdf_url?: string | null;
   status: string;
+  generations?: {
+    id: string;
+    type: string;
+    content: any;
+    created_at: string;
+  }[];
 }
 
 export default function DashboardPage() {
@@ -42,7 +48,15 @@ export default function DashboardPage() {
       const supabase = createClient();
       const { data, error } = await supabase
         .from('dashboards')
-        .select('*')
+        .select(`
+          *,
+          generations (
+            id,
+            type,
+            content,
+            created_at
+          )
+        `)
         .eq('status', 'complete')
         .order('created_at', { ascending: false });
 
@@ -227,6 +241,17 @@ export default function DashboardPage() {
                             </div>
                           )}
                           
+                          {plan.generations && plan.generations.length > 0 && (
+                            <div className="text-sm text-alira-white/70 mb-3">
+                              <strong className="text-alira-gold">AI Analysis:</strong> 
+                              {plan.generations[0].content?.problem_statement && (
+                                <div className="mt-1 text-xs text-alira-white/60">
+                                  {plan.generations[0].content.problem_statement.substring(0, 150)}...
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          
                           {plan.service_interest && plan.service_interest.length > 0 && (
                             <div className="flex flex-wrap gap-2">
                               {plan.service_interest.map((service: string) => (
@@ -242,14 +267,36 @@ export default function DashboardPage() {
                         </div>
                         
                         <div className="flex flex-col gap-2 ml-6">
-                          {plan.pdf_url ? (
+                          {plan.generations && plan.generations.length > 0 ? (
                             <Button
-                              onClick={() => window.open(plan.pdf_url!, '_blank')}
+                              onClick={() => {
+                                // Show the AI-generated content in a modal or new page
+                                const content = plan.generations[0].content;
+                                const contentText = `
+Business Plan Analysis:
+
+Problem Statement:
+${content.problem_statement || 'Not available'}
+
+Objectives:
+${content.objectives?.join('\n• ') || 'Not available'}
+
+Proposed Solution:
+${content.proposed_solution?.map(s => `${s.pillar}: ${s.actions?.join(', ')}`).join('\n') || 'Not available'}
+
+Expected Outcomes:
+${content.expected_outcomes?.join('\n• ') || 'Not available'}
+
+Next Steps:
+${content.next_steps?.join('\n• ') || 'Not available'}
+                                `;
+                                alert(contentText);
+                              }}
                               variant="alira"
                               size="sm"
                             >
-                              <Download className="w-4 h-4 mr-2" />
-                              Download PDF
+                              <FileText className="w-4 h-4 mr-2" />
+                              View Plan
                             </Button>
                           ) : (
                             <Button
@@ -260,6 +307,18 @@ export default function DashboardPage() {
                             >
                               <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
                               Processing...
+                            </Button>
+                          )}
+                          
+                          {plan.pdf_url && (
+                            <Button
+                              onClick={() => window.open(plan.pdf_url!, '_blank')}
+                              variant="outline"
+                              size="sm"
+                              className="border-white/20 text-alira-white hover:bg-white/10"
+                            >
+                              <Download className="w-4 h-4 mr-2" />
+                              Download PDF
                             </Button>
                           )}
                         </div>
