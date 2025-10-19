@@ -83,11 +83,7 @@ export async function getUser(req?: NextRequest): Promise<AuthUser | null> {
       return null;
     }
 
-    return {
-      id: user.id,
-      email: user.email!,
-      ...user,
-    };
+    return user as AuthUser;
   } catch (error) {
     console.error('Error getting user:', error);
     return null;
@@ -139,7 +135,7 @@ export async function hasPurchased(userId: string): Promise<boolean> {
   const supabase = getServiceClient();
   
   const { data, error } = await supabase
-    .from('users')
+    .from('profiles')
     .select('has_purchased')
     .eq('id', userId)
     .single();
