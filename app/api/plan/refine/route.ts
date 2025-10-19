@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
         .limit(10) // Last 10 messages for context
 
       if (chatHistory) {
-        conversationHistory = chatHistory.map(msg => ({
+        conversationHistory = chatHistory.map((msg: any) => ({
           role: msg.message_type === 'user' ? 'user' : 'assistant',
           content: msg.content
         }))
