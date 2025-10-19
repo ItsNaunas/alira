@@ -165,3 +165,91 @@ export const currentToolsOptions = [
   { value: 'automation', label: 'Some automation tools' },
   { value: 'ai_tools', label: 'AI tools and integrations' }
 ] as const
+
+// ============================================
+// Plan Versioning and Management Types
+// ============================================
+
+// Plan version schema
+export const planVersionSchema = z.object({
+  id: z.string().uuid(),
+  dashboard_id: z.string().uuid(),
+  generation_id: z.string().uuid().nullable(),
+  version_number: z.number().int().positive(),
+  content: z.record(z.string(), z.any()),
+  changes_summary: z.string().nullable(),
+  parent_version_id: z.string().uuid().nullable(),
+  created_at: z.string(),
+  created_by: z.string().uuid().nullable(),
+  user_id: z.string().uuid(),
+})
+
+export type PlanVersion = z.infer<typeof planVersionSchema>
+
+// Refinement chat message schema
+export const refinementChatMessageSchema = z.object({
+  id: z.string().uuid(),
+  dashboard_id: z.string().uuid(),
+  message_type: z.enum(['user', 'assistant', 'system']),
+  content: z.string(),
+  suggested_changes: z.record(z.string(), z.any()).nullable(),
+  applied: z.boolean().default(false),
+  created_at: z.string(),
+  user_id: z.string().uuid(),
+})
+
+export type RefinementChatMessage = z.infer<typeof refinementChatMessageSchema>
+
+// Plan detail with all related data
+export interface PlanDetail {
+  id: string
+  business_name: string
+  current_challenges?: string
+  immediate_goals?: string
+  service_interest?: string[]
+  form_data?: Record<string, any>
+  pdf_url?: string | null
+  status: string
+  created_at: string
+  updated_at: string
+  user_id: string
+  generation?: {
+    id: string
+    type: string
+    content: BusinessCaseOutline
+    version: number
+    created_at: string
+  }
+  current_version?: PlanVersion
+  version_count?: number
+}
+
+// Plan section types for structured editing
+export type PlanSection = 
+  | 'problem_statement'
+  | 'objectives'
+  | 'current_state'
+  | 'proposed_solution'
+  | 'expected_outcomes'
+  | 'next_steps'
+  | 'risk_assessment'
+  | 'competitive_advantage'
+
+export const planSectionLabels: Record<PlanSection, string> = {
+  problem_statement: 'Problem Statement',
+  objectives: 'Objectives',
+  current_state: 'Current State',
+  proposed_solution: 'Proposed Solution',
+  expected_outcomes: 'Expected Outcomes',
+  next_steps: 'Next Steps',
+  risk_assessment: 'Risk Assessment',
+  competitive_advantage: 'Competitive Advantage',
+}
+
+// Status options for plans
+export const planStatusOptions = [
+  { value: 'draft', label: 'Draft', color: 'gray' },
+  { value: 'in_progress', label: 'In Progress', color: 'blue' },
+  { value: 'complete', label: 'Complete', color: 'green' },
+  { value: 'archived', label: 'Archived', color: 'slate' },
+] as const

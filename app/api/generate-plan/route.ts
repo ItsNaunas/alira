@@ -54,31 +54,28 @@ export async function POST(request: NextRequest) {
     const formData = validatedData.answers as Record<string, any>;
     
     // Step 5: Generate business plan using AI
-    // TODO: Implement generateBusinessPlan in lib/openai.ts
-    // For now, return a placeholder structure
-    const businessPlan = {
-      problem_statement: formData['current_challenges'] || 'Challenge analysis pending',
-      objectives: [formData['immediate_goals'] || 'Goals to be defined'],
-      proposed_solution: [
-        {
-          pillar: 'Strategy',
-          actions: ['Action items based on selected services'],
-          effort: 'medium',
-          impact: 'high'
-        }
-      ],
-      expected_outcomes: ['Outcomes based on goals'],
-      next_steps: ['Next steps to be defined']
+    console.log('Generating business plan with form data:', formData);
+    
+    // Map form data to the format expected by generateBusinessCase
+    const mappedFormData = {
+      businessName: formData.business_idea || 'Business concept',
+      industry: 'General business',
+      stage: 'Early stage',
+      challenges: formData.current_challenges || 'Business development challenges',
+      goalsShort: formData.immediate_goals || 'Short-term business goals',
+      goalsLong: 'Long-term business growth and sustainability',
+      resources: formData.current_tools || 'Available business resources',
+      budget: 'To be determined',
+      timeline: 'Flexible timeline',
+      service: formData.service_interest?.join(', ') || 'General business improvement',
+      notes: formData.business_idea || 'Business concept not provided'
     };
     
-    // Uncomment when generateBusinessPlan is implemented:
-    // const businessPlan = await generateBusinessPlan({
-    //   business_idea: formData['business_idea'],
-    //   current_challenges: formData['current_challenges'],
-    //   immediate_goals: formData['immediate_goals'],
-    //   service_interest: formData['service_interest'],
-    //   current_tools: formData['current_tools']
-    // });
+    console.log('Mapped form data for AI:', mappedFormData);
+    
+    // Import and use the actual generateBusinessCase function
+    const { generateBusinessCase } = await import('@/lib/openai');
+    const businessPlan = await generateBusinessCase(mappedFormData);
 
     // Step 6: Store the generated plan in the database
     const supabase = getServiceClient();
@@ -92,39 +89,79 @@ export async function POST(request: NextRequest) {
     }
     
     // Store the generated plan
-    const { data: generation, error: insertError } = await supabase
-      .from('generations')
-      .insert({
-        dashboard_id: dashboardId || null,
-        type: 'business_plan',
-        content: businessPlan,
-        version: 1,
-        user_id: user.id
-      })
-      .select()
-      .single();
+    const insertData: any = {
+      dashboard_id: dashboardId || null,
+      type: 'business_plan',
+      content: businessPlan,
+      version: 1
+    };
 
-    if (insertError) {
-      console.error('Database error:', insertError);
+    // Only add user_id if the column exists (check by trying to insert)
+    try {
+      const { data: generation, error: insertError } = await supabase
+        .from('generations')
+        .insert({
+          ...insertData,
+          user_id: user.id
+        })
+        .select()
+        .single();
+
+      if (insertError) {
+        // If user_id column doesn't exist, try without it
+        if (insertError.message.includes('user_id') || insertError.message.includes('column')) {
+          console.log('user_id column not found, inserting without it');
+          const { data: generation2, error: insertError2 } = await supabase
+            .from('generations')
+            .insert(insertData)
+            .select()
+            .single();
+          
+          if (insertError2) {
+            console.error('Database error:', insertError2);
+            throw errors.internal('Failed to save generated plan');
+          }
+          
+          // Update the dashboard if it exists
+          if (dashboardId) {
+            await supabase
+              .from('dashboards')
+              .update({
+                form_data: { ...formData, generation_id: generation2.id }
+              })
+              .eq('id', dashboardId)
+              .eq('user_id', user.id);
+          }
+
+          return successResponse({
+            generation: generation2,
+            dashboardId: dashboardId || null
+          });
+        } else {
+          console.error('Database error:', insertError);
+          throw errors.internal('Failed to save generated plan');
+        }
+      }
+
+      // Update the dashboard if it exists
+      if (dashboardId) {
+        await supabase
+          .from('dashboards')
+          .update({
+            form_data: { ...formData, generation_id: generation.id }
+          })
+          .eq('id', dashboardId)
+          .eq('user_id', user.id);
+      }
+
+      return successResponse({
+        generation: generation,
+        dashboardId: dashboardId || null
+      });
+    } catch (dbError) {
+      console.error('Database operation failed:', dbError);
       throw errors.internal('Failed to save generated plan');
     }
-
-    // Update the dashboard if it exists
-    if (dashboardId) {
-      await supabase
-        .from('dashboards')
-        .update({
-          form_data: { ...formData, generation_id: generation.id }
-        })
-        .eq('id', dashboardId)
-        .eq('user_id', user.id); // Additional security check
-    }
-
-    // Step 7: Return success response
-    return successResponse({
-      generation: generation,
-      dashboardId: dashboardId || null
-    });
 
   } catch (error) {
     // Step 8: Centralized error handling (never leaks sensitive data)

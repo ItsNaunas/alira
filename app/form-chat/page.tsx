@@ -88,9 +88,9 @@ function FormChatContent() {
         body: JSON.stringify({
           answers: {
             ...formData,
-            dashboardId: data.id
-          },
-          userId: user.id
+            dashboardId: data.id,
+            userId: user.id
+          }
         }),
       });
 

@@ -369,30 +369,7 @@ export default function DashboardPage() {
                     <Card 
                       key={plan.id} 
                       className="bg-white/[0.02] border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-black/20 transition-all cursor-pointer group hover:-translate-y-0.5"
-                      onClick={() => {
-                        if (plan.generations && plan.generations.length > 0) {
-                          const content = plan.generations[0].content;
-                          const contentText = `
-Business Plan Analysis:
-
-Problem Statement:
-${content.problem_statement || 'Not available'}
-
-Objectives:
-${content.objectives?.join('\n• ') || 'Not available'}
-
-Proposed Solution:
-${content.proposed_solution?.map((s: any) => `${s.pillar}: ${s.actions?.join(', ')}`).join('\n') || 'Not available'}
-
-Expected Outcomes:
-${content.expected_outcomes?.join('\n• ') || 'Not available'}
-
-Next Steps:
-${content.next_steps?.join('\n• ') || 'Not available'}
-                          `;
-                          alert(contentText);
-                        }
-                      }}
+                      onClick={() => router.push(`/dashboard/${plan.id}`)}
                     >
                       <CardContent className="p-5">
                         <div className="flex items-center justify-between gap-4">
@@ -426,28 +403,7 @@ ${content.next_steps?.join('\n• ') || 'Not available'}
                             className="border-white/20 text-alira-white hover:bg-white/5 flex-shrink-0"
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (plan.generations && plan.generations.length > 0) {
-                                const content = plan.generations[0].content;
-                                const contentText = `
-Business Plan Analysis:
-
-Problem Statement:
-${content.problem_statement || 'Not available'}
-
-Objectives:
-${content.objectives?.join('\n• ') || 'Not available'}
-
-Proposed Solution:
-${content.proposed_solution?.map((s: any) => `${s.pillar}: ${s.actions?.join(', ')}`).join('\n') || 'Not available'}
-
-Expected Outcomes:
-${content.expected_outcomes?.join('\n• ') || 'Not available'}
-
-Next Steps:
-${content.next_steps?.join('\n• ') || 'Not available'}
-                                `;
-                                alert(contentText);
-                              }
+                              router.push(`/dashboard/${plan.id}`);
                             }}
                           >
                             View
