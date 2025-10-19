@@ -10,10 +10,12 @@ import {
   ChevronDown,
   Home,
   ChevronRight,
-  FileText
+  FileText,
+  Loader2
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useState } from 'react'
 
 interface PlanHeaderProps {
   plan: PlanDetail
@@ -31,6 +33,7 @@ export default function PlanHeader({
   showActions = true 
 }: PlanHeaderProps) {
   const router = useRouter()
+  const [generatingPDF, setGeneratingPDF] = useState(false)
   
   const statusOption = planStatusOptions.find(opt => opt.value === plan.status)
   const statusColor = statusOption?.color || 'gray'
@@ -43,9 +46,37 @@ export default function PlanHeader({
     router.push(`/dashboard/${plan.id}/refine`)
   }
 
-  const handleExport = () => {
+  const handleDownloadPDF = async () => {
+    // If PDF already exists, just open it
     if (plan.pdf_url) {
       window.open(plan.pdf_url, '_blank')
+      return
+    }
+
+    // Otherwise, generate it on-demand
+    setGeneratingPDF(true)
+    try {
+      const response = await fetch('/api/plan/generate-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId: plan.id })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate PDF')
+      }
+
+      const data = await response.json()
+      if (data.pdf_url) {
+        window.open(data.pdf_url, '_blank')
+        // Refresh the page to show the updated PDF URL
+        router.refresh()
+      }
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+      alert('Failed to generate PDF. Please try again.')
+    } finally {
+      setGeneratingPDF(false)
     }
   }
 
@@ -149,17 +180,25 @@ export default function PlanHeader({
                   Refine with AI
                 </Button>
                 
-                {plan.pdf_url && (
-                  <Button
-                    onClick={handleExport}
-                    variant="outline"
-                    size="sm"
-                    className="border-white/20 text-alira-white hover:bg-white/5"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Export
-                  </Button>
-                )}
+                <Button
+                  onClick={handleDownloadPDF}
+                  variant="outline"
+                  size="sm"
+                  className="border-white/20 text-alira-white hover:bg-white/5"
+                  disabled={generatingPDF}
+                >
+                  {generatingPDF ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-4 h-4 mr-2" />
+                      {plan.pdf_url ? 'Download PDF' : 'Generate PDF'}
+                    </>
+                  )}
+                </Button>
                 
                 <Button
                   onClick={handleShare}

@@ -108,8 +108,10 @@ export default function DashboardPage() {
   // Get the most recent plan for the main grid
   const currentPlan = plans[0];
   const totalPlans = plans.length;
-  const inProgress = plans.filter(p => !p.pdf_url).length;
-  const completed = plans.filter(p => p.pdf_url).length;
+  // Plans are considered "in progress" if they have no generations yet
+  const inProgress = plans.filter(p => !p.generations || p.generations.length === 0).length;
+  // Plans are "completed" if they have generated content
+  const completed = plans.filter(p => p.generations && p.generations.length > 0).length;
 
   return (
     <DashboardLayout>
@@ -279,9 +281,9 @@ export default function DashboardPage() {
                 {/* Generated Plan Preview */}
                 <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
                   <CardContent className="p-6">
-                    <h3 className="text-lg font-serif text-alira-white mb-4">Generated Plan Preview</h3>
+                    <h3 className="text-lg font-serif text-alira-white mb-4">Your Strategic Plan</h3>
                     <div className="space-y-4">
-                      {currentPlan?.pdf_url ? (
+                      {currentPlan?.generations && currentPlan.generations.length > 0 ? (
                         <>
                           <div className="aspect-[8.5/11] bg-white/5 border border-alira-gold/30 rounded-lg flex items-center justify-center">
                             <FileText className="w-16 h-16 text-alira-gold/40" />
@@ -290,17 +292,18 @@ export default function DashboardPage() {
                             variant="outline"
                             size="sm"
                             className="w-full border-white/20 text-alira-white hover:bg-white/5"
-                            onClick={() => window.open(currentPlan.pdf_url!, '_blank')}
+                            onClick={() => router.push(`/dashboard/${currentPlan.id}`)}
                           >
-                            Preview Plan
+                            <Eye className="w-4 h-4 mr-2" />
+                            View Plan
                           </Button>
                         </>
                       ) : (
                         <>
                           <div className="aspect-[8.5/11] bg-white/5 border border-white/10 rounded-lg flex items-center justify-center">
                             <div className="text-center">
-                              <RefreshCw className="w-12 h-12 text-alira-white/20 animate-spin mx-auto mb-3" />
-                              <div className="text-xs text-alira-white/40">Generating...</div>
+                              <FileText className="w-12 h-12 text-alira-white/20 mb-3" />
+                              <div className="text-xs text-alira-white/40">No plan generated yet</div>
                             </div>
                           </div>
                           <Button
@@ -309,7 +312,7 @@ export default function DashboardPage() {
                             className="w-full border-white/20 text-alira-white/50"
                             disabled
                           >
-                            Preview Plan
+                            View Plan
                           </Button>
                         </>
                       )}
@@ -420,27 +423,16 @@ export default function DashboardPage() {
       </main>
 
       {/* Sticky Action Bar */}
-      {plans.length > 0 && currentPlan && (
+      {plans.length > 0 && currentPlan && currentPlan.generations && currentPlan.generations.length > 0 && (
         <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-20">
-          {currentPlan.pdf_url ? (
-            <Button
-              onClick={() => window.open(currentPlan.pdf_url!, '_blank')}
-              className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium px-6 md:px-8 py-4 md:py-6 text-sm md:text-base shadow-2xl shadow-alira-gold/20"
-              size="lg"
-            >
-              <Download className="w-4 md:w-5 h-4 md:h-5 mr-2" />
-              Download PDF
-            </Button>
-          ) : (
-            <Button
-              className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium px-6 md:px-8 py-4 md:py-6 text-sm md:text-base shadow-2xl shadow-alira-gold/20"
-              size="lg"
-              disabled
-            >
-              <RefreshCw className="w-4 md:w-5 h-4 md:h-5 mr-2 animate-spin" />
-              Generate Plan
-            </Button>
-          )}
+          <Button
+            onClick={() => router.push(`/dashboard/${currentPlan.id}`)}
+            className="bg-alira-gold hover:bg-alira-gold/90 text-alira-black font-medium px-6 md:px-8 py-4 md:py-6 text-sm md:text-base shadow-2xl shadow-alira-gold/20"
+            size="lg"
+          >
+            <Eye className="w-4 md:w-5 h-4 md:h-5 mr-2" />
+            View Your Plan
+          </Button>
         </div>
       )}
     </DashboardLayout>
