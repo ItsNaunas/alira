@@ -20,13 +20,17 @@ import { db } from '@/lib/supabase-server'
 import { requireUser } from '@/lib/server/auth'
 import { handleApiError, successResponse, errors } from '@/lib/server/errors'
 import { validateOrThrow } from '@/lib/server/validation'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function POST(request: NextRequest) {
   try {
     // Step 1: Authenticate user (Layer 2 security)
     const user = await requireUser();
     
-    // Step 2: Parse and validate request body
+    // Step 2: Rate limiting - 10 AI generations per minute per user
+    await checkRateLimit(user.id, 'ai-generate', 10, 60000);
+    
+    // Step 3: Parse and validate request body
     const body = await request.json()
     
     // Debug logging (only in development)

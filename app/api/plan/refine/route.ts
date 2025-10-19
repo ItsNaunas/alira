@@ -10,6 +10,7 @@ import { NextRequest } from 'next/server'
 import { requireUser, getServiceClient } from '@/lib/server/auth'
 import { handleApiError, successResponse, errors } from '@/lib/server/errors'
 import { refineBusinessPlan } from '@/lib/openai-refine'
+import { checkRateLimit } from '@/lib/rate-limit'
 import { z } from 'zod'
 
 // Request validation schema
@@ -25,7 +26,10 @@ export async function POST(request: NextRequest) {
     // Step 1: Authenticate user
     const user = await requireUser()
     
-    // Step 2: Parse and validate input
+    // Step 2: Rate limiting - 15 refinements per minute per user
+    await checkRateLimit(user.id, 'plan-refine', 15, 60000)
+    
+    // Step 3: Parse and validate input
     const body = await request.json()
     const validatedData = RefineRequestSchema.parse(body)
     

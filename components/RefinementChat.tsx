@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent } from '@/components/ui/card'
@@ -55,11 +55,7 @@ export default function RefinementChat({
   }, [messages])
 
   // Load chat history
-  useEffect(() => {
-    loadChatHistory()
-  }, [planId])
-
-  const loadChatHistory = async () => {
+  const loadChatHistory = useCallback(async () => {
     try {
       setIsLoadingHistory(true)
       const response = await fetch(`/api/plan/refine?planId=${planId}`)
@@ -81,7 +77,12 @@ export default function RefinementChat({
     } finally {
       setIsLoadingHistory(false)
     }
-  }
+  }, [planId])
+
+  // Load chat history on mount and when planId changes
+  useEffect(() => {
+    loadChatHistory()
+  }, [loadChatHistory])
 
   const handleSend = async () => {
     if (!inputValue.trim() || isLoading) return

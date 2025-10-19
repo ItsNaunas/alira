@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { PlanVersion } from '@/lib/schema'
@@ -32,11 +32,7 @@ export default function VersionHistory({
   const [restoringId, setRestoringId] = useState<string | null>(null)
   const [expandedId, setExpandedId] = useState<string | null>(null)
 
-  useEffect(() => {
-    loadVersions()
-  }, [planId])
-
-  const loadVersions = async () => {
+  const loadVersions = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
@@ -55,7 +51,12 @@ export default function VersionHistory({
     } finally {
       setLoading(false)
     }
-  }
+  }, [planId])
+
+  // Load versions on mount and when planId changes
+  useEffect(() => {
+    loadVersions()
+  }, [loadVersions])
 
   const handleRestore = async (versionId: string) => {
     if (!onRestoreVersion) return

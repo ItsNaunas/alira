@@ -1,18 +1,15 @@
 import OpenAI from 'openai'
 
-// Comprehensive API key validation
+// API key validation
 if (!process.env.OPENAI_API_KEY) {
   console.error('[OPENAI] ❌ OPENAI_API_KEY is missing from environment variables!')
-  console.error('[OPENAI] Available env vars:', Object.keys(process.env).filter(k => k.includes('OPEN')))
   throw new Error('Missing OPENAI_API_KEY environment variable')
 }
 
-console.log('[OPENAI] ✅ OPENAI_API_KEY found:', {
-  present: true,
-  length: process.env.OPENAI_API_KEY.length,
-  startsWithSk: process.env.OPENAI_API_KEY.startsWith('sk-'),
-  preview: `${process.env.OPENAI_API_KEY.substring(0, 10)}...`
-})
+// Only log in development - no key metadata in production
+if (process.env.NODE_ENV === 'development') {
+  console.log('[OPENAI] ✅ OPENAI_API_KEY configured')
+}
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

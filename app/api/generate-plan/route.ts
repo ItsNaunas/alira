@@ -17,6 +17,7 @@ import { NextRequest } from 'next/server';
 import { GeneratePlanSchema, validateOrThrow } from '@/lib/server/validation';
 import { requireUser, getServiceClient, verifyOwnership } from '@/lib/server/auth';
 import { handleApiError, successResponse, errors } from '@/lib/server/errors';
+import { checkRateLimit } from '@/lib/rate-limit';
 // Note: You'll need to implement generateBusinessPlan in lib/openai.ts
 // import { generateBusinessPlan } from '@/lib/openai';
 
@@ -25,7 +26,10 @@ export async function POST(request: NextRequest) {
     // Step 1: Authenticate user (Layer 2 security)
     const user = await requireUser();
     
-    // Step 2: Parse and validate input
+    // Step 2: Rate limiting - 5 plan generations per minute per user
+    await checkRateLimit(user.id, 'generate-plan', 5, 60000);
+    
+    // Step 3: Parse and validate input
     const body = await request.json();
     console.log('=== GENERATE PLAN API DEBUG ===');
     console.log('Received body:', JSON.stringify(body, null, 2));

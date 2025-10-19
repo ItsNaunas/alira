@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { sendPersonalPlanEmail, EmailData } from '@/lib/enhanced-email'
 import { PersonalPlanPDFData } from '@/lib/enhanced-pdf'
 import { generateBusinessCase } from '@/lib/openai'
+import { requireUser } from '@/lib/server/auth'
 
 const submitDraftSchema = z.object({
   id: z.string().uuid(),
@@ -12,17 +13,22 @@ const submitDraftSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify authentication (defense in depth)
+    const user = await requireUser()
+    console.log('Authenticated user:', user.id)
+    
     // Parse and validate request body
     const body = await request.json()
     const { id, email } = submitDraftSchema.parse(body)
 
     console.log('Processing draft submission:', { id, email })
 
-    // Get the draft data
+    // Get the draft data (with ownership verification)
     const { data: draft, error: fetchError } = await supabase
       .from('intake_forms')
       .select('*')
       .eq('id', id)
+      .eq('user_id', user.id) // Verify ownership
       .single()
 
     if (fetchError) {
@@ -84,7 +90,6 @@ export async function POST(request: NextRequest) {
       
       console.log('[SUBMIT-ENHANCED] AI input data:', JSON.stringify(aiInput, null, 2))
       console.log('[SUBMIT-ENHANCED] OpenAI API Key present:', !!process.env.OPENAI_API_KEY)
-      console.log('[SUBMIT-ENHANCED] OpenAI API Key length:', process.env.OPENAI_API_KEY?.length || 0)
       
       aiAnalysis = await generateBusinessCase(aiInput)
       console.log('[SUBMIT-ENHANCED] AI analysis generated successfully:', {

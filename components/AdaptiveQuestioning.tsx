@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -119,14 +119,14 @@ export default function AdaptiveQuestioning({ userId, initialData, onComplete }:
   const hasInitialized = useRef(false);
   const initialBusinessIdea = useRef(initialData?.business_idea);
 
-  // Progress context messages
-  const progressMessages = [
+  // Progress context messages (memoized to prevent recreation on every render)
+  const progressMessages = useMemo(() => [
     "We're getting to know your business...",
     "Understanding your challenges...",
     "Learning about your goals...",
     "Tailoring your strategy...",
     "Finalizing your plan..."
-  ];
+  ], []);
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -143,10 +143,11 @@ export default function AdaptiveQuestioning({ userId, initialData, onComplete }:
       contextMessage: progressMessages[Math.min(step, progressMessages.length - 1)],
       isComplete
     });
-  }, [progressMessages]);
+  }, [progressMessages]); // questionFlow.length is not a reactive dependency
 
   // Initialize conversation
   useEffect(() => {
+    // This effect should only run once on mount using the ref pattern
     if (!hasInitialized.current) {
       hasInitialized.current = true;
       
@@ -161,7 +162,8 @@ export default function AdaptiveQuestioning({ userId, initialData, onComplete }:
         }, 500);
       }
     }
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty deps array is intentional - initialization should only happen once
 
   const addBotMessage = (content: string) => {
     setIsTyping(true);

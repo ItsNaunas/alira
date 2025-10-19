@@ -4,6 +4,7 @@ import { env } from '@/lib/env'
 import { z } from 'zod'
 import { sendPersonalPlanEmail } from '@/lib/enhanced-email'
 import { PersonalPlanPDFData } from '@/lib/enhanced-pdf'
+import { requireUser } from '@/lib/server/auth'
 
 export const runtime = 'nodejs'
 
@@ -17,6 +18,9 @@ export async function POST(request: NextRequest) {
   console.time('[SUBMIT] total')
   
   try {
+    // Verify authentication (defense in depth - middleware should catch this first)
+    const user = await requireUser()
+    console.log('[SUBMIT] Authenticated user:', user.id)
     // 1) validate env early
     console.log('[SUBMIT] Environment check:', {
       hasResendKey: !!env.RESEND_API_KEY,
@@ -37,11 +41,12 @@ export async function POST(request: NextRequest) {
     
     const { id, email } = submitDraftSchema.parse(body)
 
-    // Get the draft data
+    // Get the draft data (with ownership verification)
     const { data: draft, error: fetchError } = await supabase
       .from('intake_forms')
       .select('*')
       .eq('id', id)
+      .eq('user_id', user.id) // Verify ownership
       .single()
 
     if (fetchError) {
@@ -123,7 +128,6 @@ export async function POST(request: NextRequest) {
       
       console.log('[SUBMIT] AI input data:', JSON.stringify(aiInput, null, 2))
       console.log('[SUBMIT] OpenAI API Key present:', !!process.env.OPENAI_API_KEY)
-      console.log('[SUBMIT] OpenAI API Key length:', process.env.OPENAI_API_KEY?.length || 0)
       
       aiAnalysis = await generateBusinessCase(aiInput)
       console.log('[SUBMIT] AI analysis generated successfully:', {
