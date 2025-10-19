@@ -59,11 +59,11 @@ export default function ProcessDiagram() {
                   {/* Icon */}
                   <div className="relative group">
                     <div 
-                      className="w-20 h-20 rounded-full border-2 border-alira-onyx bg-white flex items-center justify-center shadow-sm transition-all duration-200 hover:shadow-md hover:border-alira-gold hover:-translate-y-1"
+                      className="w-20 h-20 rounded-full border-2 border-alira-primary bg-white flex items-center justify-center shadow-sm transition-all duration-200 hover:shadow-md hover:border-alira-gold hover:-translate-y-1"
                       role="img"
                       aria-label={`${step.title} step`}
                     >
-                      <IconComponent className="w-8 h-8 text-alira-onyx dark:text-alira-porcelain transition-colors duration-200 group-hover:text-alira-gold" />
+                      <IconComponent className="w-8 h-8 text-alira-primary dark:text-alira-white transition-colors duration-200 group-hover:text-alira-gold" />
                     </div>
                     {/* Info indicator */}
                     <div className="absolute -top-2 -right-2 w-6 h-6 bg-alira-gold/10 rounded-full flex items-center justify-center border border-alira-gold/20">
@@ -82,12 +82,12 @@ export default function ProcessDiagram() {
                     
                     {/* Detailed description on hover */}
                     {isHovered && (
-                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-80 bg-white border border-alira-onyx/10 rounded-lg shadow-lg p-4 z-20">
-                        <div className="text-sm text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-80 bg-white border border-alira-primary/10 rounded-lg shadow-lg p-4 z-20">
+                        <div className="text-sm text-alira-primary/80 dark:text-alira-white/80 leading-relaxed">
                           {step.detailedDescription}
                         </div>
                         {/* Arrow pointing up */}
-                        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-alira-onyx/10 rotate-45"></div>
+                        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-alira-primary/10 rotate-45"></div>
                       </div>
                     )}
                   </div>
@@ -126,11 +126,11 @@ export default function ProcessDiagram() {
                   {/* Icon */}
                   <div className="flex-shrink-0 group relative">
                     <div 
-                      className="w-16 h-16 rounded-full border-2 border-alira-onyx bg-white flex items-center justify-center shadow-sm transition-all duration-200 hover:shadow-md hover:border-alira-gold hover:-translate-y-1"
+                      className="w-16 h-16 rounded-full border-2 border-alira-primary bg-white flex items-center justify-center shadow-sm transition-all duration-200 hover:shadow-md hover:border-alira-gold hover:-translate-y-1"
                       role="img"
                       aria-label={`${step.title} step`}
                     >
-                      <IconComponent className="w-6 h-6 text-alira-onyx dark:text-alira-porcelain transition-colors duration-200 group-hover:text-alira-gold" />
+                      <IconComponent className="w-6 h-6 text-alira-primary dark:text-alira-white transition-colors duration-200 group-hover:text-alira-gold" />
                     </div>
                     {/* Info indicator */}
                     <div className="absolute -top-1 -right-1 w-5 h-5 bg-alira-gold/10 rounded-full flex items-center justify-center border border-alira-gold/20">
@@ -149,8 +149,8 @@ export default function ProcessDiagram() {
                     
                     {/* Detailed description on hover */}
                     {isHovered && (
-                      <div className="mt-4 p-4 bg-alira-onyx/5 rounded-lg border border-alira-onyx/10">
-                        <div className="text-sm text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
+                      <div className="mt-4 p-4 bg-alira-primary/5 rounded-lg border border-alira-primary/10">
+                        <div className="text-sm text-alira-primary/80 dark:text-alira-white/80 leading-relaxed">
                           {step.detailedDescription}
                         </div>
                       </div>

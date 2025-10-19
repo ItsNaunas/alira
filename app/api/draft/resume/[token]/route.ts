@@ -1,70 +1,89 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase-server'
+import { z } from 'zod'
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { token: string } }
-) {
+const createDraftSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  data: z.object({
+    mini_idea_one_liner: z.string().optional()
+  })
+})
+
+export async function POST(request: NextRequest) {
   try {
-    const { token } = params
+    // Parse and validate request body
+    const body = await request.json()
+    const { name, email, data } = createDraftSchema.parse(body)
 
-    // Validate token format (basic UUID validation)
-    if (!token || typeof token !== 'string' || token.length < 10) {
-      return NextResponse.json(
-        { error: 'Invalid resume token format' },
-        { status: 400 }
-      )
-    }
+    // Generate unique resume token
+    const resume_token = crypto.randomUUID()
 
-    // Get draft by resume token
+    // Create draft record
     const { data: draft, error } = await supabase
       .from('intake_forms')
-      .select('*')
-      .eq('resume_token', token)
-      .eq('status', 'draft')
+      .insert({
+        name,
+        email,
+        data,
+        resume_token,
+        status: 'draft',
+        step: 1
+      })
+      .select()
       .single()
 
     if (error) {
-      console.error('Database error resuming draft:', error)
+      console.error('Database error creating draft:', error)
       
       // Handle specific database errors
-      if (error.code === 'PGRST116') { // Row not found
+      if (error.code === '23505') { // Unique constraint violation
         return NextResponse.json(
-          { error: 'Draft not found or expired' },
-          { status: 404 }
+          { error: 'A draft with this email already exists' },
+          { status: 409 }
         )
       }
       
       return NextResponse.json(
-        { error: 'Failed to retrieve draft. Please try again.' },
+        { error: 'Failed to create draft. Please try again.' },
         { status: 500 }
       )
     }
 
     if (!draft) {
       return NextResponse.json(
-        { error: 'Draft not found or expired' },
-        { status: 404 }
-      )
-    }
-
-    // Check if draft is too old (optional - could be 7 days)
-    const draftAge = Date.now() - new Date(draft.created_at).getTime()
-    const maxAge = 7 * 24 * 60 * 60 * 1000 // 7 days in milliseconds
-    
-    if (draftAge > maxAge) {
-      return NextResponse.json(
-        { error: 'Draft has expired. Please start a new form.' },
-        { status: 410 } // Gone
+        { error: 'Draft was not created successfully' },
+        { status: 500 }
       )
     }
 
     return NextResponse.json({
       success: true,
-      draft
+      id: draft.id,
+      resume_token: draft.resume_token
     })
   } catch (error) {
-    console.error('Error in resume draft API:', error)
+    console.error('Error in create draft API:', error)
+    
+    // Handle validation errors
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { 
+          error: 'Invalid request data',
+          details: error.errors.map(e => `${e.path.join('.')}: ${e.message}`)
+        },
+        { status: 400 }
+      )
+    }
+    
+    // Handle JSON parsing errors
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: 'Invalid JSON in request body' },
+        { status: 400 }
+      )
+    }
+    
     return NextResponse.json(
       { error: 'Internal server error. Please try again.' },
       { status: 500 }

@@ -35,7 +35,7 @@ export interface WizardFormData {
 
 // Email templates
 const contactFormTemplate = (data: ContactFormData) => `
-<div style="font-family: Lato, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
+<div style="font-family: 'General Sans', Arial, sans-serif; font-weight: 300; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
   <div style="background-color: #1a1a1a; color: #ffffff; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
     <h1 style="margin: 0; font-size: 28px; font-weight: bold;">ALIRA.</h1>
     <p style="margin: 10px 0 0 0; color: #d4af37; font-size: 16px;">New Contact Form Submission</p>
@@ -68,7 +68,7 @@ const contactFormTemplate = (data: ContactFormData) => `
 `
 
 const businessCaseFormTemplate = (data: BusinessCaseFormData) => `
-<div style="font-family: Lato, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
+<div style="font-family: 'General Sans', Arial, sans-serif; font-weight: 300; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
   <div style="background-color: #1a1a1a; color: #ffffff; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
     <h1 style="margin: 0; font-size: 28px; font-weight: bold;">ALIRA.</h1>
     <p style="margin: 10px 0 0 0; color: #d4af37; font-size: 16px;">New Business Case Request</p>
@@ -153,7 +153,7 @@ const businessCaseFormTemplate = (data: BusinessCaseFormData) => `
 `
 
 const wizardFormTemplate = (data: WizardFormData) => `
-<div style="font-family: Lato, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
+<div style="font-family: 'General Sans', Arial, sans-serif; font-weight: 300; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
   <div style="background-color: #1a1a1a; color: #ffffff; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
     <h1 style="margin: 0; font-size: 28px; font-weight: bold;">ALIRA.</h1>
     <p style="margin: 10px 0 0 0; color: #d4af37; font-size: 16px;">New Simple Plan Request</p>
@@ -272,7 +272,7 @@ export async function sendAutoReply(to: string, type: 'contact' | 'business-case
     contact: {
       subject: 'Thank you for contacting ALIRA',
       html: `
-        <div style="font-family: Lato, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="font-family: 'General Sans', Arial, sans-serif; font-weight: 300; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background-color: #1a1a1a; color: #ffffff; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
             <h1 style="margin: 0; font-size: 28px; font-weight: bold;">ALIRA.</h1>
           </div>
@@ -287,7 +287,7 @@ export async function sendAutoReply(to: string, type: 'contact' | 'business-case
     'business-case': {
       subject: 'Your Business Case Request - ALIRA',
       html: `
-        <div style="font-family: Lato, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="font-family: 'General Sans', Arial, sans-serif; font-weight: 300; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background-color: #1a1a1a; color: #ffffff; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
             <h1 style="margin: 0; font-size: 28px; font-weight: bold;">ALIRA.</h1>
           </div>
@@ -302,7 +302,7 @@ export async function sendAutoReply(to: string, type: 'contact' | 'business-case
     wizard: {
       subject: 'Your Simple Plan Request - ALIRA',
       html: `
-        <div style="font-family: Lato, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="font-family: 'General Sans', Arial, sans-serif; font-weight: 300; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background-color: #1a1a1a; color: #ffffff; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
             <h1 style="margin: 0; font-size: 28px; font-weight: bold;">ALIRA.</h1>
           </div>

@@ -43,24 +43,24 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
       }
 
       return (
-        <div className="min-h-screen flex items-center justify-center bg-alira-porcelain">
+        <div className="min-h-screen flex items-center justify-center bg-alira-white">
           <div className="max-w-md mx-auto text-center p-8">
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <AlertTriangle className="w-8 h-8 text-red-600" />
             </div>
             
-            <h2 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-4">
+            <h2 className="text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-4">
               Something went wrong
             </h2>
             
-            <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 mb-6">
+            <p className="text-alira-primary/70 dark:text-alira-white/70 mb-6">
               We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.
             </p>
             
             <div className="space-y-3">
               <Button 
                 onClick={this.resetError}
-                className="w-full bg-alira-onyx hover:bg-alira-onyx/90"
+                className="w-full bg-alira-primary hover:bg-alira-primary/90"
               >
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Try Again
@@ -77,10 +77,10 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
             
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <details className="mt-6 text-left">
-                <summary className="cursor-pointer text-sm text-alira-onyx/60 mb-2">
+                <summary className="cursor-pointer text-sm text-alira-primary/60 mb-2">
                   Error Details (Development)
                 </summary>
-                <pre className="text-xs bg-alira-onyx/5 p-3 rounded overflow-auto">
+                <pre className="text-xs bg-alira-primary/5 p-3 rounded overflow-auto">
                   {this.state.error.message}
                   {'\n'}
                   {this.state.error.stack}

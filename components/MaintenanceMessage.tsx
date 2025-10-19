@@ -15,28 +15,28 @@ export default function MaintenanceMessage() {
               <Wrench className="w-8 h-8 text-alira-gold" />
             </div>
           </div>
-          <CardTitle className="text-2xl alira-heading text-alira-onyx">
+          <CardTitle className="text-2xl alira-heading text-alira-primary">
             Currently Under Maintenance
           </CardTitle>
         </CardHeader>
         <CardContent className="text-center space-y-6">
           <div className="space-y-4">
-            <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
+            <p className="text-alira-primary/80 dark:text-alira-white/80 leading-relaxed">
               We're currently updating our simple plan form to provide you with an even better experience. 
               Our team is working hard to bring you enhanced features and improved functionality.
             </p>
             
-            <div className="flex items-center justify-center space-x-2 text-alira-onyx/70">
+            <div className="flex items-center justify-center space-x-2 text-alira-primary/70">
               <Clock className="w-4 h-4" />
               <span className="text-sm">Expected completion: Until further notice</span>
             </div>
           </div>
 
-          <div className="bg-alira-onyx/5 rounded-lg p-4 border border-alira-onyx/10">
-            <h3 className="font-semibold text-alira-onyx dark:text-alira-porcelain mb-2">
+          <div className="bg-alira-primary/5 rounded-lg p-4 border border-alira-primary/10">
+            <h3 className="font-light text-alira-primary dark:text-alira-white mb-2">
               Need immediate assistance?
             </h3>
-            <p className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70 mb-4">
+            <p className="text-sm text-alira-primary/70 dark:text-alira-white/70 mb-4">
               Our team is still available to help with your planning needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -47,14 +47,14 @@ export default function MaintenanceMessage() {
                 </Button>
               </Link>
               <Link href="/services">
-                <Button className="w-full sm:w-auto bg-alira-onyx hover:bg-alira-onyx/90">
+                <Button className="w-full sm:w-auto bg-alira-primary hover:bg-alira-primary/90">
                   View Services
                 </Button>
               </Link>
             </div>
           </div>
 
-          <div className="text-xs text-alira-onyx/60">
+          <div className="text-xs text-alira-primary/60">
             Thank you for your patience. We'll be back online soon!
           </div>
         </CardContent>

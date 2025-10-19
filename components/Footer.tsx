@@ -15,13 +15,13 @@ const navigation = {
 
 export default function Footer() {
   return (
-    <footer className="bg-alira-onyx dark:bg-alira-onyx text-alira-porcelain">
+    <footer className="bg-alira-black dark:bg-alira-black text-alira-white">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-16 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
           {/* Left: ALIRA logo + copyright */}
           <div className="text-center lg:text-left">
-            <LogoMark size="lg" className="text-alira-porcelain mb-4" />
-            <p className="text-sm leading-5 text-alira-porcelain/60">
+            <LogoMark size="lg" className="text-alira-white mb-4" />
+            <p className="text-sm leading-5 text-alira-white/60">
               &copy; {new Date().getFullYear()} ALIRA. All rights reserved.
             </p>
           </div>
@@ -32,7 +32,7 @@ export default function Footer() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm leading-6 text-alira-porcelain/80 hover:text-alira-gold transition-colors"
+                className="text-sm leading-6 text-alira-white/80 hover:text-alira-gold transition-colors"
               >
                 {item.name}
               </Link>

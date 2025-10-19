@@ -51,7 +51,7 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section className="py-24 bg-alira-porcelain/30 dark:bg-alira-onyx/30 relative overflow-hidden">
+    <section className="py-24 bg-white/30 dark:bg-alira-primary/30 relative overflow-hidden">
       {/* Architectural grid background */}
       <ArchitecturalGrid 
         variant="subtle" 
@@ -63,14 +63,14 @@ export default function Experience() {
         {/* Section Header */}
         <Reveal>
           <div className="text-center mb-20">
-            <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-medium">
+            <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-light">
               PROVEN RESULTS
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6">
               Measurable Impact
             </h2>
             <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
-            <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-3xl mx-auto">
+            <p className="text-lg text-alira-primary/70 dark:text-alira-white/70 max-w-3xl mx-auto">
               Real outcomes from real engagements. Every number represents a business challenge solved and value delivered across 10+ years of transformation experience.
             </p>
           </div>
@@ -93,16 +93,16 @@ export default function Experience() {
                   
                   {/* Content */}
                   <div className={`lg:w-5/12 ${index % 2 === 0 ? 'lg:pr-12 lg:text-right' : 'lg:pl-12 lg:text-left'} ml-16 lg:ml-0`}>
-                    <div className="text-sm font-sans font-medium text-alira-gold mb-3 tracking-wide">
+                    <div className="text-sm font-sans font-light text-alira-gold mb-3 tracking-wide">
                       {experience.period}
                     </div>
-                    <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-2">
+                    <h3 className="text-xl font-serif font-normal text-alira-primary dark:text-alira-white mb-2">
                       {experience.title}
                     </h3>
-                    <div className="text-base font-sans font-medium text-alira-onyx/80 dark:text-alira-porcelain/80 italic mb-3">
+                    <div className="text-base font-sans font-light text-alira-primary/80 dark:text-alira-white/80 italic mb-3">
                       {experience.context}
                     </div>
-                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed mb-6">
+                    <p className="text-alira-primary/70 dark:text-alira-white/70 leading-relaxed mb-6">
                       {experience.description}
                     </p>
                     
@@ -111,15 +111,15 @@ export default function Experience() {
                       {experience.results.map((result, resultIndex) => {
                         const IconComponent = result.icon
                         return (
-                          <div key={resultIndex} className="flex items-center space-x-3 bg-white/50 dark:bg-alira-onyx/20 rounded-lg p-3 border border-alira-onyx/5 dark:border-alira-porcelain/10">
+                          <div key={resultIndex} className="flex items-center space-x-3 bg-white/50 dark:bg-alira-primary/20 rounded-lg p-3 border border-alira-primary/5 dark:border-alira-white/10">
                             <div className="flex-shrink-0 w-8 h-8 bg-alira-gold/10 rounded-full flex items-center justify-center">
                               <IconComponent className="w-4 h-4 text-alira-gold" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="text-lg font-bold text-alira-onyx dark:text-alira-porcelain">
+                              <div className="text-lg font-light text-alira-primary dark:text-alira-white">
                                 {result.metric}
                               </div>
-                              <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">
+                              <div className="text-sm text-alira-primary/70 dark:text-alira-white/70">
                                 {result.label}
                               </div>
                             </div>
@@ -140,33 +140,33 @@ export default function Experience() {
         {/* Client Spotlight */}
         <Reveal delay={600}>
           <div className="mt-20 text-center">
-            <div className="bg-white dark:bg-alira-onyx/30 rounded-2xl p-8 lg:p-12 border border-alira-onyx/10 dark:border-alira-porcelain/10 shadow-lg">
-              <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-medium">
+            <div className="bg-white dark:bg-alira-primary/30 rounded-2xl p-8 lg:p-12 border border-alira-primary/10 dark:border-alira-white/10 shadow-lg">
+              <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-light">
                 CLIENT SPOTLIGHT
               </div>
-              <h3 className="text-2xl lg:text-3xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+              <h3 className="text-2xl lg:text-3xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6">
                 Enterprise Transformation Success
               </h3>
-              <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 mb-8 max-w-3xl mx-auto">
+              <p className="text-lg text-alira-primary/70 dark:text-alira-white/70 mb-8 max-w-3xl mx-auto">
                 Delivered comprehensive transformation programmes focused on improving efficiency, value for money, and operational performance across multiple teams and departments.
               </p>
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="text-center">
-                  <div className="text-2xl font-serif font-bold text-alira-gold mb-2">£21,000</div>
-                  <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">Total annual savings</div>
+                  <div className="text-2xl font-serif font-normal text-alira-gold mb-2">£21,000</div>
+                  <div className="text-sm text-alira-primary/70 dark:text-alira-white/70">Total annual savings</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-serif font-bold text-alira-gold mb-2">3,000+</div>
-                  <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">Staff onboarded</div>
+                  <div className="text-2xl font-serif font-normal text-alira-gold mb-2">3,000+</div>
+                  <div className="text-sm text-alira-primary/70 dark:text-alira-white/70">Staff onboarded</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-serif font-bold text-alira-gold mb-2">25%</div>
-                  <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">Sign-up increase</div>
+                  <div className="text-2xl font-serif font-normal text-alira-gold mb-2">25%</div>
+                  <div className="text-sm text-alira-primary/70 dark:text-alira-white/70">Sign-up increase</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-serif font-bold text-alira-gold mb-2">10+</div>
-                  <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">Years experience</div>
+                  <div className="text-2xl font-serif font-normal text-alira-gold mb-2">10+</div>
+                  <div className="text-sm text-alira-primary/70 dark:text-alira-white/70">Years experience</div>
                 </div>
               </div>
             </div>

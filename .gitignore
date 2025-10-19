@@ -26,23 +26,44 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 next-env.d.ts
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
 # OS
 Thumbs.db
+.DS_Store
 
 # Ignore docs and accidental files
 *.pdf
+My_Personal_Plan_*.pdf
+My_Personal_Plan_*.xlsx
+
+# Prevent accidental command output files
 tatus
-ophy component with 4-principle grid layout
+status
+*status*output*
+*git?log*
+*git?status*
+
+# Prevent accidental note files in root
+*component*with*layout*
+component?for*

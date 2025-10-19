@@ -23,7 +23,7 @@ const principles = [
 export default function OurPhilosophy() {
   return (
     <section 
-      className="py-24 bg-alira-porcelain dark:bg-alira-onyx relative overflow-hidden"
+      className="py-24 bg-alira-white dark:bg-alira-primary relative overflow-hidden"
       aria-labelledby="philosophy-heading"
     >
       {/* Architectural grid background */}
@@ -36,11 +36,11 @@ export default function OurPhilosophy() {
       <div className="max-w-5xl mx-auto px-4 relative z-10">
         <Reveal>
           <div className="text-center mb-16">
-            <div className="text-sm tracking-wide uppercase text-alira-onyx/60 dark:text-alira-porcelain/60 mb-4 font-sans font-medium">
+            <div className="text-sm tracking-wide uppercase text-alira-primary/60 dark:text-alira-white/60 mb-4 font-sans font-light">
               OUR APPROACH
             </div>
             <div className="group inline-block">
-              <h2 id="philosophy-heading" className="text-4xl md:text-5xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-8 relative">
+              <h2 id="philosophy-heading" className="text-4xl md:text-5xl font-serif font-normal text-alira-primary dark:text-alira-white mb-8 relative">
                 Our Philosophy
                 <div className="absolute bottom-0 left-0 w-0 h-1 bg-alira-gold transition-all duration-500 ease-out group-hover:w-full"></div>
               </h2>
@@ -52,7 +52,7 @@ export default function OurPhilosophy() {
         {/* Premium Pull Quote */}
         <Reveal delay={150}>
           <div className="text-center mb-20">
-            <blockquote className="text-3xl md:text-4xl text-alira-onyx dark:text-alira-porcelain font-serif italic font-light max-w-4xl mx-auto leading-tight">
+            <blockquote className="text-3xl md:text-4xl text-alira-primary dark:text-alira-white font-serif italic font-light max-w-4xl mx-auto leading-tight">
               "Simple systems outlast complicated ones."
             </blockquote>
           </div>
@@ -68,11 +68,11 @@ export default function OurPhilosophy() {
                   <div className="absolute left-0 top-0 bottom-0 w-px bg-alira-gold/30 transition-colors duration-300 group-hover:bg-alira-gold/60"></div>
                   
                   <div className="pl-6 py-4">
-                    <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-3 relative">
+                    <h3 className="text-xl font-serif font-normal text-alira-primary dark:text-alira-white mb-3 relative">
                       {principle.title}
                       <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-alira-gold transition-all duration-300 ease-out group-hover:w-full"></div>
                     </h3>
-                    <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed text-base group-hover:text-alira-onyx/90 dark:group-hover:text-alira-porcelain/90 transition-colors duration-300">
+                    <p className="text-alira-primary/70 dark:text-alira-white/70 leading-relaxed text-base group-hover:text-alira-primary/90 dark:group-hover:text-alira-white/90 transition-colors duration-300">
                       {principle.description}
                     </p>
                   </div>
@@ -85,7 +85,7 @@ export default function OurPhilosophy() {
         {/* Speed Connection */}
         <Reveal delay={500}>
           <div className="text-center mt-16">
-            <p className="text-lg text-alira-onyx/80 dark:text-alira-porcelain/80 font-sans font-medium">
+            <p className="text-lg text-alira-primary/80 dark:text-alira-white/80 font-sans font-light">
               That's why every business case we deliver arrives in minutes, not days — clarity without delay.
             </p>
           </div>

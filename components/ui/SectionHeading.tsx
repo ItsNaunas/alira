@@ -12,11 +12,11 @@ export default function SectionHeading({ children, className, subtleLabel, id }:
   return (
     <div className={clsx("text-center", className)}>
       {subtleLabel && (
-        <div className="text-[11px] font-semibold tracking-[0.18em] uppercase text-alira-gold/80">
+        <div className="text-[11px] font-light tracking-[0.18em] uppercase text-alira-gold/80">
           {subtleLabel}
         </div>
       )}
-      <h2 id={id} className="mt-2 text-3xl md:text-4xl font-serif font-semibold tracking-tight text-alira-onyx dark:text-alira-porcelain">
+      <h2 id={id} className="mt-2 text-3xl md:text-4xl font-serif font-normal tracking-tight text-alira-primary dark:text-alira-white">
         {children}
       </h2>
       <div className="mx-auto mt-3 h-[2px] w-12 bg-alira-gold/80 rounded-full" />

@@ -19,7 +19,7 @@ const personalPlanEmailTemplate = (data: PersonalPlanPDFData) => `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Personal Business Plan - ALIRA</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: Lato, Arial, sans-serif; background-color: #f8f9fa;">
+<body style="margin: 0; padding: 0; font-family: 'General Sans', Arial, sans-serif; font-weight: 300; background-color: #f8f9fa;">
     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
         
         <!-- Header -->
@@ -163,7 +163,7 @@ export async function sendAutoReply(to: string, name: string) {
       to: [to],
       subject: 'Thank you for requesting your Personal Business Plan',
       html: `
-        <div style="font-family: Lato, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="font-family: 'General Sans', Arial, sans-serif; font-weight: 300; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background-color: #1a1a1a; color: #ffffff; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
             <h1 style="margin: 0; font-size: 28px; font-weight: bold; color: #d4af37;">ALIRA.</h1>
           </div>

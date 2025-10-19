@@ -43,7 +43,7 @@ export default function ServicesGrid() {
             <div key={service.value} className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center`}>
               {/* Content Side */}
               <div className={`flex-1 ${isEven ? 'lg:pr-12' : 'lg:pl-12'}`}>
-                <Card className="border-alira-onyx/10 dark:border-alira-porcelain/10 hover:border-alira-gold/30 transition-all duration-500 hover:shadow-xl group bg-white/50 dark:bg-alira-onyx/50 hover:bg-alira-porcelain/80 dark:hover:bg-alira-onyx/80">
+                <Card className="border-alira-primary/10 dark:border-alira-white/10 hover:border-alira-gold/30 transition-all duration-500 hover:shadow-xl group bg-white/50 dark:bg-alira-primary/50 hover:bg-white/80 dark:hover:bg-alira-primary/80">
                   <CardHeader className="pb-8">
                     <div className="space-y-6">
                       {/* Icon */}
@@ -53,10 +53,10 @@ export default function ServicesGrid() {
                       
                       {/* Title and Tagline */}
                       <div className="space-y-3">
-                        <CardTitle className="text-3xl alira-heading text-alira-onyx dark:text-alira-porcelain group-hover:text-alira-gold transition-colors duration-300">
+                        <CardTitle className="text-3xl alira-heading text-alira-primary dark:text-alira-white group-hover:text-alira-gold transition-colors duration-300">
                           {service.label}
                         </CardTitle>
-                        <p className="text-lg text-alira-gold font-sans font-medium italic">
+                        <p className="text-lg text-alira-gold font-sans font-light italic">
                           {details.tagline}
                         </p>
                       </div>
@@ -66,17 +66,17 @@ export default function ServicesGrid() {
                   <CardContent className="space-y-6">
                     {/* Outcome */}
                     <div className="space-y-3">
-                      <h4 className="text-sm font-sans font-semibold text-alira-onyx/60 dark:text-alira-porcelain/60 uppercase tracking-wide">
+                      <h4 className="text-sm font-sans font-light text-alira-primary/60 dark:text-alira-white/60 uppercase tracking-wide">
                         What You Get
                       </h4>
-                      <p className="text-lg text-alira-onyx dark:text-alira-porcelain leading-relaxed">
+                      <p className="text-lg text-alira-primary dark:text-alira-white leading-relaxed">
                         {details.outcome}
                       </p>
                     </div>
                     
                     {/* Duration */}
-                    <div className="pt-4 border-t border-alira-onyx/10">
-                      <p className="text-sm text-alira-onyx/50 dark:text-alira-porcelain/50">
+                    <div className="pt-4 border-t border-alira-primary/10">
+                      <p className="text-sm text-alira-primary/50 dark:text-alira-white/50">
                         Duration: {details.duration}
                       </p>
                     </div>
@@ -86,16 +86,16 @@ export default function ServicesGrid() {
               
               {/* Visual Side */}
               <div className="flex-1">
-                <div className="bg-alira-onyx/5 dark:bg-alira-porcelain/5 p-12 rounded-lg border border-alira-onyx/10 dark:border-alira-porcelain/10 h-full flex items-center justify-center">
+                <div className="bg-alira-primary/5 dark:bg-white/5 p-12 rounded-lg border border-alira-primary/10 dark:border-alira-white/10 h-full flex items-center justify-center">
                   <div className="text-center space-y-6">
                     <div className="w-24 h-24 bg-alira-gold/10 rounded-full flex items-center justify-center mx-auto">
                       <IconComponent className="w-12 h-12 text-alira-gold" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-serif font-semibold text-alira-onyx dark:text-alira-porcelain">
+                      <h3 className="text-2xl font-serif font-normal text-alira-primary dark:text-alira-white">
                         {service.label}
                       </h3>
-                      <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-sm">
+                      <p className="text-alira-primary/70 dark:text-alira-white/70 max-w-sm">
                         {service.description}
                       </p>
                     </div>
@@ -110,11 +110,11 @@ export default function ServicesGrid() {
       {/* Why ALIRA Services Section */}
       <div className="mt-24 text-center">
         <div className="max-w-4xl mx-auto space-y-8">
-          <h3 className="text-2xl font-serif font-semibold text-alira-onyx dark:text-alira-porcelain">
+          <h3 className="text-2xl font-serif font-normal text-alira-primary dark:text-alira-white">
             Why ALIRA Services?
           </h3>
-          <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 leading-relaxed">
-            Every engagement is designed to cut through complexity and leave you with <em className="text-alira-gold font-sans font-medium">lasting clarity</em>. Whether you're resetting, scaling, adopting AI, or seeking long-term guidance - the outcome is always systems that endure.
+          <p className="text-lg text-alira-primary/70 dark:text-alira-white/70 leading-relaxed">
+            Every engagement is designed to cut through complexity and leave you with <em className="text-alira-gold font-sans font-light">lasting clarity</em>. Whether you're resetting, scaling, adopting AI, or seeking long-term guidance - the outcome is always systems that endure.
           </p>
         </div>
       </div>

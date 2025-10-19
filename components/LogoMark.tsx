@@ -14,7 +14,7 @@ export default function LogoMark({ className, size = 'md' }: LogoMarkProps) {
 
   return (
     <span className={cn(
-      'font-serif font-bold tracking-tight text-alira-onyx dark:text-alira-porcelain',
+      'font-serif font-normal tracking-tight text-alira-gold',
       sizeClasses[size],
       className
     )}>

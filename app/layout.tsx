@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://alirapartners.co.uk'),
@@ -46,8 +43,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en-GB" className="scroll-smooth">
-      <body className={`${inter.className} antialiased`}>
+    <html lang="en-GB" className="scroll-smooth dark">
+      <body className="antialiased">
         <ErrorBoundary>
           <div className="min-h-screen flex flex-col">
             <Header />

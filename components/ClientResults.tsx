@@ -40,7 +40,7 @@ const keyAchievements = [
 
 export default function ClientResults() {
   return (
-    <section className="py-24 bg-white dark:bg-alira-onyx/20 relative overflow-hidden">
+    <section className="py-24 bg-white dark:bg-alira-primary/20 relative overflow-hidden">
       {/* Architectural grid background */}
       <ArchitecturalGrid 
         variant="minimal" 
@@ -50,14 +50,14 @@ export default function ClientResults() {
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <Reveal>
           <div className="text-center mb-16">
-            <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-medium">
+            <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-light">
               CLIENT SUCCESS
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6">
               Enterprise Transformation Results
             </h2>
             <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
-            <p className="text-lg text-alira-onyx/70 dark:text-alira-porcelain/70 max-w-3xl mx-auto">
+            <p className="text-lg text-alira-primary/70 dark:text-alira-white/70 max-w-3xl mx-auto">
               Delivered comprehensive transformation programmes focused on improving efficiency, value for money, and operational performance across multiple teams and departments.
             </p>
           </div>
@@ -67,8 +67,8 @@ export default function ClientResults() {
         <Reveal delay={200}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {results.map((category, index) => (
-              <div key={index} className="bg-alira-porcelain/30 dark:bg-alira-onyx/30 rounded-2xl p-8 border border-alira-onyx/5 dark:border-alira-porcelain/10">
-                <h3 className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-6 text-center">
+              <div key={index} className="bg-white/30 dark:bg-alira-primary/30 rounded-2xl p-8 border border-alira-primary/5 dark:border-alira-white/10">
+                <h3 className="text-xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6 text-center">
                   {category.category}
                 </h3>
                 <div className="space-y-4">
@@ -80,10 +80,10 @@ export default function ClientResults() {
                           <IconComponent className="w-5 h-5 text-alira-gold" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain">
+                          <div className="text-xl font-serif font-normal text-alira-primary dark:text-alira-white">
                             {metric.value}
                           </div>
-                          <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">
+                          <div className="text-sm text-alira-primary/70 dark:text-alira-white/70">
                             {metric.label}
                           </div>
                         </div>
@@ -98,8 +98,8 @@ export default function ClientResults() {
 
         {/* Key Achievements */}
         <Reveal delay={400}>
-          <div className="bg-alira-onyx/5 dark:bg-alira-onyx/20 rounded-2xl p-8 lg:p-12 border border-alira-onyx/10 dark:border-alira-porcelain/10">
-            <h3 className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-8 text-center">
+          <div className="bg-alira-primary/5 dark:bg-alira-primary/20 rounded-2xl p-8 lg:p-12 border border-alira-primary/10 dark:border-alira-white/10">
+            <h3 className="text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-8 text-center">
               Key Achievements
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -108,7 +108,7 @@ export default function ClientResults() {
                   <div className="flex-shrink-0 w-6 h-6 bg-alira-gold/10 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="w-4 h-4 text-alira-gold" />
                   </div>
-                  <p className="text-alira-onyx/80 dark:text-alira-porcelain/80 leading-relaxed">
+                  <p className="text-alira-primary/80 dark:text-alira-white/80 leading-relaxed">
                     {achievement}
                   </p>
                 </div>
@@ -121,10 +121,10 @@ export default function ClientResults() {
         <Reveal delay={600}>
           <div className="mt-16 text-center">
             <div className="inline-block bg-alira-gold/10 dark:bg-alira-gold/20 rounded-full px-8 py-4 border border-alira-gold/20">
-              <div className="text-2xl font-serif font-bold text-alira-onyx dark:text-alira-porcelain mb-2">
+              <div className="text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-2">
                 £21,000 Total Annual Savings
               </div>
-              <div className="text-sm text-alira-onyx/70 dark:text-alira-porcelain/70">
+              <div className="text-sm text-alira-primary/70 dark:text-alira-white/70">
                 Secured through efficiency measures, contract reviews, and stakeholder negotiations
               </div>
             </div>
@@ -133,15 +133,15 @@ export default function ClientResults() {
 
         {/* Testimonial */}
         <Reveal delay={800}>
-          <div className="mt-16 bg-white dark:bg-alira-onyx/30 rounded-2xl p-8 border border-alira-onyx/10 dark:border-alira-porcelain/10 shadow-lg">
+          <div className="mt-16 bg-white dark:bg-alira-primary/30 rounded-2xl p-8 border border-alira-primary/10 dark:border-alira-white/10 shadow-lg">
             <div className="text-center">
-              <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-medium">
+              <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-light">
                 CLIENT TESTIMONIAL
               </div>
-              <blockquote className="text-lg text-alira-onyx/80 dark:text-alira-porcelain/80 italic mb-4 max-w-3xl mx-auto">
+              <blockquote className="text-lg text-alira-primary/80 dark:text-alira-white/80 italic mb-4 max-w-3xl mx-auto">
                 "I was consistently impressed by his creativity to solve problems and deliver results. His ability to quickly learn new skills and build relationships consistently contributed to the success of our team projects that had internal and external stakeholders, and a national and international reach."
               </blockquote>
-              <div className="text-sm text-alira-onyx/60 dark:text-alira-porcelain/60">
+              <div className="text-sm text-alira-primary/60 dark:text-alira-white/60">
                 — Programme Director, National Institute for Health and Care Excellence
               </div>
             </div>

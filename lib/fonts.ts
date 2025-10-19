@@ -7,17 +7,17 @@
 
 // Font Family Constants
 export const FONTS = {
-  serif: 'font-serif', // Playfair Display - for headings
-  sans: 'font-sans',   // Lato - for body text
+  sans: 'font-sans',   // Lato - for body text, labels
+  serif: 'font-serif', // Instrument Serif - for headings
 } as const
 
 // Font Weight Constants
 export const WEIGHTS = {
-  light: 'font-light',
-  regular: 'font-normal',
-  medium: 'font-medium',
-  semibold: 'font-semibold',
-  bold: 'font-bold',
+  light: 'font-light',     // 300
+  regular: 'font-normal',  // 400
+  medium: 'font-medium',   // 500
+  semibold: 'font-semibold', // 600
+  bold: 'font-bold',       // 700
 } as const
 
 // Text Color Constants (Light + Dark Mode)
@@ -46,46 +46,46 @@ export const TEXT_COLORS = {
 
 // Typography Hierarchy - Use these for all text elements
 export const typography = {
-  // Main section headings (H1, H2)
+  // Main section headings (H1, H2) - Instrument Serif
   heading: {
-    main: `${FONTS.serif} ${WEIGHTS.bold} ${TEXT_COLORS.primary}`,
-    sub: `${FONTS.serif} ${WEIGHTS.semibold} ${TEXT_COLORS.primary}`,
+    main: `${FONTS.serif} ${WEIGHTS.bold} text-alira-primary dark:text-alira-white`,
+    sub: `${FONTS.serif} ${WEIGHTS.semibold} text-alira-primary dark:text-alira-white`,
   },
   
-  // Body text
+  // Body text - Lato (sans-serif)
   body: {
-    regular: `${FONTS.sans} ${TEXT_COLORS.secondary}`,
-    muted: `${FONTS.sans} ${TEXT_COLORS.tertiary}`,
+    regular: `${FONTS.sans} ${WEIGHTS.regular} text-alira-black/80 dark:text-alira-white/80`,
+    muted: `${FONTS.sans} ${WEIGHTS.regular} text-alira-black/70 dark:text-alira-white/70`,
   },
   
-  // Labels, badges, small text
+  // Labels, badges, small text - Lato (sans-serif)
   label: {
-    main: `${FONTS.sans} ${WEIGHTS.medium} ${TEXT_COLORS.primary}`,
-    muted: `${FONTS.sans} ${WEIGHTS.medium} ${TEXT_COLORS.tertiary}`,
+    main: `${FONTS.sans} ${WEIGHTS.medium} text-alira-primary dark:text-alira-white`,
+    muted: `${FONTS.sans} ${WEIGHTS.regular} text-alira-black/70 dark:text-alira-white/70`,
   },
   
-  // Special: Italic serif for subtext
+  // Subtext - Instrument Serif Light Italic
   subtext: {
-    main: `${FONTS.serif} italic ${WEIGHTS.light} ${TEXT_COLORS.secondary}`,
+    main: `${FONTS.serif} italic ${WEIGHTS.light} text-alira-black/80 dark:text-alira-white/80`,
   },
 } as const
 
 // Helper functions to get consistent font + color classes
-export const getHeadingClass = () => 'font-serif font-bold text-alira-onyx dark:text-alira-porcelain'
-export const getSubHeadingClass = () => 'font-serif font-semibold text-alira-onyx dark:text-alira-porcelain'
-export const getBodyClass = () => 'font-sans text-alira-onyx/80 dark:text-alira-porcelain/80'
-export const getLabelClass = () => 'font-sans font-medium text-alira-onyx dark:text-alira-porcelain'
-export const getSubtextClass = () => 'font-serif italic font-light text-alira-onyx/80 dark:text-alira-porcelain/80'
-export const getInputClass = () => 'text-alira-onyx dark:text-alira-porcelain placeholder:text-alira-onyx/40 dark:placeholder:text-alira-porcelain/40'
+export const getHeadingClass = () => 'font-serif font-bold text-alira-primary dark:text-alira-white'
+export const getSubHeadingClass = () => 'font-serif font-semibold text-alira-primary dark:text-alira-white'
+export const getBodyClass = () => 'font-sans font-normal text-alira-black/80 dark:text-alira-white/80'
+export const getLabelClass = () => 'font-sans font-medium text-alira-primary dark:text-alira-white'
+export const getSubtextClass = () => 'font-serif italic font-light text-alira-black/80 dark:text-alira-white/80'
+export const getInputClass = () => 'text-alira-black dark:text-alira-white placeholder:text-alira-black/40 dark:placeholder:text-alira-white/40'
 
 // CSS-in-JS styles (for non-Tailwind usage)
 export const fontStyles = {
   heading: {
-    fontFamily: '"Playfair Display", "Times New Roman", serif',
+    fontFamily: '"Instrument Serif", "Georgia", serif',
     fontWeight: 700,
   },
   subHeading: {
-    fontFamily: '"Playfair Display", "Times New Roman", serif',
+    fontFamily: '"Instrument Serif", "Georgia", serif',
     fontWeight: 600,
   },
   body: {
@@ -97,7 +97,7 @@ export const fontStyles = {
     fontWeight: 500,
   },
   subtext: {
-    fontFamily: '"Playfair Display", "Times New Roman", serif',
+    fontFamily: '"Instrument Serif", "Georgia", serif',
     fontWeight: 300,
     fontStyle: 'italic',
   },

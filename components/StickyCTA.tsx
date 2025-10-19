@@ -19,19 +19,19 @@ export default function StickyCTA() {
   if (!isVisible) return null
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-alira-onyx/10 p-4 z-50 lg:hidden">
-      <div className="flex items-center justify-between max-w-md mx-auto">
-        <div className="flex-1">
+    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-alira-primary border-t border-alira-primary/10 dark:border-white/10 p-3 sm:p-4 z-50 xl:hidden">
+      <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
+        <div className="flex-1 min-w-0">
           <CTAButton 
-            href="#start-form" 
+            href="#start-chat" 
             variant="alira"
-            className="w-full"
+            className="w-full px-4 py-2 text-sm sm:text-base whitespace-nowrap"
           />
         </div>
-                 <div className="ml-4 text-xs text-alira-onyx/70">
-           <div>✓ Delivered in minutes</div>
-           <div>🔒 Private & secure</div>
-         </div>
+        <div className="hidden sm:flex flex-col text-xs text-alira-primary/70 dark:text-alira-white/70 flex-shrink-0">
+          <div>✓ Free</div>
+          <div>🔒 Secure</div>
+        </div>
       </div>
     </div>
   )

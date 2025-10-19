@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -52,36 +52,33 @@ module.exports = {
         },
         // ALIRA. Brand Colors
         alira: {
-          onyx: "#0B0B0B",
-          porcelain: "#FDFDFD",
-          gold: "#C9A96E",        // Warmer, more elegant primary gold
-          'gold-light': '#E6C659', // Lighter accent gold
-          'gold-dark': '#B8941F',  // Darker accent gold
-          'gold-warm': '#C5A572',  // Original gold for compatibility
-          midnight: "#1A2238",
-          ink: "#0B0B0B",
-          cream: "#FDF9F0",        // Rich cream base
-          'warm-white': "#FEFCF7",  // Warm white
-          'light-gold': "#F7F0E3", // Light gold background
+          primary: "#0B1D51",      // Deep navy blue - primary brand color
+          gold: "#A06B00",         // Golden brown - accent color
+          black: "#000000",        // Pure black - text and deep contrast
+          white: "#FFFFFF",        // Pure white - backgrounds
+          'primary-dark': '#081640', // Darker navy variant
+          'primary-light': '#0e2a6e', // Lighter navy variant
+          'gold-light': '#c79000',  // Lighter gold variant
+          'gold-dark': '#7a5000',   // Darker gold variant
         },
       },
       fontFamily: {
-        serif: ["Playfair Display", "Times New Roman", "serif"],
-        sans: ["Lato", "Inter", "Helvetica Neue", "sans-serif"],
-        heading: ["Playfair Display", "Times New Roman", "serif"],
-        body: ["Lato", "Inter", "Helvetica Neue", "sans-serif"],
+        sans: ["Lato", "Helvetica Neue", "Arial", "sans-serif"],
+        serif: ["Instrument Serif", "Georgia", "serif"],
+        heading: ["Instrument Serif", "Georgia", "serif"],
+        body: ["Lato", "Helvetica Neue", "Arial", "sans-serif"],
       },
       fontSize: {
-        'xs': ['0.75rem', { lineHeight: '1.5' }],
-        'sm': ['0.875rem', { lineHeight: '1.5' }],
-        'base': ['1rem', { lineHeight: '1.5' }],
-        'lg': ['1.125rem', { lineHeight: '1.5' }],
-        'xl': ['1.25rem', { lineHeight: '1.4' }],
-        '2xl': ['1.5rem', { lineHeight: '1.4' }],
-        '3xl': ['1.875rem', { lineHeight: '1.3' }],
-        '4xl': ['2.25rem', { lineHeight: '1.2' }],
-        '5xl': ['3rem', { lineHeight: '1.1' }],
-        '6xl': ['3.75rem', { lineHeight: '1.1' }],
+        'xs': ['0.875rem', { lineHeight: '1.5' }],      // Increased from 0.75rem
+        'sm': ['1rem', { lineHeight: '1.5' }],          // Increased from 0.875rem
+        'base': ['1.125rem', { lineHeight: '1.6' }],    // Increased from 1rem
+        'lg': ['1.25rem', { lineHeight: '1.6' }],       // Increased from 1.125rem
+        'xl': ['1.5rem', { lineHeight: '1.4' }],        // Increased from 1.25rem
+        '2xl': ['1.875rem', { lineHeight: '1.4' }],     // Increased from 1.5rem
+        '3xl': ['2.25rem', { lineHeight: '1.3' }],      // Increased from 1.875rem
+        '4xl': ['2.75rem', { lineHeight: '1.2' }],      // Increased from 2.25rem
+        '5xl': ['3.5rem', { lineHeight: '1.1' }],       // Increased from 3rem
+        '6xl': ['4.5rem', { lineHeight: '1.1' }],       // Increased from 3.75rem
       },
       spacing: {
         '18': '4.5rem',

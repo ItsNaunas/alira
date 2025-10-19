@@ -78,10 +78,10 @@ export default function MiniForm({ onSuccess }: MiniFormProps) {
       <Card className="max-w-md mx-auto border-2 border-alira-gold/20">
         <CardContent className="p-6 text-center">
           <CheckCircle className="w-12 h-12 text-alira-gold mx-auto mb-4" />
-          <h3 className="text-lg font-serif font-semibold text-alira-onyx dark:text-alira-porcelain mb-2">
+          <h3 className="text-lg font-serif font-normal text-alira-primary dark:text-alira-white mb-2">
             Draft Created!
           </h3>
-          <p className="text-alira-onyx/70 dark:text-alira-porcelain/70 text-sm">
+          <p className="text-alira-primary/70 dark:text-alira-white/70 text-sm">
             Taking you to your personalized form...
           </p>
         </CardContent>
@@ -94,13 +94,13 @@ export default function MiniForm({ onSuccess }: MiniFormProps) {
       <CardContent className="p-6">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-sans font-medium text-alira-onyx dark:text-alira-porcelain mb-2">
+            <label className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
               First Name *
             </label>
             <Input
               {...register('firstName')}
               placeholder="Your first name"
-              className="w-full text-alira-onyx dark:text-alira-porcelain placeholder:text-alira-onyx/40 dark:placeholder:text-alira-porcelain/40"
+              className="w-full text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40"
             />
             {errors.firstName && (
               <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.firstName.message}</p>
@@ -108,14 +108,14 @@ export default function MiniForm({ onSuccess }: MiniFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-sans font-medium text-alira-onyx dark:text-alira-porcelain mb-2">
+            <label className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
               Email *
             </label>
             <Input
               {...register('email')}
               type="email"
               placeholder="your@email.com"
-              className="w-full text-alira-onyx dark:text-alira-porcelain placeholder:text-alira-onyx/40 dark:placeholder:text-alira-porcelain/40"
+              className="w-full text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40"
             />
             {errors.email && (
               <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.email.message}</p>
@@ -123,14 +123,14 @@ export default function MiniForm({ onSuccess }: MiniFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-sans font-medium text-alira-onyx dark:text-alira-porcelain mb-2">
+            <label className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
               Tell us your idea in one line (optional)
             </label>
             <Textarea
               {...register('idea')}
               placeholder="e.g., A mobile app for local food delivery"
               rows={2}
-              className="w-full resize-none text-alira-onyx dark:text-alira-porcelain placeholder:text-alira-onyx/40 dark:placeholder:text-alira-porcelain/40"
+              className="w-full resize-none text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40"
             />
           </div>
 
