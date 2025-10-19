@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import ConditionalLayout from '@/components/ConditionalLayout'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://alirapartners.co.uk'),
@@ -14,9 +13,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'ALIRA.' }],
   creator: 'ALIRA.',
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: '/images/assets/favicon.png',
+    shortcut: '/images/assets/favicon.png',
+    apple: '/images/assets/favicon.png',
   },
   openGraph: {
     title: 'ALIRA. - Build With Clarity, Scale With Confidence',
@@ -46,13 +45,9 @@ export default function RootLayout({
     <html lang="en-GB" className="scroll-smooth dark">
       <body className="antialiased">
         <ErrorBoundary>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
         </ErrorBoundary>
         <Analytics />
         <SpeedInsights />
