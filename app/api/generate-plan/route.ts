@@ -1,38 +1,43 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
-import { env } from '@/lib/env';
+/**
+ * Generate Business Plan API Route (Layer 2 Security)
+ * 
+ * Protected Route - Requires Authentication
+ * 
+ * Security Pattern Implementation:
+ * 1. Authentication verification
+ * 2. Input validation
+ * 3. Ownership verification
+ * 4. Business logic execution
+ * 5. Database operations with RLS
+ * 6. Success response
+ * 7. Centralized error handling
+ */
+
+import { NextRequest } from 'next/server';
+import { GeneratePlanSchema, validateOrThrow } from '@/lib/server/validation';
+import { requireUser, getServiceClient, verifyOwnership } from '@/lib/server/auth';
+import { handleApiError, successResponse, errors } from '@/lib/server/errors';
 // Note: You'll need to implement generateBusinessPlan in lib/openai.ts
 // import { generateBusinessPlan } from '@/lib/openai';
 
 export async function POST(request: NextRequest) {
   try {
-    const cookieStore = cookies();
-    const supabase = createServerClient(
-      env.SUPABASE_URL!,
-      env.SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get(name: string) {
-            return cookieStore.get(name)?.value;
-          },
-        },
-      }
-    );
+    // Step 1: Authenticate user (Layer 2 security)
+    const user = await requireUser();
     
-    // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    // Step 2: Parse and validate input
+    const body = await request.json();
+    const validatedData = validateOrThrow(GeneratePlanSchema, body);
     
-    if (authError || !user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
+    // Step 3: Verify user owns the dashboard (if userId is provided)
+    if (validatedData.userId && validatedData.userId !== user.id) {
+      throw errors.forbidden('You do not have permission to generate a plan for this user');
     }
 
-    const { formId, formData } = await request.json();
-
-    // Generate business plan using AI
+    // Step 4: Get form data from validated answers
+    const formData = validatedData.answers;
+    
+    // Step 5: Generate business plan using AI
     // TODO: Implement generateBusinessPlan in lib/openai.ts
     // For now, return a placeholder structure
     const businessPlan = {
@@ -59,45 +64,55 @@ export async function POST(request: NextRequest) {
     //   current_tools: formData.current_tools
     // });
 
-    // Store the generated plan in the database as a generation
+    // Step 6: Store the generated plan in the database
+    const supabase = getServiceClient();
+    
+    // Create or get dashboard ID
+    const dashboardId = formData.dashboardId;
+    
+    if (dashboardId) {
+      // Verify ownership of existing dashboard
+      await verifyOwnership('dashboards', dashboardId, user.id, 'Dashboard');
+    }
+    
+    // Store the generated plan
     const { data: generation, error: insertError } = await supabase
       .from('generations')
       .insert({
-        dashboard_id: formId,
+        dashboard_id: dashboardId || null,
         type: 'business_plan',
         content: businessPlan,
-        version: 1
+        version: 1,
+        user_id: user.id
       })
       .select()
       .single();
 
     if (insertError) {
-      throw insertError;
+      console.error('Database error:', insertError);
+      throw errors.internal('Failed to save generated plan');
     }
 
-    // Update the dashboard with the generation reference
-    await supabase
-      .from('dashboards')
-      .update({
-        form_data: { ...formData, generation_id: generation.id }
-      })
-      .eq('id', formId);
+    // Update the dashboard if it exists
+    if (dashboardId) {
+      await supabase
+        .from('dashboards')
+        .update({
+          form_data: { ...formData, generation_id: generation.id }
+        })
+        .eq('id', dashboardId)
+        .eq('user_id', user.id); // Additional security check
+    }
 
-    return NextResponse.json({
-      success: true,
+    // Step 7: Return success response
+    return successResponse({
       generation: generation,
-      dashboardId: formId
+      dashboardId: dashboardId || null
     });
 
   } catch (error) {
-    console.error('Error generating plan:', error);
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
-      },
-      { status: 500 }
-    );
+    // Step 8: Centralized error handling (never leaks sensitive data)
+    return handleApiError(error);
   }
 }
 

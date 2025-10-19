@@ -1,32 +1,42 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { sendContactFormEmail, sendAutoReply } from '@/lib/email'
-import { z } from 'zod'
+/**
+ * Contact Form API Route (Layer 2 Security)
+ * 
+ * This route follows the standardized 9-step security pattern:
+ * 1. Type definitions
+ * 2. Request handler
+ * 3. Input validation
+ * 4. Business logic
+ * 5. Database operations
+ * 6. Success response
+ * 7. Error handling
+ */
 
-const contactFormSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Valid email is required'),
-  message: z.string().min(10, 'Message must be at least 10 characters')
-})
+import { NextRequest } from 'next/server'
+import { sendContactFormEmail, sendAutoReply } from '@/lib/email'
+import { ContactFormSchema, validateOrThrow } from '@/lib/server/validation'
+import { handleApiError, successResponse } from '@/lib/server/errors'
 
 export async function POST(request: NextRequest) {
   try {
+    // Step 1: Parse request body
     const body = await request.json()
     
-    // Validate the form data
-    const validatedData = contactFormSchema.parse(body)
+    // Step 2: Validate input using Zod schema
+    const validatedData = validateOrThrow(ContactFormSchema, body)
     
-    // Send email to ALIRA team
-    const emailResult = await sendContactFormEmail(validatedData)
+    // Step 3: Business Logic - Send email to ALIRA team
+    const emailResult = await sendContactFormEmail({
+      name: validatedData.name,
+      email: validatedData.email,
+      message: validatedData.message,
+    })
     
     if (!emailResult.success) {
       console.error('Failed to send contact form email:', emailResult.error)
-      return NextResponse.json(
-        { success: false, error: 'Failed to send email' },
-        { status: 500 }
-      )
+      throw new Error('Failed to send email')
     }
     
-    // Send auto-reply to the user
+    // Step 4: Send auto-reply to the user (non-blocking)
     const autoReplyResult = await sendAutoReply(validatedData.email, 'contact')
     
     if (!autoReplyResult.success) {
@@ -34,25 +44,14 @@ export async function POST(request: NextRequest) {
       // Don't fail the request if auto-reply fails
     }
     
-    return NextResponse.json({
-      success: true,
+    // Step 5: Return success response
+    return successResponse({
       message: 'Message sent successfully',
       emailId: emailResult.messageId
     })
     
   } catch (error) {
-    console.error('Contact form error:', error)
-    
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { success: false, error: 'Invalid form data', details: error.errors },
-        { status: 400 }
-      )
-    }
-    
-    return NextResponse.json(
-      { success: false, error: 'Failed to send message' },
-      { status: 500 }
-    )
+    // Step 6: Centralized error handling
+    return handleApiError(error)
   }
 }

@@ -1,18 +1,41 @@
-import { NextRequest, NextResponse } from 'next/server'
+/**
+ * AI Generate Business Case API Route (Layer 2 Security)
+ * 
+ * Protected Route - Requires Authentication
+ * 
+ * Security Implementation:
+ * 1. Authentication verification
+ * 2. Input validation with Zod
+ * 3. Rate limiting consideration
+ * 4. Business logic execution
+ * 5. Event tracking
+ * 6. Success response
+ * 7. Centralized error handling
+ */
+
+import { NextRequest } from 'next/server'
 import { generateBusinessCase } from '@/lib/openai'
 import { aiGenerateSchema } from '@/lib/schema'
 import { db } from '@/lib/supabase-server'
+import { requireUser } from '@/lib/server/auth'
+import { handleApiError, successResponse, errors } from '@/lib/server/errors'
+import { validateOrThrow } from '@/lib/server/validation'
 
 export async function POST(request: NextRequest) {
   try {
-    // Parse and validate request body
+    // Step 1: Authenticate user (Layer 2 security)
+    const user = await requireUser();
+    
+    // Step 2: Parse and validate request body
     const body = await request.json()
     
-    // Debug logging
-    console.log("=== AI GENERATE API DEBUG ===")
-    console.log("Received body:", JSON.stringify(body, null, 2))
-    console.log("OPENAI API KEY present:", !!process.env.OPENAI_API_KEY)
-    console.log("OPENAI API KEY length:", process.env.OPENAI_API_KEY?.length || 0)
+    // Debug logging (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      console.log("=== AI GENERATE API DEBUG ===")
+      console.log("User ID:", user.id)
+      console.log("Received body:", JSON.stringify(body, null, 2))
+      console.log("OPENAI API KEY present:", !!process.env.OPENAI_API_KEY)
+    }
     
     // Ensure all optional fields have default values
     const sanitizedBody = {
@@ -29,46 +52,40 @@ export async function POST(request: NextRequest) {
       notes: body.notes || ''
     }
     
-    console.log("Sanitized body:", JSON.stringify(sanitizedBody, null, 2))
+    // Step 3: Validate input
+    const validatedData = validateOrThrow(aiGenerateSchema, sanitizedBody)
     
-    const validatedData = aiGenerateSchema.parse(sanitizedBody)
+    // Step 4: Check OpenAI API key is configured
+    if (!process.env.OPENAI_API_KEY) {
+      throw errors.internal('OpenAI API key is not configured');
+    }
     
-    // Generate business case using OpenAI
-    console.log("Calling OpenAI with validated data...")
+    // Step 5: Generate business case using OpenAI
+    if (process.env.NODE_ENV === 'development') {
+      console.log("Calling OpenAI with validated data...")
+    }
+    
     const outline = await generateBusinessCase(validatedData)
-    console.log("OpenAI response received successfully")
     
-    // Track the generation event
+    if (process.env.NODE_ENV === 'development') {
+      console.log("OpenAI response received successfully")
+    }
+    
+    // Step 6: Track the generation event (with user context)
     await db.trackEvent('ai_business_case_generated', {
+      userId: user.id,
       businessName: validatedData.businessName,
       industry: validatedData.industry,
       service: validatedData.service
     })
     
-    return NextResponse.json({
-      success: true,
+    // Step 7: Return success response
+    return successResponse({
       outline
     })
     
   } catch (error) {
-    console.error('AI Generation error:', error)
-    
-    if (error instanceof Error) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: error.message 
-        },
-        { status: 400 }
-      )
-    }
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to generate business case' 
-      },
-      { status: 500 }
-    )
+    // Step 8: Centralized error handling (never leaks sensitive data)
+    return handleApiError(error)
   }
 }

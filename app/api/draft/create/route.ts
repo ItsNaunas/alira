@@ -1,34 +1,44 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase-server'
-import { z } from 'zod'
+/**
+ * Create Draft API Route (Layer 2 Security)
+ * 
+ * Protected Route - Requires Authentication
+ * 
+ * Security Implementation:
+ * 1. Authentication verification
+ * 2. Input validation with Zod
+ * 3. Database operations with user context
+ * 4. Secure token generation
+ * 5. Conflict handling
+ * 6. Centralized error handling
+ */
 
-const createDraftSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  data: z.object({
-    mini_idea_one_liner: z.string().optional()
-  })
-})
+import { NextRequest } from 'next/server'
+import { CreateDraftSchema, validateOrThrow } from '@/lib/server/validation'
+import { requireUser, getServiceClient } from '@/lib/server/auth'
+import { handleApiError, successResponse, errors } from '@/lib/server/errors'
 
 export async function POST(request: NextRequest) {
   try {
-    // Parse and validate request body
+    // Step 1: Authenticate user (Layer 2 security)
+    const user = await requireUser();
+    
+    // Step 2: Parse and validate input
     const body = await request.json()
-    const { name, email, data } = createDraftSchema.parse(body)
+    const validatedData = validateOrThrow(CreateDraftSchema, body)
 
-    // Generate unique resume token
+    // Step 3: Generate secure unique resume token
     const resume_token = crypto.randomUUID()
 
-    // Create draft record
+    // Step 4: Create draft record with user ownership
+    const supabase = getServiceClient()
     const { data: draft, error } = await supabase
       .from('intake_forms')
       .insert({
-        name,
-        email,
-        data,
+        user_id: user.id, // Associate with authenticated user
+        data: validatedData.formData,
         resume_token,
         status: 'draft',
-        step: 1
+        step: validatedData.metadata?.version ? parseInt(validatedData.metadata.version) : 1
       })
       .select()
       .single()
@@ -38,55 +48,24 @@ export async function POST(request: NextRequest) {
       
       // Handle specific database errors
       if (error.code === '23505') { // Unique constraint violation
-        return NextResponse.json(
-          { error: 'A draft with this email already exists' },
-          { status: 409 }
-        )
+        throw errors.conflict('A draft for this session already exists');
       }
       
-      return NextResponse.json(
-        { error: 'Failed to create draft. Please try again.' },
-        { status: 500 }
-      )
+      throw errors.internal('Failed to create draft');
     }
 
     if (!draft) {
-      return NextResponse.json(
-        { error: 'Draft was not created successfully' },
-        { status: 500 }
-      )
+      throw errors.internal('Draft was not created successfully');
     }
 
-    return NextResponse.json({
-      success: true,
+    // Step 5: Return success response
+    return successResponse({
       id: draft.id,
       resume_token: draft.resume_token
-    })
+    }, 201)
+    
   } catch (error) {
-    console.error('Error in create draft API:', error)
-    
-    // Handle validation errors
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { 
-          error: 'Invalid request data',
-          details: error.errors.map(e => `${e.path.join('.')}: ${e.message}`)
-        },
-        { status: 400 }
-      )
-    }
-    
-    // Handle JSON parsing errors
-    if (error instanceof SyntaxError) {
-      return NextResponse.json(
-        { error: 'Invalid JSON in request body' },
-        { status: 400 }
-      )
-    }
-    
-    return NextResponse.json(
-      { error: 'Internal server error. Please try again.' },
-      { status: 500 }
-    )
+    // Step 6: Centralized error handling
+    return handleApiError(error)
   }
 }
