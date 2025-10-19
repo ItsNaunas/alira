@@ -27,7 +27,23 @@ export async function POST(request: NextRequest) {
     
     // Step 2: Parse and validate input
     const body = await request.json();
-    const validatedData = validateOrThrow(GeneratePlanSchema, body);
+    console.log('=== GENERATE PLAN API DEBUG ===');
+    console.log('Received body:', JSON.stringify(body, null, 2));
+    console.log('User ID:', user.id);
+    console.log('Body type:', typeof body);
+    console.log('Body keys:', Object.keys(body || {}));
+    console.log('Answers field:', body?.answers);
+    console.log('Answers type:', typeof body?.answers);
+    console.log('Answers keys:', Object.keys(body?.answers || {}));
+    let validatedData;
+    try {
+      validatedData = validateOrThrow(GeneratePlanSchema, body);
+      console.log('✅ Validation passed:', validatedData);
+    } catch (validationError) {
+      console.error('❌ Validation failed:', validationError);
+      console.error('❌ Validation error details:', JSON.stringify(validationError, null, 2));
+      throw validationError;
+    }
     
     // Step 3: Verify user owns the dashboard (if userId is provided)
     if (validatedData.userId && validatedData.userId !== user.id) {

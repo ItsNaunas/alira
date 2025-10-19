@@ -165,7 +165,7 @@ export type SaveDraft = z.infer<typeof SaveDraftSchema>;
  * Used for: /api/generate-plan
  */
 export const GeneratePlanSchema = z.object({
-  answers: z.record(z.any()),
+  answers: z.record(z.any()).min(1, 'Answers object cannot be empty'),
   userId: validators.uuid.optional(),
   preferences: z.object({
     format: z.enum(['pdf', 'html', 'markdown']).optional(),

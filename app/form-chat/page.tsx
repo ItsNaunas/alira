@@ -86,8 +86,11 @@ function FormChatContent() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          formId: data.id,
-          formData: formData
+          answers: {
+            ...formData,
+            dashboardId: data.id
+          },
+          userId: user.id
         }),
       });
 
