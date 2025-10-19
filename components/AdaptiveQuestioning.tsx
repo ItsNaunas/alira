@@ -27,10 +27,10 @@ interface FormData {
 interface Question {
   id: string;
   question: string;
-  placeholder: string;
+  placeholder?: string;
   helper: string;
   type?: 'text' | 'multiselect';
-  options?: Array<{ value: string; label: string }>;
+  options?: ReadonlyArray<{ readonly value: string; readonly label: string; readonly description?: string }>;
   followUpQuestions?: string[];
   depthThreshold?: number; // Minimum character count for sufficient detail
 }
