@@ -47,7 +47,7 @@ export default function PlanDetailPage() {
             id,
             type,
             content,
-            version_number,
+            version,
             created_at
           )
         `)
@@ -88,7 +88,7 @@ export default function PlanDetailPage() {
           id: planData.generations[0].id,
           type: planData.generations[0].type,
           content: planData.generations[0].content,
-          version: planData.generations[0].version_number || 1,
+          version: planData.generations[0].version || 1,
           created_at: planData.generations[0].created_at,
         } : undefined,
         version_count: versionCount || 1,

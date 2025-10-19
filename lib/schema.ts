@@ -175,7 +175,7 @@ export const planVersionSchema = z.object({
   id: z.string().uuid(),
   dashboard_id: z.string().uuid(),
   generation_id: z.string().uuid().nullable(),
-  version_number: z.number().int().positive(),
+  version: z.number().int().positive(),
   content: z.record(z.string(), z.any()),
   changes_summary: z.string().nullable(),
   parent_version_id: z.string().uuid().nullable(),

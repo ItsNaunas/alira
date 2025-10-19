@@ -13,6 +13,8 @@
     "check-all": "npm run type-check && npm run lint && npm run build",
     "fonts:check": "node scripts/standardize-fonts.mjs",
     "fonts:fix": "node scripts/standardize-fonts.mjs",
+    "env:validate": "node scripts/validate-env.js",
+    "env:check": "node scripts/validate-env.js",
     "prepare": "husky"
   },
   "dependencies": {

@@ -119,14 +119,14 @@ async function retryWithBackoff<T>(
 }
 
 export async function generateBusinessCase(formData: any): Promise<BusinessCaseOutline> {
-  console.log("========================================")
-  console.log("🚀 OPENAI: generateBusinessCase() CALLED")
-  console.log("========================================")
-  console.log("Form data received:", JSON.stringify(formData, null, 2))
-  console.log("OpenAI API Key present:", !!process.env.OPENAI_API_KEY)
-  console.log("OpenAI API Key length:", process.env.OPENAI_API_KEY?.length || 0)
-  console.log("OpenAI API Key starts with sk-:", process.env.OPENAI_API_KEY?.startsWith('sk-') || false)
-  console.log("Current timestamp:", new Date().toISOString())
+  // Debug logging (only in development - no sensitive data)
+  if (process.env.NODE_ENV === 'development') {
+    console.log("========================================")
+    console.log("🚀 OPENAI: generateBusinessCase() CALLED")
+    console.log("========================================")
+    console.log("Form data received:", JSON.stringify(formData, null, 2))
+    console.log("Current timestamp:", new Date().toISOString())
+  }
   
   try {
     const userPrompt = `
@@ -148,8 +148,10 @@ Project Details:
 - Additional Notes: ${formData.notes || 'None provided'}
 `
 
-    console.log("Making OpenAI API call with retry logic...")
-    console.log("User prompt:", userPrompt)
+    if (process.env.NODE_ENV === 'development') {
+      console.log("Making OpenAI API call with retry logic...")
+      console.log("User prompt:", userPrompt)
+    }
     
     const completion = await retryWithBackoff(async () => {
       return await openai.chat.completions.create({
@@ -170,28 +172,34 @@ Project Details:
       })
     }, 3, 2000) // 3 retries, 2 second base delay
     
-    console.log("OpenAI API call completed successfully")
-    console.log("Completion object:", {
-      hasChoices: !!completion.choices,
-      choicesLength: completion.choices?.length || 0,
-      hasContent: !!completion.choices?.[0]?.message?.content
-    })
+    if (process.env.NODE_ENV === 'development') {
+      console.log("OpenAI API call completed successfully")
+      console.log("Completion object:", {
+        hasChoices: !!completion.choices,
+        choicesLength: completion.choices?.length || 0,
+        hasContent: !!completion.choices?.[0]?.message?.content
+      })
+    }
 
     const content = completion.choices[0]?.message?.content
     if (!content) {
       throw new Error('No content received from OpenAI')
     }
 
-    console.log("Raw content from OpenAI:", content)
+    if (process.env.NODE_ENV === 'development') {
+      console.log("Raw content from OpenAI:", content)
+    }
     
     let outline: BusinessCaseOutline
     try {
       outline = JSON.parse(content) as BusinessCaseOutline
-      console.log("Parsed outline:", {
-        hasProblemStatement: !!outline.problem_statement,
-        objectivesCount: outline.objectives?.length || 0,
-        solutionsCount: outline.proposed_solution?.length || 0
-      })
+      if (process.env.NODE_ENV === 'development') {
+        console.log("Parsed outline:", {
+          hasProblemStatement: !!outline.problem_statement,
+          objectivesCount: outline.objectives?.length || 0,
+          solutionsCount: outline.proposed_solution?.length || 0
+        })
+      }
     } catch (parseError) {
       console.error("JSON parsing error:", parseError)
       console.error("Content that failed to parse:", content)
@@ -209,7 +217,9 @@ Project Details:
       throw new Error('Invalid response structure from OpenAI')
     }
 
-    console.log("AI analysis generated successfully")
+    if (process.env.NODE_ENV === 'development') {
+      console.log("AI analysis generated successfully")
+    }
     return outline
   } catch (error) {
     console.error('OpenAI API error:', error)
