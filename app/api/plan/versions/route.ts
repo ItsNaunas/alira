@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
         *,
         generations (
           id,
-          version_number
+          version
         )
       `)
       .eq('id', planId)
@@ -112,14 +112,13 @@ export async function POST(request: NextRequest) {
 
     // Step 5: Update the generation with restored content
     const currentGeneration = dashboard.generations[0]
-    const currentVersion = currentGeneration.version_number || 1
+    const currentVersion = currentGeneration.version || 1
 
     const { error: updateError } = await supabase
       .from('generations')
       .update({
         content: versionToRestore.content,
-        version_number: currentVersion + 1,
-        updated_at: new Date().toISOString()
+        version: currentVersion + 1
       })
       .eq('id', currentGeneration.id)
 

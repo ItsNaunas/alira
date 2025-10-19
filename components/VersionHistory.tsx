@@ -148,7 +148,7 @@ export default function VersionHistory({
       <div className="space-y-2">
         {versions.map((version, index) => {
           const isExpanded = expandedId === version.id
-          const isCurrent = version.version_number === currentVersion
+          const isCurrent = version.version === currentVersion
           const isLatest = index === 0
 
           return (
@@ -165,7 +165,7 @@ export default function VersionHistory({
                     <div className="flex items-center gap-2 mb-2">
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium text-alira-white">
-                          Version {version.version_number}
+                          Version {version.version}
                         </span>
                         {isLatest && (
                           <span className="px-2 py-0.5 rounded text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20">
