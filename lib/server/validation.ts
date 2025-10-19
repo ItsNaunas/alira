@@ -178,6 +178,30 @@ export const GeneratePlanSchema = z.object({
 export type GeneratePlan = z.infer<typeof GeneratePlanSchema>;
 
 /**
+ * Update Plan Schema
+ * Used for: /api/plan/update
+ */
+export const UpdatePlanSchema = z.object({
+  planId: validators.uuid,
+  content: z.record(z.string(), z.any()),
+  changesSummary: z.string().min(1, 'Changes summary is required').max(500),
+  createVersion: z.boolean().default(true),
+});
+
+export type UpdatePlan = z.infer<typeof UpdatePlanSchema>;
+
+/**
+ * Version Restore Schema
+ * Used for: /api/plan/versions (POST)
+ */
+export const VersionRestoreSchema = z.object({
+  planId: validators.uuid,
+  versionId: validators.uuid,
+});
+
+export type VersionRestore = z.infer<typeof VersionRestoreSchema>;
+
+/**
  * Helper function to safely parse and validate input
  * 
  * Usage:
