@@ -7,6 +7,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { getUserFriendlyError, errorMessages } from '@/lib/error-messages'
+import { FormField } from '@/components/ui/form-field'
+import { FormSuccess } from '@/components/ui/form-success'
+import { InlineError } from '@/components/ui/error-state'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -96,35 +99,29 @@ export default function ContactPage() {
                   
                   {/* Success Message */}
                   {submitStatus === 'success' && (
-                    <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                      <div className="flex items-center">
-                        <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <p className="text-green-800 font-sans font-light">Message sent successfully!</p>
-                      </div>
-                      <p className="text-green-700 text-sm mt-1">We'll get back to you within 24 hours.</p>
-                    </div>
+                    <FormSuccess
+                      title="Message Sent!"
+                      message="Thank you for reaching out. We'll get back to you within 24 hours."
+                      className="mb-6"
+                    />
                   )}
 
                   {/* Error Message */}
                   {submitStatus === 'error' && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                      <div className="flex items-center">
-                        <svg className="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        <p className="text-red-800 font-sans font-light">Failed to send message</p>
-                      </div>
-                      <p className="text-red-700 text-sm mt-1">{errorMessage}</p>
-                    </div>
+                    <InlineError
+                      message={errorMessage}
+                      onRetry={() => setSubmitStatus('idle')}
+                      className="mb-6"
+                    />
                   )}
 
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                      <label htmlFor="name" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
-                        Name *
-                      </label>
+                    <FormField
+                      label="Name"
+                      htmlFor="name"
+                      required
+                      hint="Please provide your full name"
+                    >
                       <Input
                         id="name"
                         name="name"
@@ -133,16 +130,17 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleInputChange}
                         disabled={isSubmitting}
-                        className="w-full px-4 py-3 border border-alira-primary/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors disabled:opacity-50 text-base"
+                        className="w-full"
                         placeholder="Your full name"
-                        aria-required="true"
                       />
-                    </div>
+                    </FormField>
                     
-                    <div>
-                      <label htmlFor="email" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
-                        Email *
-                      </label>
+                    <FormField
+                      label="Email"
+                      htmlFor="email"
+                      required
+                      hint="We'll use this to get back to you"
+                    >
                       <Input
                         id="email"
                         name="email"
@@ -151,16 +149,17 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleInputChange}
                         disabled={isSubmitting}
-                        className="w-full px-4 py-3 border border-alira-primary/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors disabled:opacity-50 text-base"
+                        className="w-full"
                         placeholder="your.email@example.com"
-                        aria-required="true"
                       />
-                    </div>
+                    </FormField>
                     
-                    <div>
-                      <label htmlFor="message" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
-                        Message *
-                      </label>
+                    <FormField
+                      label="Message"
+                      htmlFor="message"
+                      required
+                      hint="Tell us about your project, idea, or what you'd like to achieve"
+                    >
                       <Textarea
                         id="message"
                         name="message"
@@ -169,11 +168,10 @@ export default function ContactPage() {
                         value={formData.message}
                         onChange={handleInputChange}
                         disabled={isSubmitting}
-                        className="w-full px-4 py-3 border border-alira-primary/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors resize-none disabled:opacity-50 text-base"
-                        placeholder="Tell us about your project, idea, or what you'd like to achieve..."
-                        aria-required="true"
+                        className="w-full resize-none"
+                        placeholder="Your message here..."
                       />
-                    </div>
+                    </FormField>
                     
                     <Button
                       type="submit"

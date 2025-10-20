@@ -14,6 +14,9 @@ import { conversionEvents } from '@/lib/analytics'
 import { wizardFormSchema, type WizardFormData, serviceInterestOptions, currentToolsOptions } from '@/lib/schema'
 import { getUserFriendlyError, errorMessages } from '@/lib/error-messages'
 import { cn } from '@/lib/utils'
+import { FormProgress } from './ui/form-progress'
+import { FormSuccess } from './ui/form-success'
+import { InlineError } from './ui/error-state'
 
 interface FormWizardProps {
   resumeToken?: string
@@ -692,31 +695,16 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
 
   return (
     <div className="max-w-3xl mx-auto">
-      {/* Progress Track */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-light text-alira-primary dark:text-alira-white/70">
-            Step {currentStep} of 4
-          </span>
-          <div className="flex items-center space-x-2">
-            {[1, 2, 3, 4].map((step) => (
-              <div key={step} className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-light transition-all duration-300 ${
-                step <= currentStep 
-                  ? 'bg-alira-gold text-alira-primary' 
-                  : 'bg-alira-primary/20 dark:bg-white/20 text-alira-primary/50 dark:text-alira-white/50'
-              }`}>
-                {step < currentStep ? '✓' : step}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="h-1.5 w-full rounded-full bg-alira-primary/20 dark:bg-white/20">
-          <div 
-            className="h-1.5 rounded-full bg-alira-gold transition-all duration-500" 
-            style={{ width: `${(currentStep / 4) * 100}%` }}
-          ></div>
-        </div>
-      </div>
+      {/* Enhanced Progress Indicator */}
+      <FormProgress
+        steps={[
+          { label: "Your Business", description: "Tell us about your idea" },
+          { label: "Challenges", description: "What's holding you back" },
+          { label: "Goals", description: "Where you want to be" },
+          { label: "Services", description: "How we can help" },
+        ]}
+        currentStep={currentStep}
+      />
 
       <form onSubmit={handleSubmit(onSubmit)} onSubmitCapture={(e) => console.log('Form submit event triggered', e)}>
         <Card className="border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/70 backdrop-blur shadow-[0_10px_30px_rgba(0,0,0,0.35)] rounded-2xl">

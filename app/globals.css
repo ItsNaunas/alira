@@ -629,6 +629,40 @@ select:focus-visible {
   font-weight: 900;
 }
 
+/* Form Spacing System */
+.form-section {
+  @apply space-y-6;
+}
+
+.form-field-group {
+  @apply space-y-2;
+}
+
+.form-grid {
+  @apply grid grid-cols-1 gap-6 sm:grid-cols-2;
+}
+
+.form-actions {
+  @apply flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4;
+}
+
+.form-actions-primary {
+  @apply w-full sm:w-auto sm:flex-1 sm:max-w-xs;
+}
+
+.form-actions-secondary {
+  @apply w-full sm:w-auto;
+}
+
+/* Form States */
+.form-loading {
+  @apply opacity-60 pointer-events-none;
+}
+
+.form-disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -66,6 +66,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       return "white"
     }
     
+    // When using asChild, we must pass ONLY the children without any conditionals
+    // to satisfy React.Children.only() requirement in Slot
+    const buttonContent = loading ? (
+      <>
+        <Spinner size="sm" color={getSpinnerColor()} className="mr-2" />
+        {children}
+      </>
+    ) : children
+    
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
@@ -73,8 +82,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         {...props}
       >
-        {loading && <Spinner size="sm" color={getSpinnerColor()} className="mr-2" />}
-        {children}
+        {buttonContent}
       </Comp>
     )
   }
