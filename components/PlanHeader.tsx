@@ -7,7 +7,6 @@ import {
   Edit3, 
   MessageSquare, 
   Download, 
-  Share2, 
   ChevronDown,
   Home,
   ChevronRight,
@@ -109,11 +108,6 @@ export default function PlanHeader({
     } finally {
       setGeneratingPDF(false)
     }
-  }
-
-  const handleShare = () => {
-    // TODO: Implement share functionality
-    alert('Share functionality coming soon!')
   }
 
   const handleDelete = async () => {
@@ -252,16 +246,6 @@ export default function PlanHeader({
                       {plan.pdf_url ? 'Download PDF' : 'Generate PDF'}
                     </>
                   )}
-                </Button>
-                
-                <Button
-                  onClick={handleShare}
-                  variant="outline"
-                  size="sm"
-                  className="border-white/20 text-alira-white hover:bg-white/5"
-                >
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Share
                 </Button>
 
                 <Button
