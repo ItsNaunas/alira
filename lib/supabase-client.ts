@@ -40,7 +40,7 @@ export const auth = {
         data: {
           full_name: fullName,
         },
-        emailRedirectTo: `${getURL()}dashboard`, // Redirect to dashboard after email confirmation
+        emailRedirectTo: `${getURL()}auth/callback?next=/dashboard`, // Redirect to auth callback, then dashboard
       },
     })
     return { data, error }
