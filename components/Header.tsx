@@ -354,7 +354,7 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
     try {
       if (isSignUp) {
         // Sign up new user
-        const { data, error } = await auth.signUp(email, password, name)
+        const { data, error, needsEmailConfirmation } = await auth.signUp(email, password, name)
         
         if (error) {
           setAuthError(error.message)
@@ -362,6 +362,16 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
           return
         }
         
+        if (needsEmailConfirmation) {
+          // Email confirmation is required
+          setAuthError('Success! Please check your email to confirm your account, then you can sign in.')
+          setIsSubmitting(false)
+          // Switch to sign in mode
+          setIsSignUp(false)
+          return
+        }
+        
+        // User is logged in immediately (email confirmation disabled)
         // Wait a moment for auth state to update
         await new Promise(resolve => setTimeout(resolve, 500))
         

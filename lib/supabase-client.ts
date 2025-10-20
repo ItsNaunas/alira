@@ -65,7 +65,13 @@ export const auth = {
         emailRedirectTo: `${getURL()}auth/callback?next=/dashboard`, // Redirect to auth callback, then dashboard
       },
     })
-    return { data, error }
+    
+    // Return both auth data and whether user needs to confirm email
+    return { 
+      data, 
+      error,
+      needsEmailConfirmation: !!(data.user && !data.session) // User created but no session = needs confirmation
+    }
   },
 
   async signIn(email: string, password: string) {
