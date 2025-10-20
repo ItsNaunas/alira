@@ -29,10 +29,10 @@ interface FormData {
 interface QuestionConfig {
   id: keyof FormData;
   question: string;
-  placeholder: string;
+  placeholder?: string;
   helper: string;
   type?: 'text' | 'multiselect';
-  options?: readonly string[];
+  options?: readonly { value: string; label: string; description?: string }[];
 }
 
 const questions: QuestionConfig[] = [
@@ -194,7 +194,18 @@ export default function ConversationalFormEnhanced({
       return;
     }
 
-    const userResponse = isMultiSelect ? selectedServices.join(', ') : input.trim();
+    // For multiselect, create a human-readable response with labels
+    let userResponse = input.trim();
+    if (isMultiSelect && currentQuestion.options) {
+      const selectedLabels = selectedServices.map(value => {
+        const option = currentQuestion.options?.find(opt => 
+          typeof opt === 'string' ? opt === value : opt.value === value
+        );
+        if (typeof option === 'string') return option;
+        return option?.label || value;
+      });
+      userResponse = selectedLabels.join(', ');
+    }
     
     // Add user message
     addMessage('user', userResponse);
@@ -390,32 +401,43 @@ export default function ConversationalFormEnhanced({
                 {currentQuestion.helper}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {currentQuestion.options?.map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => toggleService(option)}
-                    className={cn(
-                      'p-4 rounded-lg border-2 text-left transition-all',
-                      selectedServices.includes(option)
-                        ? 'border-alira-gold bg-alira-gold/10 text-white'
-                        : 'border-white/20 bg-white/5 text-white/80 hover:border-white/40'
-                    )}
-                  >
-                    <div className="flex items-center gap-2">
-                      <div className={cn(
-                        'w-5 h-5 rounded border-2 flex items-center justify-center',
-                        selectedServices.includes(option)
-                          ? 'border-alira-gold bg-alira-gold'
-                          : 'border-white/40'
-                      )}>
-                        {selectedServices.includes(option) && (
-                          <CheckCircle className="w-4 h-4 text-black" />
-                        )}
+                {currentQuestion.options?.map((option) => {
+                  const optionValue = typeof option === 'string' ? option : option.value;
+                  const optionLabel = typeof option === 'string' ? option : option.label;
+                  const optionDescription = typeof option === 'object' ? option.description : undefined;
+                  
+                  return (
+                    <button
+                      key={optionValue}
+                      onClick={() => toggleService(optionValue)}
+                      className={cn(
+                        'p-4 rounded-lg border-2 text-left transition-all',
+                        selectedServices.includes(optionValue)
+                          ? 'border-alira-gold bg-alira-gold/10 text-white'
+                          : 'border-white/20 bg-white/5 text-white/80 hover:border-white/40'
+                      )}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={cn(
+                          'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5',
+                          selectedServices.includes(optionValue)
+                            ? 'border-alira-gold bg-alira-gold'
+                            : 'border-white/40'
+                        )}>
+                          {selectedServices.includes(optionValue) && (
+                            <CheckCircle className="w-4 h-4 text-black" />
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-medium">{optionLabel}</div>
+                          {optionDescription && (
+                            <div className="text-xs text-white/60 mt-1">{optionDescription}</div>
+                          )}
+                        </div>
                       </div>
-                      <span className="text-sm">{option}</span>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
               <Button
                 onClick={handleSend}
