@@ -178,7 +178,7 @@ export default function ContactPage() {
                     <Button
                       type="submit"
                       loading={isSubmitting}
-                      className="w-full bg-alira-gold hover:bg-alira-gold/90 text-alira-black py-3 px-6 rounded-lg font-sans font-medium transition-colors disabled:opacity-50"
+                      className="w-full bg-alira-gold hover:bg-alira-gold/90 text-alira-black py-3 px-6 font-sans font-medium transition-colors disabled:opacity-50"
                     >
                       {isSubmitting ? 'Sending...' : 'Send Message'}
                     </Button>

@@ -788,7 +788,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   <Button
                     type="button"
                     onClick={nextStep}
-                    className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-alira-primary dark:bg-alira-primary text-alira-white dark:text-alira-white px-5 font-light ring-2 ring-alira-primary/20 dark:ring-alira-white/20 hover:bg-alira-primary/90 dark:hover:bg-alira-primary/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200"
+                    className="inline-flex min-h-[48px] items-center justify-center bg-alira-primary dark:bg-alira-primary text-alira-white dark:text-alira-white px-5 font-light ring-2 ring-alira-primary/20 dark:ring-alira-white/20 hover:bg-alira-primary/90 dark:hover:bg-alira-primary/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200"
                   >
                     Next Step →
                   </Button>
@@ -815,7 +815,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                         }
                       }
                     }}
-                    className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-alira-gold text-alira-primary px-5 font-light ring-2 ring-alira-gold/20 hover:bg-alira-gold/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200"
+                    className="inline-flex min-h-[48px] items-center justify-center bg-alira-gold text-alira-primary px-5 font-light ring-2 ring-alira-gold/20 hover:bg-alira-gold/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200"
                   >
                   {isSubmitting || isGeneratingPlan ? (
                     isSubmitting ? 'Analyzing Your Inputs...' : 'Generating Your Plan...'

@@ -148,7 +148,7 @@ export default function Header() {
                   setIsSignUp(true)
                   setShowAuthModal(true)
                 }}
-                className="bg-alira-gold text-alira-black hover:bg-alira-gold/90 font-sans font-medium px-3 sm:px-4 lg:px-6 py-1.5 sm:py-2 rounded-lg transition-all duration-200 text-xs sm:text-sm lg:text-base whitespace-nowrap"
+                className="bg-alira-gold text-alira-black hover:bg-alira-gold/90 font-sans font-medium px-3 sm:px-4 lg:px-6 py-1.5 sm:py-2 transition-all duration-200 text-xs sm:text-sm lg:text-base whitespace-nowrap"
               >
                 Sign Up
               </Button>
