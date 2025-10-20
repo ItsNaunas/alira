@@ -11,7 +11,7 @@ interface ProgressBarProps {
 }
 
 export default function ProgressBar({ current, total, contextMessage, className }: ProgressBarProps) {
-  const percentage = Math.round((current / total) * 100);
+  const percentage = Math.min(Math.round((current / total) * 100), 100);
 
   return (
     <div className={cn("w-full space-y-3", className)}>

@@ -1,5 +1,19 @@
 # Auto-Login After Signup - Setup Guide
 
+## ⚠️ RECOMMENDED APPROACH
+
+**For the best security and user experience, keep email confirmation ENABLED.**
+
+Users will be **automatically logged in after clicking the email confirmation link** - they never have to manually sign in!
+
+See **`EMAIL_CONFIRMATION_WITH_AUTO_LOGIN.md`** for the complete guide.
+
+---
+
+## Alternative: Disable Email Confirmation (NOT RECOMMENDED)
+
+If you want to completely skip email confirmation (less secure), follow this guide.
+
 ## What Was Changed
 
 The signup flow has been updated to automatically log users in after they create an account, **if email confirmation is disabled** in your Supabase project.

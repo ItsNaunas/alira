@@ -363,15 +363,13 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
         }
         
         if (needsEmailConfirmation) {
-          // Email confirmation is required
-          setAuthError('Success! Please check your email to confirm your account, then you can sign in.')
+          // Email confirmation is required (this is the normal flow)
+          setAuthError('🎉 Account created! Please check your email and click the confirmation link. You\'ll be automatically logged in after confirming.')
           setIsSubmitting(false)
-          // Switch to sign in mode
-          setIsSignUp(false)
           return
         }
         
-        // User is logged in immediately (email confirmation disabled)
+        // User is logged in immediately (only if email confirmation is disabled in Supabase)
         // Wait a moment for auth state to update
         await new Promise(resolve => setTimeout(resolve, 500))
         

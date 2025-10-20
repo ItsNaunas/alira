@@ -4,8 +4,7 @@ import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { auth, createClient } from '@/lib/supabase-client';
 import { Spinner } from '@/components/ui/spinner';
-import ConversationalForm from '@/components/ConversationalForm';
-import AdaptiveQuestioning from '@/components/AdaptiveQuestioning';
+import MultiStepForm from '@/components/MultiStepForm';
 
 function FormChatContent() {
   const router = useRouter();
@@ -152,9 +151,9 @@ function FormChatContent() {
         </div>
       </header>
 
-      {/* Conversational Form */}
+      {/* Multi-Step Form */}
       <main className="container mx-auto px-6 py-8">
-        <AdaptiveQuestioning
+        <MultiStepForm
           userId={user.id}
           initialData={initialIdea ? { business_idea: initialIdea } : undefined}
           onComplete={handleFormComplete}
