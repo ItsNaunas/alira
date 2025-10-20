@@ -2,6 +2,7 @@
 
 import { PlanDetail, planStatusOptions } from '@/lib/schema'
 import { Button } from '@/components/ui/button'
+import { AlertDialog } from '@/components/ui/alert-dialog'
 import { 
   Edit3, 
   MessageSquare, 
@@ -11,7 +12,8 @@ import {
   Home,
   ChevronRight,
   FileText,
-  Loader2
+  Loader2,
+  Trash2
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -34,6 +36,8 @@ export default function PlanHeader({
 }: PlanHeaderProps) {
   const router = useRouter()
   const [generatingPDF, setGeneratingPDF] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   
   const statusOption = planStatusOptions.find(opt => opt.value === plan.status)
   const statusColor = statusOption?.color || 'gray'
@@ -62,19 +66,23 @@ export default function PlanHeader({
         body: JSON.stringify({ planId: plan.id })
       })
 
+      const data = await response.json()
+      
       if (!response.ok) {
-        throw new Error('Failed to generate PDF')
+        console.error('PDF generation failed:', data)
+        throw new Error(data.error?.message || 'Failed to generate PDF')
       }
 
-      const data = await response.json()
       if (data.pdf_url) {
         window.open(data.pdf_url, '_blank')
         // Refresh the page to show the updated PDF URL
-        router.refresh()
+        window.location.reload()
+      } else {
+        throw new Error('No PDF URL returned')
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating PDF:', error)
-      alert('Failed to generate PDF. Please try again.')
+      alert(`Failed to generate PDF: ${error.message || 'Please try again.'}`)
     } finally {
       setGeneratingPDF(false)
     }
@@ -83,6 +91,29 @@ export default function PlanHeader({
   const handleShare = () => {
     // TODO: Implement share functionality
     alert('Share functionality coming soon!')
+  }
+
+  const handleDelete = async () => {
+    setIsDeleting(true)
+    try {
+      const response = await fetch('/api/plan/delete', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId: plan.id })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to delete plan')
+      }
+
+      // Redirect to dashboard after successful deletion
+      router.push('/dashboard')
+      router.refresh()
+    } catch (error) {
+      console.error('Error deleting plan:', error)
+      alert('Failed to delete plan. Please try again.')
+      setIsDeleting(false)
+    }
   }
 
   return (
@@ -209,11 +240,34 @@ export default function PlanHeader({
                   <Share2 className="w-4 h-4 mr-2" />
                   Share
                 </Button>
+
+                <Button
+                  onClick={() => setDeleteDialogOpen(true)}
+                  variant="outline"
+                  size="sm"
+                  className="border-white/20 text-red-400 hover:bg-red-500/10 hover:border-red-500/30"
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Delete
+                </Button>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        title="Delete Plan?"
+        description={`Are you sure you want to delete "${plan.business_name}"? This action cannot be undone and will permanently delete all plan data, versions, and chat history.`}
+        cancelText="Cancel"
+        actionText="Delete Plan"
+        onAction={handleDelete}
+        variant="destructive"
+        loading={isDeleting}
+      />
     </div>
   )
 }

@@ -13,10 +13,12 @@ import {
   Target,
   AlertCircle,
   Eye,
-  ChevronDown
+  ChevronDown,
+  Trash2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { AlertDialog } from '@/components/ui/alert-dialog';
 import DashboardLayout from '@/components/DashboardLayout';
 
 interface BusinessPlan {
@@ -43,6 +45,9 @@ export default function DashboardPage() {
   const [plans, setPlans] = useState<BusinessPlan[]>([]);
   const [loading, setLoading] = useState(true);
   const [isLoadingPlans, setIsLoadingPlans] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [planToDelete, setPlanToDelete] = useState<BusinessPlan | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const checkUser = useCallback(async () => {
     const { user, error } = await auth.getUser();
@@ -93,6 +98,39 @@ export default function DashboardPage() {
 
   const handleNewPlan = () => {
     router.push('/#start-chat');
+  };
+
+  const handleDeleteClick = (e: React.MouseEvent, plan: BusinessPlan) => {
+    e.stopPropagation();
+    setPlanToDelete(plan);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!planToDelete) return;
+
+    setIsDeleting(true);
+    try {
+      const response = await fetch('/api/plan/delete', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId: planToDelete.id })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete plan');
+      }
+
+      // Remove plan from local state
+      setPlans(plans.filter(p => p.id !== planToDelete.id));
+      setDeleteDialogOpen(false);
+      setPlanToDelete(null);
+    } catch (error) {
+      console.error('Error deleting plan:', error);
+      alert('Failed to delete plan. Please try again.');
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   if (loading) {
@@ -279,30 +317,60 @@ export default function DashboardPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
                 {/* Generated Plan Preview */}
-                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
+                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all cursor-pointer" onClick={() => currentPlan?.generations && currentPlan.generations.length > 0 && router.push(`/dashboard/${currentPlan.id}`)}>
                   <CardContent className="p-6">
                     <h3 className="text-lg font-serif text-alira-white mb-4">Your Strategic Plan</h3>
                     <div className="space-y-4">
                       {currentPlan?.generations && currentPlan.generations.length > 0 ? (
                         <>
-                          <div className="aspect-[8.5/11] bg-white/5 border border-alira-gold/30 rounded-lg flex items-center justify-center">
-                            <FileText className="w-16 h-16 text-alira-gold/40" />
+                          {/* Compact preview box with text excerpt */}
+                          <div className="h-48 bg-white/5 border border-alira-gold/30 rounded-lg p-4 overflow-hidden relative group">
+                            <div className="space-y-2">
+                              {/* Problem Statement Preview */}
+                              {currentPlan.generations[0].content?.problem_statement && (
+                                <div>
+                                  <div className="text-xs font-medium text-alira-gold/80 mb-1">Problem Statement</div>
+                                  <p className="text-xs text-alira-white/70 leading-relaxed line-clamp-2">
+                                    {currentPlan.generations[0].content.problem_statement}
+                                  </p>
+                                </div>
+                              )}
+                              {/* Objectives Preview */}
+                              {currentPlan.generations[0].content?.objectives && (
+                                <div>
+                                  <div className="text-xs font-medium text-alira-gold/80 mb-1">Key Objectives</div>
+                                  <p className="text-xs text-alira-white/70 leading-relaxed line-clamp-3">
+                                    {currentPlan.generations[0].content.objectives[0]}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                            {/* Overlay on hover */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
+                              <div className="flex items-center gap-2 text-alira-gold text-sm font-medium">
+                                <Eye className="w-4 h-4" />
+                                Click to View Full Plan
+                              </div>
+                            </div>
                           </div>
                           <Button
                             variant="outline"
                             size="sm"
                             className="w-full border-white/20 text-alira-white hover:bg-white/5"
-                            onClick={() => router.push(`/dashboard/${currentPlan.id}`)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              router.push(`/dashboard/${currentPlan.id}`);
+                            }}
                           >
                             <Eye className="w-4 h-4 mr-2" />
-                            View Plan
+                            View Full Plan
                           </Button>
                         </>
                       ) : (
                         <>
-                          <div className="aspect-[8.5/11] bg-white/5 border border-white/10 rounded-lg flex items-center justify-center">
+                          <div className="h-48 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center">
                             <div className="text-center">
-                              <FileText className="w-12 h-12 text-alira-white/20 mb-3" />
+                              <FileText className="w-12 h-12 text-alira-white/20 mx-auto mb-3" />
                               <div className="text-xs text-alira-white/40">No plan generated yet</div>
                             </div>
                           </div>
@@ -324,13 +392,14 @@ export default function DashboardPage() {
                 <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
                   <CardContent className="p-6">
                     <h3 className="text-lg font-serif text-alira-white mb-4">Next Steps</h3>
-                    <div className="space-y-3 mb-4">
+                    {/* Compact next steps preview */}
+                    <div className="h-48 space-y-3 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent pr-2">
                       {currentPlan?.generations?.[0]?.content?.next_steps ? (
-                        currentPlan.generations[0].content.next_steps.slice(0, 3).map((step: string, idx: number) => (
+                        currentPlan.generations[0].content.next_steps.slice(0, 5).map((step: string, idx: number) => (
                           <div key={idx} className="flex gap-3">
-                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0">{idx + 1}</div>
+                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0 mt-0.5">{idx + 1}</div>
                             <div className="text-sm text-alira-white/80 leading-relaxed">
-                              {step.substring(0, 100)}{step.length > 100 ? '...' : ''}
+                              {step.length > 120 ? step.substring(0, 120) + '...' : step}
                             </div>
                           </div>
                         ))
@@ -357,9 +426,14 @@ export default function DashboardPage() {
                         </>
                       )}
                     </div>
-                    <button className="text-xs text-alira-white/40 hover:text-alira-gold transition-colors">
-                      Show more
-                    </button>
+                    {currentPlan?.generations?.[0]?.content?.next_steps && currentPlan.generations[0].content.next_steps.length > 5 && (
+                      <button 
+                        className="text-xs text-alira-white/40 hover:text-alira-gold transition-colors mt-3"
+                        onClick={() => router.push(`/dashboard/${currentPlan.id}`)}
+                      >
+                        View all {currentPlan.generations[0].content.next_steps.length} steps →
+                      </button>
+                    )}
                   </CardContent>
                 </Card>
               </div>
@@ -400,17 +474,27 @@ export default function DashboardPage() {
                               )}
                             </div>
                           </div>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border-white/20 text-alira-white hover:bg-white/5 flex-shrink-0"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              router.push(`/dashboard/${plan.id}`);
-                            }}
-                          >
-                            View
-                          </Button>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-white/20 text-alira-white hover:bg-white/5 flex-shrink-0"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(`/dashboard/${plan.id}`);
+                              }}
+                            >
+                              View
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-white/20 text-red-400 hover:bg-red-500/10 hover:border-red-500/30 flex-shrink-0"
+                              onClick={(e) => handleDeleteClick(e, plan)}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
                         </div>
                       </CardContent>
                     </Card>
@@ -435,6 +519,19 @@ export default function DashboardPage() {
           </Button>
         </div>
       )}
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        title="Delete Plan?"
+        description={`Are you sure you want to delete "${planToDelete?.business_name || 'this plan'}"? This action cannot be undone and will permanently delete all plan data, versions, and chat history.`}
+        cancelText="Cancel"
+        actionText="Delete Plan"
+        onAction={handleDeleteConfirm}
+        variant="destructive"
+        loading={isDeleting}
+      />
     </DashboardLayout>
   );
 }
