@@ -32,6 +32,7 @@ CREATE TABLE public.dashboards (
   service_interest ARRAY,
   current_tools text,
   form_data jsonb DEFAULT '{}'::jsonb,
+  pdf_url text,
   CONSTRAINT dashboards_pkey PRIMARY KEY (id),
   CONSTRAINT dashboards_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id)
 );

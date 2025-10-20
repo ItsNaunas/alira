@@ -65,21 +65,7 @@ export async function DELETE(request: NextRequest) {
       }
     }
 
-    // Step 5: Delete plan refinement chats (if table exists)
-    await supabase
-      .from('plan_refinement_chats')
-      .delete()
-      .eq('dashboard_id', planId)
-      .eq('user_id', user.id)
-
-    // Step 6: Delete plan versions (if table exists)
-    await supabase
-      .from('plan_versions')
-      .delete()
-      .eq('dashboard_id', planId)
-      .eq('user_id', user.id)
-
-    // Step 7: Delete generations
+    // Step 5: Delete generations
     // Note: This should cascade delete from dashboard, but we'll do it explicitly
     await supabase
       .from('generations')

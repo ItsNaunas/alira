@@ -65,13 +65,10 @@ export default function PlanDetailPage() {
         return
       }
 
-      // Get version count
-      const { count: versionCount } = await supabase
-        .from('plan_versions')
-        .select('*', { count: 'exact', head: true })
-        .eq('dashboard_id', planId)
-
       // Transform data to PlanDetail format
+      // Note: version_count is based on generations for now since plan_versions table doesn't exist yet
+      const versionCount = planData.generations?.length || 1
+
       const planDetail: PlanDetail = {
         id: planData.id,
         business_name: planData.business_name || 'Business Plan',
@@ -91,7 +88,7 @@ export default function PlanDetailPage() {
           version: planData.generations[0].version || 1,
           created_at: planData.generations[0].created_at,
         } : undefined,
-        version_count: versionCount || 1,
+        version_count: versionCount,
       }
 
       setPlan(planDetail)
