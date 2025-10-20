@@ -2,16 +2,38 @@ import { createBrowserClient } from '@supabase/ssr'
 
 // Get the correct base URL based on environment
 const getURL = () => {
-  let url =
-    process.env.NEXT_PUBLIC_SITE_URL ?? // Set this in Vercel for production
-    process.env.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel
-    'http://localhost:3000/'
+  // Debug: Log what environment variables we have
+  if (typeof window !== 'undefined') {
+    console.log('🔍 Environment check:', {
+      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+      NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
+    })
+  }
   
-  // Make sure to include `https://` when not localhost
-  url = url.includes('http') ? url : `https://${url}`
-  // Make sure to include trailing `/`
-  url = url.charAt(url.length - 1) === '/' ? url : `${url}/`
+  // Priority order: NEXT_PUBLIC_SITE_URL > NEXT_PUBLIC_VERCEL_URL > localhost
+  let url = process.env.NEXT_PUBLIC_SITE_URL
   
+  // If not set, try VERCEL_URL (Vercel auto-sets this)
+  if (!url && process.env.NEXT_PUBLIC_VERCEL_URL) {
+    url = process.env.NEXT_PUBLIC_VERCEL_URL
+  }
+  
+  // Fallback to localhost for development
+  if (!url) {
+    url = 'http://localhost:3000'
+  }
+  
+  // Ensure URL has protocol
+  if (!url.startsWith('http')) {
+    url = `https://${url}`
+  }
+  
+  // Ensure URL has trailing slash
+  if (!url.endsWith('/')) {
+    url = `${url}/`
+  }
+  
+  console.log('✅ getURL() returning:', url)
   return url
 }
 
