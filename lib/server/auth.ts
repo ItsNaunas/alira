@@ -10,6 +10,7 @@
  * SECURITY: These functions should ONLY be used in API routes (server-side)
  */
 
+import 'server-only'
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';

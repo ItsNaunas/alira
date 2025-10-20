@@ -66,12 +66,15 @@ export default function PlanHeader({
         body: JSON.stringify({ planId: plan.id })
       })
 
-      const data = await response.json()
+      const result = await response.json()
       
       if (!response.ok) {
-        console.error('PDF generation failed:', data)
-        throw new Error(data.error?.message || 'Failed to generate PDF')
+        console.error('PDF generation failed:', result)
+        throw new Error(result.error || 'Failed to generate PDF')
       }
+
+      // The API wraps response in a 'data' field: { success: true, data: {...} }
+      const data = result.data || result
 
       if (data.pdf_url) {
         // PDF was uploaded to storage, open the URL

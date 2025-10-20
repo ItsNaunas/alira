@@ -1,3 +1,4 @@
+import 'server-only'
 import { Resend } from 'resend'
 import { generatePersonalPlanPDF, getPDFBase64, PersonalPlanPDFData } from './enhanced-pdf'
 import { env } from './env'

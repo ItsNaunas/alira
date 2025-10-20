@@ -10,6 +10,7 @@
  * SECURITY: All API route inputs should be validated using these schemas
  */
 
+import 'server-only'
 import { z } from 'zod';
 
 /**

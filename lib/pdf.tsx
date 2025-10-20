@@ -1,3 +1,4 @@
+import 'server-only'
 import { BusinessCaseOutline } from './openai'
 
 // Enhanced PDF generation with full business case content

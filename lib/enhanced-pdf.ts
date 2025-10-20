@@ -1,4 +1,5 @@
 // lib/enhanced-pdf.ts
+import 'server-only'
 import jsPDF from 'jspdf'
 
 // Safe string helper to prevent undefined/null issues

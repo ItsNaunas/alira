@@ -14,7 +14,7 @@ import {
   X
 } from 'lucide-react'
 import { RefinementChatMessage } from '@/lib/schema'
-import { getQuickActions } from '@/lib/openai-refine'
+import { getQuickActions } from '@/lib/refinement-utils'
 
 interface RefinementChatProps {
   planId: string

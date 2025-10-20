@@ -8,6 +8,7 @@
  * - Type-safe error handling
  */
 
+import 'server-only'
 import { NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
