@@ -10,7 +10,7 @@ import { getUserFriendlyError, errorMessages } from '@/lib/error-messages'
 import { FormField } from '@/components/ui/form-field'
 import { FormSuccess } from '@/components/ui/form-success'
 import { InlineError } from '@/components/ui/error-state'
-import GradientBars from '@/components/ui/gradient-bars'
+import { GradientBars } from '@/components/ui/gradient-bars'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({

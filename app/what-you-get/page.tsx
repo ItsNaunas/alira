@@ -5,7 +5,7 @@ import { FileText, Compass, MapPin, CheckCircle, Clock, Target, Lightbulb, Trend
 import Reveal from '@/components/Reveal'
 import CTAButton from '@/components/CTAButton'
 import { conversionEvents } from '@/lib/analytics'
-import GradientBars from '@/components/ui/gradient-bars'
+import { GradientBars } from '@/components/ui/gradient-bars'
 
 export default function WhatYouGetPage() {
   // Track page view

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Reveal from '@/components/Reveal'
 import CTAButton from '@/components/CTAButton'
-import GradientBars from '@/components/ui/gradient-bars'
+import { GradientBars } from '@/components/ui/gradient-bars'
 
 export default function AboutPage() {
   const [activeStat, setActiveStat] = useState(0)

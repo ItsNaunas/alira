@@ -6,7 +6,7 @@ import CTAButton from '@/components/CTAButton'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import SectionHeading from '@/components/ui/SectionHeading'
-import GradientBars from '@/components/ui/gradient-bars'
+import { GradientBars } from '@/components/ui/gradient-bars'
 
 export default function Services() {
   return (
