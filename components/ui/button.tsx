@@ -54,7 +54,9 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, loading = false, disabled, children, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+    // When loading, we can't use asChild because we need to render multiple children (spinner + content)
+    // Slot component requires exactly one child
+    const Comp = (asChild && !loading) ? Slot : "button"
     
     // Determine spinner color based on button variant
     const getSpinnerColor = () => {
