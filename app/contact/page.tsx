@@ -121,7 +121,7 @@ export default function ContactPage() {
 
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+                      <label htmlFor="name" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
                         Name *
                       </label>
                       <Input
@@ -132,13 +132,14 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleInputChange}
                         disabled={isSubmitting}
-                        className="w-full px-4 py-3 border border-alira-primary/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors disabled:opacity-50"
+                        className="w-full px-4 py-3 border border-alira-primary/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors disabled:opacity-50 text-base"
                         placeholder="Your full name"
+                        aria-required="true"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="email" className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+                      <label htmlFor="email" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
                         Email *
                       </label>
                       <Input
@@ -149,13 +150,14 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleInputChange}
                         disabled={isSubmitting}
-                        className="w-full px-4 py-3 border border-alira-primary/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors disabled:opacity-50"
+                        className="w-full px-4 py-3 border border-alira-primary/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors disabled:opacity-50 text-base"
                         placeholder="your.email@example.com"
+                        aria-required="true"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="message" className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+                      <label htmlFor="message" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
                         Message *
                       </label>
                       <Textarea
@@ -166,8 +168,9 @@ export default function ContactPage() {
                         value={formData.message}
                         onChange={handleInputChange}
                         disabled={isSubmitting}
-                        className="w-full px-4 py-3 border border-alira-primary/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors resize-none disabled:opacity-50"
+                        className="w-full px-4 py-3 border border-alira-primary/20 rounded-lg focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-colors resize-none disabled:opacity-50 text-base"
                         placeholder="Tell us about your project, idea, or what you'd like to achieve..."
+                        aria-required="true"
                       />
                     </div>
                     
@@ -277,7 +280,7 @@ export default function ContactPage() {
                 Don't wait for the perfect moment. The best time to start is now.
               </p>
               <CTAButton 
-                href="#start-form" 
+                href="/#start-chat" 
                 variant="alira"
                 className="px-8 py-4 text-lg font-sans font-light"
               >

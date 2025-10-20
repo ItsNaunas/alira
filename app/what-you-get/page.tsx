@@ -236,7 +236,7 @@ export default function WhatYouGetPage() {
                 
                 <div className="space-y-4">
                   <CTAButton 
-                    href="/#form-section" 
+                    href="/#start-chat" 
                     variant="aliraOutline"
                     className="px-12 py-6 text-xl font-sans font-light"
                     location="what-you-get-cta"

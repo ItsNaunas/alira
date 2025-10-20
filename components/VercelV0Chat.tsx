@@ -179,16 +179,35 @@ export function VercelV0Chat() {
     <>
       {/* Email Gating Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="auth-modal-title"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowModal(false);
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setShowModal(false);
+            }
+          }}
+        >
           <div className="bg-white dark:bg-alira-primary rounded-xl sm:rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 text-alira-primary/50 dark:text-alira-white/50 hover:text-alira-primary dark:hover:text-alira-white transition-colors"
+              aria-label="Close dialog"
             >
               <X className="w-5 h-5" />
             </button>
             
-            <h2 className="text-xl sm:text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-2">
+            <h2 
+              id="auth-modal-title"
+              className="text-xl sm:text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-2"
+            >
               {isSignUp ? 'Create your account' : 'Welcome back'}
             </h2>
             <p className="text-xs sm:text-sm text-alira-primary/70 dark:text-alira-white/70 mb-4 sm:mb-6">
@@ -206,49 +225,56 @@ export function VercelV0Chat() {
             <form onSubmit={handleModalSubmit} className="space-y-3 sm:space-y-4">
               {isSignUp && (
                 <div>
-                  <label className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+                  <label htmlFor="auth-name" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
                     Your Name
                   </label>
                   <Input
+                    id="auth-name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g., John Smith"
                     required
-                    className="w-full"
+                    className="w-full text-base"
+                    aria-required="true"
                   />
                 </div>
               )}
               
               <div>
-                <label className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+                <label htmlFor="auth-email" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
                   Email Address
                 </label>
                 <Input
+                  id="auth-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g., john@example.com"
                   required
-                  className="w-full"
+                  className="w-full text-base"
+                  aria-required="true"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+                <label htmlFor="auth-password" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
                   Password
                 </label>
                 <Input
+                  id="auth-password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Create a secure password"
                   required
                   minLength={6}
-                  className="w-full"
+                  className="w-full text-base"
+                  aria-required="true"
+                  aria-describedby={isSignUp ? "password-hint" : undefined}
                 />
                 {isSignUp && (
-                  <p className="text-xs text-alira-primary/50 dark:text-alira-white/50 mt-1">
+                  <p id="password-hint" className="text-xs sm:text-sm text-alira-primary/50 dark:text-alira-white/50 mt-1">
                     Minimum 6 characters
                   </p>
                 )}

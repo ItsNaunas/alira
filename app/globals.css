@@ -402,6 +402,59 @@ html {
   }
 }
 
+/* ========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ======================================== */
+
+/* Enhanced focus indicators for WCAG compliance */
+*:focus-visible {
+  outline: 2px solid #A06B00;
+  outline-offset: 2px;
+}
+
+/* Focus rings for interactive elements */
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #A06B00;
+  outline-offset: 2px;
+}
+
+/* Input focus states with gold ring */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #A06B00;
+  outline-offset: 0;
+  border-color: #A06B00;
+}
+
+/* Contrast-safe text utilities for WCAG AA compliance */
+.text-safe-muted {
+  color: rgba(255, 255, 255, 0.80); /* Minimum for body text - 4.5:1 */
+}
+
+.text-safe-subtle {
+  color: rgba(255, 255, 255, 0.65); /* For captions only - 3:1 for large text */
+}
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #A06B00;
+  color: #000000;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 /* Premium underline animation */
 .underline-grow {
   position: relative;

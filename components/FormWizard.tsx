@@ -12,6 +12,7 @@ import { Checkbox } from './ui/checkbox'
 import { ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react'
 import { conversionEvents } from '@/lib/analytics'
 import { wizardFormSchema, type WizardFormData, serviceInterestOptions, currentToolsOptions } from '@/lib/schema'
+import { cn } from '@/lib/utils'
 
 interface FormWizardProps {
   resumeToken?: string
@@ -359,10 +360,17 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 {...register('business_idea')}
                 placeholder="e.g., a marketing agency that helps creators launch offers"
                 rows={4}
-                className="w-full rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none"
+                className={cn(
+                  "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
+                  errors.business_idea 
+                    ? "border-red-500 dark:border-red-400 ring-2 ring-red-500/20" 
+                    : "border-alira-primary/20 dark:border-alira-white/20"
+                )}
+                aria-invalid={errors.business_idea ? "true" : "false"}
+                aria-describedby={errors.business_idea ? "business_idea-error" : "business_idea-hint"}
               />
               
-              <div className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
+              <div id="business_idea-hint" className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
                 <p className="text-xs md:text-sm text-alira-primary/75 dark:text-alira-white/75">
                   <span className="mr-2">💡</span>
                   Example: "A SaaS for freelancers to manage projects" or "A service helping restaurants set up online ordering"
@@ -370,7 +378,14 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               </div>
               
               {errors.business_idea && (
-                <p className="mt-2 text-xs text-red-400">
+                <p 
+                  id="business_idea-error"
+                  className="mt-2 text-sm font-medium text-red-500 dark:text-red-400 flex items-center gap-1.5"
+                  role="alert"
+                >
+                  <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
                   {errors.business_idea.message}
                 </p>
               )}
@@ -390,16 +405,30 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 {...register('current_challenges')}
                 placeholder="What's slowing you down or preventing growth?"
                 rows={4}
-                className="w-full rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none"
+                className={cn(
+                  "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
+                  errors.current_challenges 
+                    ? "border-red-500 dark:border-red-400 ring-2 ring-red-500/20" 
+                    : "border-alira-primary/20 dark:border-alira-white/20"
+                )}
+                aria-invalid={errors.current_challenges ? "true" : "false"}
+                aria-describedby={errors.current_challenges ? "current_challenges-error" : "current_challenges-hint"}
               />
-              <div className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
+              <div id="current_challenges-hint" className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
                 <p className="text-xs md:text-sm text-alira-primary/75 dark:text-alira-white/75">
                   <span className="mr-2">⚠️</span>
                   Common challenges: Unclear messaging, scattered customer data, manual processes, poor website conversion, or lack of automation
                 </p>
               </div>
               {errors.current_challenges && (
-                <p className="mt-2 text-xs text-red-400">
+                <p 
+                  id="current_challenges-error"
+                  className="mt-2 text-sm font-medium text-red-500 dark:text-red-400 flex items-center gap-1.5"
+                  role="alert"
+                >
+                  <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
                   {errors.current_challenges.message}
                 </p>
               )}
@@ -419,16 +448,30 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 {...register('immediate_goals')}
                 placeholder="What specific outcomes do you want to see?"
                 rows={4}
-                className="w-full rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none"
+                className={cn(
+                  "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
+                  errors.immediate_goals 
+                    ? "border-red-500 dark:border-red-400 ring-2 ring-red-500/20" 
+                    : "border-alira-primary/20 dark:border-alira-white/20"
+                )}
+                aria-invalid={errors.immediate_goals ? "true" : "false"}
+                aria-describedby={errors.immediate_goals ? "immediate_goals-error" : "immediate_goals-hint"}
               />
-              <div className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
+              <div id="immediate_goals-hint" className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
                 <p className="text-xs md:text-sm text-alira-primary/75 dark:text-alira-white/75">
                   <span className="mr-2">🎯</span>
                   Example goals: Increase conversion rates by 25%, automate lead follow-up, clarify brand positioning, or streamline customer onboarding
                 </p>
               </div>
               {errors.immediate_goals && (
-                <p className="mt-2 text-xs text-red-400">
+                <p 
+                  id="immediate_goals-error"
+                  className="mt-2 text-sm font-medium text-red-500 dark:text-red-400 flex items-center gap-1.5"
+                  role="alert"
+                >
+                  <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
                   {errors.immediate_goals.message}
                 </p>
               )}
@@ -460,7 +503,16 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 ))}
               </div>
               {errors.service_interest && (
-                <p className="text-red-500 text-sm mt-1">{errors.service_interest.message}</p>
+                <p 
+                  id="service_interest-error"
+                  className="mt-2 text-sm font-medium text-red-500 dark:text-red-400 flex items-center gap-1.5"
+                  role="alert"
+                >
+                  <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  {errors.service_interest.message}
+                </p>
               )}
             </div>
 
@@ -534,7 +586,16 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               </div>
             </div>
             {errors.consent && (
-              <p className="text-red-400 dark:text-red-400 text-sm">{errors.consent.message}</p>
+              <p 
+                id="consent-error"
+                className="mt-2 text-sm font-medium text-red-500 dark:text-red-400 flex items-center gap-1.5"
+                role="alert"
+              >
+                <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+                {errors.consent.message}
+              </p>
             )}
           </div>
         )

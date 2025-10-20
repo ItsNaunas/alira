@@ -44,6 +44,9 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className="scroll-smooth dark">
       <body className="antialiased">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <ErrorBoundary>
           <ConditionalLayout>
             {children}

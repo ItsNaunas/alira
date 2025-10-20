@@ -45,7 +45,7 @@ export default function Services() {
             <Reveal delay={300}>
               <div className="space-y-4">
                 <CTAButton 
-                  href="#start-form" 
+                  href="/#start-chat" 
                   variant="alira"
                   className="px-8 py-4 text-lg font-sans font-light"
                   location="services-hero"

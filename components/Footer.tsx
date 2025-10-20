@@ -42,7 +42,7 @@ export default function Footer() {
           {/* Right: CTA */}
           <div className="text-center lg:text-right">
             <CTAButton 
-              href="#start-form" 
+              href="/#start-chat" 
               variant="aliraOutline"
               className="px-6 py-3"
               location="footer"

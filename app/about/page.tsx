@@ -177,15 +177,15 @@ export default function AboutPage() {
                 <div className="space-y-8">
                                             {/* Founder photo with elegant styling */}
                           <div className="relative">
-                            <div className="w-full h-80 rounded-2xl overflow-hidden border border-alira-primary/10 dark:border-alira-white/10 shadow-lg">
-                              <Image 
-                                src="/images/assets/founder.jpg" 
-                                alt="ALIRA Founder - Professional headshot"
-                                width={400}
-                                height={320}
-                                className="w-full h-full object-cover object-top"
-                              />
-                            </div>
+                          <div className="w-full h-80 rounded-2xl overflow-hidden border border-alira-primary/10 dark:border-alira-white/10 shadow-lg">
+                            <Image 
+                              src="/images/assets/founder.jpg" 
+                              alt="Portrait of ALIRA founder with over 10 years of project management experience, specializing in business strategy and operational excellence"
+                              width={400}
+                              height={320}
+                              className="w-full h-full object-cover object-top"
+                            />
+                          </div>
                             {/* Decorative elements */}
                             <div className="absolute -top-4 -right-4 w-8 h-8 bg-alira-gold/20 rounded-full"></div>
                             <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-alira-gold/30 rounded-full"></div>
@@ -636,7 +636,7 @@ export default function AboutPage() {
                 Let's turn your ambition into clear action. Start with a simple plan and build from there.
               </p>
               <CTAButton 
-                href="#start-form" 
+                href="/#start-chat" 
                 variant="alira"
                 className="px-8 py-4 text-lg font-sans font-light"
               >

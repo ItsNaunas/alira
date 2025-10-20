@@ -10,6 +10,7 @@ import DashboardLayout from '@/components/DashboardLayout'
 import { Card, CardContent } from '@/components/ui/card'
 import { RefreshCw, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Breadcrumbs } from '@/components/Breadcrumbs'
 
 export default function PlanDetailPage() {
   const router = useRouter()
@@ -155,6 +156,18 @@ export default function PlanDetailPage() {
   return (
     <DashboardLayout>
       <div className="min-h-screen">
+        {/* Breadcrumbs */}
+        <div className="px-4 md:px-6 pt-4 pb-2 border-b border-white/5">
+          <div className="max-w-5xl mx-auto">
+            <Breadcrumbs
+              items={[
+                { label: 'Dashboard', href: '/dashboard' },
+                { label: plan.business_name || 'Plan' },
+              ]}
+            />
+          </div>
+        </div>
+
         {/* Header */}
         <PlanHeader 
           plan={plan}

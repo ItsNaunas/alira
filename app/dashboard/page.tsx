@@ -14,7 +14,8 @@ import {
   AlertCircle,
   Eye,
   ChevronDown,
-  Trash2
+  Trash2,
+  CheckCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -171,6 +172,7 @@ export default function DashboardPage() {
                 variant="ghost"
                 size="icon"
                 className="text-alira-white/60 hover:text-alira-white hover:bg-white/5"
+                aria-label="More options for dashboard"
               >
                 <MoreVertical className="w-5 h-5" />
               </Button>
@@ -206,6 +208,7 @@ export default function DashboardPage() {
                 size="icon"
                 className="text-alira-white/40 hover:text-alira-white hover:bg-white/5 flex-shrink-0"
                 disabled={isLoadingPlans}
+                aria-label={isLoadingPlans ? "Refreshing plans..." : "Refresh plans"}
               >
                 <RefreshCw className={`w-4 h-4 ${isLoadingPlans ? 'animate-spin' : ''}`} />
               </Button>
@@ -276,11 +279,16 @@ export default function DashboardPage() {
                     <div className="flex items-start justify-between mb-4">
                       <h3 className="text-lg font-serif text-alira-white">AI Summary</h3>
                       {currentPlan?.generations && currentPlan.generations.length > 0 ? (
-                        <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs">
+                        <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs inline-flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3" aria-hidden="true" />
                           Ready
                         </span>
                       ) : (
-                        <span className="px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs">
+                        <span className="px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs inline-flex items-center gap-1">
+                          <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
                           In Progress
                         </span>
                       )}
@@ -317,7 +325,19 @@ export default function DashboardPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
                 {/* Generated Plan Preview */}
-                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all cursor-pointer" onClick={() => currentPlan?.generations && currentPlan.generations.length > 0 && router.push(`/dashboard/${currentPlan.id}`)}>
+                <Card 
+                  className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all cursor-pointer focus-within:ring-2 focus-within:ring-alira-gold focus-within:ring-offset-2 focus-within:ring-offset-black" 
+                  onClick={() => currentPlan?.generations && currentPlan.generations.length > 0 && router.push(`/dashboard/${currentPlan.id}`)}
+                  onKeyDown={(e) => {
+                    if ((e.key === 'Enter' || e.key === ' ') && currentPlan?.generations && currentPlan.generations.length > 0) {
+                      e.preventDefault();
+                      router.push(`/dashboard/${currentPlan.id}`);
+                    }
+                  }}
+                  tabIndex={currentPlan?.generations && currentPlan.generations.length > 0 ? 0 : -1}
+                  role="button"
+                  aria-label={currentPlan?.generations && currentPlan.generations.length > 0 ? `View strategic plan for ${currentPlan.business_name || 'your business'}` : 'Plan not yet available'}
+                >
                   <CardContent className="p-6">
                     <h3 className="text-lg font-serif text-alira-white mb-4">Your Strategic Plan</h3>
                     <div className="space-y-4">
@@ -445,8 +465,17 @@ export default function DashboardPage() {
                   {plans.map((plan) => (
                     <Card 
                       key={plan.id} 
-                      className="bg-white/[0.02] border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-black/20 transition-all cursor-pointer group hover:-translate-y-0.5"
+                      className="bg-white/[0.02] border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-black/20 transition-all cursor-pointer group hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-alira-gold focus-within:ring-offset-2 focus-within:ring-offset-black"
                       onClick={() => router.push(`/dashboard/${plan.id}`)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          router.push(`/dashboard/${plan.id}`);
+                        }
+                      }}
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`View plan: ${plan.business_name || 'Business Plan'}, created ${new Date(plan.created_at).toLocaleDateString()}`}
                     >
                       <CardContent className="p-5">
                         <div className="flex items-center justify-between gap-4">
