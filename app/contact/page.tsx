@@ -10,6 +10,7 @@ import { getUserFriendlyError, errorMessages } from '@/lib/error-messages'
 import { FormField } from '@/components/ui/form-field'
 import { FormSuccess } from '@/components/ui/form-success'
 import { InlineError } from '@/components/ui/error-state'
+import GradientBars from '@/components/ui/gradient-bars'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -62,20 +63,21 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black">
       {/* Hero Section */}
-      <section className="py-24 md:py-32 bg-gradient-to-br from-alira-white/30 via-white to-alira-white/20 dark:from-alira-primary/30 dark:via-alira-primary dark:to-alira-primary/20 relative overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-8">
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+        <GradientBars />
+        <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <Reveal>
             <div className="max-w-4xl mx-auto text-center">
               <div className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-light">
                 Get in Touch
               </div>
-              <h1 className="text-4xl md:text-6xl font-serif font-normal text-alira-primary dark:text-alira-white mb-8">
+              <h1 className="text-4xl md:text-6xl font-serif font-normal text-alira-white mb-8">
                 Contact Us
               </h1>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
-              <p className="text-xl text-alira-primary/80 dark:text-alira-white/80 leading-relaxed max-w-2xl mx-auto">
+              <p className="text-xl text-alira-white/80 leading-relaxed max-w-2xl mx-auto">
                 Every enquiry is private and secure. We'll get back to you within 24 hours.
               </p>
             </div>
@@ -84,16 +86,16 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form & Details Section */}
-      <section className="py-24 bg-white dark:bg-alira-primary/20">
+      <section className="py-24 bg-black">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               
               {/* Contact Form */}
               <Reveal delay={200}>
-                <div className="bg-alira-white/30 dark:bg-alira-primary/20 p-8 rounded-2xl border border-alira-primary/10 dark:border-alira-white/10">
-                  <h2 className="text-3xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6">Send us a message</h2>
-                  <p className="text-alira-primary/70 dark:text-alira-white/70 mb-8">
+                <div className="bg-white/[0.02] p-8 rounded-2xl border border-white/10">
+                  <h2 className="text-3xl font-serif font-normal text-alira-white mb-6">Send us a message</h2>
+                  <p className="text-alira-white/70 mb-8">
                     Tell us about your project, idea, or challenge. We're here to help you move forward.
                   </p>
                   
@@ -176,7 +178,7 @@ export default function ContactPage() {
                     <Button
                       type="submit"
                       loading={isSubmitting}
-                      className="w-full bg-alira-primary dark:bg-alira-white hover:bg-alira-primary/90 dark:hover:bg-alira-white/90 text-white dark:text-alira-black py-3 px-6 rounded-lg font-sans font-light transition-colors disabled:opacity-50"
+                      className="w-full bg-alira-gold hover:bg-alira-gold/90 text-alira-black py-3 px-6 rounded-lg font-sans font-medium transition-colors disabled:opacity-50"
                     >
                       {isSubmitting ? 'Sending...' : 'Send Message'}
                     </Button>
@@ -188,14 +190,14 @@ export default function ContactPage() {
               <Reveal delay={400}>
                 <div className="space-y-8">
                   <div>
-                    <h2 className="text-3xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6">Direct Contact</h2>
-                    <p className="text-alira-primary/70 dark:text-alira-white/70 mb-8">
+                    <h2 className="text-3xl font-serif font-normal text-alira-white mb-6">Direct Contact</h2>
+                    <p className="text-alira-white/70 mb-8">
                       Prefer to reach out directly? Here's how you can get in touch with us.
                     </p>
                   </div>
 
                   {/* Email */}
-                  <div className="bg-white dark:bg-alira-primary/20 p-6 rounded-xl border border-alira-primary/10 dark:border-alira-white/10 hover:border-alira-gold/20 transition-colors">
+                  <div className="bg-white/[0.02] p-6 rounded-xl border border-white/10 hover:border-alira-gold/30 transition-colors">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-alira-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,14 +205,14 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-lg font-serif font-normal text-alira-primary dark:text-alira-white mb-2">Email</h3>
+                        <h3 className="text-lg font-serif font-normal text-alira-white mb-2">Email</h3>
                         <a 
                           href="mailto:Enquiries@aliracapital.co.uk" 
-                          className="text-alira-gold hover:text-alira-gold/80 dark:hover:text-alira-gold transition-colors font-sans font-light"
+                          className="text-alira-gold hover:text-alira-gold/80 transition-colors font-sans font-light"
                         >
                           Enquiries@aliracapital.co.uk
                         </a>
-                        <p className="text-alira-primary/70 dark:text-alira-white/70 text-sm mt-1">
+                        <p className="text-alira-white/70 text-sm mt-1">
                           We typically respond within 24 hours
                         </p>
                       </div>
@@ -218,7 +220,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* Company Information */}
-                  <div className="bg-white dark:bg-alira-primary/20 p-6 rounded-xl border border-alira-primary/10 dark:border-alira-white/10">
+                  <div className="bg-white/[0.02] p-6 rounded-xl border border-white/10">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-alira-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -226,8 +228,8 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-lg font-serif font-normal text-alira-primary dark:text-alira-white mb-2">Company Details</h3>
-                        <div className="text-alira-primary/80 dark:text-alira-white/80 space-y-1 font-sans">
+                        <h3 className="text-lg font-serif font-normal text-alira-white mb-2">Company Details</h3>
+                        <div className="text-alira-white/80 space-y-1 font-sans">
                           <p><strong>ALIRA Capital Ventures Ltd</strong></p>
                           <p>Registered in England & Wales</p>
                           <p>Company No: 16419663</p>
@@ -237,7 +239,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* Response Time */}
-                  <div className="bg-gradient-to-r from-alira-gold/10 to-alira-white/20 dark:from-alira-gold/20 dark:to-alira-primary/30 p-6 rounded-xl border border-alira-gold/20">
+                  <div className="bg-white/[0.02] p-6 rounded-xl border border-alira-gold/30">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-alira-gold/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -245,8 +247,8 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-lg font-serif font-normal text-alira-primary dark:text-alira-white mb-2">Quick Response</h3>
-                        <p className="text-alira-primary/80 dark:text-alira-white/80 font-sans">
+                        <h3 className="text-lg font-serif font-normal text-alira-white mb-2">Quick Response</h3>
+                        <p className="text-alira-white/80 font-sans">
                           We understand that time matters. Most enquiries receive a response within 24 hours, 
                           and urgent matters are prioritized.
                         </p>
@@ -265,16 +267,17 @@ export default function ContactPage() {
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-serif font-normal text-white dark:text-alira-black mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif font-normal text-white mb-6">
                 Ready to get started?
               </h2>
-              <p className="text-xl text-white/80 dark:text-alira-black/80 dark:text-alira-white/80 mb-8 leading-relaxed">
+              <p className="text-xl text-white/80 mb-8 leading-relaxed">
                 Don't wait for the perfect moment. The best time to start is now.
               </p>
               <CTAButton 
                 href="/#start-chat" 
                 variant="alira"
                 className="px-8 py-4 text-lg font-sans font-light"
+                location="contact-cta"
               >
                 Start My Plan
               </CTAButton>

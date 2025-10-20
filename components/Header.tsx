@@ -12,7 +12,7 @@ import { X, Menu } from 'lucide-react'
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: '/', label: 'Home' },
-  { href: '/how-it-works', label: 'What You Get' },
+  { href: '/what-you-get', label: 'What You Get' },
   { href: '/services', label: 'Services' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
