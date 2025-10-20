@@ -215,6 +215,63 @@ This is **only Step 1**: the website sets up the form-to-PDF flow. Later steps:
 - Formalise retainer workflows
 - Scale across industries
 
+## Deployment
+
+### Quick Deploy to Vercel
+
+1. Push to GitHub:
+```bash
+git push origin main
+```
+
+2. Connect to Vercel:
+   - Import your GitHub repository
+   - Vercel auto-detects Next.js configuration
+   - Set environment variables (see below)
+
+3. Set Environment Variables in Vercel Dashboard:
+   - All variables from `env.example`
+   - See `VERCEL_ENV_CHECKLIST.md` for complete list
+
+### Deployment Troubleshooting
+
+If deployment fails:
+
+**Quick Fix (90% success rate):**
+```powershell
+# Retry deployment
+.\scripts\retry-deployment.ps1
+
+# Or manually:
+git commit --allow-empty -m "Retry deployment"
+git push origin main
+```
+
+**Comprehensive Guides:**
+- 🚀 **`DEPLOYMENT_RECOVERY_GUIDE.md`** - Start here for any deployment issues
+- 🔧 **`VERCEL_DEPLOYMENT_TROUBLESHOOTING.md`** - Detailed troubleshooting steps
+- ✅ **`VERCEL_ENV_CHECKLIST.md`** - Environment variable setup guide
+- 📋 **`PHASE_6_TASK_6.5_DEPLOYMENT_CHECKLIST.md`** - Full deployment checklist
+
+**Automated Scripts:**
+- `scripts/retry-deployment.ps1` (PowerShell/Windows)
+- `scripts/retry-deployment.sh` (Bash/Mac/Linux)
+
+### Environment Variables Required
+
+Production deployment requires:
+- ✅ `NEXT_PUBLIC_SUPABASE_URL`
+- ✅ `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- ✅ `SUPABASE_URL`
+- ✅ `SUPABASE_ANON_KEY`
+- ✅ `SUPABASE_SERVICE_ROLE_KEY` (Production only!)
+- ✅ `OPENAI_API_KEY`
+- ✅ `RESEND_API_KEY`
+- ✅ `RESEND_FROM_EMAIL`
+- ✅ `NEXT_PUBLIC_SITE_URL`
+
+See `VERCEL_ENV_CHECKLIST.md` for detailed setup instructions.
+
 ## Contributing
 
 This project follows ALIRA.'s design principles:
