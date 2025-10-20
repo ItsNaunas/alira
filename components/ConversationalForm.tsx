@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ArrowUpIcon, Sparkles, CheckCircle } from 'lucide-react';
 import { serviceInterestOptions } from '@/lib/schema';
@@ -305,9 +306,10 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
               ))}
             </div>
             
-            <button
+            <Button
               onClick={handleSend}
-              disabled={selectedServices.length === 0 || isSubmitting}
+              disabled={selectedServices.length === 0}
+              loading={isSubmitting}
               className={cn(
                 'w-full flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-all duration-200',
                 'bg-gradient-to-r from-alira-gold to-[#8B5A00] text-black',
@@ -317,17 +319,14 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
               )}
             >
               {isSubmitting ? (
-                <>
-                  <div className="animate-spin rounded-full h-3.5 w-3.5 sm:h-4 sm:w-4 border-b-2 border-black"></div>
-                  <span>Processing...</span>
-                </>
+                <span>Processing...</span>
               ) : (
                 <>
                   <span>Continue</span>
                   <ArrowUpIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </>
               )}
-            </button>
+            </Button>
           </div>
         ) : (
           // Text Input UI

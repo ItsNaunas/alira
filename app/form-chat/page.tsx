@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { auth, createClient } from '@/lib/supabase-client';
+import { Spinner } from '@/components/ui/spinner';
 import ConversationalForm from '@/components/ConversationalForm';
 import AdaptiveQuestioning from '@/components/AdaptiveQuestioning';
 
@@ -124,7 +125,7 @@ function FormChatContent() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-alira-gold"></div>
+        <Spinner size="lg" color="gold" />
       </div>
     );
   }
@@ -167,7 +168,7 @@ export default function FormChatPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-black">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-alira-gold"></div>
+        <Spinner size="lg" color="gold" />
       </div>
     }>
       <FormChatContent />

@@ -6,6 +6,7 @@ import CTAButton from '@/components/CTAButton'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { getUserFriendlyError, errorMessages } from '@/lib/error-messages'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -47,11 +48,11 @@ export default function ContactPage() {
         setFormData({ name: '', email: '', message: '' })
       } else {
         setSubmitStatus('error')
-        setErrorMessage(result.error || 'Failed to send message')
+        setErrorMessage(result.error || errorMessages.contactSubmitFailed)
       }
     } catch (error) {
       setSubmitStatus('error')
-      setErrorMessage('Network error. Please try again.')
+      setErrorMessage(getUserFriendlyError(error))
     } finally {
       setIsSubmitting(false)
     }
@@ -176,17 +177,10 @@ export default function ContactPage() {
                     
                     <Button
                       type="submit"
-                      disabled={isSubmitting}
+                      loading={isSubmitting}
                       className="w-full bg-alira-primary dark:bg-alira-white hover:bg-alira-primary/90 dark:hover:bg-alira-white/90 text-white dark:text-alira-black py-3 px-6 rounded-lg font-sans font-light transition-colors disabled:opacity-50"
                     >
-                      {isSubmitting ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white dark:border-alira-primary mr-2"></div>
-                          Sending...
-                        </>
-                      ) : (
-                        'Send Message'
-                      )}
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
                     </Button>
                   </form>
                 </div>

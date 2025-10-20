@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useAutoResizeTextarea } from '@/hooks/use-auto-resize-textarea';
 import { ArrowUpIcon, X } from 'lucide-react';
@@ -280,9 +281,9 @@ export function VercelV0Chat() {
                 )}
               </div>
               
-              <button
+              <Button
                 type="submit"
-                disabled={isSubmitting}
+                loading={isSubmitting}
                 className={cn(
                   'w-full flex items-center justify-center gap-1.5 sm:gap-2 rounded-lg px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-all duration-200',
                   'bg-gradient-to-r from-alira-gold to-[#8B5A00] text-alira-black',
@@ -292,17 +293,14 @@ export function VercelV0Chat() {
                 )}
               >
                 {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-3.5 w-3.5 sm:h-4 sm:w-4 border-b-2 border-black"></div>
-                    <span className="text-xs sm:text-sm">{isSignUp ? 'Creating Account...' : 'Signing In...'}</span>
-                  </>
+                  <span className="text-xs sm:text-sm">{isSignUp ? 'Creating Account...' : 'Signing In...'}</span>
                 ) : (
                   <>
                     <span className="text-xs sm:text-sm">{isSignUp ? 'Create Account & Continue' : 'Sign In & Continue'}</span>
                     <ArrowUpIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </>
                 )}
-              </button>
+              </Button>
               
               <div className="text-center">
                 <button

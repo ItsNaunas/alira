@@ -137,14 +137,11 @@ export default function MiniForm({ onSuccess }: MiniFormProps) {
           <Button
             type="submit"
             variant="alira"
-            disabled={isSubmitting}
+            loading={isSubmitting}
             className="w-full"
           >
             {isSubmitting ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Creating Draft...
-              </>
+              'Creating Draft...'
             ) : (
               <>
                 Start My Plan

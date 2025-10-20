@@ -3,14 +3,11 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
 import { useState, useEffect } from 'react'
 import { auth, createClient } from '@/lib/supabase-client'
 import { User } from '@supabase/supabase-js'
+import { motion, AnimatePresence } from 'framer-motion'
+import { X, Menu } from 'lucide-react'
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -29,6 +26,7 @@ export default function Header() {
   const [user, setUser] = useState<User | null>(null)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [isSignUp, setIsSignUp] = useState(true)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,6 +60,23 @@ export default function Header() {
     router.push('/')
   }
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [pathname])
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
       isScrolled 
@@ -76,19 +91,23 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Center - Navigation Links (Desktop only, hidden on tablet and mobile) */}
-        <nav className="hidden xl:flex items-center gap-6 2xl:gap-8">
+        {/* Center - Navigation Links (Desktop - show at lg breakpoint 1024px) */}
+        <nav className="hidden lg:flex items-center gap-6 2xl:gap-8">
           {navigationLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`font-serif text-sm 2xl:text-base font-normal transition-colors duration-200 whitespace-nowrap ${
+              className={`font-serif text-sm 2xl:text-base font-normal transition-colors duration-200 whitespace-nowrap relative group ${
                 pathname === link.href
                   ? 'text-white'
-                  : 'text-white/80 hover:text-white'
+                  : 'text-white/60 hover:text-white'
               }`}
             >
               {link.label}
+              {/* Active indicator - gold underline */}
+              {pathname === link.href && (
+                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-alira-gold" />
+              )}
             </Link>
           ))}
         </nav>
@@ -137,107 +156,121 @@ export default function Header() {
           )}
         </div>
 
-        {/* Tablet/Mobile Menu (shown on xl and below) */}
-        <div className="xl:hidden flex items-center gap-2">
-          {/* Show CTA on mobile inside menu trigger */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button 
-                className="group h-9 w-9 sm:h-10 sm:w-10 p-0 text-white hover:bg-white/10" 
-                variant="ghost" 
-                size="icon"
-                aria-label="Open menu"
-              >
-                <svg
-                  className="pointer-events-none text-white"
-                  width={20}
-                  height={20}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4 12L20 12"
-                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
-                  />
-                  <path
-                    d="M4 12H20"
-                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
-                  />
-                  <path
-                    d="M4 12H20"
-                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
-                  />
-                </svg>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent 
-              align="end" 
-              className="w-56 sm:w-64 p-3 bg-[#0A0E18]/95 backdrop-blur-xl border-white/10"
+        {/* Mobile Menu Button (shown below lg breakpoint) */}
+        <div className="lg:hidden">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+            className="text-white hover:bg-white/10"
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </Button>
+        </div>
+      </div>
+
+      {/* Full-Screen Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 lg:hidden"
+          >
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/95 backdrop-blur-xl"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            
+            {/* Menu Content */}
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative h-full flex flex-col items-center justify-center p-8"
             >
-              <nav className="flex flex-col gap-1">
+              {/* Navigation Links */}
+              <nav className="flex flex-col items-center gap-8 mb-12">
                 {navigationLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-4 py-3 text-sm sm:text-base font-serif font-normal rounded-md transition-colors ${
+                    className={`font-serif text-2xl font-normal transition-colors duration-200 ${
                       pathname === link.href
-                        ? 'text-alira-gold bg-alira-gold/10'
-                        : 'text-white/80 hover:text-white hover:bg-white/5'
+                        ? 'text-alira-gold'
+                        : 'text-white hover:text-alira-gold'
                     }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.label}
                   </Link>
                 ))}
-                {/* Auth buttons in mobile menu */}
-                <div className="mt-2 pt-2 border-t border-white/10 space-y-2">
-                  {user ? (
-                    <>
-                      <Link
-                        href="/dashboard"
-                        className="block w-full px-4 py-3 text-center bg-white/5 text-white hover:bg-white/10 font-sans font-light rounded-lg transition-all duration-200 text-sm sm:text-base"
-                      >
-                        Dashboard
-                      </Link>
-                      <button
-                        onClick={handleSignOut}
-                        className="block w-full px-4 py-3 text-center border border-white/20 text-white hover:bg-white/10 font-sans font-light rounded-lg transition-all duration-200 text-sm sm:text-base"
-                      >
-                        Sign Out
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        onClick={() => {
-                          setIsSignUp(false)
-                          setShowAuthModal(true)
-                        }}
-                        className="block w-full px-4 py-3 text-center bg-white/5 text-white hover:bg-white/10 font-sans font-light rounded-lg transition-all duration-200 text-sm sm:text-base"
-                      >
-                        Log In
-                      </button>
-                      <button
-                        onClick={() => {
-                          setIsSignUp(true)
-                          setShowAuthModal(true)
-                        }}
-                        className="block w-full px-4 py-3 text-center bg-alira-gold text-alira-black hover:bg-alira-gold/90 font-sans font-medium rounded-lg transition-all duration-200 text-sm sm:text-base"
-                      >
-                        Sign Up
-                      </button>
-                    </>
-                  )}
-                </div>
               </nav>
-            </PopoverContent>
-          </Popover>
-        </div>
-      </div>
+
+              {/* Auth Buttons */}
+              <div className="flex flex-col items-center gap-4 w-full max-w-xs">
+                {user ? (
+                  <>
+                    <Button
+                      asChild
+                      className="w-full bg-alira-gold text-alira-black hover:bg-alira-gold/90 font-sans font-medium py-6 text-lg"
+                    >
+                      <Link href="/dashboard">Go to Dashboard</Link>
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleSignOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      variant="outline"
+                      className="w-full border-white/20 text-white hover:bg-white/10 font-sans font-light py-6 text-lg"
+                    >
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      onClick={() => {
+                        setIsSignUp(true)
+                        setShowAuthModal(true)
+                        setIsMobileMenuOpen(false)
+                      }}
+                      className="w-full bg-alira-gold text-alira-black hover:bg-alira-gold/90 font-sans font-medium py-6 text-lg"
+                    >
+                      Sign Up
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setIsSignUp(false)
+                        setShowAuthModal(true)
+                        setIsMobileMenuOpen(false)
+                      }}
+                      variant="outline"
+                      className="w-full border-white/20 text-white hover:bg-white/10 font-sans font-light py-6 text-lg"
+                    >
+                      Log In
+                    </Button>
+                  </>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }

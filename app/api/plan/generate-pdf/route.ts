@@ -78,6 +78,12 @@ export async function POST(request: NextRequest) {
     let publicUrl: string | null = null
     
     try {
+      // Check if service role key is configured
+      if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        console.warn('⚠️  SUPABASE_SERVICE_ROLE_KEY not set - skipping storage upload')
+        throw new Error('Service role key not configured')
+      }
+
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('pdfs')
         .upload(fileName, pdfBuffer, {
@@ -88,6 +94,18 @@ export async function POST(request: NextRequest) {
 
       if (uploadError) {
         console.error('PDF upload error:', uploadError)
+        console.error('Error details:', {
+          statusCode: uploadError.statusCode,
+          message: uploadError.message,
+          error: uploadError.error
+        })
+        
+        // Provide helpful error messages
+        if (uploadError.statusCode === '404') {
+          console.error('❌ Storage bucket "pdfs" not found. Please create it in Supabase Dashboard.')
+          console.error('📝 Instructions: https://supabase.com/docs/guides/storage')
+        }
+        
         // Continue without storage - we'll return the PDF as base64
       } else {
         // Step 7: Get public URL

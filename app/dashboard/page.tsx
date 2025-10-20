@@ -20,6 +20,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { AlertDialog } from '@/components/ui/alert-dialog';
+import { Spinner } from '@/components/ui/spinner';
+import { getUserFriendlyError, errorMessages } from '@/lib/error-messages';
 import DashboardLayout from '@/components/DashboardLayout';
 
 interface BusinessPlan {
@@ -128,7 +130,7 @@ export default function DashboardPage() {
       setPlanToDelete(null);
     } catch (error) {
       console.error('Error deleting plan:', error);
-      alert('Failed to delete plan. Please try again.');
+      alert(getUserFriendlyError(error) || errorMessages.planDeleteFailed);
     } finally {
       setIsDeleting(false);
     }
@@ -138,7 +140,7 @@ export default function DashboardPage() {
     return (
       <DashboardLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-alira-gold"></div>
+          <Spinner size="lg" color="gold" />
         </div>
       </DashboardLayout>
     );

@@ -12,6 +12,7 @@ import { Checkbox } from './ui/checkbox'
 import { ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react'
 import { conversionEvents } from '@/lib/analytics'
 import { wizardFormSchema, type WizardFormData, serviceInterestOptions, currentToolsOptions } from '@/lib/schema'
+import { getUserFriendlyError, errorMessages } from '@/lib/error-messages'
 import { cn } from '@/lib/utils'
 
 interface FormWizardProps {
@@ -213,7 +214,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     // Check if we have required user data
     if (!draftData?.name || !draftData?.email) {
       console.log('❌ Missing user data, showing alert')
-      alert('Missing contact information. Please start from the homepage to provide your name and email.')
+      alert(errorMessages.required('contact information'))
       return
     }
     
@@ -281,8 +282,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       await generateAndSendPlan(currentDraftId!, draftData.email!)
     } catch (error) {
       console.error('Error submitting form:', error)
-      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
-      alert(`There was an error submitting your form: ${errorMessage}. Please try again.`)
+      alert(getUserFriendlyError(error))
     } finally {
       setIsSubmitting(false)
     }
@@ -327,8 +327,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       }, 5000)
     } catch (error) {
       console.error('Error generating plan:', error)
-      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
-      alert(`There was an error generating your plan: ${errorMessage}. Please try again.`)
+      alert(getUserFriendlyError(error))
     } finally {
       setIsGeneratingPlan(false)
     }
@@ -813,7 +812,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 >
                   <Button
                     type="button"
-                    disabled={isSubmitting || isGeneratingPlan}
+                    loading={isSubmitting || isGeneratingPlan}
                     onClick={async () => {
                       console.log('Button clicked, current step:', currentStep, 'isSubmitting:', isSubmitting, 'isGeneratingPlan:', isGeneratingPlan)
                       if (currentStep === 4) {
@@ -824,17 +823,14 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                           await onSubmit(formData)
                         } catch (error) {
                           console.error('Button click error:', error)
-                          alert(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`)
+                          alert(getUserFriendlyError(error))
                         }
                       }
                     }}
                     className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-alira-gold text-alira-primary px-5 font-light ring-2 ring-alira-gold/20 hover:bg-alira-gold/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200"
                   >
                   {isSubmitting || isGeneratingPlan ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-alira-primary mr-2"></div>
-                      {isSubmitting ? 'Analyzing Your Inputs...' : 'Generating Your Plan...'}
-                    </>
+                    isSubmitting ? 'Analyzing Your Inputs...' : 'Generating Your Plan...'
                   ) : (
                     <>
                       Generate My Plan
@@ -908,14 +904,12 @@ function EmailGateForm({ onSubmit, isGenerating, existingName, existingEmail }: 
       >
         <Button
           type="submit"
-          disabled={!isValid || isGenerating}
+          disabled={!isValid}
+          loading={isGenerating}
           className="w-full bg-gradient-to-r from-alira-gold to-alira-gold/90 hover:from-alira-gold/90 hover:to-alira-gold/80 text-alira-primary dark:text-alira-white px-8 py-4 text-lg font-serif font-normal shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
         {isGenerating ? (
-          <>
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-alira-primary mr-2"></div>
-            Generating Your Plan...
-          </>
+          'Generating Your Plan...'
         ) : (
           <>
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
