@@ -54,13 +54,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const links = [
     {
-      label: "Home",
-      href: "/",
-      icon: (
-        <IconHome className="h-5 w-5 shrink-0 text-alira-white/70" />
-      ),
-    },
-    {
       label: "Dashboard",
       href: "/dashboard",
       icon: (
@@ -72,13 +65,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       href: "/#start-chat",
       icon: (
         <IconPlus className="h-5 w-5 shrink-0 text-alira-white/70" />
-      ),
-    },
-    {
-      label: "Form",
-      href: "/form",
-      icon: (
-        <IconFileText className="h-5 w-5 shrink-0 text-alira-white/70" />
       ),
     },
   ];
@@ -100,7 +86,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               ))}
             </div>
           </div>
-          <div>
+          <div className="border-t border-white/10 pt-4">
+            {/* Back to Website Link */}
+            <a
+              href="/"
+              className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-white/5 transition-colors w-full mb-2"
+            >
+              <IconHome className="h-5 w-5 shrink-0 text-alira-white/70" />
+              <motion.span
+                animate={{
+                  display: open ? "inline-block" : "none",
+                  opacity: open ? 1 : 0,
+                }}
+                className="text-alira-white/80 text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-alira-white transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+              >
+                Back to Website
+              </motion.span>
+            </a>
+            
+            {/* Logout Button */}
             <button
               onClick={handleSignOut}
               className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-white/5 transition-colors w-full"
