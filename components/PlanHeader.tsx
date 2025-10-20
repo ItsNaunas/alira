@@ -74,11 +74,31 @@ export default function PlanHeader({
       }
 
       if (data.pdf_url) {
+        // PDF was uploaded to storage, open the URL
         window.open(data.pdf_url, '_blank')
         // Refresh the page to show the updated PDF URL
         window.location.reload()
+      } else if (data.pdf_base64) {
+        // PDF returned as base64, trigger download
+        const byteCharacters = atob(data.pdf_base64)
+        const byteNumbers = new Array(byteCharacters.length)
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i)
+        }
+        const byteArray = new Uint8Array(byteNumbers)
+        const blob = new Blob([byteArray], { type: 'application/pdf' })
+        
+        // Create download link
+        const url = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        link.download = `${plan.business_name || 'Business-Plan'}-${new Date().toISOString().split('T')[0]}.pdf`
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(url)
       } else {
-        throw new Error('No PDF URL returned')
+        throw new Error('No PDF data returned')
       }
     } catch (error: any) {
       console.error('Error generating PDF:', error)

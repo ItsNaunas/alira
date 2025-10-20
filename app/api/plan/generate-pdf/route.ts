@@ -73,47 +73,65 @@ export async function POST(request: NextRequest) {
     const { generatePersonalPlanPDF } = await import('@/lib/enhanced-pdf')
     const pdfBuffer = await generatePersonalPlanPDF(pdfData)
 
-    // Step 6: Upload PDF to Supabase Storage
+    // Step 6: Try to upload PDF to Supabase Storage
     const fileName = `plans/${planId}/plan-${Date.now()}.pdf`
+    let publicUrl: string | null = null
     
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('pdfs')
-      .upload(fileName, pdfBuffer, {
-        contentType: 'application/pdf',
-        cacheControl: '3600',
-        upsert: false
-      })
+    try {
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('pdfs')
+        .upload(fileName, pdfBuffer, {
+          contentType: 'application/pdf',
+          cacheControl: '3600',
+          upsert: false
+        })
 
-    if (uploadError) {
-      console.error('PDF upload error:', uploadError)
-      throw errors.internal('Failed to upload PDF')
+      if (uploadError) {
+        console.error('PDF upload error:', uploadError)
+        // Continue without storage - we'll return the PDF as base64
+      } else {
+        // Step 7: Get public URL
+        const { data: { publicUrl: url } } = supabase.storage
+          .from('pdfs')
+          .getPublicUrl(fileName)
+        
+        publicUrl = url
+
+        // Step 8: Update dashboard with PDF URL
+        const { error: updateError } = await supabase
+          .from('dashboards')
+          .update({
+            pdf_url: publicUrl,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', planId)
+
+        if (updateError) {
+          console.error('Failed to update dashboard with PDF URL:', updateError)
+          // Don't fail the request - PDF is generated
+        }
+      }
+    } catch (storageError) {
+      console.error('Storage operation failed:', storageError)
+      // Continue without storage - we'll return the PDF as base64
     }
 
-    // Step 7: Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('pdfs')
-      .getPublicUrl(fileName)
-
-    // Step 8: Update dashboard with PDF URL
-    const { error: updateError } = await supabase
-      .from('dashboards')
-      .update({
+    // Step 9: Return success with PDF URL or base64 data
+    if (publicUrl) {
+      return successResponse({
+        message: 'PDF generated successfully',
         pdf_url: publicUrl,
-        updated_at: new Date().toISOString()
+        planId
       })
-      .eq('id', planId)
-
-    if (updateError) {
-      console.error('Failed to update dashboard with PDF URL:', updateError)
-      // Don't fail the request - PDF is generated and accessible
+    } else {
+      // Return PDF as base64 for direct download
+      const base64Pdf = pdfBuffer.toString('base64')
+      return successResponse({
+        message: 'PDF generated successfully',
+        pdf_base64: base64Pdf,
+        planId
+      })
     }
-
-    // Step 9: Return success with PDF URL
-    return successResponse({
-      message: 'PDF generated successfully',
-      pdf_url: publicUrl,
-      planId
-    })
 
   } catch (error) {
     return handleApiError(error)
