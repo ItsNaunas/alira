@@ -154,10 +154,27 @@ module.exports = {
   				}
   			]
   		},
-  		spacing: {
-  			'18': '4.5rem',
-  			'88': '22rem'
-  		},
+		spacing: {
+			'18': '4.5rem',
+			'88': '22rem',
+			// Semantic spacing for sections
+			'section-xs': '2rem',     // 32px - extra small sections
+			'section-sm': '4rem',     // 64px - small sections
+			'section-md': '6rem',     // 96px - standard sections
+			'section-lg': '8rem',     // 128px - large sections
+			'section-xl': '10rem',    // 160px - extra large sections
+			// Semantic spacing for cards
+			'card-xs': '0.75rem',     // 12px - very tight card padding
+			'card-sm': '1rem',        // 16px - tight card padding
+			'card-md': '1.5rem',      // 24px - standard card padding
+			'card-lg': '2rem',        // 32px - spacious card padding
+			'card-xl': '2.5rem',      // 40px - extra spacious card padding
+			// Element spacing
+			'element-xs': '0.5rem',   // 8px - very tight element spacing
+			'element-sm': '1rem',     // 16px - tight element spacing
+			'element-md': '1.5rem',   // 24px - standard element spacing
+			'element-lg': '2rem',     // 32px - loose element spacing
+		},
   		letterSpacing: {
   			tight: '-0.02em'
   		},
