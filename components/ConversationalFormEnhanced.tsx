@@ -392,11 +392,12 @@ export default function ConversationalFormEnhanced({
 
       // If not enough detail and we haven't asked too many follow-ups
       if (!evaluation.hasEnoughDetail && evaluation.followUpQuestion && followUpCount < 2) {
-        // Ask follow-up question
+        // Ask follow-up question in the same conversation
         setTimeout(() => {
           addMessage('bot', evaluation.followUpQuestion!, true);
           setIsInFollowUp(true);
           setFollowUpCount(prev => prev + 1);
+          // Don't advance to next question, stay on current one
         }, 800);
       } else {
         // Enough detail or max follow-ups reached - move to next question
@@ -606,8 +607,10 @@ export default function ConversationalFormEnhanced({
                   'rounded-2xl px-4 py-3',
                   message.type === 'user'
                     ? 'bg-alira-gold text-alira-black ml-auto max-w-[80%]'
-                    : message.type === 'bot'
-                    ? 'bg-white/5 text-white border border-white/10 max-w-[80%]'
+                    :                   message.type === 'bot'
+                    ? message.isFollowUp 
+                      ? 'bg-alira-gold/10 text-white border border-alira-gold/30 max-w-[80%]'
+                      : 'bg-white/5 text-white border border-white/10 max-w-[80%]'
                     : message.content.includes('✨')
                     ? 'w-full bg-gradient-to-r from-alira-gold/20 via-alira-gold/10 to-transparent border-l-4 border-alira-gold text-white'
                     : 'bg-white/[0.03] text-white/70 italic border border-white/5 max-w-[80%]'
@@ -621,7 +624,7 @@ export default function ConversationalFormEnhanced({
                 </p>
                 {message.isFollowUp && (
                   <p className="text-xs mt-2 opacity-60">
-                    💡 Just need a bit more detail
+                    💡 Just need a bit more detail to help you better
                   </p>
                 )}
               </div>
