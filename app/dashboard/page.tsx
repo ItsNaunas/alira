@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient, auth } from '@/lib/supabase-client';
 import { 
@@ -18,7 +18,9 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { AlertDialog } from '@/components/ui/alert-dialog';
 import { Spinner } from '@/components/ui/spinner';
 import { getUserFriendlyError, errorMessages } from '@/lib/error-messages';
@@ -51,6 +53,10 @@ export default function DashboardPage() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [planToDelete, setPlanToDelete] = useState<BusinessPlan | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [isLoadingTasks, setIsLoadingTasks] = useState(false);
+  const [newTaskTitle, setNewTaskTitle] = useState('');
 
   const checkUser = useCallback(async () => {
     const { user, error } = await auth.getUser();
@@ -94,6 +100,21 @@ export default function DashboardPage() {
     loadPlans();
   }, [checkUser, loadPlans]);
 
+  const loadTasks = useCallback(async (planId?: string) => {
+    setIsLoadingTasks(true);
+    try {
+      const url = planId ? `/api/dashboard/tasks?planId=${planId}` : '/api/dashboard/tasks';
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('Failed to load tasks');
+      const json = await res.json();
+      setTasks(json?.data?.tasks || json?.tasks || []);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoadingTasks(false);
+    }
+  }, []);
+
   const handleSignOut = async () => {
     await auth.signOut();
     router.push('/');
@@ -136,6 +157,27 @@ export default function DashboardPage() {
     }
   };
 
+  // derive current plan id and recent activity hooks (must run every render order)
+  const currentPlanId = plans[0]?.id;
+  useEffect(() => {
+    if (user) loadTasks(currentPlanId);
+  }, [user, currentPlanId, loadTasks]);
+
+  const recentActivity = useMemo(() => {
+    const events: { label: string; date: string }[] = [];
+    for (const p of plans) {
+      events.push({ label: `Created: ${p.business_name || 'Plan'}` , date: p.created_at });
+      if (p.generations && p.generations.length > 0) {
+        for (const g of p.generations) {
+          events.push({ label: `AI analysis for ${p.business_name || 'Plan'}`, date: g.created_at });
+        }
+      }
+    }
+    return events
+      .sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0,5);
+  }, [plans]);
+
   if (loading) {
     return (
       <DashboardLayout>
@@ -153,6 +195,57 @@ export default function DashboardPage() {
   const inProgress = plans.filter(p => !p.generations || p.generations.length === 0).length;
   // Plans are "completed" if they have generated content
   const completed = plans.filter(p => p.generations && p.generations.length > 0).length;
+
+  const filteredPlans = plans.filter(p =>
+    (p.business_name || '').toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // task actions
+  const handleAddTask = async () => {
+    const title = newTaskTitle.trim();
+    if (!title) return;
+    try {
+      const res = await fetch('/api/dashboard/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, planId: currentPlanId || undefined })
+      });
+      if (!res.ok) throw new Error('Failed to create task');
+      const json = await res.json();
+      const created = json?.data?.task || json?.task;
+      setTasks(prev => [...prev, created]);
+      setNewTaskTitle('');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleToggleTask = async (task: any) => {
+    try {
+      setTasks(prev => prev.map(t => t.id === task.id ? { ...t, completed: !t.completed } : t));
+      const res = await fetch(`/api/dashboard/tasks/${task.id}` , {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ completed: !task.completed })
+      });
+      if (!res.ok) throw new Error('Failed to update task');
+    } catch (e) {
+      console.error(e);
+      // reload on failure
+      loadTasks(currentPlanId || undefined);
+    }
+  };
+
+  const handleDeleteTask = async (taskId: string) => {
+    try {
+      setTasks(prev => prev.filter(t => t.id !== taskId));
+      const res = await fetch(`/api/dashboard/tasks/${taskId}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Failed to delete task');
+    } catch (e) {
+      console.error(e);
+      loadTasks(currentPlanId || undefined);
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -187,34 +280,120 @@ export default function DashboardPage() {
       <main className="px-4 md:px-6 py-6 md:py-8 w-full pb-32">
         <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
           
-          {/* Top Summary Strip */}
+          {/* Plans Toolbar */}
           <div className="bg-white/[0.02] border border-white/10 rounded-lg px-4 md:px-6 py-4">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center divide-x divide-white/10">
-                <div className="pr-4 md:pr-8">
-                  <div className="text-2xl md:text-3xl font-serif text-alira-white mb-0.5">{totalPlans}</div>
-                  <div className="text-xs text-alira-white/50 font-light whitespace-nowrap">Total Plans</div>
-                </div>
-                <div className="px-4 md:px-8">
-                  <div className="text-2xl md:text-3xl font-serif text-alira-white mb-0.5">{inProgress}</div>
-                  <div className="text-xs text-alira-white/50 font-light whitespace-nowrap">In Progress</div>
-                </div>
-                <div className="pl-4 md:pl-8">
-                  <div className="text-2xl md:text-3xl font-serif text-alira-white mb-0.5">{completed}</div>
-                  <div className="text-xs text-alira-white/50 font-light whitespace-nowrap">Completed</div>
-                </div>
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <h2 className="text-lg font-serif text-alira-white">All Plans</h2>
+              <div className="flex items-center gap-3">
+                <Input
+                  placeholder="Search plans..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="bg-black/40 border-white/15 text-alira-white placeholder:text-alira-white/40"
+                />
+                <Button
+                  onClick={loadPlans}
+                  variant="ghost"
+                  size="icon"
+                  className="text-alira-white/40 hover:text-alira-white hover:bg-white/5 flex-shrink-0"
+                  disabled={isLoadingPlans}
+                  aria-label={isLoadingPlans ? 'Refreshing plans...' : 'Refresh plans'}
+                >
+                  <RefreshCw className={`w-4 h-4 ${isLoadingPlans ? 'animate-spin' : ''}`} />
+                </Button>
               </div>
-              <Button
-                onClick={loadPlans}
-                variant="ghost"
-                size="icon"
-                className="text-alira-white/40 hover:text-alira-white hover:bg-white/5 flex-shrink-0"
-                disabled={isLoadingPlans}
-                aria-label={isLoadingPlans ? "Refreshing plans..." : "Refresh plans"}
-              >
-                <RefreshCw className={`w-4 h-4 ${isLoadingPlans ? 'animate-spin' : ''}`} />
-              </Button>
             </div>
+          </div>
+
+          {/* Widgets: Quick Actions, Recent Activity, Versions, Checklist */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {/* Quick Actions */}
+            <Card className="bg-white/[0.02] border-white/10">
+              <CardContent className="p-5 space-y-3">
+                <h3 className="text-lg font-serif text-alira-white">Quick Actions</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button onClick={handleNewPlan} className="bg-alira-gold text-alira-black hover:bg-alira-gold/90" aria-label="Create new plan">
+                    <Plus className="w-4 h-4 mr-2" />New
+                  </Button>
+                  <Button onClick={() => currentPlanId && router.push(`/dashboard/${currentPlanId}/refine`)} variant="outline" className="border-white/20 text-alira-white hover:bg-white/5" aria-label="Refine latest plan" disabled={!currentPlanId}>
+                    <RefreshCw className="w-4 h-4 mr-2" />Refine
+                  </Button>
+                  <Button onClick={() => currentPlanId && router.push(`/dashboard/${currentPlanId}`)} variant="outline" className="border-white/20 text-alira-white hover:bg-white/5" aria-label="View plan" disabled={!currentPlanId}>
+                    <Eye className="w-4 h-4 mr-2" />View
+                  </Button>
+                  <Button onClick={() => currentPlanId && router.push(`/dashboard/${currentPlanId}`)} variant="outline" className="border-white/20 text-alira-white hover:bg-white/5" aria-label="Download PDF" disabled={!currentPlanId}>
+                    <Download className="w-4 h-4 mr-2" />PDF
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Recent Activity */}
+            <Card className="bg-white/[0.02] border-white/10">
+              <CardContent className="p-5">
+                <h3 className="text-lg font-serif text-alira-white mb-3">Recent Activity</h3>
+                <div className="space-y-2 max-h-40 overflow-auto pr-1">
+                  {recentActivity.length === 0 ? (
+                    <div className="text-sm text-alira-white/50">No recent activity</div>
+                  ) : recentActivity.map((evt, idx) => (
+                    <div key={idx} className="text-sm text-alira-white/80 flex items-center justify-between gap-3">
+                      <span className="truncate">{evt.label}</span>
+                      <span className="text-xs text-alira-white/40 whitespace-nowrap">{new Date(evt.date).toLocaleDateString()}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Plan Versions (latest) */}
+            <Card className="bg-white/[0.02] border-white/10">
+              <CardContent className="p-5">
+                <h3 className="text-lg font-serif text-alira-white mb-3">Plan Versions</h3>
+                <div className="space-y-2 max-h-40 overflow-auto pr-1">
+                  {currentPlan?.generations && currentPlan.generations.length > 0 ? (
+                    currentPlan.generations.slice(0,5).map((g:any, idx:number) => (
+                      <div key={g.id || idx} className="text-sm text-alira-white/80 flex items-center justify-between gap-3">
+                        <span className="truncate">Version {idx + 1}</span>
+                        <span className="text-xs text-alira-white/40 whitespace-nowrap">{new Date(g.created_at).toLocaleDateString()}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-sm text-alira-white/50">No versions yet</div>
+                  )}
+                </div>
+                {currentPlanId && (
+                  <button className="text-xs text-alira-white/40 hover:text-alira-gold mt-2" onClick={() => router.push(`/dashboard/${currentPlanId}`)}>Open plan →</button>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Checklist */}
+            <Card className="bg-white/[0.02] border-white/10">
+              <CardContent className="p-5">
+                <h3 className="text-lg font-serif text-alira-white mb-3">Checklist</h3>
+                <div className="flex gap-2 mb-3">
+                  <Input value={newTaskTitle} onChange={(e) => setNewTaskTitle(e.target.value)} placeholder="Add task..." className="bg-black/40 border-white/15 text-alira-white placeholder:text-alira-white/40" />
+                  <Button onClick={handleAddTask} className="bg-alira-gold text-alira-black hover:bg-alira-gold/90" aria-label="Add task">Add</Button>
+                </div>
+                <div className="space-y-2 max-h-40 overflow-auto pr-1">
+                  {isLoadingTasks ? (
+                    <div className="text-sm text-alira-white/50">Loading...</div>
+                  ) : tasks.length === 0 ? (
+                    <div className="text-sm text-alira-white/50">No tasks yet</div>
+                  ) : (
+                    tasks.map((t) => (
+                      <div key={t.id} className="flex items-center justify-between gap-3">
+                        <label className="flex items-center gap-2 flex-1 min-w-0">
+                          <Checkbox checked={!!t.completed} onCheckedChange={() => handleToggleTask(t)} aria-label={`Toggle ${t.title}`} />
+                          <span className={`text-sm truncate ${t.completed ? 'line-through text-alira-white/40' : 'text-alira-white/80'}`}>{t.title}</span>
+                        </label>
+                        <button onClick={() => handleDeleteTask(t.id)} className="text-xs text-red-400 hover:text-red-300">Delete</button>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {plans.length === 0 ? (
@@ -240,88 +419,7 @@ export default function DashboardPage() {
             </Card>
           ) : (
             <>
-              {/* Main Grid - Row 1 */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                {/* Your Current Inputs */}
-                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
-                  <CardContent className="p-6">
-                    <h3 className="text-lg font-serif text-alira-white mb-4">Your Current Inputs</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <div className="text-xs text-alira-white/40 mb-1">Name</div>
-                        <div className="text-sm text-alira-white/90">
-                          {currentPlan?.business_name || 'Not provided'}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-alira-white/40 mb-1">Latest Challenge</div>
-                        <div className="text-sm text-alira-white/90 leading-relaxed">
-                          {currentPlan?.current_challenges 
-                            ? currentPlan.current_challenges.substring(0, 100) + (currentPlan.current_challenges.length > 100 ? '...' : '')
-                            : 'Not provided'}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-alira-white/40 mb-1">90-Day Goal</div>
-                        <div className="text-sm text-alira-white/90">
-                          {currentPlan?.immediate_goals || 'Not provided'}
-                        </div>
-                      </div>
-                      <div className="pt-2 border-t border-white/5">
-                        <div className="text-xs text-alira-white/30">Step 1 of 1</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* AI Summary */}
-                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <h3 className="text-lg font-serif text-alira-white">AI Summary</h3>
-                      {currentPlan?.generations && currentPlan.generations.length > 0 ? (
-                        <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs inline-flex items-center gap-1">
-                          <CheckCircle className="w-3 h-3" aria-hidden="true" />
-                          Ready
-                        </span>
-                      ) : (
-                        <span className="px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs inline-flex items-center gap-1">
-                          <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          In Progress
-                        </span>
-                      )}
-                    </div>
-                    <div className="space-y-3">
-                      <div className="flex gap-3">
-                        <Lightbulb className="w-4 h-4 text-alira-gold/70 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-alira-white/80 leading-relaxed">
-                          {currentPlan?.generations?.[0]?.content?.problem_statement 
-                            ? currentPlan.generations[0].content.problem_statement.substring(0, 80) + '...'
-                            : 'Analyzing your business context'}
-                        </div>
-                      </div>
-                      <div className="flex gap-3">
-                        <Target className="w-4 h-4 text-alira-gold/70 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-alira-white/80 leading-relaxed">
-                          {currentPlan?.generations?.[0]?.content?.objectives?.[0]
-                            ? currentPlan.generations[0].content.objectives[0].substring(0, 80) + (currentPlan.generations[0].content.objectives[0].length > 80 ? '...' : '')
-                            : 'Identifying key objectives'}
-                        </div>
-                      </div>
-                      <div className="flex gap-3">
-                        <AlertCircle className="w-4 h-4 text-alira-gold/70 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-alira-white/80 leading-relaxed">
-                          Review generated insights carefully
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+              
 
               {/* Main Grid - Row 2 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -462,9 +560,8 @@ export default function DashboardPage() {
 
               {/* Plans List */}
               <div className="space-y-4 pt-8">
-                <h2 className="text-xl font-serif text-alira-white">All Plans</h2>
                 <div className="space-y-3">
-                  {plans.map((plan) => (
+                  {filteredPlans.map((plan) => (
                     <Card 
                       key={plan.id} 
                       className="bg-white/[0.02] border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-black/20 transition-all cursor-pointer group hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-alira-gold focus-within:ring-offset-2 focus-within:ring-offset-black"
