@@ -53,23 +53,20 @@ const teamMembers = [
 
 export default function TeamFlipCards() {
   return (
-    <section className="py-16 md:py-24 bg-black relative overflow-hidden">
-      {/* Animated Gradient Bars Background - Same as Hero */}
-      <GradientBars bars={20} colors={['#0B1D51', 'transparent']} />
-      
+    <section className="py-16 md:py-24 bg-bg-page relative overflow-hidden">
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <Reveal>
           <div className="text-center mb-16">
-            <div className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-light">
+            <div className="text-accent-dark text-sm tracking-wide uppercase mb-4 font-sans font-light">
               Meet The Team
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-normal text-white mb-6">
-              Our <span className="text-alira-gold">Expert</span> Team
+            <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-primary mb-6">
+              Our <span className="text-accent-dark">Expert</span> Team
             </h2>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto mb-8 font-serif italic font-light">
+            <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 font-serif italic font-light">
               Meet the professionals behind ALIRA's success, each bringing unique expertise to deliver exceptional results.
             </p>
-            <div className="w-16 h-px bg-alira-gold mx-auto shadow-lg shadow-alira-gold/30"></div>
+            <div className="w-16 h-px bg-accent mx-auto"></div>
           </div>
         </Reveal>
         
@@ -95,12 +92,12 @@ export default function TeamFlipCards() {
         {/* Team CTA */}
         <Reveal delay={600}>
           <div className="text-center mt-16">
-            <p className="text-white/70 font-sans font-light mb-6">
+            <p className="text-text-secondary font-sans font-light mb-6">
               Ready to work with our expert team?
             </p>
             <a
               href="/contact"
-              className="inline-flex items-center gap-2 bg-alira-gold text-white px-8 py-4 rounded-xl font-sans font-light hover:bg-alira-primary hover:border-alira-gold border-2 border-transparent transition-all duration-300 shadow-lg shadow-alira-gold/20"
+              className="inline-flex items-center gap-2 bg-brand text-text-inverse px-8 py-4 rounded-xl font-sans font-light hover:bg-brand-hover transition-all duration-300 shadow-token-sm"
             >
               Get In Touch
             </a>

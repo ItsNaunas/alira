@@ -33,66 +33,66 @@ const caseStudies = [
 
 export default function ProofOfClarity() {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-black to-alira-primary relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-brand via-brand/80 to-bg-page relative overflow-hidden">
       <div className="container mx-auto px-6 lg:px-8">
         <Reveal>
           <div className="text-center mb-16">
-            <div className="text-sm font-sans font-semibold tracking-wide text-alira-gold uppercase mb-4">
+            <div className="text-sm font-sans font-semibold tracking-wide text-text-inverse uppercase mb-4">
               Case Studies
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-normal text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-inverse mb-6">
               Proof of Clarity
             </h2>
-            <div className="w-16 h-px bg-alira-gold mx-auto"></div>
+            <div className="w-16 h-px bg-accent mx-auto"></div>
           </div>
         </Reveal>
         
-        <div className="max-w-6xl mx-auto space-y-8">
+        <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
           {caseStudies.map((study, index) => {
             const IconComponent = study.icon
             return (
               <Reveal key={index} delay={index * 200}>
-                <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 md:p-12 border border-white/10 shadow-lg hover:shadow-xl hover:border-alira-gold/30 transition-all duration-300">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                 <div className="bg-surface rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 lg:p-12 border border-borderToken-subtle shadow-token-lg hover:shadow-token-lg hover:border-accent transition-all duration-300">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
                     {/* Left side - Metric & Icon */}
                     <div className="text-center lg:text-left">
-                      <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-alira-gold/20 to-alira-gold/10 rounded-2xl mb-6">
-                        <IconComponent className="w-10 h-10 text-alira-gold" />
+                      <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-accent/10 rounded-2xl mb-4 sm:mb-6">
+                        <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />
                       </div>
-                      <div className="text-4xl md:text-5xl font-serif font-bold text-alira-gold mb-2">
+                      <div className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-accent-dark mb-2">
                         {study.metric}
                       </div>
-                      <div className="text-lg text-white/70 font-sans font-medium">
+                      <div className="text-base sm:text-lg text-text-secondary font-sans font-medium">
                         {study.timeframe}
                       </div>
                     </div>
                     
                     {/* Right side - Story & Outcome */}
-                    <div className="space-y-6">
-                      <h3 className="text-2xl md:text-3xl font-serif font-normal text-white leading-tight">
+                    <div className="space-y-4 sm:space-y-6">
+                      <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-normal text-text-primary leading-tight">
                         {study.headline}
                       </h3>
                       
-                      <div className="space-y-4">
+                      <div className="space-y-3 sm:space-y-4">
                         <div className="flex items-start gap-3">
-                          <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="w-2 h-2 bg-error rounded-full mt-2 flex-shrink-0"></div>
                           <div>
-                            <div className="text-sm font-sans font-medium text-white/60 mb-1">Before:</div>
-                            <p className="text-white/80 leading-relaxed">{study.before}</p>
+                            <div className="text-sm font-sans font-medium text-text-secondary mb-1">Before:</div>
+                            <p className="text-text-secondary leading-relaxed text-sm sm:text-base">{study.before}</p>
                           </div>
                         </div>
                         
                         <div className="flex items-start gap-3">
-                          <ArrowRight className="w-5 h-5 text-alira-gold mt-1 flex-shrink-0" />
+                          <ArrowRight className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
                           <div>
-                            <div className="text-sm font-sans font-medium text-white/60 mb-1">After:</div>
-                            <p className="text-white/80 leading-relaxed">{study.after}</p>
+                            <div className="text-sm font-sans font-medium text-text-secondary mb-1">After:</div>
+                            <p className="text-text-secondary leading-relaxed text-sm sm:text-base">{study.after}</p>
                           </div>
                         </div>
                       </div>
                       
-                      <div className="pt-4 border-t border-white/20">
-                        <p className="text-sm text-white/60 font-sans font-medium">
+                      <div className="pt-3 sm:pt-4 border-t border-borderToken-subtle">
+                        <p className="text-sm text-text-secondary font-sans font-medium">
                           {study.context}
                         </p>
                       </div>

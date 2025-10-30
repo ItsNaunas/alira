@@ -36,14 +36,21 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+}
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en-GB" className="scroll-smooth dark">
-      <body className="antialiased">
+    <html lang="en-GB" className="scroll-smooth">
+      <body className="antialiased bg-bg-page text-text-primary">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>

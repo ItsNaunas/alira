@@ -81,22 +81,21 @@ export default function WhatYouGetPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-bg-page">
       {/* Hero Section */}
-      <section className="py-24 bg-black relative overflow-hidden">
-        <GradientBars />
+      <section className="py-24 bg-bg-section relative overflow-hidden">
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
               <div className="mb-12">
-                <span className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-light block">
+                <span className="text-accent-dark text-sm tracking-wide uppercase mb-4 font-sans font-light block">
                   WHAT YOU GET
                 </span>
-                <h1 className="text-5xl md:text-6xl font-serif font-normal text-alira-white leading-tight mb-6">
+                <h1 className="text-5xl md:text-6xl font-serif font-normal text-text-primary leading-tight mb-6">
                   Your Complete Business Plan
                 </h1>
-                <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
-                <p className="text-xl md:text-2xl text-alira-white/70 max-w-3xl mx-auto leading-relaxed">
+                <div className="w-20 h-px bg-accent mx-auto mb-8"></div>
+                <p className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
                   In minutes, you'll receive a comprehensive PDF that shows everything you need to move forward with confidence.
                 </p>
               </div>
@@ -106,32 +105,32 @@ export default function WhatYouGetPage() {
       </section>
 
       {/* Main Benefits */}
-      <section className="py-20 bg-black">
+      <section className="py-20 bg-bg-page">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-serif font-normal text-alira-white mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-6">
                   Three Things You Get Immediately
                 </h2>
-                <div className="w-16 h-px bg-alira-gold mx-auto"></div>
+                <div className="w-16 h-px bg-accent mx-auto"></div>
               </div>
             </Reveal>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-16">
               {mainBenefits.map(({ icon: Icon, title, desc }, index) => (
                 <Reveal key={title} delay={index * 100}>
-                  <article className="group rounded-2xl border border-white/10 bg-white/[0.02] p-8 lg:p-10 transition-all duration-300 hover:-translate-y-1 hover:border-alira-gold hover:shadow-xl">
+                  <article className="group rounded-2xl border border-borderToken-subtle bg-surface p-8 lg:p-10 transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-token-lg">
                     <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 h-12 w-12 flex items-center justify-center rounded-xl bg-alira-gold/10 text-alira-gold">
+                      <div className="flex-shrink-0 h-12 w-12 flex items-center justify-center rounded-xl bg-accent/10 text-accent">
                         <Icon className="h-6 w-6" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="w-12 h-[2px] bg-alira-gold mb-4"></div>
-                        <h3 className="text-lg font-serif font-normal text-alira-white mb-3 leading-tight">
+                        <div className="w-12 h-[2px] bg-accent mb-4"></div>
+                        <h3 className="text-lg font-serif font-normal text-text-primary mb-3 leading-tight">
                           {title}
                         </h3>
-                        <p className="text-alira-white/70 leading-relaxed">
+                        <p className="text-text-secondary leading-relaxed">
                           {desc}
                         </p>
                       </div>
@@ -143,20 +142,20 @@ export default function WhatYouGetPage() {
 
             {/* Quick Stats */}
             <Reveal delay={400}>
-              <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-12 text-center bg-white/[0.02] rounded-2xl p-8 border border-white/10">
+              <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-12 text-center bg-surface rounded-2xl p-8 border border-borderToken-subtle shadow-token-sm">
                 <div className="flex flex-col items-center">
-                  <span className="text-2xl font-serif font-normal text-alira-white">Ready in minutes</span>
-                  <span className="text-sm text-alira-white/60 mt-1">delivered instantly</span>
+                  <span className="text-2xl font-serif font-normal text-text-primary">Ready in minutes</span>
+                  <span className="text-sm text-text-tertiary mt-1">delivered instantly</span>
                 </div>
-                <div className="hidden md:block w-px h-8 bg-white/20"></div>
+                <div className="hidden md:block w-px h-8 bg-borderToken-subtle"></div>
                 <div className="flex flex-col items-center">
-                  <span className="text-2xl font-serif font-normal text-alira-white">100% custom</span>
-                  <span className="text-sm text-alira-white/60 mt-1">tailored to your business</span>
+                  <span className="text-2xl font-serif font-normal text-text-primary">100% custom</span>
+                  <span className="text-sm text-text-tertiary mt-1">tailored to your business</span>
                 </div>
-                <div className="hidden md:block w-px h-8 bg-white/20"></div>
+                <div className="hidden md:block w-px h-8 bg-borderToken-subtle"></div>
                 <div className="flex flex-col items-center">
-                  <span className="text-2xl font-serif font-normal text-alira-white">Ready to use</span>
-                  <span className="text-sm text-alira-white/60 mt-1">implement immediately</span>
+                  <span className="text-2xl font-serif font-normal text-text-primary">Ready to use</span>
+                  <span className="text-sm text-text-tertiary mt-1">implement immediately</span>
                 </div>
               </div>
             </Reveal>
@@ -165,16 +164,16 @@ export default function WhatYouGetPage() {
       </section>
 
       {/* Detailed Features */}
-      <section className="py-20 bg-black">
+      <section className="py-20 bg-bg-section">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-serif font-normal text-alira-white mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-6">
                   What's Inside Your Plan
                 </h2>
-                <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
-                <p className="text-xl text-alira-white/70 max-w-3xl mx-auto">
+                <div className="w-16 h-px bg-accent mx-auto mb-6"></div>
+                <p className="text-xl text-text-secondary max-w-3xl mx-auto">
                   Every plan is structured to give you maximum clarity and actionable next steps.
                 </p>
               </div>
@@ -185,27 +184,27 @@ export default function WhatYouGetPage() {
                 const IconComponent = feature.icon
                 return (
                   <Reveal key={index} delay={index * 150}>
-                    <div className="bg-white/[0.02] rounded-2xl p-8 border border-white/10 hover:border-alira-gold hover:shadow-xl transition-all duration-300">
+                    <div className="bg-surface rounded-2xl p-8 border border-borderToken-subtle hover:border-accent hover:shadow-token-lg transition-all duration-300">
                       <div className="flex items-center mb-6">
-                        <div className="w-12 h-12 bg-alira-gold/10 rounded-xl flex items-center justify-center mr-4">
-                          <IconComponent className="w-6 h-6 text-alira-gold" />
+                        <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mr-4">
+                          <IconComponent className="w-6 h-6 text-accent" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-serif font-normal text-alira-white">
+                          <h3 className="text-xl font-serif font-normal text-text-primary">
                             {feature.title}
                           </h3>
                         </div>
                       </div>
                       
-                      <p className="text-alira-white/80 mb-6 leading-relaxed">
+                      <p className="text-text-secondary mb-6 leading-relaxed">
                         {feature.description}
                       </p>
 
                       <ul className="space-y-3">
                         {feature.details.map((detail, detailIndex) => (
                           <li key={detailIndex} className="flex items-start space-x-3">
-                            <div className="w-2 h-2 bg-alira-gold rounded-full mt-2 flex-shrink-0"></div>
-                            <span className="text-alira-white/70 text-sm">
+                            <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
+                            <span className="text-text-secondary text-sm">
                               {detail}
                             </span>
                           </li>
@@ -221,19 +220,19 @@ export default function WhatYouGetPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-alira-primary via-alira-primary to-alira-gold/20">
+      <section className="py-20 bg-gradient-to-br from-brand via-brand/80 to-bg-page">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-4xl md:text-5xl font-serif font-normal text-white mb-6 leading-tight">
+                  <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-inverse mb-6 leading-tight">
                     Ready to get your plan?
                   </h2>
-                  <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+                  <p className="text-xl text-text-inverse/90 mb-8 max-w-2xl mx-auto">
                     Answer a few quick questions and receive your personalized business plan in minutes.
                   </p>
-                  <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
+                  <div className="w-20 h-px bg-accent mx-auto mb-8"></div>
                 </div>
                 
                 <div className="space-y-4">
@@ -245,7 +244,7 @@ export default function WhatYouGetPage() {
                   >
                     Start My Plan
                   </CTAButton>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-text-inverse/80">
                     Free • Private • No card required • Delivered in minutes
                   </p>
                 </div>

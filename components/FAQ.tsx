@@ -43,17 +43,17 @@ export default function FAQ() {
   }
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-alira-primary via-alira-primary/90 to-alira-primary/80 relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-bg-section relative overflow-hidden">
       {/* Enhanced pattern overlay */}
       <div className="container mx-auto px-6 lg:px-8">
         <Reveal>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-serif font-normal text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-primary mb-6">
                 Frequently Asked Questions
               </h2>
-              <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
-              <p className="text-xl text-white/70 max-w-2xl mx-auto font-serif italic font-light">
+              <div className="w-16 h-px bg-accent mx-auto mb-8"></div>
+              <p className="text-xl text-text-secondary max-w-2xl mx-auto font-serif italic font-light">
                 Everything you need to know about our services and how we can help you grow.
               </p>
             </div>
@@ -61,19 +61,19 @@ export default function FAQ() {
             <div className="max-w-3xl mx-auto space-y-4">
               {faqs.map((faq, index) => (
                 <Reveal key={index} delay={index * 100}>
-                  <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-alira-gold/20 transition-all duration-300 overflow-hidden">
+                  <div className="bg-surface rounded-2xl border border-borderToken-subtle hover:border-borderToken-strong shadow-token-sm transition-all duration-300 overflow-hidden">
                     <button
                       onClick={() => toggleFAQ(index)}
-                      className="w-full p-6 text-left flex items-center justify-between hover:bg-white/10 transition-colors duration-200"
+                      className="w-full p-4 sm:p-6 text-left flex items-center justify-between hover:bg-bg-muted transition-colors duration-200 min-h-[44px] touch-target"
                     >
-                      <h3 className="text-lg font-serif font-normal text-white pr-4 text-left">
+                      <h3 className="text-base sm:text-lg font-serif font-normal text-text-primary pr-4 text-left">
                         {faq.q}
                       </h3>
-                      <div className="flex-shrink-0">
+                      <div className="flex-shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center">
                         {openIndex === index ? (
-                          <ChevronUp className="w-5 h-5 text-alira-gold" />
+                          <ChevronUp className="w-5 h-5 text-accent" />
                         ) : (
-                          <ChevronDown className="w-5 h-5 text-white/60" />
+                          <ChevronDown className="w-5 h-5 text-text-secondary" />
                         )}
                       </div>
                     </button>
@@ -83,8 +83,8 @@ export default function FAQ() {
                         openIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
-                      <div className="px-6 pb-6">
-                <p className="text-alira-primary/90 dark:text-alira-white/90 leading-relaxed text-base text-left font-sans">
+                      <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+                <p className="text-text-secondary leading-relaxed text-sm sm:text-base text-left font-sans">
                   {faq.a}
                 </p>
                       </div>

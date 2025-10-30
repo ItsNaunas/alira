@@ -7,7 +7,7 @@ const textareaVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-input bg-background focus-visible:ring-2 focus-visible:ring-alira-gold focus-visible:ring-offset-2",
+        default: "border-borderToken-subtle bg-surface focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2",
         error: "border-red-500 bg-red-50/5 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2",
         success: "border-emerald-500 bg-emerald-50/5 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
         warning: "border-amber-500 bg-amber-50/5 focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2",

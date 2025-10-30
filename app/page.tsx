@@ -39,7 +39,7 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section 
-        className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden"
+        className="min-h-screen flex items-center justify-center bg-bg-page relative overflow-hidden"
         aria-labelledby="hero-heading"
       >
         {/* Animated Gradient Bars Background */}
@@ -61,7 +61,7 @@ export default function Home() {
             <div className="text-center">
               {/* Main Headline */}
               <Reveal delay={200}>
-                <h1 id="hero-heading" className="font-serif font-normal text-alira-white leading-tight tracking-tight mb-6 text-4xl md:text-5xl lg:text-6xl xl:text-7xl" style={{ fontSize: 'clamp(48px, 8vw, 96px)' }}>
+                <h1 id="hero-heading" className="font-serif font-normal text-text-primary leading-tight tracking-tight mb-6 text-4xl md:text-5xl lg:text-6xl xl:text-7xl" style={{ fontSize: 'clamp(48px, 8vw, 96px)' }}>
                   Turn your idea into a business<br />
                   in a few clicks.
                 </h1>
@@ -69,7 +69,7 @@ export default function Home() {
               
               {/* Subtext */}
               <Reveal delay={250}>
-                <p className="text-alira-gold text-lg md:text-xl lg:text-2xl font-sans font-light max-w-3xl mx-auto mb-16">
+                <p className="text-text-secondary text-lg md:text-xl lg:text-2xl font-sans font-light max-w-3xl mx-auto mb-16">
                   We scale brands with content, websites, and smart systems
                 </p>
               </Reveal>

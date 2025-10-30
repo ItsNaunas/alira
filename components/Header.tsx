@@ -78,15 +78,11 @@ export default function Header() {
   }, [isMobileMenuOpen])
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
-      isScrolled 
-        ? 'bg-[#0A0E18]/30 backdrop-blur-xl' 
-        : 'bg-transparent'
-    }`}>
-      <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <header className={"fixed top-0 left-0 right-0 z-50 bg-bg-page border-b border-borderToken-subtle"}>
+        <div className="flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Left side - Logo */}
         <div className="flex items-center flex-shrink-0">
-          <Link href="/" className="text-alira-gold font-serif font-normal tracking-wider text-xl sm:text-2xl whitespace-nowrap">
+          <Link href="/" className="text-alira-gold font-serif font-normal tracking-wider text-lg sm:text-xl lg:text-2xl whitespace-nowrap">
             ALIRA<span className="text-alira-gold">.</span>
           </Link>
         </div>
@@ -99,8 +95,8 @@ export default function Header() {
               href={link.href}
               className={`font-serif text-sm 2xl:text-base font-normal transition-colors duration-200 whitespace-nowrap relative group ${
                 pathname === link.href
-                  ? 'text-white'
-                  : 'text-white/60 hover:text-white'
+                  ? 'text-brand'
+                  : 'text-text-secondary hover:text-brand'
               }`}
             >
               {link.label}
@@ -119,14 +115,14 @@ export default function Header() {
               <Button
                 asChild
                 variant="ghost"
-                className="text-white hover:bg-white/10 font-sans font-light px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm whitespace-nowrap"
+                className="text-text-primary hover:bg-bg-muted font-sans font-light px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm whitespace-nowrap"
               >
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
               <Button
                 onClick={handleSignOut}
                 variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 font-sans font-light px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm whitespace-nowrap"
+                className="border border-borderToken-subtle text-text-primary hover:bg-bg-muted font-sans font-light px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm whitespace-nowrap"
               >
                 Sign Out
               </Button>
@@ -139,7 +135,7 @@ export default function Header() {
                   setShowAuthModal(true)
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white/10 font-sans font-light px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm whitespace-nowrap"
+                className="text-text-primary hover:bg-bg-muted font-sans font-light px-3 lg:px-4 py-1.5 sm:py-2 text-xs sm:text-sm whitespace-nowrap"
               >
                 Log In
               </Button>
@@ -148,7 +144,7 @@ export default function Header() {
                   setIsSignUp(true)
                   setShowAuthModal(true)
                 }}
-                className="bg-alira-gold text-alira-black hover:bg-alira-gold/90 font-sans font-medium px-3 sm:px-4 lg:px-6 py-1.5 sm:py-2 transition-all duration-200 text-xs sm:text-sm lg:text-base whitespace-nowrap"
+                className="bg-brand text-text-inverse hover:bg-brand-hover font-sans font-medium px-3 sm:px-4 lg:px-6 py-1.5 sm:py-2 transition-all duration-200 text-xs sm:text-sm lg:text-base whitespace-nowrap"
               >
                 Sign Up
               </Button>
@@ -164,7 +160,7 @@ export default function Header() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
-            className="text-white hover:bg-white/10"
+            className="text-text-primary hover:bg-bg-muted"
           >
             {isMobileMenuOpen ? (
               <X className="h-6 w-6" />
@@ -190,7 +186,7 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/95 backdrop-blur-xl"
+              className="absolute inset-0 bg-bg-page/95"
               onClick={() => setIsMobileMenuOpen(false)}
             />
             
@@ -208,11 +204,11 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`font-serif text-2xl font-normal transition-colors duration-200 ${
-                      pathname === link.href
-                        ? 'text-alira-gold'
-                        : 'text-white hover:text-alira-gold'
-                    }`}
+              className={`font-serif text-xl sm:text-2xl font-normal transition-colors duration-200 ${
+                pathname === link.href
+                  ? 'text-brand'
+                  : 'text-text-primary hover:text-brand'
+              }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.label}
@@ -226,7 +222,7 @@ export default function Header() {
                   <>
                     <Button
                       asChild
-                      className="w-full bg-alira-gold text-alira-black hover:bg-alira-gold/90 font-sans font-medium py-6 text-lg"
+                      className="w-full bg-brand text-text-inverse hover:bg-brand-hover font-sans font-medium py-6 text-lg"
                     >
                       <Link href="/dashboard">Go to Dashboard</Link>
                     </Button>
@@ -236,7 +232,7 @@ export default function Header() {
                         setIsMobileMenuOpen(false);
                       }}
                       variant="outline"
-                      className="w-full border-white/20 text-white hover:bg-white/10 font-sans font-light py-6 text-lg"
+                      className="w-full border border-borderToken-subtle text-text-primary hover:bg-bg-muted font-sans font-light py-6 text-lg"
                     >
                       Sign Out
                     </Button>
@@ -249,7 +245,7 @@ export default function Header() {
                         setShowAuthModal(true)
                         setIsMobileMenuOpen(false)
                       }}
-                      className="w-full bg-alira-gold text-alira-black hover:bg-alira-gold/90 font-sans font-medium py-6 text-lg"
+                      className="w-full bg-brand text-text-inverse hover:bg-brand-hover font-sans font-medium py-6 text-lg"
                     >
                       Sign Up
                     </Button>
@@ -260,7 +256,7 @@ export default function Header() {
                         setIsMobileMenuOpen(false)
                       }}
                       variant="outline"
-                      className="w-full border-white/20 text-white hover:bg-white/10 font-sans font-light py-6 text-lg"
+                      className="w-full border border-borderToken-subtle text-text-primary hover:bg-bg-muted font-sans font-light py-6 text-lg"
                     >
                       Log In
                     </Button>
@@ -295,7 +291,7 @@ export default function Header() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="bg-white dark:bg-alira-primary rounded-xl sm:rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto"
+              className="bg-surface border border-borderToken-subtle rounded-xl sm:rounded-2xl shadow-token-lg max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto"
             >
               <button
                 onClick={() => setShowAuthModal(false)}

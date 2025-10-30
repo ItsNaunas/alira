@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class", "class"],
+  darkMode: false,
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -50,6 +50,30 @@ module.exports = {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
   			},
+				// Semantic light theme tokens
+				bg: {
+					page: 'var(--bg-page)',
+					section: 'var(--bg-section)',
+					muted: 'var(--bg-muted)'
+				},
+				text: {
+					primary: 'var(--text-primary)',
+					secondary: 'var(--text-secondary)',
+					tertiary: 'var(--text-tertiary)',
+					inverse: 'var(--text-inverse)'
+				},
+				brand: {
+					DEFAULT: 'var(--brand)',
+					hover: 'var(--brand-hover)'
+				},
+				accent: {
+					DEFAULT: 'var(--accent)',
+					dark: 'var(--accent-dark)'
+				},
+				borderToken: {
+					subtle: 'var(--border-subtle)',
+					strong: 'var(--border-strong)'
+				},
   			alira: {
   				primary: '#0B1D51',
   				gold: '#A06B00',
@@ -224,9 +248,13 @@ module.exports = {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-  			'fade-in': 'fade-in 0.6s ease-out',
-  			'slide-in': 'slide-in 0.6s ease-out'
-  		}
+			'fade-in': 'fade-in 0.6s ease-out',
+			'slide-in': 'slide-in 0.6s ease-out'
+		},
+		boxShadow: {
+			'token-sm': 'var(--shadow-sm)',
+			'token-lg': 'var(--shadow-lg)'
+		}
   	}
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { Spinner } from "./spinner"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-lg font-light ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-lg font-light ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -15,20 +15,20 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-borderToken-subtle bg-surface hover:bg-bg-muted hover:text-text-primary",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        ghost: "text-text-primary hover:bg-bg-muted",
+        link: "text-brand underline-offset-4 hover:underline",
         
         // ALIRA Design System - Consolidated & Simplified
-        primary: "bg-alira-gold text-alira-black hover:bg-alira-gold/90 focus:ring-alira-gold/40 font-medium shadow-sm hover:shadow-lg transition-all duration-200 active:scale-[0.98]",
-        primaryOutline: "border-2 border-alira-gold text-alira-gold hover:bg-alira-gold hover:text-alira-black focus:ring-alira-gold/40 transition-all duration-200 shadow-sm hover:shadow-lg active:scale-[0.98]",
-        tertiary: "text-alira-white hover:bg-white/10 focus:ring-white/40 transition-colors",
+        primary: "bg-brand text-text-inverse hover:bg-brand-hover font-medium shadow-token-sm hover:shadow-token-lg transition-all duration-200 active:scale-[0.98]",
+        primaryOutline: "border-2 border-brand text-brand hover:bg-brand hover:text-text-inverse transition-all duration-200 shadow-token-sm hover:shadow-token-lg active:scale-[0.98]",
+        tertiary: "text-text-primary hover:bg-bg-muted transition-colors",
         
         // Legacy support (deprecated - will be removed in next major version)
-        alira: "bg-alira-gold text-alira-black hover:bg-alira-gold/90 focus:ring-alira-gold/40 font-medium shadow-sm hover:shadow-lg transition-all duration-200 active:scale-[0.98]",
-        aliraOutline: "border-2 border-alira-gold text-alira-gold hover:bg-alira-gold hover:text-alira-black focus:ring-alira-gold/40 transition-all duration-200 shadow-sm hover:shadow-lg active:scale-[0.98]",
+        alira: "bg-brand text-text-inverse hover:bg-brand-hover font-medium shadow-token-sm hover:shadow-token-lg transition-all duration-200 active:scale-[0.98]",
+        aliraOutline: "border-2 border-brand text-brand hover:bg-brand hover:text-text-inverse transition-all duration-200 shadow-token-sm hover:shadow-token-lg active:scale-[0.98]",
       },
       size: {
         default: "h-10 px-4 py-2 text-sm",
