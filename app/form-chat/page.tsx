@@ -157,6 +157,7 @@ function FormChatContent() {
           initialData={initialIdea ? { business_idea: initialIdea } : undefined}
           onComplete={handleFormComplete}
           useAuthenticatedFlow={true}
+          userId={user?.id}
         />
       </main>
     </div>

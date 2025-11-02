@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Eye, X, Copy, Check } from 'lucide-react'
 import { FormTemplate, getTemplatesForQuestion, getRandomTemplate } from '@/lib/form-templates'
@@ -17,9 +17,17 @@ export function ExampleTemplate({ questionId, onFillExample, className }: Exampl
   const [showExamples, setShowExamples] = useState(false)
   const [selectedTemplate, setSelectedTemplate] = useState<FormTemplate | null>(null)
   const [copied, setCopied] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   const templates = getTemplatesForQuestion(questionId)
   const previewTemplate = getRandomTemplate(questionId)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const handleCopy = async (template: FormTemplate) => {
     try {
@@ -64,37 +72,52 @@ export function ExampleTemplate({ questionId, onFillExample, className }: Exampl
               className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
             />
 
-            {/* Examples Panel */}
+            {/* Examples Panel - Mobile: Bottom Sheet, Desktop: Dropdown */}
             <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              initial={{ opacity: 0, y: isMobile ? 400 : -10, scale: isMobile ? 1 : 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              className="absolute top-8 left-0 z-50 w-full sm:w-[500px] bg-white dark:bg-alira-primary rounded-xl border border-alira-primary/20 dark:border-alira-white/20 shadow-xl overflow-hidden"
+              exit={{ opacity: 0, y: isMobile ? 400 : -10, scale: isMobile ? 1 : 0.95 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className={cn(
+                "z-50 bg-white dark:bg-alira-primary border border-alira-primary/20 dark:border-alira-white/20 shadow-xl overflow-hidden",
+                // Mobile: Full-screen bottom sheet
+                "fixed inset-x-0 bottom-0 rounded-t-3xl sm:rounded-xl",
+                // Desktop: Dropdown
+                "sm:absolute sm:top-8 sm:left-0 sm:w-[500px] sm:max-h-[600px] sm:rounded-xl",
+                // Mobile: Max height
+                "h-[85vh] sm:h-auto"
+              )}
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-alira-primary/10 dark:border-alira-white/10">
-                <h3 className="text-sm font-medium text-alira-primary dark:text-alira-white">
-                  Example Answers
-                </h3>
+              <div className="flex items-center justify-between p-4 sm:p-4 border-b border-alira-primary/10 dark:border-alira-white/10">
+                <div className="flex items-center gap-3">
+                  {/* Mobile: Drag handle */}
+                  <div className="sm:hidden w-10 h-1 bg-alira-primary/30 dark:bg-alira-white/30 rounded-full mx-auto" />
+                  <h3 className="text-base sm:text-sm font-medium text-alira-primary dark:text-alira-white">
+                    Example Answers
+                  </h3>
+                </div>
                 <button
                   type="button"
                   onClick={() => setShowExamples(false)}
-                  className="text-text-tertiary hover:text-text-primary transition-colors"
+                  className="p-2 -mr-2 text-text-tertiary hover:text-text-primary hover:bg-alira-primary/5 dark:hover:bg-alira-white/5 rounded-lg transition-colors touch-manipulation"
+                  aria-label="Close examples"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-5 h-5 sm:w-4 sm:h-4" />
                 </button>
               </div>
 
               {/* Templates List */}
-              <div className="max-h-[400px] overflow-y-auto p-4 space-y-3">
+              <div className="flex-1 overflow-y-auto p-4 sm:p-4 sm:max-h-[400px] space-y-3 pb-6 sm:pb-4">
                 {templates.map((template) => (
                   <div
                     key={template.id}
                     className={cn(
-                      "p-4 rounded-lg border cursor-pointer transition-all",
+                      "p-4 sm:p-4 rounded-lg border cursor-pointer transition-all touch-manipulation",
+                      "active:scale-[0.98] sm:active:scale-100",
                       selectedTemplate?.id === template.id
                         ? "border-alira-gold bg-alira-gold/5"
-                        : "border-alira-primary/10 dark:border-alira-white/10 hover:border-alira-gold/40"
+                        : "border-alira-primary/10 dark:border-alira-white/10 hover:border-alira-gold/40 active:border-alira-gold/40"
                     )}
                     onClick={() => setSelectedTemplate(template)}
                   >
@@ -119,7 +142,7 @@ export function ExampleTemplate({ questionId, onFillExample, className }: Exampl
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="mt-3 flex gap-2"
+                        className="mt-3 flex flex-col sm:flex-row gap-2"
                       >
                         <Button
                           type="button"
@@ -129,16 +152,16 @@ export function ExampleTemplate({ questionId, onFillExample, className }: Exampl
                             e.stopPropagation()
                             handleCopy(template)
                           }}
-                          className="text-xs"
+                          className="text-xs min-h-[44px] sm:min-h-0 touch-manipulation"
                         >
                           {copied ? (
                             <>
-                              <Check className="w-3 h-3 mr-1" />
+                              <Check className="w-4 h-4 sm:w-3 sm:h-3 mr-1" />
                               Copied
                             </>
                           ) : (
                             <>
-                              <Copy className="w-3 h-3 mr-1" />
+                              <Copy className="w-4 h-4 sm:w-3 sm:h-3 mr-1" />
                               Copy
                             </>
                           )}
@@ -151,7 +174,7 @@ export function ExampleTemplate({ questionId, onFillExample, className }: Exampl
                               e.stopPropagation()
                               handleFillExample(template)
                             }}
-                            className="text-xs bg-alira-gold text-alira-primary hover:bg-alira-gold/90"
+                            className="text-xs bg-alira-gold text-alira-primary hover:bg-alira-gold/90 min-h-[44px] sm:min-h-0 touch-manipulation"
                           >
                             Fill This Example
                           </Button>

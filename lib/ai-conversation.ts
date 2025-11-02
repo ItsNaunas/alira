@@ -1,5 +1,14 @@
 import 'server-only'
 import OpenAI from 'openai'
+import { 
+  ROOT_CAUSE_ANALYSIS_PROMPT,
+  PROBLEM_STATEMENT_GUIDANCE,
+  getIndustryContext,
+  INDUSTRY_METRICS,
+  type IndustryType,
+  type BusinessStageType
+} from './business-case-methodology'
+import { getProblemPatterns } from './industry-questions'
 
 // API key validation
 if (!process.env.OPENAI_API_KEY) {
@@ -129,54 +138,85 @@ export async function generateFollowUpQuestion(
   userResponse: string,
   context?: {
     specificArea?: string
-    businessStage?: 'idea' | 'early' | 'growing' | 'established'
-    industry?: 'tech_saas' | 'retail_ecommerce' | 'service' | 'other'
+    businessStage?: BusinessStageType
+    industry?: IndustryType
     businessIdea?: string
     previousAnswers?: Record<string, string>
   }
 ): Promise<string> {
   try {
-    const industryExamples = context?.industry ? {
-      tech_saas: "Example: If user says 'low sales', probe: 'In SaaS, sales issues usually break down into messaging clarity, channel effectiveness, or conversion. Which do you think is the biggest blocker?'",
-      retail_ecommerce: "Example: If user says 'not enough customers', probe: 'Are people finding your products but not buying (conversion issue), or not finding you at all (discovery issue)?'",
-      service: "Example: If user says 'not enough clients', probe: 'Are you having trouble attracting leads, or converting inquiries into clients?'",
-      other: ""
-    }[context.industry] : ""
+    // Get industry context from methodology
+    const industryContext = context?.industry 
+      ? getIndustryContext(context.industry, context.businessStage || 'early')
+      : ''
+    
+    // Get industry metrics to ask about
+    const industryMetrics = context?.industry && context.industry !== 'other'
+      ? INDUSTRY_METRICS[context.industry].join(', ')
+      : ''
+    
+    // Get problem patterns for the industry (if challenges question)
+    const problemPatterns = context?.industry && context.industry !== 'other'
+      ? getProblemPatterns(context.industry)
+      : []
 
-    const systemPrompt = `You are ALIRA's AI conversation assistant. Generate a single, specific follow-up question using progressive questioning methodology.
+    const systemPrompt = `You are ALIRA's senior strategy consultant. Generate a single, insightful follow-up question using proven business case development methodologies.
 
-PROGRESSIVE QUESTIONING TECHNIQUES:
-1. Start broad, then narrow down (funnel approach)
-2. Ask "why" to get to root causes (5 Whys technique)
-3. Probe for quantification (how much, how often, how many)
-4. Uncover hidden challenges (what's not working that they haven't mentioned?)
-5. Connect to business outcomes (revenue, growth, efficiency)
+${ROOT_CAUSE_ANALYSIS_PROMPT}
 
-${context?.industry ? `Industry Context: ${context.industry}. Use industry-specific terminology and examples.` : ''}
-${context?.businessStage ? `Business Stage: ${context.businessStage}. Ask stage-appropriate questions.` : ''}
-${industryExamples ? `Industry Example: ${industryExamples}` : ''}
+${PROBLEM_STATEMENT_GUIDANCE}
 
-GUIDELINES:
-- Be conversational and friendly
-- Reference what they already said to show you're listening
-- Ask about ONE specific thing
-- Use industry-specific examples if applicable
-- Probe for root causes, not symptoms (use "5 Whys" approach)
-- Ask for numbers when possible (quantify impact)
-- Make it easy to answer
-- Don't be repetitive
+PROGRESSIVE QUESTIONING METHODOLOGY:
+1. Root Cause Analysis (5 Whys): Dig beneath symptoms to find root causes
+   - Ask "why" 2-3 times mentally before generating the question
+   - Focus on underlying issues, not surface problems
+   - Example: If they say "low sales", don't accept that - ask "Why are sales low? Is it awareness, conversion, or retention?"
+
+2. Quantification: Get specific numbers and measurements
+   - Ask for metrics: time (hours/days), cost (£/%), volume (customers/units)
+   - Quantify impact: "How many hours per week?" "How much does this cost you?"
+   - Use industry-specific KPIs: ${industryMetrics || 'general business metrics'}
+
+3. Stage-Appropriate Probing:
+   ${context?.businessStage === 'idea' ? '- Focus on validation, market fit, early customer discovery' : ''}
+   ${context?.businessStage === 'early' ? '- Focus on process establishment, first customers, basic operations' : ''}
+   ${context?.businessStage === 'growing' ? '- Focus on scaling, efficiency, team building, systemization' : ''}
+   ${context?.businessStage === 'established' ? '- Focus on optimization, modernization, profit improvement' : ''}
+
+4. Industry-Specific Context:
+${industryContext ? industryContext : '- Use general business terminology'}
+
+${problemPatterns.length > 0 && context?.industry ? `\nCommon problem patterns in ${context.industry}: ${problemPatterns.join('; ')}` : ''}
+
+QUESTION GUIDELINES:
+- Be conversational, friendly, and supportive
+- Reference their answer: "I hear you're dealing with [X]. Let me dig a bit deeper..."
+- Ask ONE specific thing at a time
+- Probe for root causes, not symptoms
+- Ask for quantification when relevant
+- Make it easy to answer (provide examples or choices)
+- Don't repeat previous questions
+- Use UK business context (British English, £, realistic timelines)
 
 Example:
 Original Q: "What are your biggest challenges?"
 User: "We're not getting enough customers"
-Follow-up: "I see. That usually breaks down into either people not finding you, or finding you but not converting. Which do you think is the bigger issue?"`
+Bad follow-up: "Can you tell me more about that?" (too vague)
+Good follow-up: "I see. In [industry], customer acquisition issues usually break down into discovery (people not finding you) or conversion (finding you but not buying). Which do you think is the bigger bottleneck right now?" (root cause + quantification)`
 
     const userPrompt = `Original Question: "${originalQuestion}"
 User's Response: "${userResponse}"
 ${context?.specificArea ? `Focus Area: ${context.specificArea}` : ''}
 ${context?.businessIdea ? `Business Context: ${context.businessIdea}` : ''}
+${context?.previousAnswers ? `Previous Answers (for context): ${JSON.stringify(context.previousAnswers)}` : ''}
 
-Generate ONE specific follow-up question that uses progressive questioning to dig deeper:`
+Generate ONE specific follow-up question that:
+1. Uses "5 Whys" to probe for root causes
+2. Asks for quantification where relevant (time, cost, volume)
+3. Uses ${context?.industry || 'general'} industry context appropriately
+4. Is stage-appropriate for ${context?.businessStage || 'early'} stage
+5. References their answer naturally
+6. Is easy to answer (provide examples/choices if helpful):`
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',

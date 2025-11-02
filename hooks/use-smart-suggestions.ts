@@ -12,6 +12,7 @@ interface UseSmartSuggestionsOptions {
   currentValue: string
   businessStage?: BusinessStage
   businessIdea?: string
+  industry?: 'tech_saas' | 'retail_ecommerce' | 'service' | 'other'
   debounceMs?: number
 }
 
@@ -20,38 +21,92 @@ export function useSmartSuggestions({
   currentValue,
   businessStage,
   businessIdea,
+  industry,
   debounceMs = 500
 }: UseSmartSuggestionsOptions) {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const debounceTimer = useRef<NodeJS.Timeout>()
 
-  // Generate contextual suggestions based on field and context
+  // Generate contextual suggestions using AI API
   const generateSuggestions = useCallback(async (value: string) => {
+    // Show loading state immediately when user starts typing (after 2 chars)
+    if (value.length >= 2 && value.length < 3) {
+      setIsLoading(true)
+      return
+    }
+    
     if (!value || value.length < 3) {
       setSuggestions([])
+      setIsLoading(false)
       return
     }
 
     setIsLoading(true)
     try {
-      // Extract last few words for context
-      const words = value.trim().split(/\s+/)
-      const lastWords = words.slice(-3).join(' ')
+      // Infer industry from business idea if available
+      let inferredIndustry: 'tech_saas' | 'retail_ecommerce' | 'service' | 'other' | undefined = undefined
+      if (businessIdea) {
+        const ideaLower = businessIdea.toLowerCase()
+        if (ideaLower.includes('app') || ideaLower.includes('software') || ideaLower.includes('saas') || ideaLower.includes('platform') || ideaLower.includes('tool') || ideaLower.includes('tech')) {
+          inferredIndustry = 'tech_saas'
+        } else if (ideaLower.includes('sell') || ideaLower.includes('product') || ideaLower.includes('shop') || ideaLower.includes('store') || ideaLower.includes('retail') || ideaLower.includes('fashion') || ideaLower.includes('clothing') || ideaLower.includes('ecommerce')) {
+          inferredIndustry = 'retail_ecommerce'
+        } else if (ideaLower.includes('service') || ideaLower.includes('consult') || ideaLower.includes('agency') || ideaLower.includes('coach') || ideaLower.includes('freelance')) {
+          inferredIndustry = 'service'
+        }
+      }
+
+      // Call AI-powered suggestions API
+      const response = await fetch('/api/form/suggestions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fieldName,
+          currentValue: value,
+          businessStage: businessStage || undefined,
+          businessIdea: businessIdea || undefined,
+          industry: inferredIndustry || undefined
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Suggestions API returned ${response.status}`)
+      }
+
+      const data = await response.json()
       
-      // Generate suggestions based on field type and context
-      const fieldSuggestions = getFieldSuggestions(
+      // Convert array of strings to Suggestion objects
+      const aiSuggestions: Suggestion[] = (data.suggestions || []).map((text: string, index: number) => ({
+        id: `ai-${index}`,
+        text,
+        category: 'ai-generated'
+      }))
+
+      // If AI returns no suggestions, fall back to static templates
+      if (aiSuggestions.length === 0) {
+        const fallbackSuggestions = getFieldSuggestions(
+          fieldName,
+          value,
+          businessStage,
+          businessIdea
+        )
+        setSuggestions(fallbackSuggestions.slice(0, 5))
+      } else {
+        setSuggestions(aiSuggestions)
+      }
+    } catch (error) {
+      console.error('Error generating AI suggestions, falling back to templates:', error)
+      // Fallback to static suggestions on error
+      const fallbackSuggestions = getFieldSuggestions(
         fieldName,
-        lastWords,
+        value,
         businessStage,
         businessIdea
       )
-
-      // Limit to top 3-5 suggestions
-      setSuggestions(fieldSuggestions.slice(0, 5))
-    } catch (error) {
-      console.error('Error generating suggestions:', error)
-      setSuggestions([])
+      setSuggestions(fallbackSuggestions.slice(0, 5))
     } finally {
       setIsLoading(false)
     }

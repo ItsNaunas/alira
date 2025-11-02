@@ -25,7 +25,10 @@ import { ExitIntentModal } from './ExitIntentModal'
 import { ContextualHelp } from './ContextualHelp'
 import { CompletionPreview } from './CompletionPreview'
 import { useMobile, useSwipe, useVoiceInput } from '@/hooks/use-mobile'
+import { useAutoSave } from '@/hooks/use-auto-save'
+import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard'
 import { Mic, MicOff, Eye } from 'lucide-react'
+import { useRef } from 'react'
 
 interface FormWizardProps {
   resumeToken?: string
@@ -35,9 +38,11 @@ interface FormWizardProps {
   onComplete?: (data: WizardFormData) => Promise<void>
   // If true, skips draft-based flow and uses onComplete directly
   useAuthenticatedFlow?: boolean
+  // User ID for authenticated users (used for auto-save)
+  userId?: string
 }
 
-export default function FormWizard({ resumeToken, initialData, draftId: propDraftId, onComplete, useAuthenticatedFlow = false }: FormWizardProps) {
+export default function FormWizard({ resumeToken, initialData, draftId: propDraftId, onComplete, useAuthenticatedFlow = false, userId }: FormWizardProps) {
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [draftId, setDraftId] = useState<string | null>(propDraftId || null)
@@ -54,9 +59,22 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   const [voiceInputActive, setVoiceInputActive] = useState<string | null>(null)
   const [showExitIntent, setShowExitIntent] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
+  const [restoredDashboardId, setRestoredDashboardId] = useState<string | null>(null)
+
+  // Refs for mobile keyboard auto-scroll
+  const businessIdeaRef = useRef<HTMLTextAreaElement>(null)
+  const challengesRef = useRef<HTMLTextAreaElement>(null)
+  const goalsRef = useRef<HTMLTextAreaElement>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
 
   // Mobile detection
   const isMobile = useMobile()
+
+  // Mobile keyboard auto-scroll
+  useMobileKeyboard(businessIdeaRef, { enabled: isMobile, offset: 120 })
+  useMobileKeyboard(challengesRef, { enabled: isMobile, offset: 120 })
+  useMobileKeyboard(goalsRef, { enabled: isMobile, offset: 120 })
+  useMobileKeyboard(emailRef, { enabled: isMobile, offset: 120 })
 
   // Swipe gestures for mobile navigation
   const swipeHandlers = useSwipe(
@@ -105,6 +123,28 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
 
   const watchedValues = watch()
 
+  // Auto-save for authenticated users
+  const autoSaveState = useAutoSave({
+    enabled: useAuthenticatedFlow && !!userId,
+    userId: userId,
+    formData: {
+      ...watchedValues,
+      ...collectedFormData
+    },
+    currentStep,
+    initialDashboardId: restoredDashboardId,
+    onSaveStart: () => {
+      // Optional: could show a subtle "Saving..." indicator
+    },
+    onSaveComplete: () => {
+      // Optional: could show a brief "Saved" confirmation
+    },
+    onSaveError: (error) => {
+      // Silently log errors - don't interrupt user flow
+      console.error('Auto-save failed:', error)
+    }
+  })
+
   // Animation variants for smooth transitions
   const stepVariants = {
     hidden: { opacity: 0, x: 50, scale: 0.95 },
@@ -151,6 +191,66 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       loadDraft(resumeToken)
     }
   }, [resumeToken, initialData, loadDraft])
+
+  // Load draft for authenticated users from dashboards
+  const loadAuthenticatedDraft = useCallback(async () => {
+    if (!useAuthenticatedFlow || !userId) return
+
+    try {
+      const { createClient } = await import('@/lib/supabase-client')
+      const supabase = createClient()
+
+      // Find the most recent draft dashboard
+      const { data: draftDashboard, error } = await supabase
+        .from('dashboards')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('status', 'draft')
+        .order('updated_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+
+      if (error) {
+        console.error('Error loading authenticated draft:', error)
+        return
+      }
+
+      if (draftDashboard?.form_data) {
+        const draftFormData = draftDashboard.form_data as any
+        
+        // Restore form state
+        if (draftFormData.currentStep) {
+          setCurrentStep(draftFormData.currentStep)
+        }
+        
+        // Populate form fields
+        Object.keys(draftFormData).forEach(key => {
+          if (key !== 'currentStep' && key !== 'lastSaved') {
+            setValue(key as keyof WizardFormData, draftFormData[key])
+          }
+        })
+        
+        // Store in collectedFormData
+        setCollectedFormData(draftFormData)
+        
+        // Store dashboard ID so auto-save can use it
+        setRestoredDashboardId(draftDashboard.id)
+        
+        console.log('Restored draft from dashboard:', draftDashboard.id)
+      } else {
+        console.log('No draft found for authenticated user')
+      }
+    } catch (error) {
+      console.error('Error loading authenticated draft:', error)
+    }
+  }, [useAuthenticatedFlow, userId, setValue])
+
+  // Load authenticated draft on mount
+  useEffect(() => {
+    if (useAuthenticatedFlow && userId && !initialData && !resumeToken) {
+      loadAuthenticatedDraft()
+    }
+  }, [useAuthenticatedFlow, userId, initialData, resumeToken, loadAuthenticatedDraft])
 
   // Exit intent detection
   useEffect(() => {
@@ -565,14 +665,21 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               <div className="relative">
                 <Textarea
                   id="business_idea"
-                  {...register('business_idea')}
-                  onChange={(e) => {
-                    register('business_idea').onChange(e)
-                    const quality = evaluateAnswerQuality(e.target.value, 10)
-                    setAnswerQuality(prev => ({ ...prev, business_idea: quality.quality }))
+                  {...register('business_idea', {
+                    onChange: (e) => {
+                      const quality = evaluateAnswerQuality(e.target.value, 10)
+                      setAnswerQuality(prev => ({ ...prev, business_idea: quality.quality }))
+                    }
+                  })}
+                  ref={(e) => {
+                    const { ref } = register('business_idea')
+                    ref(e)
+                    businessIdeaRef.current = e
                   }}
                   placeholder="e.g., a marketing agency that helps creators launch offers"
                   rows={isMobile ? 6 : 4}
+                  inputMode="text"
+                  autoComplete="organization"
                   className={cn(
                     "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
                     isMobile && "text-base", // Larger text on mobile for better readability
@@ -618,6 +725,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 fieldName="business_idea"
                 currentValue={watchedValues.business_idea || ''}
                 businessStage={watchedValues.business_stage as BusinessStage}
+                businessIdea={watchedValues.business_idea}
                 onSuggestionClick={(suggestion) => {
                   const currentValue = watchedValues.business_idea || ''
                   const newValue = currentValue.trim() 
@@ -631,25 +739,32 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               
               {/* Answer Quality Indicator */}
               {watchedValues.business_idea && (
-                <div className="mt-2 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className={cn("font-medium", getQualityColorClass(answerQuality.business_idea || 'needs_more'))}>
+                <motion.div
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-3 p-2 sm:p-3 rounded-lg bg-alira-primary/5 dark:bg-alira-white/5 border border-alira-primary/10 dark:border-alira-white/10 flex items-center justify-between text-xs sm:text-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "px-2 py-1 rounded-md font-medium text-xs sm:text-sm",
+                      getQualityColorClass(answerQuality.business_idea || 'needs_more')
+                    )}>
                       {getQualityLabel(answerQuality.business_idea || 'needs_more')}
-                    </span>
-                    <span className="text-text-tertiary">
+                    </div>
+                    <span className="text-alira-primary/60 dark:text-alira-white/60">
                       {watchedValues.business_idea.length} characters
                     </span>
                   </div>
                   {evaluateAnswerQuality(watchedValues.business_idea || '', 10).suggestions.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
+                    <div className="hidden sm:flex flex-wrap gap-1">
                       {evaluateAnswerQuality(watchedValues.business_idea || '', 10).suggestions.slice(0, 1).map((suggestion, idx) => (
-                        <span key={idx} className="text-text-tertiary italic">
+                        <span key={idx} className="text-alira-primary/50 dark:text-alira-white/50 italic text-xs">
                           {suggestion}
                         </span>
                       ))}
                     </div>
                   )}
-                </div>
+                </motion.div>
               )}
               
               <div id="business_idea-hint" className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
@@ -660,16 +775,21 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               </div>
               
               {errors.business_idea && (
-                <p 
+                <motion.p 
                   id="business_idea-error"
-                  className="mt-2 text-sm font-medium text-red-500 dark:text-red-400 flex items-center gap-1.5"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={cn(
+                    "mt-2 font-medium text-red-500 dark:text-red-400 flex items-start gap-2 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800",
+                    isMobile ? "text-base" : "text-sm"
+                  )}
                   role="alert"
                 >
-                  <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <svg className={cn("flex-shrink-0", isMobile ? "w-5 h-5 mt-0.5" : "w-4 h-4")} fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                   </svg>
-                  {errors.business_idea.message}
-                </p>
+                  <span className="flex-1">{errors.business_idea.message}</span>
+                </motion.p>
               )}
             </div>
 
@@ -744,14 +864,20 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               <div className="relative">
                 <Textarea
                   id="current_challenges"
-                  {...register('current_challenges')}
-                  onChange={(e) => {
-                    register('current_challenges').onChange(e)
-                    const quality = evaluateAnswerQuality(e.target.value, 10)
-                    setAnswerQuality(prev => ({ ...prev, current_challenges: quality.quality }))
+                  {...register('current_challenges', {
+                    onChange: (e) => {
+                      const quality = evaluateAnswerQuality(e.target.value, 10)
+                      setAnswerQuality(prev => ({ ...prev, current_challenges: quality.quality }))
+                    }
+                  })}
+                  ref={(e) => {
+                    const { ref } = register('current_challenges')
+                    ref(e)
+                    challengesRef.current = e
                   }}
                   placeholder={challengesQuestion.placeholder}
                   rows={isMobile ? 6 : 4}
+                  inputMode="text"
                   className={cn(
                     "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
                     isMobile && "text-base",
@@ -811,25 +937,32 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               
               {/* Answer Quality Indicator */}
               {watchedValues.current_challenges && (
-                <div className="mt-2 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className={cn("font-medium", getQualityColorClass(answerQuality.current_challenges || 'needs_more'))}>
+                <motion.div
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-3 p-2 sm:p-3 rounded-lg bg-alira-primary/5 dark:bg-alira-white/5 border border-alira-primary/10 dark:border-alira-white/10 flex items-center justify-between text-xs sm:text-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "px-2 py-1 rounded-md font-medium text-xs sm:text-sm",
+                      getQualityColorClass(answerQuality.current_challenges || 'needs_more')
+                    )}>
                       {getQualityLabel(answerQuality.current_challenges || 'needs_more')}
-                    </span>
-                    <span className="text-text-tertiary">
+                    </div>
+                    <span className="text-alira-primary/60 dark:text-alira-white/60">
                       {watchedValues.current_challenges.length} characters
                     </span>
                   </div>
                   {evaluateAnswerQuality(watchedValues.current_challenges || '', 10).suggestions.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
+                    <div className="hidden sm:flex flex-wrap gap-1">
                       {evaluateAnswerQuality(watchedValues.current_challenges || '', 10).suggestions.slice(0, 1).map((suggestion, idx) => (
-                        <span key={idx} className="text-text-tertiary italic">
+                        <span key={idx} className="text-alira-primary/50 dark:text-alira-white/50 italic text-xs">
                           {suggestion}
                         </span>
                       ))}
                     </div>
                   )}
-                </div>
+                </motion.div>
               )}
               
               <div id="current_challenges-hint" className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
@@ -839,16 +972,21 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 </p>
               </div>
               {errors.current_challenges && (
-                <p 
+                <motion.p 
                   id="current_challenges-error"
-                  className="mt-2 text-sm font-medium text-red-500 dark:text-red-400 flex items-center gap-1.5"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={cn(
+                    "mt-2 font-medium text-red-500 dark:text-red-400 flex items-start gap-2 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800",
+                    isMobile ? "text-base" : "text-sm"
+                  )}
                   role="alert"
                 >
-                  <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <svg className={cn("flex-shrink-0", isMobile ? "w-5 h-5 mt-0.5" : "w-4 h-4")} fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                   </svg>
-                  {errors.current_challenges.message}
-                </p>
+                  <span className="flex-1">{errors.current_challenges.message}</span>
+                </motion.p>
               )}
             </div>
           </div>
@@ -891,14 +1029,20 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               <div className="relative">
                 <Textarea
                   id="immediate_goals"
-                  {...register('immediate_goals')}
-                  onChange={(e) => {
-                    register('immediate_goals').onChange(e)
-                    const quality = evaluateAnswerQuality(e.target.value, 10)
-                    setAnswerQuality(prev => ({ ...prev, immediate_goals: quality.quality }))
+                  {...register('immediate_goals', {
+                    onChange: (e) => {
+                      const quality = evaluateAnswerQuality(e.target.value, 10)
+                      setAnswerQuality(prev => ({ ...prev, immediate_goals: quality.quality }))
+                    }
+                  })}
+                  ref={(e) => {
+                    const { ref } = register('immediate_goals')
+                    ref(e)
+                    goalsRef.current = e
                   }}
                   placeholder={goalsQuestion.placeholder}
                   rows={isMobile ? 6 : 4}
+                  inputMode="text"
                   className={cn(
                     "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
                     isMobile && "text-base",
@@ -945,6 +1089,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 currentValue={watchedValues.immediate_goals || ''}
                 businessStage={watchedValues.business_stage as BusinessStage}
                 businessIdea={watchedValues.business_idea}
+                industry={inferredIndustryGoals}
                 onSuggestionClick={(suggestion) => {
                   const currentValue = watchedValues.immediate_goals || ''
                   const newValue = currentValue.trim() 
@@ -958,25 +1103,32 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               
               {/* Answer Quality Indicator */}
               {watchedValues.immediate_goals && (
-                <div className="mt-2 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className={cn("font-medium", getQualityColorClass(answerQuality.immediate_goals || 'needs_more'))}>
+                <motion.div
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-3 p-2 sm:p-3 rounded-lg bg-alira-primary/5 dark:bg-alira-white/5 border border-alira-primary/10 dark:border-alira-white/10 flex items-center justify-between text-xs sm:text-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "px-2 py-1 rounded-md font-medium text-xs sm:text-sm",
+                      getQualityColorClass(answerQuality.immediate_goals || 'needs_more')
+                    )}>
                       {getQualityLabel(answerQuality.immediate_goals || 'needs_more')}
-                    </span>
-                    <span className="text-text-tertiary">
+                    </div>
+                    <span className="text-alira-primary/60 dark:text-alira-white/60">
                       {watchedValues.immediate_goals.length} characters
                     </span>
                   </div>
                   {evaluateAnswerQuality(watchedValues.immediate_goals || '', 10).suggestions.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
+                    <div className="hidden sm:flex flex-wrap gap-1">
                       {evaluateAnswerQuality(watchedValues.immediate_goals || '', 10).suggestions.slice(0, 1).map((suggestion, idx) => (
-                        <span key={idx} className="text-text-tertiary italic">
+                        <span key={idx} className="text-alira-primary/50 dark:text-alira-white/50 italic text-xs">
                           {suggestion}
                         </span>
                       ))}
                     </div>
                   )}
-                </div>
+                </motion.div>
               )}
               
               <div id="immediate_goals-hint" className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
@@ -1077,7 +1229,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   </p>
                 </div>
               </div>
-              {(!draftData?.name || !draftData?.email) && (
+              {(!useAuthenticatedFlow && (!draftData?.name || !draftData?.email)) && (
                 <div className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 rounded-lg">
                   <p className="text-amber-800 dark:text-amber-200 text-sm">
                     ⚠️ Missing contact information. Please start from the homepage to provide your name and email.
@@ -1261,7 +1413,12 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         }}
       />
       <div 
-        className="max-w-3xl mx-auto"
+        className={cn(
+          "max-w-3xl mx-auto",
+          // Mobile: Better padding and spacing
+          isMobile ? "px-4 sm:px-6" : "px-0",
+          "pb-6 sm:pb-8"
+        )}
         {...(isMobile ? swipeHandlers : {})}
       >
       {/* Enhanced Progress Indicator */}
@@ -1280,11 +1437,12 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       <form onSubmit={handleSubmit(onSubmit)} onSubmitCapture={(e) => console.log('Form submit event triggered', e)}>
         <Card className="border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/70 backdrop-blur shadow-[0_10px_30px_rgba(0,0,0,0.35)] rounded-2xl">
           <CardHeader className="border-b border-alira-primary/10 dark:border-alira-white/10 bg-white/5 dark:bg-white/5 rounded-t-2xl px-6 py-5">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-alira-gold text-alira-primary text-sm font-light">
-                {currentStep}
-              </span>
-              <div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-alira-gold text-alira-primary text-sm font-light">
+                  {currentStep}
+                </span>
+                <div>
                 <CardTitle className="text-lg md:text-xl font-light text-alira-primary dark:text-alira-white">
                   {currentStep === 1 && "Your Business"}
                   {currentStep === 2 && "Current Challenges"}
@@ -1298,6 +1456,22 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   {currentStep === 4 && "How we can help you"}
                 </p>
               </div>
+            </div>
+            {useAuthenticatedFlow && (
+              <div className="mt-2">
+                {autoSaveState.isSaving && (
+                  <div className="flex items-center gap-2 text-xs text-alira-primary/70 dark:text-alira-white/70">
+                    <div className="w-3 h-3 border-2 border-alira-gold border-t-transparent rounded-full animate-spin" />
+                    <span>Saving...</span>
+                  </div>
+                )}
+                {!autoSaveState.isSaving && autoSaveState.lastSaved && (
+                  <div className="text-xs text-alira-primary/50 dark:text-alira-white/50">
+                    Saved {new Date(autoSaveState.lastSaved).toLocaleTimeString()}
+                  </div>
+                )}
+              </div>
+            )}
             </div>
           </CardHeader>
           <CardContent className="px-6 py-6 md:px-8 md:py-8 space-y-6">
@@ -1318,7 +1492,9 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
 
         {/* Enhanced Navigation with Animations */}
         <motion.div 
-          className="mt-8 p-6 bg-gradient-to-r from-alira-primary/5 to-alira-gold/5 rounded-xl border border-alira-primary/10"
+          className={cn(
+            "mt-6 sm:mt-8 p-4 sm:p-6 bg-gradient-to-r from-alira-primary/5 to-alira-gold/5 rounded-xl border border-alira-primary/10"
+          )}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -1378,6 +1554,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   <Button
                     type="button"
                     loading={isSubmitting || isGeneratingPlan}
+                    disabled={isSubmitting || isGeneratingPlan}
                     onClick={async () => {
                       console.log('Button clicked, current step:', currentStep, 'isSubmitting:', isSubmitting, 'isGeneratingPlan:', isGeneratingPlan)
                       if (currentStep === 4) {
@@ -1391,6 +1568,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                     }}
                     className={cn(
                       "inline-flex items-center justify-center bg-alira-gold text-alira-primary px-5 font-light ring-2 ring-alira-gold/20 hover:bg-alira-gold/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200",
+                      "disabled:opacity-50 disabled:cursor-not-allowed",
                       isMobile ? "min-h-[44px] text-base" : "min-h-[48px]"
                     )}
                   >
@@ -1462,6 +1640,10 @@ function EmailGateForm({ onSubmit, isGenerating, existingName, existingEmail }: 
           onChange={handleEmailChange}
           placeholder="your@email.com"
           disabled={!!existingEmail}
+          ref={emailRef}
+          inputMode="email"
+          autoComplete="email"
+          autoCapitalize="none"
           className={`w-full border-2 border-alira-primary/20 dark:border-alira-white/20 rounded-xl px-4 py-3 text-base text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 bg-white dark:bg-alira-primary/50 focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 ${existingEmail ? 'bg-alira-primary/5 dark:bg-alira-primary/20 cursor-not-allowed' : ''}`}
           required
         />
