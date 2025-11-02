@@ -69,7 +69,7 @@ export default function TeamFlipCards({
           <div className="w-16 h-px bg-accent mx-auto"></div>
         </div>
 
-        <div className="flex flex-nowrap items-center justify-center gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto justify-items-center">
           {members.map((member) => (
             <TeamMemberCard key={member.name} member={member} />
           ))}
@@ -103,12 +103,14 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
   }
 
   return (
-    <div className="group bg-surface border border-borderToken-subtle h-[420px] w-96 overflow-hidden rounded-xl shadow-token-sm transition-all duration-300 hover:border-accent hover:shadow-token-md flex-shrink-0 flex flex-col">
+    <div className="group bg-surface border border-borderToken-subtle h-[420px] w-full max-w-[280px] sm:max-w-80 md:max-w-96 overflow-hidden rounded-xl shadow-token-sm transition-all duration-300 hover:border-accent hover:shadow-token-md flex flex-col">
       <div className="relative h-[200px] w-full overflow-hidden flex-shrink-0">
         <Image
           src={member.imageUrl}
           alt={member.name}
           fill
+          sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 384px"
+          loading="lazy"
           className="object-cover transition-transform duration-500"
           style={{
             objectPosition: objectPosition,

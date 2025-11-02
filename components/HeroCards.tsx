@@ -83,6 +83,8 @@ export default function HeroCards() {
                         src={card.image}
                         alt={card.title}
                         fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        loading="lazy"
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                         style={{
                           filter: 'saturate(0.75) contrast(1.05) brightness(0.95)'

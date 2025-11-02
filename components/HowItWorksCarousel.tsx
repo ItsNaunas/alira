@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 
 export default function HowItWorksCarousel() {
@@ -40,11 +41,13 @@ const Step1Content = () => {
         Tell us about your idea or business through our quick, structured questionnaire. 
         We keep it simple so you can share what matters most without getting overwhelmed.
       </p>
-      <img
+      <Image
         src="/images/how-it-works/input.jpg"
         alt="Person writing notes or working on laptop with warm focused lighting"
-        height="500"
-        width="500"
+        width={500}
+        height={500}
+        sizes="(max-width: 768px) 100vw, 50vw"
+        loading="lazy"
         className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain mt-8 rounded-xl"
       />
     </div>
@@ -61,11 +64,13 @@ const Step2Content = () => {
         We turn your words into strategy. Using AI and proven business frameworks, 
         we identify opportunities, challenges, and actionable next steps tailored to your vision.
       </p>
-      <img
+      <Image
         src="/images/how-it-works/AI.jpg"
         alt="AI neural network or analytics visualization glowing on screen"
-        height="500"
-        width="500"
+        width={500}
+        height={500}
+        sizes="(max-width: 768px) 100vw, 50vw"
+        loading="lazy"
         className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain mt-8 rounded-xl"
       />
     </div>
@@ -82,11 +87,13 @@ const Step3Content = () => {
         Receive your tailored plan. A comprehensive business plan delivered as a PDF, 
         ready to use with clear objectives, solutions, and an actionable roadmap.
       </p>
-      <img
+      <Image
         src="/images/how-it-works/plan.jpg"
         alt="Laptop showing professional PDF business plan layout"
-        height="500"
-        width="500"
+        width={500}
+        height={500}
+        sizes="(max-width: 768px) 100vw, 50vw"
+        loading="lazy"
         className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain mt-8 rounded-xl"
       />
     </div>

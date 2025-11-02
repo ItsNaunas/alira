@@ -18,7 +18,7 @@ export default function DesignerPricing() {
               <h1 className="mb-6 text-4xl leading-tight font-serif font-bold tracking-tight sm:text-5xl lg:text-6xl">
                 <span
                   className={cn(
-                    'text-7xl font-normal tracking-tight text-accent-dark',
+                    'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal tracking-tight text-accent-dark',
                     serif.className,
                   )}
                 >
@@ -27,7 +27,7 @@ export default function DesignerPricing() {
                 <br />
                 <span
                   className={cn(
-                    'text-8xl font-normal tracking-tight text-text-primary',
+                    'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-text-primary',
                     serif.className,
                   )}
                 >
