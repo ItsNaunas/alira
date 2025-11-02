@@ -31,9 +31,13 @@ interface FormWizardProps {
   resumeToken?: string
   initialData?: any
   draftId?: string
+  // Optional callback for custom submission handling (used for authenticated flows)
+  onComplete?: (data: WizardFormData) => Promise<void>
+  // If true, skips draft-based flow and uses onComplete directly
+  useAuthenticatedFlow?: boolean
 }
 
-export default function FormWizard({ resumeToken, initialData, draftId: propDraftId }: FormWizardProps) {
+export default function FormWizard({ resumeToken, initialData, draftId: propDraftId, onComplete, useAuthenticatedFlow = false }: FormWizardProps) {
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [draftId, setDraftId] = useState<string | null>(propDraftId || null)
@@ -364,19 +368,30 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     console.log('Form errors:', errors)
     console.log('Current step:', currentStep)
     console.log('Draft data:', draftData)
+    console.log('Use authenticated flow:', useAuthenticatedFlow)
     
-    // Check if we have required user data
-    if (!draftData?.name || !draftData?.email) {
-      console.log('❌ Missing user data, showing alert')
-      alert(errorMessages.required('contact information'))
-      return
-    }
-    
-    console.log('✅ User data present, starting form submission...')
-    console.log('Name:', draftData.name)
-    console.log('Email:', draftData.email)
     setIsSubmitting(true)
     try {
+      // If using authenticated flow with custom onComplete handler
+      if (useAuthenticatedFlow && onComplete) {
+        console.log('✅ Using authenticated flow, calling onComplete...')
+        conversionEvents.formCompleted('wizard_form')
+        await onComplete(data)
+        return
+      }
+      
+      // Default draft-based flow (original behavior)
+      // Check if we have required user data
+      if (!draftData?.name || !draftData?.email) {
+        console.log('❌ Missing user data, showing alert')
+        alert(errorMessages.required('contact information'))
+        return
+      }
+      
+      console.log('✅ User data present, starting form submission...')
+      console.log('Name:', draftData.name)
+      console.log('Email:', draftData.email)
+      
       let currentDraftId = draftId
 
       // Create a draft if one doesn't exist
@@ -1113,7 +1128,8 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   }
 
   // Email Gate Component
-  if (showEmailGate) {
+  // Skip email gate for authenticated flow
+  if (showEmailGate && !useAuthenticatedFlow) {
     return (
       <div className="max-w-2xl mx-auto">
         <motion.div

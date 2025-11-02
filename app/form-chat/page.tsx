@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { auth, createClient } from '@/lib/supabase-client';
 import { Spinner } from '@/components/ui/spinner';
-import MultiStepForm from '@/components/MultiStepForm';
+import FormWizard from '@/components/FormWizard';
 
 function FormChatContent() {
   const router = useRouter();
@@ -151,12 +151,12 @@ function FormChatContent() {
         </div>
       </header>
 
-      {/* Multi-Step Form */}
+      {/* Enhanced Form Wizard with all new features */}
       <main className="container mx-auto px-6 py-8">
-        <MultiStepForm
-          userId={user.id}
+        <FormWizard
           initialData={initialIdea ? { business_idea: initialIdea } : undefined}
           onComplete={handleFormComplete}
+          useAuthenticatedFlow={true}
         />
       </main>
     </div>
