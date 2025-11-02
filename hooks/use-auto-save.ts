@@ -147,7 +147,7 @@ export function useAutoSave({
           immediate_goals: formData.immediate_goals || null,
           service_interest: formData.service_interest || null,
           current_tools: formData.current_tools || null,
-          business_stage: formData.business_stage || null,
+          stage: formData.business_stage || null, // Use 'stage' column, not 'business_stage'
           form_data: {
             ...formData,
             currentStep,

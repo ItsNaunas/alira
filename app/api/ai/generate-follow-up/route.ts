@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       context
     )
 
-    return NextResponse.json({ followUpQuestion })
+    return NextResponse.json({ success: true, followUpQuestion })
   } catch (error) {
     console.error('Error generating follow-up question:', error)
     return NextResponse.json(

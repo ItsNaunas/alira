@@ -42,6 +42,7 @@ interface ConversationSegment {
   followUpCount: number
   maxFollowUps: number
   data: string // Final answer for this segment
+  showOptionalFollowUp?: boolean // Track if optional follow-up is being shown
 }
 
 interface SegmentedConversationFormProps {
@@ -109,6 +110,29 @@ const SEGMENT_DEFINITIONS = [
   }
 ]
 
+// Helper functions for segment-specific thresholds
+function getThresholdForSegment(segmentIndex: number): number {
+  // Different segments need different detail levels
+  const thresholds: Record<number, number> = {
+    0: 7, // Business idea - needs good detail
+    1: 6, // Challenges - moderate detail okay
+    2: 6, // Goals - moderate detail okay
+    3: 5  // Services - minimal (selection-based)
+  }
+  return thresholds[segmentIndex] ?? 7
+}
+
+function getMaxLengthForSegment(segmentIndex: number): number {
+  // Accept longer responses even if score is lower
+  const maxLengths: Record<number, number> = {
+    0: 150, // Business idea
+    1: 120, // Challenges
+    2: 120, // Goals
+    3: 50   // Services
+  }
+  return maxLengths[segmentIndex] ?? 150
+}
+
 export default function SegmentedConversationForm({
   initialData,
   onComplete,
@@ -125,7 +149,8 @@ export default function SegmentedConversationForm({
       context: {},
       followUpCount: 0,
       maxFollowUps: def.maxFollowUps,
-      data: ''
+      data: '',
+      showOptionalFollowUp: false
     }))
   })
 
@@ -388,7 +413,11 @@ export default function SegmentedConversationForm({
         throw new Error('Failed to evaluate response')
       }
 
-      const { evaluation } = await evalResponse.json()
+      const evalData = await evalResponse.json()
+      if (!evalData.success || !evalData.evaluation) {
+        throw new Error('Invalid evaluation response')
+      }
+      const { evaluation } = evalData
 
       // Update segment with evaluation
       setSegments(prev => {
@@ -413,7 +442,25 @@ export default function SegmentedConversationForm({
       }
 
       // Check if we need a follow-up or can move on
-      if (evaluation.detailScore < 8 && currentSegment.followUpCount < currentSegment.maxFollowUps) {
+      // Use smart multi-tier logic with segment-specific thresholds
+      const responseLength = messageContent.trim().length
+      const segmentThreshold = getThresholdForSegment(currentSegmentIndex)
+      const maxLength = getMaxLengthForSegment(currentSegmentIndex)
+      
+      // Primary check: Use hasEnoughDetail boolean as primary gate
+      const definitelyNeedsFollowUp = !evaluation.hasEnoughDetail 
+        && evaluation.detailScore < segmentThreshold
+        && responseLength < maxLength
+        && currentSegment.followUpCount < currentSegment.maxFollowUps
+      
+      // Optional follow-up check: For "good but could be better" (scores 6-7)
+      const optionalFollowUp = evaluation.hasEnoughDetail 
+        && evaluation.detailScore >= 6 
+        && evaluation.detailScore < 8
+        && currentSegment.followUpCount === 0
+        && (evaluation.suggestedImprovements?.length ?? 0) > 0
+      
+      if (definitelyNeedsFollowUp) {
         // Need follow-up question via API
         const contextForFollowUp = buildContext(currentSegmentIndex)
         const followUpResponse = await fetch('/api/ai/generate-follow-up', {
@@ -432,10 +479,41 @@ export default function SegmentedConversationForm({
         })
 
         if (!followUpResponse.ok) {
-          throw new Error('Failed to generate follow-up question')
+          // If follow-up generation fails, just accept the response and move on
+          console.warn('Follow-up generation failed, accepting response as-is')
+          setSegments(prev => {
+            const updated = [...prev]
+            updated[currentSegmentIndex].data = messageContent
+            updated[currentSegmentIndex].isComplete = true
+            return updated
+          })
+          if (!isLastSegment) {
+            // Will show completion screen
+          } else {
+            setShowReview(true)
+          }
+          return
         }
 
-        const { followUpQuestion } = await followUpResponse.json()
+        const responseData = await followUpResponse.json()
+        if (!responseData.success || !responseData.followUpQuestion) {
+          // Invalid response, accept and move on
+          console.warn('Invalid follow-up response, accepting answer')
+          setSegments(prev => {
+            const updated = [...prev]
+            updated[currentSegmentIndex].data = messageContent
+            updated[currentSegmentIndex].isComplete = true
+            return updated
+          })
+          if (!isLastSegment) {
+            // Will show completion screen
+          } else {
+            setShowReview(true)
+          }
+          return
+        }
+
+        const { followUpQuestion } = responseData
 
         // Add follow-up question
         const followUpMessage: Message = {
@@ -449,6 +527,13 @@ export default function SegmentedConversationForm({
           const updated = [...prev]
           updated[currentSegmentIndex].messages.push(followUpMessage)
           updated[currentSegmentIndex].followUpCount += 1
+          return updated
+        })
+      } else if (optionalFollowUp) {
+        // Show optional follow-up prompt
+        setSegments(prev => {
+          const updated = [...prev]
+          updated[currentSegmentIndex].showOptionalFollowUp = true
           return updated
         })
       } else {
@@ -646,6 +731,29 @@ export default function SegmentedConversationForm({
         return [...prev, service]
       }
     })
+  }
+
+  // Handle skipping optional follow-up
+  const handleSkipOptionalFollowUp = () => {
+    setSegments(prev => {
+      const updated = [...prev]
+      updated[currentSegmentIndex].showOptionalFollowUp = false
+      updated[currentSegmentIndex].isComplete = true
+      // Use the last user message as the final answer
+      const lastUserMessage = updated[currentSegmentIndex].messages
+        .filter(m => m.role === 'user')
+        .pop()?.content || ''
+      if (lastUserMessage) {
+        updated[currentSegmentIndex].data = lastUserMessage
+      }
+      return updated
+    })
+
+    // Last segment complete - show review immediately
+    if (isLastSegment) {
+      setShowReview(true)
+    }
+    // Otherwise will show completion screen
   }
 
   // Handle services segment completion
@@ -858,6 +966,105 @@ export default function SegmentedConversationForm({
       {/* Messages */}
       <div className="flex-1 overflow-y-auto container mx-auto px-4 sm:px-6 py-6 max-w-4xl">
         <div className="max-w-2xl mx-auto">
+          {/* Show optional follow-up prompt */}
+          {currentSegment.showOptionalFollowUp && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="bg-alira-primary/10 dark:bg-alira-primary/20 border border-alira-gold/30 rounded-2xl p-5 mb-6 shadow-lg"
+            >
+              <div className="flex items-start gap-3 mb-4">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-alira-gold/20 flex items-center justify-center">
+                    <Bot className="w-5 h-5 text-alira-gold" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-base font-sans font-medium text-text-primary mb-2">
+                    This is good! Want to add more detail?
+                  </h3>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-4">
+                    Your answer is helpful, but adding a bit more detail will help us create an even better plan for you.
+                  </p>
+                  {currentSegment.evaluation?.suggestedImprovements && currentSegment.evaluation.suggestedImprovements.length > 0 && (
+                    <div className="mb-4">
+                      <p className="text-xs text-text-tertiary mb-2">For example, you could mention:</p>
+                      <ul className="text-xs text-text-secondary space-y-1 ml-4 list-disc">
+                        {currentSegment.evaluation.suggestedImprovements.slice(0, 2).map((suggestion, idx) => (
+                          <li key={idx}>{suggestion}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  variant="outline"
+                  onClick={async () => {
+                    // Generate and show follow-up question
+                    try {
+                      const contextForFollowUp = buildContext(currentSegmentIndex)
+                      const currentQuestion = currentSegment.messages.find(m => m.role === 'assistant')?.content || currentSegment.initialQuestion
+                      const lastUserMessage = currentSegment.messages.filter(m => m.role === 'user').pop()?.content || ''
+                      
+                      const followUpResponse = await fetch('/api/ai/generate-follow-up', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          originalQuestion: currentQuestion,
+                          userResponse: lastUserMessage,
+                          context: {
+                            industry: contextForFollowUp.industry,
+                            businessStage: contextForFollowUp.businessStage,
+                            businessIdea: contextForFollowUp.businessIdea,
+                            previousAnswers: contextForFollowUp.previousAnswers
+                          }
+                        })
+                      })
+
+                      if (followUpResponse.ok) {
+                        const responseData = await followUpResponse.json()
+                        if (responseData.success && responseData.followUpQuestion) {
+                          const followUpMessage: Message = {
+                            id: `msg-followup-opt-${Date.now()}`,
+                            role: 'assistant',
+                            content: responseData.followUpQuestion,
+                            timestamp: new Date()
+                          }
+
+                          setSegments(prev => {
+                            const updated = [...prev]
+                            updated[currentSegmentIndex].messages.push(followUpMessage)
+                            updated[currentSegmentIndex].followUpCount += 1
+                            updated[currentSegmentIndex].showOptionalFollowUp = false
+                            return updated
+                          })
+                          return
+                        }
+                      }
+                    } catch (error) {
+                      console.error('Error generating optional follow-up:', error)
+                    }
+                    // If generation fails, just accept the answer
+                    handleSkipOptionalFollowUp()
+                  }}
+                  className="flex-1 border-alira-gold/50 text-text-primary hover:bg-alira-gold/10"
+                >
+                  Add More Detail
+                </Button>
+                <Button
+                  onClick={handleSkipOptionalFollowUp}
+                  className="flex-1 bg-alira-gold text-alira-primary hover:bg-alira-gold/90"
+                >
+                  That's Enough
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
           {/* Show completion if segment just completed */}
           {currentSegment.isComplete && currentSegmentIndex < segments.length - 1 && (
             <SegmentCompletion

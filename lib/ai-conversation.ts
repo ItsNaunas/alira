@@ -55,9 +55,16 @@ EVALUATION CRITERIA:
 - Clarity: Is the answer clear and understandable?
 
 SCORING:
-- 8-10: Excellent detail, move to next question
-- 5-7: Good but could use more detail, ask ONE clarifying follow-up
-- 1-4: Too vague, needs substantial clarification
+- 8-10: Excellent detail, move to next question (hasEnoughDetail: true)
+- 6-7: Good detail, acceptable but could be enhanced (hasEnoughDetail: true for most cases)
+  * Accept answers with score 6+ as sufficient unless they're very short (<50 chars)
+  * If answer addresses the question clearly, mark hasEnoughDetail: true even if score is 6-7
+- 1-5: Too vague, needs substantial clarification (hasEnoughDetail: false)
+
+HAS_ENOUGH_DETAIL LOGIC:
+- Set hasEnoughDetail: true for scores 6+ if response shows understanding
+- Only set hasEnoughDetail: false for scores < 6 or very vague/short answers
+- Be reasonable - if answer addresses the question clearly, mark hasEnoughDetail: true even if score is 6-7
 
 FOLLOW-UP QUESTIONS:
 - Be conversational and friendly
@@ -103,12 +110,17 @@ Evaluate this response and determine if we need a follow-up question.`
     const evaluation: ResponseEvaluation = JSON.parse(response)
     
     // Ensure hasEnoughDetail is consistent with detailScore
-    if (evaluation.detailScore >= 8) {
+    // Accept scores 6+ as "hasEnoughDetail: true" (more lenient)
+    if (evaluation.detailScore >= 6) {
       evaluation.hasEnoughDetail = true
-      evaluation.followUpQuestion = undefined
+      // Only clear follow-up question for excellent scores (8+)
+      if (evaluation.detailScore >= 8) {
+        evaluation.followUpQuestion = undefined
+      }
     } else if (evaluation.detailScore < 5) {
       evaluation.hasEnoughDetail = false
     }
+    // For scores 5, trust the AI's hasEnoughDetail value
 
     return evaluation
   } catch (error) {

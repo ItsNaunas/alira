@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     const evaluation = await evaluateResponse(question, userResponse, context)
 
-    return NextResponse.json({ evaluation })
+    return NextResponse.json({ success: true, evaluation })
   } catch (error) {
     console.error('Error evaluating response:', error)
     return NextResponse.json(
