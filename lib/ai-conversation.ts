@@ -121,34 +121,62 @@ Evaluate this response and determine if we need a follow-up question.`
  * Generates an intelligent follow-up question based on context
  * @param originalQuestion - The original question asked
  * @param userResponse - User's response so far
- * @param specificArea - Specific area that needs more detail
+ * @param context - Additional context including business stage, industry, etc.
  * @returns A conversational follow-up question
  */
 export async function generateFollowUpQuestion(
   originalQuestion: string,
   userResponse: string,
-  specificArea?: string
+  context?: {
+    specificArea?: string
+    businessStage?: 'idea' | 'early' | 'growing' | 'established'
+    industry?: 'tech_saas' | 'retail_ecommerce' | 'service' | 'other'
+    businessIdea?: string
+    previousAnswers?: Record<string, string>
+  }
 ): Promise<string> {
   try {
-    const systemPrompt = `You are ALIRA's AI conversation assistant. Generate a single, specific follow-up question that helps get more detail from the user.
+    const industryExamples = context?.industry ? {
+      tech_saas: "Example: If user says 'low sales', probe: 'In SaaS, sales issues usually break down into messaging clarity, channel effectiveness, or conversion. Which do you think is the biggest blocker?'",
+      retail_ecommerce: "Example: If user says 'not enough customers', probe: 'Are people finding your products but not buying (conversion issue), or not finding you at all (discovery issue)?'",
+      service: "Example: If user says 'not enough clients', probe: 'Are you having trouble attracting leads, or converting inquiries into clients?'",
+      other: ""
+    }[context.industry] : ""
+
+    const systemPrompt = `You are ALIRA's AI conversation assistant. Generate a single, specific follow-up question using progressive questioning methodology.
+
+PROGRESSIVE QUESTIONING TECHNIQUES:
+1. Start broad, then narrow down (funnel approach)
+2. Ask "why" to get to root causes (5 Whys technique)
+3. Probe for quantification (how much, how often, how many)
+4. Uncover hidden challenges (what's not working that they haven't mentioned?)
+5. Connect to business outcomes (revenue, growth, efficiency)
+
+${context?.industry ? `Industry Context: ${context.industry}. Use industry-specific terminology and examples.` : ''}
+${context?.businessStage ? `Business Stage: ${context.businessStage}. Ask stage-appropriate questions.` : ''}
+${industryExamples ? `Industry Example: ${industryExamples}` : ''}
 
 GUIDELINES:
 - Be conversational and friendly
-- Reference what they already said
+- Reference what they already said to show you're listening
 - Ask about ONE specific thing
+- Use industry-specific examples if applicable
+- Probe for root causes, not symptoms (use "5 Whys" approach)
+- Ask for numbers when possible (quantify impact)
 - Make it easy to answer
 - Don't be repetitive
 
 Example:
-Original Q: "What's your business idea?"
-User: "A fitness app"
-Follow-up: "That sounds interesting! What specific problem does your fitness app solve that existing apps don't?"`
+Original Q: "What are your biggest challenges?"
+User: "We're not getting enough customers"
+Follow-up: "I see. That usually breaks down into either people not finding you, or finding you but not converting. Which do you think is the bigger issue?"`
 
     const userPrompt = `Original Question: "${originalQuestion}"
 User's Response: "${userResponse}"
-${specificArea ? `Focus Area: ${specificArea}` : ''}
+${context?.specificArea ? `Focus Area: ${context.specificArea}` : ''}
+${context?.businessIdea ? `Business Context: ${context.businessIdea}` : ''}
 
-Generate ONE specific follow-up question:`
+Generate ONE specific follow-up question that uses progressive questioning to dig deeper:`
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',

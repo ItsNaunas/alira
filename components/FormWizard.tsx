@@ -693,7 +693,21 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         )
 
       case 2:
-        const challengesQuestion = getChallengesQuestion(watchedValues.business_stage as BusinessStage)
+        // Infer industry from business idea for conditional questions (simple keyword matching)
+        const businessIdeaLower = (watchedValues.business_idea || '').toLowerCase()
+        const inferredIndustry: 'tech_saas' | 'retail_ecommerce' | 'service' | 'other' = 
+          businessIdeaLower.includes('app') || businessIdeaLower.includes('software') || 
+          businessIdeaLower.includes('saas') || businessIdeaLower.includes('platform') || 
+          businessIdeaLower.includes('tool') || businessIdeaLower.includes('tech') ? 'tech_saas' :
+          businessIdeaLower.includes('sell') || businessIdeaLower.includes('product') || 
+          businessIdeaLower.includes('shop') || businessIdeaLower.includes('store') || 
+          businessIdeaLower.includes('retail') || businessIdeaLower.includes('fashion') || 
+          businessIdeaLower.includes('clothing') || businessIdeaLower.includes('ecommerce') ? 'retail_ecommerce' :
+          businessIdeaLower.includes('service') || businessIdeaLower.includes('consult') || 
+          businessIdeaLower.includes('agency') || businessIdeaLower.includes('coach') || 
+          businessIdeaLower.includes('freelance') ? 'service' : 'other'
+        
+        const challengesQuestion = getChallengesQuestion(watchedValues.business_stage as BusinessStage, inferredIndustry)
         return (
           <div className="space-y-6">
             <div>
@@ -826,7 +840,21 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         )
 
       case 3:
-        const goalsQuestion = getGoalsQuestion(watchedValues.business_stage as BusinessStage)
+        // Infer industry from business idea for conditional questions (reuse same logic)
+        const businessIdeaLowerGoals = (watchedValues.business_idea || '').toLowerCase()
+        const inferredIndustryGoals: 'tech_saas' | 'retail_ecommerce' | 'service' | 'other' = 
+          businessIdeaLowerGoals.includes('app') || businessIdeaLowerGoals.includes('software') || 
+          businessIdeaLowerGoals.includes('saas') || businessIdeaLowerGoals.includes('platform') || 
+          businessIdeaLowerGoals.includes('tool') || businessIdeaLowerGoals.includes('tech') ? 'tech_saas' :
+          businessIdeaLowerGoals.includes('sell') || businessIdeaLowerGoals.includes('product') || 
+          businessIdeaLowerGoals.includes('shop') || businessIdeaLowerGoals.includes('store') || 
+          businessIdeaLowerGoals.includes('retail') || businessIdeaLowerGoals.includes('fashion') || 
+          businessIdeaLowerGoals.includes('clothing') || businessIdeaLowerGoals.includes('ecommerce') ? 'retail_ecommerce' :
+          businessIdeaLowerGoals.includes('service') || businessIdeaLowerGoals.includes('consult') || 
+          businessIdeaLowerGoals.includes('agency') || businessIdeaLowerGoals.includes('coach') || 
+          businessIdeaLowerGoals.includes('freelance') ? 'service' : 'other'
+        
+        const goalsQuestion = getGoalsQuestion(watchedValues.business_stage as BusinessStage, inferredIndustryGoals)
         return (
           <div className="space-y-6">
             <div>

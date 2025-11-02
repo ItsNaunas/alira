@@ -1,5 +1,8 @@
 // Conditional question logic based on business stage
 
+import type { IndustryType } from './business-case-methodology'
+import { getProblemPatterns } from './industry-questions'
+
 export type BusinessStage = 'idea' | 'early' | 'growing' | 'established' | undefined
 
 interface ConditionalQuestion {
@@ -9,47 +12,67 @@ interface ConditionalQuestion {
   hintIcon: string
 }
 
-export function getChallengesQuestion(stage: BusinessStage): ConditionalQuestion {
+export function getChallengesQuestion(
+  stage: BusinessStage,
+  industry?: IndustryType
+): ConditionalQuestion {
   switch (stage) {
     case 'idea':
+      const baseHint = 'Common concerns: Market validation, finding customers, funding, competition, or defining your unique value'
+      const industryHint = industry ? ` Industry-specific: ${getProblemPatterns(industry).slice(0, 2).join(', ')}` : ''
       return {
         label: 'What concerns you most about starting this business?',
         placeholder: 'What risks or obstacles do you see ahead?',
-        hint: 'Common concerns: Market validation, finding customers, funding, competition, or defining your unique value',
+        hint: baseHint + industryHint,
         hintIcon: '💭'
       }
-    case 'early':
+    case 'early': {
+      const baseHint = 'Common challenges: Lack of systems, unclear processes, manual work, limited resources, or inconsistent messaging'
+      const industryHint = industry ? ` Industry-specific: ${getProblemPatterns(industry).slice(0, 2).join(', ')}` : ''
       return {
         label: 'What are your biggest operational challenges right now?',
         placeholder: 'What\'s slowing you down or preventing growth?',
-        hint: 'Common challenges: Lack of systems, unclear processes, manual work, limited resources, or inconsistent messaging',
+        hint: baseHint + industryHint,
         hintIcon: '⚠️'
       }
-    case 'growing':
+    }
+    case 'growing': {
+      const baseHint = 'Common bottlenecks: Manual processes, scattered data, team alignment, customer acquisition costs, or scalability issues'
+      const industryHint = industry ? ` Industry-specific: ${getProblemPatterns(industry).slice(0, 2).join(', ')}` : ''
       return {
         label: 'What bottlenecks are limiting your growth?',
         placeholder: 'What systems or processes are breaking as you scale?',
-        hint: 'Common bottlenecks: Manual processes, scattered data, team alignment, customer acquisition costs, or scalability issues',
+        hint: baseHint + industryHint,
         hintIcon: '🚧'
       }
-    case 'established':
+    }
+    case 'established': {
+      const baseHint = 'Common inefficiencies: Redundant processes, outdated systems, lack of automation, poor data visibility, or resource waste'
+      const industryHint = industry ? ` Industry-specific: ${getProblemPatterns(industry).slice(0, 2).join(', ')}` : ''
       return {
         label: 'What operational inefficiencies do you want to eliminate?',
         placeholder: 'Where are you losing time or money unnecessarily?',
-        hint: 'Common inefficiencies: Redundant processes, outdated systems, lack of automation, poor data visibility, or resource waste',
+        hint: baseHint + industryHint,
         hintIcon: '⚡'
       }
-    default:
+    }
+    default: {
+      const baseHint = 'Common challenges: Unclear messaging, scattered customer data, manual processes, poor website conversion, or lack of automation'
+      const industryHint = industry ? ` Industry-specific: ${getProblemPatterns(industry).slice(0, 2).join(', ')}` : ''
       return {
         label: 'What are your biggest operational challenges right now?',
         placeholder: 'What\'s slowing you down or preventing growth?',
-        hint: 'Common challenges: Unclear messaging, scattered customer data, manual processes, poor website conversion, or lack of automation',
+        hint: baseHint + industryHint,
         hintIcon: '⚠️'
       }
+    }
   }
 }
 
-export function getGoalsQuestion(stage: BusinessStage): ConditionalQuestion {
+export function getGoalsQuestion(
+  stage: BusinessStage,
+  industry?: IndustryType
+): ConditionalQuestion {
   switch (stage) {
     case 'idea':
       return {
