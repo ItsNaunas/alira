@@ -165,7 +165,7 @@ export default function PlanHeader({
                   statusColor === 'green'
                     ? 'bg-green-500/10 text-green-400 border-green-500/20'
                     : statusColor === 'blue'
-                    ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                    ? 'bg-alira-primary/10 text-alira-primary border-alira-primary/20'
                     : statusColor === 'gray'
                     ? 'bg-gray-500/10 text-gray-400 border-gray-500/20'
                     : 'bg-slate-500/10 text-slate-400 border-slate-500/20'

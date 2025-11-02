@@ -133,8 +133,8 @@ export default function SummaryConfirmation({
             className="bg-surface border border-borderToken-subtle rounded-xl p-4"
           >
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-blue-400 text-xs">🛠</span>
+              <div className="w-8 h-8 bg-alira-primary/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-alira-primary text-xs">🛠</span>
               </div>
               <div className="flex-1">
                 <h4 className="text-sm font-medium text-accent mb-2">Services of Interest</h4>

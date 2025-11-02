@@ -57,14 +57,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       label: "Dashboard",
       href: "/dashboard",
       icon: (
-        <IconLayoutDashboard className="h-5 w-5 shrink-0 text-text-secondary" />
+        <IconLayoutDashboard className="h-5 w-5 shrink-0 text-white" />
       ),
     },
     {
       label: "New Plan",
       href: "/#start-chat",
       icon: (
-        <IconPlus className="h-5 w-5 shrink-0 text-text-secondary" />
+        <IconPlus className="h-5 w-5 shrink-0 text-white" />
       ),
     },
   ];
@@ -92,13 +92,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               href="/"
               className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-bg-muted transition-colors w-full mb-2"
             >
-              <IconHome className="h-5 w-5 shrink-0 text-text-secondary" />
+              <IconHome className="h-5 w-5 shrink-0 text-white" />
               <motion.span
                 animate={{
                   display: open ? "inline-block" : "none",
                   opacity: open ? 1 : 0,
                 }}
-                className="text-text-secondary text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-text-primary transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+                className="text-white text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-text-primary transition duration-150 whitespace-pre inline-block !p-0 !m-0"
               >
                 Back to Website
               </motion.span>
@@ -109,13 +109,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               onClick={handleSignOut}
               className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-bg-muted transition-colors w-full"
             >
-              <IconLogout className="h-5 w-5 shrink-0 text-text-secondary" />
+              <IconLogout className="h-5 w-5 shrink-0 text-white" />
               <motion.span
                 animate={{
                   display: open ? "inline-block" : "none",
                   opacity: open ? 1 : 0,
                 }}
-                className="text-text-secondary text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-text-primary transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+                className="text-white text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-text-primary transition duration-150 whitespace-pre inline-block !p-0 !m-0"
               >
                 Logout
               </motion.span>

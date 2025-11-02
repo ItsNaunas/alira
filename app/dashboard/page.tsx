@@ -596,7 +596,7 @@ export default function DashboardPage() {
                                 </span>
                               )}
                               {plan.generations && plan.generations.length > 0 && (
-                                <span className="px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs">
+                                <span className="px-2 py-0.5 rounded-full bg-alira-primary/10 border border-alira-primary/20 text-alira-primary text-xs">
                                   AI Analysis
                                 </span>
                               )}

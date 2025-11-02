@@ -119,7 +119,7 @@ html {
 
 .card {
   background: #FFFFFF;
-  border: 1px solid rgba(24, 12, 102, 0.1);
+  border: 1px solid rgba(11, 29, 81, 0.1);
   border-radius: 0.5rem;
   padding: 2rem;
   transition: border-color 0.2s ease;
@@ -284,17 +284,17 @@ html {
 /* Layered shadow system for 3D porcelain cards */
 .shadow-alira-card {
   box-shadow:
-    0 1px 1px rgba(24, 12, 102, 0.05),
-    0 6px 16px rgba(24, 12, 102, 0.06),
-    0 22px 38px rgba(24, 12, 102, 0.04),
+    0 1px 1px rgba(11, 29, 81, 0.05),
+    0 6px 16px rgba(11, 29, 81, 0.06),
+    0 22px 38px rgba(11, 29, 81, 0.04),
     inset 0 -1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .shadow-alira-card-elevated {
   box-shadow:
-    0 2px 2px rgba(24, 12, 102, 0.08),
-    0 8px 20px rgba(24, 12, 102, 0.1),
-    0 28px 45px rgba(24, 12, 102, 0.08),
+    0 2px 2px rgba(11, 29, 81, 0.08),
+    0 8px 20px rgba(11, 29, 81, 0.1),
+    0 28px 45px rgba(11, 29, 81, 0.08),
     inset 0 -1px 0 rgba(255, 255, 255, 0.6);
 }
 
@@ -852,7 +852,7 @@ select:focus-visible {
     --bg-warning-weak: rgba(179,92,0,0.1);
     --bg-error-weak: rgba(180,35,24,0.1);
     /* Focus */
-    --focus-ring: 0 0 0 3px rgba(10,102,255,0.35);
+    --focus-ring: 0 0 0 3px rgba(11,29,81,0.35);
   }
   /* Dark theme variables removed */
 }

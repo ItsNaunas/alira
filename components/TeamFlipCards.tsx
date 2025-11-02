@@ -1,109 +1,147 @@
 'use client';
 
-import Reveal from './Reveal';
-import CardFlip from './ui/card-flip';
-import { GradientBars } from './ui/gradient-bars';
+import { cn } from '@/lib/utils';
+import { GithubIcon, LinkedinIcon, TwitterIcon } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
 
-const teamMembers = [
-  {
-    name: 'Etomi',
-    role: 'Brand and Media Strategist',
-    imageSrc: '/images/cards/etomi.png',
-    description: 'Leading strategic initiatives and client partnerships with a focus on sustainable growth and operational excellence.',
-    expertise: [
-      'Brand Strategy',
-      'Media Planning',
-      'Client Relations',
-      'Strategic Development'
-    ],
-    imagePosition: 'bottom' as const,
-    isFounder: false
-  },
+interface TeamMember {
+  name: string;
+  role: string;
+  bio: string;
+  imageUrl: string;
+  location?: string;
+  imagePosition?: 'top' | 'center' | 'bottom';
+  socialLinks?: { platform: 'github' | 'twitter' | 'linkedin'; url: string }[];
+}
+
+interface TeamProps {
+  title?: string;
+  subtitle?: string;
+  members: TeamMember[];
+  className?: string;
+}
+
+// Team data with actual images and roles
+const defaultMembers: TeamMember[] = [
   {
     name: 'Shuheyb',
     role: 'Founder & CEO',
-    imageSrc: '/images/cards/shuheyb.png',
-    description: 'Visionary founder who built ALIRA from the ground up with a mission to help brands scale through intelligent systems and strategic content. With years of experience in business operations, growth strategy, and digital transformation, Shuheyb combines technical expertise with deep market insight to deliver results that matter.',
-    expertise: [
-      'Business Strategy',
-      'Growth Operations',
-      'Digital Transformation',
-      'Systems Architecture',
-      'Client Success',
-      'Team Leadership'
-    ],
-    imagePosition: 'bottom' as const,
-    isFounder: true
+    bio: 'Visionary founder who built ALIRA from the ground up. Combines technical expertise with deep market insight to help brands scale through intelligent systems.',
+    imageUrl: '/images/assets/founder.jpg',
+    imagePosition: 'top',
+  },
+  {
+    name: 'Etomi',
+    role: 'Brand and Media Strategist',
+    bio: 'Leading strategic initiatives and client partnerships with a focus on sustainable growth and operational excellence.',
+    imageUrl: '/images/cards/etomi.png',
+    imagePosition: 'center',
   },
   {
     name: 'Naufal',
     role: 'Technical Lead',
-    imageSrc: '/images/cards/naufal.png',
-    description: 'Driving technical innovation and system architecture with expertise in scalable solutions and cutting-edge technology.',
-    expertise: [
-      'System Architecture',
-      'Technical Strategy',
-      'Innovation Management',
-      'Quality Assurance'
-    ],
-    imagePosition: 'bottom' as const,
-    isFounder: false
-  }
+    bio: 'Driving technical innovation and system architecture with expertise in scalable solutions and cutting-edge technology.',
+    imageUrl: '/images/assets/naufal.jpeg',
+    imagePosition: 'top',
+  },
 ];
 
-export default function TeamFlipCards() {
+export default function TeamFlipCards({
+  title = 'Our Expert Team',
+  subtitle = "Meet the professionals behind ALIRA's success, each bringing unique expertise to deliver exceptional results.",
+  members = defaultMembers,
+  className,
+}: TeamProps) {
   return (
-    <section className="py-16 md:py-24 bg-bg-page relative overflow-hidden">
+    <section className={cn('py-16 md:py-24 bg-bg-page relative overflow-hidden', className)}>
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        <Reveal>
-          <div className="text-center mb-16">
-            <div className="text-accent-dark text-sm tracking-wide uppercase mb-4 font-sans font-light">
-              Meet The Team
-            </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-primary mb-6">
-              Our <span className="text-accent-dark">Expert</span> Team
-            </h2>
-            <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 font-serif italic font-light">
-              Meet the professionals behind ALIRA's success, each bringing unique expertise to deliver exceptional results.
-            </p>
-            <div className="w-16 h-px bg-accent mx-auto"></div>
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <div className="text-accent-dark text-sm tracking-wide uppercase mb-4 font-sans font-light">
+            Meet The Team
           </div>
-        </Reveal>
-        
-        {/* Team Flip Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {teamMembers.map((member, index) => (
-            <Reveal key={member.name} delay={200 + (index * 100)}>
-              <div className="flex justify-center">
-                <CardFlip
-                  title={member.name}
-                  subtitle={member.role}
-                  description={member.description}
-                  features={member.expertise}
-                  imageSrc={member.imageSrc}
-                  imageAlt={`${member.name} - ${member.role}`}
-                  imagePosition={member.imagePosition}
-                />
-              </div>
-            </Reveal>
+          <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-primary mb-6">
+            {title}
+          </h2>
+          <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 font-serif italic font-light">
+            {subtitle}
+          </p>
+          <div className="w-16 h-px bg-accent mx-auto"></div>
+        </div>
+
+        <div className="flex flex-nowrap items-center justify-center gap-8 max-w-7xl mx-auto">
+          {members.map((member) => (
+            <TeamMemberCard key={member.name} member={member} />
           ))}
         </div>
-        
-        {/* Team CTA */}
-        <Reveal delay={600}>
-          <div className="text-center mt-16">
-            <p className="text-text-secondary font-sans font-light mb-6">
-              Ready to work with our expert team?
-            </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-brand text-text-inverse px-8 py-4 rounded-xl font-sans font-light hover:bg-brand-hover transition-all duration-300 shadow-token-sm"
-            >
-              Get In Touch
-            </a>
-          </div>
-        </Reveal>
       </div>
     </section>
+  );
+}
+
+// Team member card component
+function TeamMemberCard({ member }: { member: TeamMember }) {
+  // Custom positioning and scaling for each member
+  let baseTransform = '';
+  let objectPosition = 'center';
+  
+  if (member.name === 'Shuheyb') {
+    // Zoom in (scale 1.05) and position
+    baseTransform = 'scale(1.05)';
+    objectPosition = 'center 35%'; // 35% from top
+  } else if (member.name === 'Naufal') {
+    // Position consistent with Shuheyb
+    baseTransform = '';
+    objectPosition = 'center 35%'; // 35% from top
+  } else if (member.name === 'Etomi') {
+    // Position to show more of top portion
+    baseTransform = '';
+    objectPosition = 'center 50%'; // 50% from top shows more upper portion
+  } else {
+    const imagePos = member.imagePosition || 'center';
+    objectPosition = imagePos === 'top' ? 'center top' : imagePos === 'bottom' ? 'center bottom' : 'center';
+  }
+
+  return (
+    <div className="group bg-surface border border-borderToken-subtle h-[420px] w-96 overflow-hidden rounded-xl shadow-token-sm transition-all duration-300 hover:border-accent hover:shadow-token-md flex-shrink-0 flex flex-col">
+      <div className="relative h-[200px] w-full overflow-hidden flex-shrink-0">
+        <Image
+          src={member.imageUrl}
+          alt={member.name}
+          fill
+          className="object-cover transition-transform duration-500"
+          style={{
+            objectPosition: objectPosition,
+            transform: baseTransform || 'none',
+          }}
+          onMouseEnter={(e) => {
+            const currentTransform = baseTransform || '';
+            if (currentTransform.includes('scale')) {
+              e.currentTarget.style.transform = currentTransform.replace(/scale\([^)]+\)/, 'scale(1.05)');
+            } else {
+              e.currentTarget.style.transform = currentTransform ? `${currentTransform} scale(1.05)` : 'scale(1.05)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = baseTransform || 'none';
+          }}
+        />
+      </div>
+
+      <div className="flex flex-col p-5 flex-1 min-h-0 overflow-hidden">
+        {member.location && (
+          <div className="text-text-secondary mb-1 flex items-center text-xs font-sans font-light flex-shrink-0">
+            <div className="bg-accent-dark mr-1.5 h-1.5 w-1.5 rounded-full" />
+            {member.location}
+          </div>
+        )}
+
+        <h3 className="mb-1 text-xl font-serif font-normal text-text-primary flex-shrink-0">{member.name}</h3>
+        <p className="text-accent-dark mb-3 text-sm font-sans font-medium flex-shrink-0">{member.role}</p>
+        <div className="flex-1 min-h-0 flex items-start">
+          <p className="text-text-secondary text-sm font-sans font-light leading-relaxed">{member.bio}</p>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -11,7 +11,6 @@ import HomeServices from '@/components/HomeServices'
 import Experience from '@/components/Experience'
 import ClientResults from '@/components/ClientResults'
 import ProvenOutcomes from '@/components/ProvenOutcomes'
-import ProofOfClarity from '@/components/ProofOfClarity'
 import FAQ from '@/components/FAQ'
 
 import StickyCTA from '@/components/StickyCTA'
@@ -94,9 +93,6 @@ export default function Home() {
 
       {/* Meet the Team Section */}
       <TeamFlipCards />
-
-      {/* Proof Band */}
-      <ProofOfClarity />
 
       {/* FAQ Section */}
       <FAQ />

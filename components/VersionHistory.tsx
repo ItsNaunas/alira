@@ -168,7 +168,7 @@ export default function VersionHistory({
                           Version {version.version}
                         </span>
                         {isLatest && (
-                          <span className="px-2 py-0.5 rounded text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                          <span className="px-2 py-0.5 rounded text-xs bg-alira-primary/10 text-alira-primary border border-alira-primary/20">
                             Latest
                           </span>
                         )}

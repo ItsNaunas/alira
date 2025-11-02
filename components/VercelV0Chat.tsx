@@ -343,7 +343,7 @@ export function VercelV0Chat() {
       )}
 
       <div className="mx-auto flex w-full max-w-4xl flex-col items-center space-y-3 sm:space-y-4 lg:space-y-6 p-3 sm:p-4 lg:p-6">
-        <h1 className="text-alira-white text-center text-base sm:text-lg lg:text-xl xl:text-2xl font-serif font-normal px-2 sm:px-4">
+        <h1 className="text-alira-primary text-center text-base sm:text-lg lg:text-xl xl:text-2xl font-serif font-normal px-2 sm:px-4">
           Tell us what you're building
         </h1>
         <div className="w-full">
