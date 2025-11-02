@@ -11,12 +11,15 @@ import {
   Award
 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { useState } from 'react'
+import { Checkbox } from '@/components/ui/checkbox'
+import { useState, useEffect, useCallback } from 'react'
 
 interface PlanViewerProps {
   content: BusinessCaseOutline
   className?: string
   collapsible?: boolean
+  planId?: string
+  enableProgressTracking?: boolean
 }
 
 interface SectionProps {
@@ -59,7 +62,81 @@ function Section({ title, icon, children, collapsible = false, defaultExpanded =
   )
 }
 
-export default function PlanViewer({ content, className = '', collapsible = true }: PlanViewerProps) {
+export default function PlanViewer({ 
+  content, 
+  className = '', 
+  collapsible = true,
+  planId,
+  enableProgressTracking = false 
+}: PlanViewerProps) {
+  const [progress, setProgress] = useState<Record<string, Record<number, boolean>>>({
+    objective: {},
+    next_step: {}
+  })
+  const [isLoadingProgress, setIsLoadingProgress] = useState(false)
+
+  const loadProgress = useCallback(async () => {
+    if (!planId) return
+    setIsLoadingProgress(true)
+    try {
+      const response = await fetch(`/api/plan/progress?planId=${planId}`)
+      if (!response.ok) throw new Error('Failed to load progress')
+      const result = await response.json()
+      setProgress(result.data?.progress || { objective: {}, next_step: {} })
+    } catch (error) {
+      console.error('Error loading progress:', error)
+    } finally {
+      setIsLoadingProgress(false)
+    }
+  }, [planId])
+
+  // Load progress if tracking is enabled
+  useEffect(() => {
+    if (enableProgressTracking && planId) {
+      loadProgress()
+    }
+  }, [enableProgressTracking, planId, loadProgress])
+
+  const toggleProgress = async (itemType: 'objective' | 'next_step', index: number, completed: boolean) => {
+    if (!planId) return
+    
+    // Optimistic update
+    setProgress(prev => ({
+      ...prev,
+      [itemType]: {
+        ...prev[itemType],
+        [index]: completed
+      }
+    }))
+
+    try {
+      const response = await fetch('/api/plan/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          planId,
+          itemType,
+          itemIndex: index,
+          completed
+        })
+      })
+      if (!response.ok) {
+        // Revert on error
+        setProgress(prev => ({
+          ...prev,
+          [itemType]: {
+            ...prev[itemType],
+            [index]: !completed
+          }
+        }))
+        throw new Error('Failed to update progress')
+      }
+    } catch (error) {
+      console.error('Error updating progress:', error)
+      alert('Failed to update progress. Please try again.')
+    }
+  }
+
   if (!content) {
     return (
       <div className="text-center py-12">
@@ -93,10 +170,20 @@ export default function PlanViewer({ content, className = '', collapsible = true
           <ul className="space-y-3">
             {content.objectives.map((objective, index) => (
               <li key={index} className="flex items-start gap-3">
+                {enableProgressTracking && (
+                  <Checkbox
+                    checked={progress.objective[index] || false}
+                    onCheckedChange={(checked) => toggleProgress('objective', index, checked === true)}
+                    className="mt-1"
+                    disabled={isLoadingProgress}
+                  />
+                )}
                 <div className="flex-shrink-0 w-6 h-6 bg-alira-gold/10 rounded-full flex items-center justify-center mt-0.5">
                   <span className="text-xs text-alira-gold font-medium">{index + 1}</span>
                 </div>
-                <p className="text-text-secondary leading-relaxed">{objective}</p>
+                <p className={`text-text-secondary leading-relaxed ${enableProgressTracking && progress.objective[index] ? 'line-through opacity-60' : ''}`}>
+                  {objective}
+                </p>
               </li>
             ))}
           </ul>
@@ -201,10 +288,20 @@ export default function PlanViewer({ content, className = '', collapsible = true
           <ol className="space-y-3">
             {content.next_steps.map((step, index) => (
               <li key={index} className="flex items-start gap-3">
+                {enableProgressTracking && (
+                  <Checkbox
+                    checked={progress.next_step[index] || false}
+                    onCheckedChange={(checked) => toggleProgress('next_step', index, checked === true)}
+                    className="mt-1"
+                    disabled={isLoadingProgress}
+                  />
+                )}
                 <div className="flex-shrink-0 w-7 h-7 bg-alira-gold/20 rounded-full flex items-center justify-center">
                   <span className="text-sm text-alira-gold font-medium">{index + 1}</span>
                 </div>
-                <p className="text-text-secondary leading-relaxed pt-0.5">{step}</p>
+                <p className={`text-text-secondary leading-relaxed pt-0.5 ${enableProgressTracking && progress.next_step[index] ? 'line-through opacity-60' : ''}`}>
+                  {step}
+                </p>
               </li>
             ))}
           </ol>

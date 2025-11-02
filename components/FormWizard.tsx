@@ -11,12 +11,21 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import { Checkbox } from './ui/checkbox'
 import { ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react'
 import { conversionEvents } from '@/lib/analytics'
-import { wizardFormSchema, type WizardFormData, serviceInterestOptions, currentToolsOptions } from '@/lib/schema'
+import { wizardFormSchema, type WizardFormData, serviceInterestOptions, currentToolsOptions, businessStages } from '@/lib/schema'
+import { getChallengesQuestion, getGoalsQuestion, type BusinessStage } from '@/lib/conditional-questions'
 import { getUserFriendlyError, errorMessages } from '@/lib/error-messages'
-import { cn } from '@/lib/utils'
+import { cn, evaluateAnswerQuality, getQualityColorClass, getQualityLabel, type AnswerQuality } from '@/lib/utils'
 import { FormProgress } from './ui/form-progress'
 import { FormSuccess } from './ui/form-success'
 import { InlineError } from './ui/error-state'
+import { ExampleTemplate } from './ExampleTemplate'
+import { SmartSuggestions } from './SmartSuggestions'
+import { FileUpload } from './FileUpload'
+import { ExitIntentModal } from './ExitIntentModal'
+import { ContextualHelp } from './ContextualHelp'
+import { CompletionPreview } from './CompletionPreview'
+import { useMobile, useSwipe, useVoiceInput } from '@/hooks/use-mobile'
+import { Mic, MicOff, Eye } from 'lucide-react'
 
 interface FormWizardProps {
   resumeToken?: string
@@ -33,6 +42,50 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   const [isSuccess, setIsSuccess] = useState(false)
   const [draftData, setDraftData] = useState<any>(null)
   const [collectedFormData, setCollectedFormData] = useState<Partial<WizardFormData>>({})
+  const [answerQuality, setAnswerQuality] = useState<{
+    business_idea?: AnswerQuality
+    current_challenges?: AnswerQuality
+    immediate_goals?: AnswerQuality
+  }>({})
+  const [voiceInputActive, setVoiceInputActive] = useState<string | null>(null)
+  const [showExitIntent, setShowExitIntent] = useState(false)
+  const [showPreview, setShowPreview] = useState(false)
+
+  // Mobile detection
+  const isMobile = useMobile()
+
+  // Swipe gestures for mobile navigation
+  const swipeHandlers = useSwipe(
+    () => {
+      // Swipe left = next step
+      if (currentStep < 4) {
+        nextStep()
+      }
+    },
+    () => {
+      // Swipe right = previous step
+      if (currentStep > 1) {
+        prevStep()
+      }
+    }
+  )
+
+  // Voice input for current field
+  const currentFieldName = currentStep === 1 ? 'business_idea' : currentStep === 2 ? 'current_challenges' : currentStep === 3 ? 'immediate_goals' : null
+
+  const voiceInput = useVoiceInput(
+    (text) => {
+      if (currentFieldName) {
+        const currentValue = watchedValues[currentFieldName] || ''
+        setValue(currentFieldName as keyof WizardFormData, `${currentValue} ${text}`.trim())
+        setVoiceInputActive(null)
+      }
+    },
+    (error) => {
+      console.error('Voice input error:', error)
+      setVoiceInputActive(null)
+    }
+  )
 
   const {
     register,
@@ -95,6 +148,99 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
     }
   }, [resumeToken, initialData, loadDraft])
 
+  // Exit intent detection
+  useEffect(() => {
+    const handleMouseLeave = (e: MouseEvent) => {
+      // Only trigger if mouse is moving upward (toward top of page)
+      if (e.clientY <= 0 && (watchedValues.business_idea || watchedValues.current_challenges || watchedValues.immediate_goals)) {
+        setShowExitIntent(true)
+        conversionEvents.exitIntentTriggered(currentStep, true)
+      }
+    }
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // Only show if user has entered data
+      if (watchedValues.business_idea || watchedValues.current_challenges || watchedValues.immediate_goals) {
+        // Modern browsers ignore custom messages
+        e.preventDefault()
+        e.returnValue = ''
+      }
+    }
+
+    window.addEventListener('mouseleave', handleMouseLeave)
+    window.addEventListener('beforeunload', handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener('mouseleave', handleMouseLeave)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [watchedValues.business_idea, watchedValues.current_challenges, watchedValues.immediate_goals])
+
+  // Save draft with email
+  const handleExitIntentSave = async (email: string) => {
+    try {
+      conversionEvents.exitIntentSaved(currentStep)
+      let currentDraftId = draftId
+
+      // Create or update draft
+      if (!currentDraftId) {
+        const createResponse = await fetch('/api/draft/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: draftData?.name || email.split('@')[0],
+            email: email,
+            data: {
+              ...collectedFormData,
+              business_idea: watchedValues.business_idea,
+              current_challenges: watchedValues.current_challenges,
+              immediate_goals: watchedValues.immediate_goals,
+              business_stage: watchedValues.business_stage
+            },
+            step: currentStep
+          })
+        })
+
+        if (createResponse.ok) {
+          const result = await createResponse.json()
+          currentDraftId = result.id
+          setDraftId(currentDraftId)
+        }
+      } else {
+        // Update existing draft
+        await fetch('/api/draft/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: currentDraftId,
+            email: email,
+            data: {
+              ...collectedFormData,
+              business_idea: watchedValues.business_idea,
+              current_challenges: watchedValues.current_challenges,
+              immediate_goals: watchedValues.immediate_goals,
+              business_stage: watchedValues.business_stage
+            },
+            step: currentStep
+          })
+        })
+      }
+
+      // Send resume link email
+      await fetch('/api/draft/send-resume-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          draftId: currentDraftId,
+          email: email
+        })
+      })
+    } catch (error) {
+      console.error('Error saving draft on exit intent:', error)
+      throw error
+    }
+  }
+
 
   const nextStep = async () => {
     // Validate only the current step's fields
@@ -128,6 +274,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         switch (currentStep) {
           case 1:
             currentStepData.business_idea = watchedValues.business_idea
+            currentStepData.business_stage = watchedValues.business_stage
             break
           case 2:
             currentStepData.current_challenges = watchedValues.current_challenges
@@ -162,6 +309,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         // Ensure all required fields are present
         const validatedFormData: WizardFormData = {
           business_idea: completeFormData.business_idea || '',
+          business_stage: completeFormData.business_stage,
           current_challenges: completeFormData.current_challenges || '',
           immediate_goals: completeFormData.immediate_goals || '',
           service_interest: completeFormData.service_interest || [],
@@ -189,6 +337,9 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         case 1:
           if (collectedFormData.business_idea) {
             setValue('business_idea', collectedFormData.business_idea)
+          }
+          if (collectedFormData.business_stage) {
+            setValue('business_stage', collectedFormData.business_stage)
           }
           break
         case 2:
@@ -353,24 +504,138 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
               </div>
             )}
             
+            {/* File Upload Option */}
+            <FileUpload
+              onExtractComplete={(extractedData) => {
+                const extractedCount = Object.keys(extractedData).filter(k => extractedData[k as keyof typeof extractedData]).length
+                conversionEvents.fileUploadCompleted('document', extractedCount)
+                
+                if (extractedData.business_idea) {
+                  setValue('business_idea', extractedData.business_idea)
+                  const quality = evaluateAnswerQuality(extractedData.business_idea, 10)
+                  setAnswerQuality(prev => ({ ...prev, business_idea: quality.quality }))
+                }
+                if (extractedData.current_challenges) {
+                  // Store for step 2
+                  setCollectedFormData(prev => ({ ...prev, current_challenges: extractedData.current_challenges }))
+                }
+                if (extractedData.immediate_goals) {
+                  // Store for step 3
+                  setCollectedFormData(prev => ({ ...prev, immediate_goals: extractedData.immediate_goals }))
+                }
+              }}
+              onError={(error) => {
+                console.error('File upload error:', error)
+                conversionEvents.fileUploadFailed('document', error)
+              }}
+              className="mb-4"
+            />
+            
             <div>
-              <label htmlFor="business_idea" className="block text-sm md:text-base font-light text-alira-primary/90 dark:text-alira-white/90 mb-3">
-                What is your business idea or current venture?
-              </label>
-              <Textarea
-                id="business_idea"
-                {...register('business_idea')}
-                placeholder="e.g., a marketing agency that helps creators launch offers"
-                rows={4}
-                className={cn(
-                  "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
-                  errors.business_idea 
-                    ? "border-red-500 dark:border-red-400 ring-2 ring-red-500/20" 
-                    : "border-alira-primary/20 dark:border-alira-white/20"
+              <div className="flex items-center justify-between mb-3">
+                <label htmlFor="business_idea" className="block text-sm md:text-base font-light text-alira-primary/90 dark:text-alira-white/90">
+                  What is your business idea or current venture?
+                </label>
+                <div className="flex items-center gap-2">
+                  <ContextualHelp 
+                    fieldId="business_idea"
+                    onClick={() => conversionEvents.helpIconClicked('business_idea')}
+                  />
+                  <ExampleTemplate 
+                    questionId="business_idea" 
+                    onFillExample={(content) => setValue('business_idea', content)}
+                  />
+                </div>
+              </div>
+              <div className="relative">
+                <Textarea
+                  id="business_idea"
+                  {...register('business_idea')}
+                  onChange={(e) => {
+                    register('business_idea').onChange(e)
+                    const quality = evaluateAnswerQuality(e.target.value, 10)
+                    setAnswerQuality(prev => ({ ...prev, business_idea: quality.quality }))
+                  }}
+                  placeholder="e.g., a marketing agency that helps creators launch offers"
+                  rows={isMobile ? 6 : 4}
+                  className={cn(
+                    "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
+                    isMobile && "text-base", // Larger text on mobile for better readability
+                    errors.business_idea 
+                      ? "border-red-500 dark:border-red-400 ring-2 ring-red-500/20" 
+                      : "border-alira-primary/20 dark:border-alira-white/20"
+                  )}
+                  aria-invalid={errors.business_idea ? "true" : "false"}
+                  aria-describedby={errors.business_idea ? "business_idea-error" : "business_idea-hint"}
+                />
+                {/* Voice Input Button (Mobile) */}
+                {isMobile && voiceInput.isSupported && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (voiceInputActive === 'business_idea') {
+                        voiceInput.stopListening()
+                        setVoiceInputActive(null)
+                      } else {
+                        voiceInput.startListening()
+                        setVoiceInputActive('business_idea')
+                      }
+                    }}
+                    className={cn(
+                      "absolute bottom-4 right-4 p-2 rounded-lg transition-colors",
+                      voiceInputActive === 'business_idea'
+                        ? "bg-red-500 text-white"
+                        : "bg-alira-gold/20 text-alira-gold hover:bg-alira-gold/30"
+                    )}
+                    aria-label="Voice input"
+                  >
+                    {voiceInputActive === 'business_idea' ? (
+                      <MicOff className="w-5 h-5" />
+                    ) : (
+                      <Mic className="w-5 h-5" />
+                    )}
+                  </button>
                 )}
-                aria-invalid={errors.business_idea ? "true" : "false"}
-                aria-describedby={errors.business_idea ? "business_idea-error" : "business_idea-hint"}
+              </div>
+              
+              {/* Smart Suggestions */}
+              <SmartSuggestions
+                fieldName="business_idea"
+                currentValue={watchedValues.business_idea || ''}
+                businessStage={watchedValues.business_stage as BusinessStage}
+                onSuggestionClick={(suggestion) => {
+                  const currentValue = watchedValues.business_idea || ''
+                  const newValue = currentValue.trim() 
+                    ? `${currentValue} ${suggestion}`.trim()
+                    : suggestion
+                  setValue('business_idea', newValue)
+                  const quality = evaluateAnswerQuality(newValue, 10)
+                  setAnswerQuality(prev => ({ ...prev, business_idea: quality.quality }))
+                }}
               />
+              
+              {/* Answer Quality Indicator */}
+              {watchedValues.business_idea && (
+                <div className="mt-2 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className={cn("font-medium", getQualityColorClass(answerQuality.business_idea || 'needs_more'))}>
+                      {getQualityLabel(answerQuality.business_idea || 'needs_more')}
+                    </span>
+                    <span className="text-text-tertiary">
+                      {watchedValues.business_idea.length} characters
+                    </span>
+                  </div>
+                  {evaluateAnswerQuality(watchedValues.business_idea || '', 10).suggestions.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {evaluateAnswerQuality(watchedValues.business_idea || '', 10).suggestions.slice(0, 1).map((suggestion, idx) => (
+                        <span key={idx} className="text-text-tertiary italic">
+                          {suggestion}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
               
               <div id="business_idea-hint" className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
                 <p className="text-xs md:text-sm text-alira-primary/75 dark:text-alira-white/75">
@@ -392,34 +657,156 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 </p>
               )}
             </div>
+
+            {/* Business Stage Selection */}
+            <div>
+              <label className="block text-sm md:text-base font-light text-alira-primary/90 dark:text-alira-white/90 mb-3">
+                What stage is your business at? (Optional - helps us tailor questions)
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {businessStages.map((stage) => (
+                  <label 
+                    key={stage.value} 
+                    className={cn(
+                      "flex items-center space-x-2 cursor-pointer p-3 border rounded-lg transition-all",
+                      watchedValues.business_stage === stage.value
+                        ? "border-alira-gold bg-alira-gold/10 dark:bg-alira-gold/20"
+                        : "border-alira-primary/20 dark:border-alira-white/20 hover:border-alira-gold/40 dark:hover:border-alira-gold/60"
+                    )}
+                  >
+                    <input
+                      type="radio"
+                      value={stage.value}
+                      {...register('business_stage', {
+                        onChange: () => {
+                          conversionEvents.businessStageSelected(stage.value)
+                        }
+                      })}
+                      className="rounded border-alira-primary/20 dark:border-alira-white/30"
+                    />
+                    <span className="text-xs md:text-sm text-alira-primary dark:text-alira-white">{stage.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
           </div>
         )
 
       case 2:
+        const challengesQuestion = getChallengesQuestion(watchedValues.business_stage as BusinessStage)
         return (
           <div className="space-y-6">
             <div>
-              <label htmlFor="current_challenges" className="block text-sm md:text-base font-light text-alira-primary/90 dark:text-alira-white/90 mb-3">
-                What are your biggest operational challenges right now?
-              </label>
-              <Textarea
-                id="current_challenges"
-                {...register('current_challenges')}
-                placeholder="What's slowing you down or preventing growth?"
-                rows={4}
-                className={cn(
-                  "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
-                  errors.current_challenges 
-                    ? "border-red-500 dark:border-red-400 ring-2 ring-red-500/20" 
-                    : "border-alira-primary/20 dark:border-alira-white/20"
+              <div className="flex items-center justify-between mb-3">
+                <label htmlFor="current_challenges" className="block text-sm md:text-base font-light text-alira-primary/90 dark:text-alira-white/90">
+                  {challengesQuestion.label}
+                </label>
+                <div className="flex items-center gap-2">
+                  <ContextualHelp 
+                    fieldId="current_challenges"
+                    onClick={() => conversionEvents.helpIconClicked('current_challenges')}
+                  />
+                  <ExampleTemplate 
+                    questionId="current_challenges" 
+                    onFillExample={(content) => setValue('current_challenges', content)}
+                  />
+                </div>
+              </div>
+              <div className="relative">
+                <Textarea
+                  id="current_challenges"
+                  {...register('current_challenges')}
+                  onChange={(e) => {
+                    register('current_challenges').onChange(e)
+                    const quality = evaluateAnswerQuality(e.target.value, 10)
+                    setAnswerQuality(prev => ({ ...prev, current_challenges: quality.quality }))
+                  }}
+                  placeholder={challengesQuestion.placeholder}
+                  rows={isMobile ? 6 : 4}
+                  className={cn(
+                    "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
+                    isMobile && "text-base",
+                    errors.current_challenges 
+                      ? "border-red-500 dark:border-red-400 ring-2 ring-red-500/20" 
+                      : "border-alira-primary/20 dark:border-alira-white/20"
+                  )}
+                  aria-invalid={errors.current_challenges ? "true" : "false"}
+                  aria-describedby={errors.current_challenges ? "current_challenges-error" : "current_challenges-hint"}
+                />
+                {/* Voice Input Button (Mobile) */}
+                {isMobile && voiceInput.isSupported && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (voiceInputActive === 'current_challenges') {
+                        voiceInput.stopListening()
+                        setVoiceInputActive(null)
+                      } else {
+                        voiceInput.startListening()
+                        setVoiceInputActive('current_challenges')
+                      }
+                    }}
+                    className={cn(
+                      "absolute bottom-4 right-4 p-2 rounded-lg transition-colors",
+                      voiceInputActive === 'current_challenges'
+                        ? "bg-red-500 text-white"
+                        : "bg-alira-gold/20 text-alira-gold hover:bg-alira-gold/30"
+                    )}
+                    aria-label="Voice input"
+                  >
+                    {voiceInputActive === 'current_challenges' ? (
+                      <MicOff className="w-5 h-5" />
+                    ) : (
+                      <Mic className="w-5 h-5" />
+                    )}
+                  </button>
                 )}
-                aria-invalid={errors.current_challenges ? "true" : "false"}
-                aria-describedby={errors.current_challenges ? "current_challenges-error" : "current_challenges-hint"}
+              </div>
+              
+              {/* Smart Suggestions */}
+              <SmartSuggestions
+                fieldName="current_challenges"
+                currentValue={watchedValues.current_challenges || ''}
+                businessStage={watchedValues.business_stage as BusinessStage}
+                businessIdea={watchedValues.business_idea}
+                onSuggestionClick={(suggestion) => {
+                  const currentValue = watchedValues.current_challenges || ''
+                  const newValue = currentValue.trim() 
+                    ? `${currentValue} ${suggestion}`.trim()
+                    : suggestion
+                  setValue('current_challenges', newValue)
+                  const quality = evaluateAnswerQuality(newValue, 10)
+                  setAnswerQuality(prev => ({ ...prev, current_challenges: quality.quality }))
+                }}
               />
+              
+              {/* Answer Quality Indicator */}
+              {watchedValues.current_challenges && (
+                <div className="mt-2 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className={cn("font-medium", getQualityColorClass(answerQuality.current_challenges || 'needs_more'))}>
+                      {getQualityLabel(answerQuality.current_challenges || 'needs_more')}
+                    </span>
+                    <span className="text-text-tertiary">
+                      {watchedValues.current_challenges.length} characters
+                    </span>
+                  </div>
+                  {evaluateAnswerQuality(watchedValues.current_challenges || '', 10).suggestions.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {evaluateAnswerQuality(watchedValues.current_challenges || '', 10).suggestions.slice(0, 1).map((suggestion, idx) => (
+                        <span key={idx} className="text-text-tertiary italic">
+                          {suggestion}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+              
               <div id="current_challenges-hint" className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
                 <p className="text-xs md:text-sm text-alira-primary/75 dark:text-alira-white/75">
-                  <span className="mr-2">⚠️</span>
-                  Common challenges: Unclear messaging, scattered customer data, manual processes, poor website conversion, or lack of automation
+                  <span className="mr-2">{challengesQuestion.hintIcon}</span>
+                  {challengesQuestion.hint}
                 </p>
               </div>
               {errors.current_challenges && (
@@ -439,30 +826,120 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
         )
 
       case 3:
+        const goalsQuestion = getGoalsQuestion(watchedValues.business_stage as BusinessStage)
         return (
           <div className="space-y-6">
             <div>
-              <label htmlFor="immediate_goals" className="block text-sm md:text-base font-light text-alira-primary/90 dark:text-alira-white/90 mb-3">
-                What do you want to achieve in the next 3-6 months?
-              </label>
-              <Textarea
-                id="immediate_goals"
-                {...register('immediate_goals')}
-                placeholder="What specific outcomes do you want to see?"
-                rows={4}
-                className={cn(
-                  "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
-                  errors.immediate_goals 
-                    ? "border-red-500 dark:border-red-400 ring-2 ring-red-500/20" 
-                    : "border-alira-primary/20 dark:border-alira-white/20"
+              <div className="flex items-center justify-between mb-3">
+                <label htmlFor="immediate_goals" className="block text-sm md:text-base font-light text-alira-primary/90 dark:text-alira-white/90">
+                  {goalsQuestion.label}
+                </label>
+                <div className="flex items-center gap-2">
+                  <ContextualHelp 
+                    fieldId="immediate_goals"
+                    onClick={() => conversionEvents.helpIconClicked('immediate_goals')}
+                  />
+                  <ExampleTemplate 
+                    questionId="immediate_goals" 
+                    onFillExample={(content) => setValue('immediate_goals', content)}
+                  />
+                </div>
+              </div>
+              <div className="relative">
+                <Textarea
+                  id="immediate_goals"
+                  {...register('immediate_goals')}
+                  onChange={(e) => {
+                    register('immediate_goals').onChange(e)
+                    const quality = evaluateAnswerQuality(e.target.value, 10)
+                    setAnswerQuality(prev => ({ ...prev, immediate_goals: quality.quality }))
+                  }}
+                  placeholder={goalsQuestion.placeholder}
+                  rows={isMobile ? 6 : 4}
+                  className={cn(
+                    "w-full rounded-xl border bg-alira-primary/10 dark:bg-alira-primary/80 px-4 py-3 text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:outline-none focus:ring-2 focus:ring-alira-gold/20 transition-all duration-200 resize-none",
+                    isMobile && "text-base",
+                    errors.immediate_goals 
+                      ? "border-red-500 dark:border-red-400 ring-2 ring-red-500/20" 
+                      : "border-alira-primary/20 dark:border-alira-white/20"
+                  )}
+                  aria-invalid={errors.immediate_goals ? "true" : "false"}
+                  aria-describedby={errors.immediate_goals ? "immediate_goals-error" : "immediate_goals-hint"}
+                />
+                {/* Voice Input Button (Mobile) */}
+                {isMobile && voiceInput.isSupported && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (voiceInputActive === 'immediate_goals') {
+                        voiceInput.stopListening()
+                        setVoiceInputActive(null)
+                      } else {
+                        voiceInput.startListening()
+                        setVoiceInputActive('immediate_goals')
+                      }
+                    }}
+                    className={cn(
+                      "absolute bottom-4 right-4 p-2 rounded-lg transition-colors",
+                      voiceInputActive === 'immediate_goals'
+                        ? "bg-red-500 text-white"
+                        : "bg-alira-gold/20 text-alira-gold hover:bg-alira-gold/30"
+                    )}
+                    aria-label="Voice input"
+                  >
+                    {voiceInputActive === 'immediate_goals' ? (
+                      <MicOff className="w-5 h-5" />
+                    ) : (
+                      <Mic className="w-5 h-5" />
+                    )}
+                  </button>
                 )}
-                aria-invalid={errors.immediate_goals ? "true" : "false"}
-                aria-describedby={errors.immediate_goals ? "immediate_goals-error" : "immediate_goals-hint"}
+              </div>
+              
+              {/* Smart Suggestions */}
+              <SmartSuggestions
+                fieldName="immediate_goals"
+                currentValue={watchedValues.immediate_goals || ''}
+                businessStage={watchedValues.business_stage as BusinessStage}
+                businessIdea={watchedValues.business_idea}
+                onSuggestionClick={(suggestion) => {
+                  const currentValue = watchedValues.immediate_goals || ''
+                  const newValue = currentValue.trim() 
+                    ? `${currentValue} ${suggestion}`.trim()
+                    : suggestion
+                  setValue('immediate_goals', newValue)
+                  const quality = evaluateAnswerQuality(newValue, 10)
+                  setAnswerQuality(prev => ({ ...prev, immediate_goals: quality.quality }))
+                }}
               />
+              
+              {/* Answer Quality Indicator */}
+              {watchedValues.immediate_goals && (
+                <div className="mt-2 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className={cn("font-medium", getQualityColorClass(answerQuality.immediate_goals || 'needs_more'))}>
+                      {getQualityLabel(answerQuality.immediate_goals || 'needs_more')}
+                    </span>
+                    <span className="text-text-tertiary">
+                      {watchedValues.immediate_goals.length} characters
+                    </span>
+                  </div>
+                  {evaluateAnswerQuality(watchedValues.immediate_goals || '', 10).suggestions.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {evaluateAnswerQuality(watchedValues.immediate_goals || '', 10).suggestions.slice(0, 1).map((suggestion, idx) => (
+                        <span key={idx} className="text-text-tertiary italic">
+                          {suggestion}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+              
               <div id="immediate_goals-hint" className="mt-4 rounded-xl border border-alira-primary/20 dark:border-alira-white/20 bg-alira-primary/5 dark:bg-alira-primary/80 p-4">
                 <p className="text-xs md:text-sm text-alira-primary/75 dark:text-alira-white/75">
-                  <span className="mr-2">🎯</span>
-                  Example goals: Increase conversion rates by 25%, automate lead follow-up, clarify brand positioning, or streamline customer onboarding
+                  <span className="mr-2">{goalsQuestion.hintIcon}</span>
+                  {goalsQuestion.hint}
                 </p>
               </div>
               {errors.immediate_goals && (
@@ -694,7 +1171,55 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
   }
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <>
+      <ExitIntentModal
+        isOpen={showExitIntent}
+        onClose={() => {
+          setShowExitIntent(false)
+          conversionEvents.exitIntentDismissed(currentStep)
+        }}
+        onSave={handleExitIntentSave}
+        existingEmail={draftData?.email}
+      />
+      
+      <CompletionPreview
+        isOpen={showPreview}
+        onClose={() => setShowPreview(false)}
+        formData={{
+          business_idea: watchedValues.business_idea,
+          business_stage: watchedValues.business_stage,
+          current_challenges: watchedValues.current_challenges,
+          immediate_goals: watchedValues.immediate_goals,
+          service_interest: watchedValues.service_interest,
+          current_tools: watchedValues.current_tools
+        }}
+        onEdit={(sectionId) => {
+          conversionEvents.previewEditClicked(sectionId)
+          // Navigate to appropriate step based on section
+          if (sectionId === 'executive-summary' || sectionId === 'business-context') {
+            setCurrentStep(1)
+          } else if (sectionId === 'challenges') {
+            setCurrentStep(2)
+          } else if (sectionId === 'goals') {
+            setCurrentStep(3)
+          } else if (sectionId === 'services' || sectionId === 'tools') {
+            setCurrentStep(4)
+          }
+        }}
+        onConfirm={() => {
+          conversionEvents.previewConfirmed()
+          setShowPreview(false)
+          // Trigger form submission
+          handleSubmit(onSubmit)()
+        }}
+        onCancel={() => {
+          setShowPreview(false)
+        }}
+      />
+      <div 
+        className="max-w-3xl mx-auto"
+        {...(isMobile ? swipeHandlers : {})}
+      >
       {/* Enhanced Progress Indicator */}
       <FormProgress
         steps={[
@@ -704,6 +1229,8 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
           { label: "Services", description: "How we can help" },
         ]}
         currentStep={currentStep}
+        estimatedTimePerStep={90}
+        showMilestones={true}
       />
 
       <form onSubmit={handleSubmit(onSubmit)} onSubmitCapture={(e) => console.log('Form submit event triggered', e)}>
@@ -762,16 +1289,19 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={prevStep}
-                  disabled={currentStep === 1}
-                  className="text-sm md:text-base text-alira-primary/80 dark:text-alira-white/80 hover:text-alira-primary dark:hover:text-alira-white border-0 bg-transparent hover:bg-transparent"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  ← Previous
-                </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={prevStep}
+                    disabled={currentStep === 1}
+                    className={cn(
+                      "text-sm md:text-base text-alira-primary/80 dark:text-alira-white/80 hover:text-alira-primary dark:hover:text-alira-white border-0 bg-transparent hover:bg-transparent",
+                      isMobile && "min-h-[44px] min-w-[44px]" // Ensure touch targets are at least 44px
+                    )}
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    ← Previous
+                  </Button>
               </motion.div>
             </motion.div>
 
@@ -788,7 +1318,10 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   <Button
                     type="button"
                     onClick={nextStep}
-                    className="inline-flex min-h-[48px] items-center justify-center bg-alira-primary dark:bg-alira-primary text-alira-white dark:text-alira-white px-5 font-light ring-2 ring-alira-primary/20 dark:ring-alira-white/20 hover:bg-alira-primary/90 dark:hover:bg-alira-primary/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200"
+                    className={cn(
+                      "inline-flex items-center justify-center bg-alira-primary dark:bg-alira-primary text-alira-white dark:text-alira-white px-5 font-light ring-2 ring-alira-primary/20 dark:ring-alira-white/20 hover:bg-alira-primary/90 dark:hover:bg-alira-primary/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200",
+                      isMobile ? "min-h-[44px] text-base" : "min-h-[48px]"
+                    )}
                   >
                     Next Step →
                   </Button>
@@ -804,27 +1337,36 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                     onClick={async () => {
                       console.log('Button clicked, current step:', currentStep, 'isSubmitting:', isSubmitting, 'isGeneratingPlan:', isGeneratingPlan)
                       if (currentStep === 4) {
-                        try {
-                          // Trigger form submission directly
-                          const formData = watchedValues
-                          console.log('Form data being submitted:', formData)
-                          await onSubmit(formData)
-                        } catch (error) {
-                          console.error('Button click error:', error)
-                          alert(getUserFriendlyError(error))
-                        }
+                        // Show preview first
+                        conversionEvents.previewViewed()
+                        setShowPreview(true)
+                      } else {
+                        // Continue to next step
+                        nextStep()
                       }
                     }}
-                    className="inline-flex min-h-[48px] items-center justify-center bg-alira-gold text-alira-primary px-5 font-light ring-2 ring-alira-gold/20 hover:bg-alira-gold/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200"
+                    className={cn(
+                      "inline-flex items-center justify-center bg-alira-gold text-alira-primary px-5 font-light ring-2 ring-alira-gold/20 hover:bg-alira-gold/90 focus:outline-none focus:ring-2 focus:ring-alira-gold/40 transition-all duration-200",
+                      isMobile ? "min-h-[44px] text-base" : "min-h-[48px]"
+                    )}
                   >
                   {isSubmitting || isGeneratingPlan ? (
                     isSubmitting ? 'Analyzing Your Inputs...' : 'Generating Your Plan...'
                   ) : (
                     <>
-                      Generate My Plan
-                      <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
+                      {currentStep === 4 ? (
+                        <>
+                          <Eye className="w-5 h-5 mr-2" />
+                          Preview & Generate
+                        </>
+                      ) : (
+                        <>
+                          Generate My Plan
+                          <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                          </svg>
+                        </>
+                      )}
                     </>
                   )}
                   </Button>
@@ -834,7 +1376,8 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
           </div>
         </motion.div>
       </form>
-    </div>
+      </div>
+    </>
   )
 }
 

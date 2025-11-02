@@ -10,6 +10,7 @@ export const miniFormSchema = z.object({
 // New wizard form schema (aligned with ALIRA service areas)
 export const wizardFormSchema = z.object({
   business_idea: z.string().min(10, "Please provide more detail about your business idea"),
+  business_stage: z.enum(['idea', 'early', 'growing', 'established']).optional(),
   current_challenges: z.string().min(10, "Please provide more detail about your current challenges"),
   immediate_goals: z.string().min(10, "Please provide more detail about your immediate goals"),
   service_interest: z.array(z.string()).min(1, "Please select at least one service area"),

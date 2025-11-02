@@ -65,8 +65,11 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
   const [isTyping, setIsTyping] = useState(false);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftId, setDraftId] = useState<string | null>(null);
+  const [isSavingDraft, setIsSavingDraft] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const currentQuestion = questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
@@ -79,30 +82,39 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Show first question on mount (only once)
+  // Load draft and initialize on mount
   useEffect(() => {
-    if (!hasInitialized.current) {
-      hasInitialized.current = true;
+    const initializeForm = async () => {
+      // Load draft first
+      const draftLoaded = await loadDraft();
       
-      // If we have initial business idea from homepage, skip first question
-      if (initialBusinessIdea.current) {
-        setTimeout(() => {
-          addUserMessage(initialBusinessIdea.current!);
-        }, 300);
+      if (!hasInitialized.current) {
+        hasInitialized.current = true;
         
-        // Go straight to second question
-        setTimeout(() => {
-          addBotMessage(questions[1].question);
-        }, 1000);
-      } else {
-        // No initial data, start with first question
-        setTimeout(() => {
-          addBotMessage(questions[0].question);
-        }, 500);
+        // Only show initial question if no draft was loaded
+        if (!draftLoaded) {
+          // If we have initial business idea from homepage, skip first question
+          if (initialBusinessIdea.current) {
+            setTimeout(() => {
+              addUserMessage(initialBusinessIdea.current!);
+            }, 300);
+            
+            // Go straight to second question
+            setTimeout(() => {
+              addBotMessage(questions[1].question);
+            }, 1000);
+          } else {
+            // No initial data, start with first question
+            setTimeout(() => {
+              addBotMessage(questions[0].question);
+            }, 500);
+          }
+        }
       }
-    }
+    };
+    
+    initializeForm();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // Intentionally empty: hasInitialized ref ensures this runs only once on mount
   }, []);
 
   const addBotMessage = (content: string) => {
@@ -127,6 +139,134 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
     }]);
   };
 
+  const loadDraft = async (): Promise<boolean> => {
+    try {
+      const response = await fetch('/api/form/draft');
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.draft) {
+          const draft = result.draft;
+          setDraftId(draft.id);
+          
+          // Restore form data
+          if (draft.form_data) {
+            setFormData(draft.form_data);
+          }
+          
+          // Restore question index
+          if (typeof draft.current_question_index === 'number') {
+            setCurrentQuestionIndex(draft.current_question_index);
+            
+            // Restore messages based on question index
+            const restoredMessages: Message[] = [];
+            for (let i = 0; i <= draft.current_question_index; i++) {
+              const question = questions[i];
+              if (question) {
+                restoredMessages.push({
+                  id: `bot-${i}-restored`,
+                  type: 'bot',
+                  content: question.question,
+                  timestamp: new Date()
+                });
+                
+                const answer = draft.form_data[question.id];
+                if (answer && i < draft.current_question_index) {
+                  if (question.type === 'multiselect') {
+                    restoredMessages.push({
+                      id: `user-${i}-restored`,
+                      type: 'user',
+                      content: Array.isArray(answer) 
+                        ? answer.map(s => serviceInterestOptions.find(o => o.value === s)?.label).join(', ')
+                        : '',
+                      timestamp: new Date()
+                    });
+                  } else {
+                    restoredMessages.push({
+                      id: `user-${i}-restored`,
+                      type: 'user',
+                      content: answer || '',
+                      timestamp: new Date()
+                    });
+                  }
+                }
+              }
+            }
+            
+            if (restoredMessages.length > 0) {
+              setMessages(restoredMessages);
+              if (draft.form_data.service_interest) {
+                setSelectedServices(draft.form_data.service_interest);
+              }
+            }
+            
+          }
+          return true; // Draft was loaded
+        }
+      }
+    } catch (error) {
+      console.error('Error loading draft:', error);
+    }
+    return false; // No draft loaded
+  };
+
+  const saveDraft = async () => {
+    if (isSubmitting) return; // Don't save if submitting
+    
+    setIsSavingDraft(true);
+    try {
+      const response = await fetch('/api/form/draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          form_data: formData,
+          current_question_index: currentQuestionIndex,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.draft) {
+          setDraftId(result.draft.id);
+        }
+      }
+    } catch (error) {
+      console.error('Error saving draft:', error);
+    } finally {
+      setIsSavingDraft(false);
+    }
+  };
+
+  const deleteDraft = async () => {
+    try {
+      await fetch('/api/form/draft', {
+        method: 'DELETE',
+      });
+      setDraftId(null);
+    } catch (error) {
+      console.error('Error deleting draft:', error);
+    }
+  };
+
+  // Auto-save when form data or question index changes (debounced)
+  useEffect(() => {
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current);
+    }
+
+    // Only auto-save if we have some data
+    if (Object.keys(formData).length > 0 || currentQuestionIndex > 0) {
+      autoSaveTimeoutRef.current = setTimeout(() => {
+        saveDraft();
+      }, 2000); // Debounce for 2 seconds
+    }
+
+    return () => {
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current);
+      }
+    };
+  }, [formData, currentQuestionIndex]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handleSend = async () => {
     if (currentQuestion.type === 'multiselect') {
       // Handle multiselect submission
@@ -144,6 +284,10 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
       // Complete the form
       setIsTyping(true);
       setIsSubmitting(true);
+      
+      // Delete draft on completion
+      await deleteDraft();
+      
       setTimeout(() => {
         addBotMessage("Perfect! I'm now creating your personalized business plan. This will just take a moment...");
         setTimeout(async () => {
@@ -196,8 +340,27 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
     );
   };
 
+  // Calculate progress
+  const progressPercentage = Math.round(((currentQuestionIndex + 1) / questions.length) * 100);
+
   return (
     <div className="flex flex-col h-[calc(100vh-120px)] sm:h-[calc(100vh-160px)] lg:h-[calc(100vh-200px)] max-w-4xl mx-auto">
+      {/* Progress Indicator */}
+      {messages.length > 0 && (
+        <div className="mb-4 px-4 sm:px-6">
+          <div className="flex justify-between text-xs text-text-tertiary mb-2">
+            <span>Step {currentQuestionIndex + 1} of {questions.length}</span>
+            <span>{progressPercentage}%</span>
+          </div>
+          <div className="h-1 bg-bg-muted rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-alira-gold rounded-full transition-all duration-300"
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
+        </div>
+      )}
+      
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-6">
         <AnimatePresence>

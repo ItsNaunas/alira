@@ -230,6 +230,8 @@ export default function PlanDetailPage() {
                 <PlanViewer 
                   content={plan.generation.content}
                   collapsible={true}
+                  planId={plan.id}
+                  enableProgressTracking={true}
                 />
               </>
             ) : (

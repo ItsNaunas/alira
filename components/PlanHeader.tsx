@@ -3,6 +3,7 @@
 import { PlanDetail, planStatusOptions } from '@/lib/schema'
 import { Button } from '@/components/ui/button'
 import { AlertDialog } from '@/components/ui/alert-dialog'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { 
   Edit3, 
   MessageSquare, 
@@ -12,7 +13,8 @@ import {
   ChevronRight,
   FileText,
   Loader2,
-  Trash2
+  Trash2,
+  FileDown
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -35,6 +37,8 @@ export default function PlanHeader({
 }: PlanHeaderProps) {
   const router = useRouter()
   const [generatingPDF, setGeneratingPDF] = useState(false)
+  const [exportingMarkdown, setExportingMarkdown] = useState(false)
+  const [exportMenuOpen, setExportMenuOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   
@@ -47,6 +51,43 @@ export default function PlanHeader({
 
   const handleRefine = () => {
     router.push(`/dashboard/${plan.id}/refine`)
+  }
+
+  const handleExportMarkdown = async () => {
+    setExportingMarkdown(true)
+    setExportMenuOpen(false)
+    try {
+      const response = await fetch('/api/plan/export-markdown', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId: plan.id })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to export markdown')
+      }
+
+      // Get the markdown content
+      const markdown = await response.text()
+      const filename = response.headers.get('Content-Disposition')?.split('filename=')[1]?.replace(/"/g, '') || 
+        `${plan.business_name || 'Business-Plan'}-${new Date().toISOString().split('T')[0]}.md`
+
+      // Create download link
+      const blob = new Blob([markdown], { type: 'text/markdown; charset=utf-8' })
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = filename
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (error: any) {
+      console.error('Error exporting markdown:', error)
+      alert(`Failed to export markdown: ${error.message || 'Please try again.'}`)
+    } finally {
+      setExportingMarkdown(false)
+    }
   }
 
   const handleDownloadPDF = async () => {
@@ -228,25 +269,45 @@ export default function PlanHeader({
                   Refine with AI
                 </Button>
                 
-                <Button
-                  onClick={handleDownloadPDF}
-                  variant="outline"
-                  size="sm"
-                  className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
-                  disabled={generatingPDF}
-                >
-                  {generatingPDF ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Generating...
-                    </>
-                  ) : (
-                    <>
-                      <Download className="w-4 h-4 mr-2" />
+                <Popover open={exportMenuOpen} onOpenChange={setExportMenuOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
+                      disabled={generatingPDF || exportingMarkdown}
+                    >
+                      {(generatingPDF || exportingMarkdown) ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          {generatingPDF ? 'Generating...' : 'Exporting...'}
+                        </>
+                      ) : (
+                        <>
+                          <FileDown className="w-4 h-4 mr-2" />
+                          Export
+                          <ChevronDown className="w-4 h-4 ml-1" />
+                        </>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-48 p-1" align="end">
+                    <button
+                      onClick={handleDownloadPDF}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-text-primary hover:bg-bg-muted rounded-md transition-colors"
+                    >
+                      <Download className="w-4 h-4" />
                       {plan.pdf_url ? 'Download PDF' : 'Generate PDF'}
-                    </>
-                  )}
-                </Button>
+                    </button>
+                    <button
+                      onClick={handleExportMarkdown}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-text-primary hover:bg-bg-muted rounded-md transition-colors"
+                    >
+                      <FileText className="w-4 h-4" />
+                      Export Markdown
+                    </button>
+                  </PopoverContent>
+                </Popover>
 
                 <Button
                   onClick={() => setDeleteDialogOpen(true)}

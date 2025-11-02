@@ -121,6 +121,176 @@ export const conversionEvents = {
     action: 'time_on_page',
     label: pageName,
     value: seconds
+  }),
+
+  // Form feature usage
+  fileUploadStarted: (fileType: string, fileSize: number) => trackEvent({
+    event: 'file_upload_start',
+    category: 'feature_usage',
+    action: 'file_upload',
+    label: fileType,
+    value: fileSize
+  }),
+
+  fileUploadCompleted: (fileType: string, extractedFields: number) => trackEvent({
+    event: 'file_upload_complete',
+    category: 'feature_usage',
+    action: 'file_upload',
+    label: fileType,
+    value: extractedFields
+  }),
+
+  fileUploadFailed: (fileType: string, error: string) => trackEvent({
+    event: 'file_upload_failed',
+    category: 'error',
+    action: 'file_upload',
+    label: `${fileType}: ${error}`
+  }),
+
+  smartSuggestionShown: (fieldName: string, suggestionCount: number) => trackEvent({
+    event: 'smart_suggestion_shown',
+    category: 'feature_usage',
+    action: 'smart_suggestions',
+    label: fieldName,
+    value: suggestionCount
+  }),
+
+  smartSuggestionClicked: (fieldName: string, suggestionText: string) => trackEvent({
+    event: 'smart_suggestion_clicked',
+    category: 'feature_usage',
+    action: 'smart_suggestions',
+    label: `${fieldName}: ${suggestionText.substring(0, 50)}`
+  }),
+
+  exitIntentTriggered: (stepNumber: number, hasData: boolean) => trackEvent({
+    event: 'exit_intent_triggered',
+    category: 'conversion',
+    action: 'exit_intent',
+    label: `step_${stepNumber}`,
+    value: hasData ? 1 : 0
+  }),
+
+  exitIntentSaved: (stepNumber: number) => trackEvent({
+    event: 'exit_intent_saved',
+    category: 'conversion',
+    action: 'exit_intent',
+    label: `step_${stepNumber}`
+  }),
+
+  exitIntentDismissed: (stepNumber: number) => trackEvent({
+    event: 'exit_intent_dismissed',
+    category: 'engagement',
+    action: 'exit_intent',
+    label: `step_${stepNumber}`
+  }),
+
+  helpIconClicked: (fieldName: string) => trackEvent({
+    event: 'help_icon_clicked',
+    category: 'feature_usage',
+    action: 'contextual_help',
+    label: fieldName
+  }),
+
+  previewViewed: () => trackEvent({
+    event: 'preview_viewed',
+    category: 'engagement',
+    action: 'preview',
+    label: 'completion_preview'
+  }),
+
+  previewEditClicked: (sectionId: string) => trackEvent({
+    event: 'preview_edit_clicked',
+    category: 'engagement',
+    action: 'preview',
+    label: sectionId
+  }),
+
+  previewConfirmed: () => trackEvent({
+    event: 'preview_confirmed',
+    category: 'conversion',
+    action: 'preview',
+    label: 'completion_preview'
+  }),
+
+  // Step drop-off tracking
+  stepDropOff: (stepNumber: number, timeSpent: number) => trackEvent({
+    event: 'step_drop_off',
+    category: 'engagement',
+    action: 'drop_off',
+    label: `step_${stepNumber}`,
+    value: timeSpent
+  }),
+
+  // Answer quality tracking
+  answerQualityChange: (fieldName: string, quality: string, characterCount: number) => trackEvent({
+    event: 'answer_quality_change',
+    category: 'engagement',
+    action: 'answer_quality',
+    label: `${fieldName}: ${quality}`,
+    value: characterCount
+  }),
+
+  // Voice input tracking
+  voiceInputStarted: (fieldName: string) => trackEvent({
+    event: 'voice_input_started',
+    category: 'feature_usage',
+    action: 'voice_input',
+    label: fieldName
+  }),
+
+  voiceInputCompleted: (fieldName: string, transcriptLength: number) => trackEvent({
+    event: 'voice_input_complete',
+    category: 'feature_usage',
+    action: 'voice_input',
+    label: fieldName,
+    value: transcriptLength
+  }),
+
+  voiceInputFailed: (fieldName: string, error: string) => trackEvent({
+    event: 'voice_input_failed',
+    category: 'error',
+    action: 'voice_input',
+    label: `${fieldName}: ${error}`
+  }),
+
+  // Swipe gesture tracking
+  swipeGesture: (direction: 'left' | 'right', stepNumber: number) => trackEvent({
+    event: 'swipe_gesture',
+    category: 'feature_usage',
+    action: 'mobile_gesture',
+    label: `${direction}: step_${stepNumber}`
+  }),
+
+  // Example template tracking
+  exampleTemplateViewed: (questionId: string) => trackEvent({
+    event: 'example_template_viewed',
+    category: 'feature_usage',
+    action: 'example_template',
+    label: questionId
+  }),
+
+  exampleTemplateCopied: (questionId: string) => trackEvent({
+    event: 'example_template_copied',
+    category: 'feature_usage',
+    action: 'example_template',
+    label: questionId
+  }),
+
+  // Conditional branching tracking
+  businessStageSelected: (stage: string) => trackEvent({
+    event: 'business_stage_selected',
+    category: 'engagement',
+    action: 'conditional_branching',
+    label: stage
+  }),
+
+  // Progress milestone tracking
+  milestoneReached: (milestoneName: string, stepNumber: number) => trackEvent({
+    event: 'milestone_reached',
+    category: 'engagement',
+    action: 'progress',
+    label: milestoneName,
+    value: stepNumber
   })
 }
 
