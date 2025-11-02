@@ -278,7 +278,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
       window.removeEventListener('mouseleave', handleMouseLeave)
       window.removeEventListener('beforeunload', handleBeforeUnload)
     }
-  }, [watchedValues.business_idea, watchedValues.current_challenges, watchedValues.immediate_goals])
+  }, [watchedValues.business_idea, watchedValues.current_challenges, watchedValues.immediate_goals, currentStep])
 
   // Save draft with email
   const handleExitIntentSave = async (email: string) => {
@@ -672,9 +672,17 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                     }
                   })}
                   ref={(e) => {
-                    const { ref } = register('business_idea')
-                    ref(e)
-                    businessIdeaRef.current = e
+                    const { ref: registerRef } = register('business_idea')
+                    // Call react-hook-form's ref
+                    if (typeof registerRef === 'function') {
+                      registerRef(e)
+                    } else if (registerRef && 'current' in registerRef) {
+                      (registerRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = e
+                    }
+                    // Set our custom ref for mobile keyboard
+                    if (businessIdeaRef) {
+                      (businessIdeaRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = e
+                    }
                   }}
                   placeholder="e.g., a marketing agency that helps creators launch offers"
                   rows={isMobile ? 6 : 4}
@@ -871,9 +879,17 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                     }
                   })}
                   ref={(e) => {
-                    const { ref } = register('current_challenges')
-                    ref(e)
-                    challengesRef.current = e
+                    const { ref: registerRef } = register('current_challenges')
+                    // Call react-hook-form's ref
+                    if (typeof registerRef === 'function') {
+                      registerRef(e)
+                    } else if (registerRef && 'current' in registerRef) {
+                      (registerRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = e
+                    }
+                    // Set our custom ref for mobile keyboard
+                    if (challengesRef) {
+                      (challengesRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = e
+                    }
                   }}
                   placeholder={challengesQuestion.placeholder}
                   rows={isMobile ? 6 : 4}
@@ -1036,9 +1052,17 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                     }
                   })}
                   ref={(e) => {
-                    const { ref } = register('immediate_goals')
-                    ref(e)
-                    goalsRef.current = e
+                    const { ref: registerRef } = register('immediate_goals')
+                    // Call react-hook-form's ref
+                    if (typeof registerRef === 'function') {
+                      registerRef(e)
+                    } else if (registerRef && 'current' in registerRef) {
+                      (registerRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = e
+                    }
+                    // Set our custom ref for mobile keyboard
+                    if (goalsRef) {
+                      (goalsRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = e
+                    }
                   }}
                   placeholder={goalsQuestion.placeholder}
                   rows={isMobile ? 6 : 4}
@@ -1614,6 +1638,7 @@ interface EmailGateFormProps {
 function EmailGateForm({ onSubmit, isGenerating, existingName, existingEmail }: EmailGateFormProps) {
   const [email, setEmail] = useState(existingEmail || '')
   const [isValid, setIsValid] = useState(!!existingEmail)
+  const emailRef = useRef<HTMLInputElement>(null)
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
