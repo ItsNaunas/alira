@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Reveal from './Reveal'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import { GradientBars } from '@/components/ui/gradient-bars'
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -44,8 +45,9 @@ export default function FAQ() {
 
   return (
     <section className="py-16 md:py-24 bg-bg-section relative overflow-hidden">
-      {/* Enhanced pattern overlay */}
-      <div className="container mx-auto px-6 lg:px-8">
+      {/* Animated Gradient Bars Background */}
+      <GradientBars bars={20} colors={['var(--brand)', 'transparent']} />
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <Reveal>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
