@@ -20,7 +20,7 @@ export function FormProgress({ steps, currentStep, className }: FormProgressProp
       {/* Progress Bar */}
       <div className="relative mb-8">
         {/* Background Track */}
-        <div className="absolute top-5 left-0 right-0 h-0.5 bg-white/10" aria-hidden="true" />
+        <div className="absolute top-5 left-0 right-0 h-0.5 bg-borderToken-subtle" aria-hidden="true" />
         
         {/* Active Progress */}
         <motion.div
@@ -51,7 +51,7 @@ export function FormProgress({ steps, currentStep, className }: FormProgressProp
                     "w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm border-2 transition-colors relative z-10",
                     isCompleted && "bg-alira-gold border-alira-gold text-alira-black",
                     isCurrent && "bg-alira-primary border-alira-gold text-alira-gold",
-                    isUpcoming && "bg-alira-primary border-white/20 text-white/40"
+                    isUpcoming && "bg-surface border-borderToken-subtle text-text-tertiary"
                   )}
                   initial={false}
                   animate={{
@@ -71,8 +71,8 @@ export function FormProgress({ steps, currentStep, className }: FormProgressProp
                   <p
                     className={cn(
                       "text-xs sm:text-sm font-medium transition-colors",
-                      (isCompleted || isCurrent) && "text-alira-white",
-                      isUpcoming && "text-white/40"
+                      (isCompleted || isCurrent) && "text-text-primary",
+                      isUpcoming && "text-text-tertiary"
                     )}
                   >
                     {step.label}
@@ -81,8 +81,8 @@ export function FormProgress({ steps, currentStep, className }: FormProgressProp
                     <p
                       className={cn(
                         "text-xs mt-1 hidden sm:block transition-colors",
-                        (isCompleted || isCurrent) && "text-white/60",
-                        isUpcoming && "text-white/30"
+                        (isCompleted || isCurrent) && "text-text-secondary",
+                        isUpcoming && "text-text-tertiary"
                       )}
                     >
                       {step.description}
@@ -119,14 +119,14 @@ export function SimpleFormProgress({
   return (
     <div className={cn("w-full", className)} role="progressbar" aria-valuenow={currentStep} aria-valuemin={1} aria-valuemax={totalSteps} aria-label="Form progress">
       <div className="flex items-center justify-between mb-2">
-        <p className="text-sm text-alira-white/80 font-light">
+        <p className="text-sm text-text-secondary font-light">
           Step {currentStep} of {totalSteps}
         </p>
-        <p className="text-sm text-alira-white/60 font-light">
+        <p className="text-sm text-text-tertiary font-light">
           {Math.round(percentage)}% complete
         </p>
       </div>
-      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+      <div className="h-2 bg-borderToken-subtle rounded-full overflow-hidden">
         <motion.div
           className="h-full bg-alira-gold rounded-full"
           initial={{ width: 0 }}

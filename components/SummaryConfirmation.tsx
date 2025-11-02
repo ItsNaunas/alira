@@ -44,14 +44,14 @@ export default function SummaryConfirmation({
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="w-16 h-16 bg-gradient-to-r from-alira-gold to-[#8B5A00] rounded-full flex items-center justify-center mx-auto"
+          className="w-16 h-16 bg-gradient-to-r from-accent to-accent-dark rounded-full flex items-center justify-center mx-auto"
         >
           <CheckCircle className="w-8 h-8 text-black" />
         </motion.div>
-        <h3 className="text-xl font-serif text-alira-white">
+        <h3 className="text-xl font-serif text-text-primary">
           Here's what I've understood
         </h3>
-        <p className="text-sm text-alira-white/70">
+        <p className="text-sm text-text-secondary">
           Review your information before I create your personalized business plan
         </p>
       </div>
@@ -64,15 +64,15 @@ export default function SummaryConfirmation({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white/5 border border-white/10 rounded-xl p-4"
+            className="bg-surface border border-borderToken-subtle rounded-xl p-4"
           >
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 bg-alira-gold/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                 <Target className="w-4 h-4 text-alira-gold" />
               </div>
               <div className="flex-1">
-                <h4 className="text-sm font-medium text-alira-gold mb-1">Your Business</h4>
-                <p className="text-sm text-alira-white/80 leading-relaxed">
+                <h4 className="text-sm font-medium text-accent mb-1">Your Business</h4>
+                <p className="text-sm text-text-primary leading-relaxed">
                   {data.business_idea}
                 </p>
               </div>
@@ -86,15 +86,15 @@ export default function SummaryConfirmation({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-white/5 border border-white/10 rounded-xl p-4"
+            className="bg-surface border border-borderToken-subtle rounded-xl p-4"
           >
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-red-400 text-xs">⚠</span>
               </div>
               <div className="flex-1">
-                <h4 className="text-sm font-medium text-alira-gold mb-1">Key Challenges</h4>
-                <p className="text-sm text-alira-white/80 leading-relaxed">
+                <h4 className="text-sm font-medium text-accent mb-1">Key Challenges</h4>
+                <p className="text-sm text-text-primary leading-relaxed">
                   {data.current_challenges}
                 </p>
               </div>
@@ -108,15 +108,15 @@ export default function SummaryConfirmation({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
-            className="bg-white/5 border border-white/10 rounded-xl p-4"
+            className="bg-surface border border-borderToken-subtle rounded-xl p-4"
           >
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-green-400 text-xs">🎯</span>
               </div>
               <div className="flex-1">
-                <h4 className="text-sm font-medium text-alira-gold mb-1">3-6 Month Goals</h4>
-                <p className="text-sm text-alira-white/80 leading-relaxed">
+                <h4 className="text-sm font-medium text-accent mb-1">3-6 Month Goals</h4>
+                <p className="text-sm text-text-primary leading-relaxed">
                   {data.immediate_goals}
                 </p>
               </div>
@@ -130,14 +130,14 @@ export default function SummaryConfirmation({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-white/5 border border-white/10 rounded-xl p-4"
+            className="bg-surface border border-borderToken-subtle rounded-xl p-4"
           >
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-blue-400 text-xs">🛠</span>
               </div>
               <div className="flex-1">
-                <h4 className="text-sm font-medium text-alira-gold mb-2">Services of Interest</h4>
+                <h4 className="text-sm font-medium text-accent mb-2">Services of Interest</h4>
                 <div className="flex flex-wrap gap-2">
                   {getServiceLabels(data.service_interest).map((service, index) => (
                     <span
@@ -164,7 +164,7 @@ export default function SummaryConfirmation({
         <Button
           onClick={onConfirm}
           disabled={isProcessing}
-          className="flex-1 bg-gradient-to-r from-alira-gold to-[#8B5A00] hover:from-[#8B5A00] hover:to-alira-gold text-black font-medium disabled:opacity-50"
+          className="flex-1 bg-gradient-to-r from-accent to-accent-dark hover:from-accent-dark hover:to-accent text-text-primary font-medium disabled:opacity-50"
         >
           {isProcessing ? (
             <>
@@ -184,7 +184,7 @@ export default function SummaryConfirmation({
           <Button
             onClick={onCancel}
             variant="outline"
-            className="border-white/20 text-alira-white hover:bg-white/10"
+            className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
             disabled={isProcessing}
           >
             Edit Details

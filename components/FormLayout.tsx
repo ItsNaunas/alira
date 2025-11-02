@@ -70,7 +70,7 @@ export default function FormLayout({ children }: { children: React.ReactNode }) 
   return (
     <div
       className={cn(
-        "flex w-full flex-col bg-alira-white dark:bg-alira-primary md:flex-row",
+        "flex w-full flex-col bg-alira-white md:flex-row",
         "min-h-screen"
       )}
     >

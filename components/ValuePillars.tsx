@@ -34,16 +34,16 @@ export default function ValuePillars() {
       {pillars.map((pillar, index) => {
         const IconComponent = pillar.icon
         return (
-          <Card key={pillar.title} className="border-alira-primary/10 dark:border-alira-white/10 hover:border-alira-gold/30 transition-all duration-300 hover:shadow-lg group bg-white dark:bg-alira-primary">
+          <Card key={pillar.title} className="border-borderToken-subtle hover:border-accent/30 transition-all duration-300 hover:shadow-lg group bg-surface dark:bg-brand">
             <CardHeader className="pb-4">
               <div className="flex flex-col items-center text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-alira-gold/20 to-alira-gold/10 flex items-center justify-center group-hover:from-alira-gold/30 group-hover:to-alira-gold/20 transition-all duration-300 border border-alira-gold/20">
-                  <IconComponent className="h-8 w-8 text-alira-gold" />
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center group-hover:from-accent/30 group-hover:to-accent/20 transition-all duration-300 border border-accent/20">
+                  <IconComponent className="h-8 w-8 text-accent" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl alira-heading text-alira-primary dark:text-alira-white">
+                  <CardTitle className="text-xl alira-heading text-brand dark:text-text-inverse">
                     {pillar.title}
-                    <span className="text-alira-gold font-light"> {pillar.subtitle}</span>
+                    <span className="text-accent font-light"> {pillar.subtitle}</span>
                   </CardTitle>
                 </div>
               </div>

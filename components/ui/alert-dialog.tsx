@@ -39,33 +39,33 @@ export function AlertDialog({
       
       {/* Dialog */}
       <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md animate-in fade-in zoom-in-95 duration-200">
-        <div className="bg-[#0A0A0A] border border-white/20 rounded-lg shadow-2xl">
+        <div className="bg-surface border border-borderToken-subtle rounded-lg shadow-2xl">
           {/* Header */}
           <div className="flex items-start justify-between p-6 pb-4">
             <div>
-              <h2 className="text-xl font-serif text-alira-white mb-2">
+              <h2 className="text-xl font-serif text-text-primary mb-2">
                 {title}
               </h2>
-              <p className="text-sm text-alira-white/60 leading-relaxed">
+              <p className="text-sm text-text-secondary leading-relaxed">
                 {description}
               </p>
             </div>
             <button
               onClick={() => !loading && onOpenChange(false)}
               disabled={loading}
-              className="text-alira-white/40 hover:text-alira-white transition-colors disabled:opacity-50"
+              className="text-text-tertiary hover:text-text-primary transition-colors disabled:opacity-50"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 p-6 pt-4 border-t border-white/10">
+          <div className="flex items-center justify-end gap-3 p-6 pt-4 border-t border-borderToken-subtle">
             <Button
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={loading}
-              className="border-white/20 text-alira-white hover:bg-white/5"
+              className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
             >
               {cancelText}
             </Button>

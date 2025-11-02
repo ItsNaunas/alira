@@ -18,9 +18,9 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-bg-page">
       {/* Hero Section */}
-      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+      <section className="py-24 md:py-32 bg-bg-page relative overflow-hidden pt-28 md:pt-32">
         <GradientBars />
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <Reveal>
@@ -28,11 +28,11 @@ export default function AboutPage() {
               <div className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-light">
                 About Us
               </div>
-              <h1 className="text-4xl md:text-6xl font-serif font-normal text-alira-white mb-8">
+              <h1 className="text-4xl md:text-6xl font-serif font-normal text-text-primary mb-8">
                 Our Story
               </h1>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
-              <p className="text-xl text-alira-white/80 leading-relaxed max-w-3xl mx-auto mb-8">
+              <p className="text-xl text-text-secondary leading-relaxed max-w-3xl mx-auto mb-8">
                 ALIRA was created to solve a simple problem: brilliant ideas getting stuck in complexity. 
                 We believe every ambitious person deserves a clear path forward, not another complicated framework.
               </p>
@@ -42,8 +42,8 @@ export default function AboutPage() {
                     key={index}
                     className={`text-center p-6 rounded-xl cursor-pointer transition-all duration-300 ${
                       activeStat === index 
-                        ? 'bg-white/[0.05] border-2 border-alira-gold shadow-lg' 
-                        : 'bg-white/[0.02] border border-white/10 hover:border-white/20 hover:bg-white/[0.04]'
+                        ? 'bg-surface border-2 border-alira-gold shadow-lg' 
+                        : 'bg-surface border border-borderToken-subtle hover:border-accent hover:bg-bg-muted'
                     }`}
                     onClick={() => setActiveStat(index)}
                     onMouseEnter={() => setActiveStat(index)}
@@ -53,8 +53,8 @@ export default function AboutPage() {
                     }`}>
                       {stat.number}
                     </div>
-                    <div className="text-alira-white/70 mb-2">{stat.label}</div>
-                    <div className={`text-sm text-alira-white/60 transition-all duration-300 ${
+                    <div className="text-text-secondary mb-2">{stat.label}</div>
+                    <div className={`text-sm text-text-secondary transition-all duration-300 ${
                       activeStat === index ? 'opacity-100 max-h-20' : 'opacity-0 max-h-0 overflow-hidden'
                     }`}>
                       {stat.description}
@@ -68,21 +68,21 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="py-24 bg-black">
+      <section className="py-24 bg-bg-page">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <Reveal>
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-serif font-normal text-alira-white mb-6">
+                  <h2 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-6">
                     Our Mission
                   </h2>
                   <div className="w-12 h-px bg-alira-gold mb-6"></div>
-                  <p className="text-lg text-alira-white/80 leading-relaxed mb-6">
+                  <p className="text-lg text-text-secondary leading-relaxed mb-6">
                     To strip away the noise and give ambitious people what they actually need: 
                     a simple plan, clear steps, and the confidence to move forward.
                   </p>
-                  <p className="text-lg text-alira-white/80 leading-relaxed">
+                  <p className="text-lg text-text-secondary leading-relaxed">
                     We believe that complexity is the enemy of progress. Every great idea deserves 
                     a straightforward path to reality, not another complicated system to navigate.
                   </p>
@@ -91,15 +91,15 @@ export default function AboutPage() {
               
               <Reveal delay={200}>
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-serif font-normal text-alira-white mb-6">
+                  <h2 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-6">
                     Our Vision
                   </h2>
                   <div className="w-12 h-px bg-alira-gold mb-6"></div>
-                  <p className="text-lg text-alira-white/80 leading-relaxed mb-6">
+                  <p className="text-lg text-text-secondary leading-relaxed mb-6">
                     A world where every ambitious person has access to clear, actionable guidance 
                     that transforms their ideas into reality without unnecessary complexity.
                   </p>
-                  <p className="text-lg text-alira-white/80 leading-relaxed">
+                  <p className="text-lg text-text-secondary leading-relaxed">
                     We envision a future where starting and growing something meaningful is 
                     accessible to everyone, regardless of their background or resources.
                   </p>
@@ -111,14 +111,14 @@ export default function AboutPage() {
       </section>
 
       {/* Meet the Team Section */}
-        <section className="py-24 bg-black relative overflow-hidden" aria-labelledby="team-heading">
+        <section className="py-24 bg-bg-page relative overflow-hidden" aria-labelledby="team-heading">
           <GradientBars />
 
           <div className="container mx-auto px-6 lg:px-8 relative z-10">
             <div className="max-w-6xl mx-auto">
               <Reveal>
                 <div className="text-center mb-20">
-                  <h2 id="team-heading" className="text-4xl md:text-5xl font-serif font-normal text-alira-white mb-6">
+                  <h2 id="team-heading" className="text-4xl md:text-5xl font-serif font-normal text-text-primary mb-6">
                     Meet the Team
                   </h2>
                   <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
@@ -129,8 +129,8 @@ export default function AboutPage() {
             <div className="mb-16">
               <Reveal delay={100}>
                 <div className="text-center mb-12">
-                  <h3 className="text-3xl font-serif font-normal text-alira-white mb-4">Our Founder</h3>
-                  <p className="text-lg text-alira-white/70 max-w-2xl mx-auto">
+                  <h3 className="text-3xl font-serif font-normal text-text-primary mb-4">Our Founder</h3>
+                  <p className="text-lg text-text-secondary max-w-2xl mx-auto">
                     ALIRA began with one person's frustration: seeing brilliant ideas stall in complexity.
                   </p>
                   <div className="w-12 h-px bg-alira-gold mx-auto mt-4"></div>
@@ -145,22 +145,22 @@ export default function AboutPage() {
                   {/* Opening statement */}
                   <div className="relative">
                     <div className="absolute -left-4 top-0 w-1 h-full bg-alira-gold/30"></div>
-                    <p className="text-2xl text-alira-white font-serif italic leading-relaxed pl-6">
+                    <p className="text-2xl text-text-primary font-serif italic leading-relaxed pl-6">
                       "I know what it feels like to have ambition but no clear path."
                     </p>
                   </div>
 
                   {/* Personal journey */}
                   <div className="space-y-6">
-                    <p className="text-lg text-alira-white/80 leading-relaxed">
+                    <p className="text-lg text-text-secondary leading-relaxed">
                       For over a decade, I worked in project management and operations — leading teams, fixing systems, and delivering projects that saved organisations time and money.
                     </p>
                     
-                    <p className="text-lg text-alira-white/80 leading-relaxed">
+                    <p className="text-lg text-text-secondary leading-relaxed">
                       But I kept seeing the same pattern: great ideas getting stuck in complexity. Simple problems becoming complicated messes.
                     </p>
                     
-                    <p className="text-lg text-alira-white/80 leading-relaxed">
+                    <p className="text-lg text-text-secondary leading-relaxed">
                       That's why I built ALIRA: to strip away the noise and give people what they actually need — a simple plan, clear steps, and the confidence to move forward.
                     </p>
                   </div>
@@ -172,7 +172,7 @@ export default function AboutPage() {
                 <div className="space-y-8">
                                             {/* Founder photo with elegant styling */}
                           <div className="relative">
-                          <div className="w-full h-80 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+                          <div className="w-full h-80 rounded-2xl overflow-hidden border border-borderToken-subtle shadow-lg">
                             <Image 
                               src="/images/assets/founder.jpg" 
                               alt="Portrait of ALIRA founder with over 10 years of project management experience, specializing in business strategy and operational excellence"
@@ -190,15 +190,15 @@ export default function AboutPage() {
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-alira-white/80 font-sans font-light">10+ years in project management</span>
+                      <span className="text-text-secondary font-sans font-light">10+ years in project management</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-alira-white/80 font-sans font-light">Experience leading teams across multiple industries</span>
+                      <span className="text-text-secondary font-sans font-light">Experience leading teams across multiple industries</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-alira-white/80 font-sans font-light">Delivered projects that saved organisations time and money</span>
+                      <span className="text-text-secondary font-sans font-light">Delivered projects that saved organisations time and money</span>
                     </div>
                   </div>
 
@@ -222,8 +222,8 @@ export default function AboutPage() {
             <div className="mt-20">
               <Reveal delay={600}>
                 <div className="text-center mb-12">
-                  <h3 className="text-3xl font-serif font-normal text-alira-white mb-4">Our Team Capabilities</h3>
-                  <p className="text-lg text-alira-white/70 max-w-2xl mx-auto">
+                  <h3 className="text-3xl font-serif font-normal text-text-primary mb-4">Our Team Capabilities</h3>
+                  <p className="text-lg text-text-secondary max-w-2xl mx-auto">
                     Three specialists working together to deliver clarity, reach, and systems that work.
                   </p>
                 </div>
@@ -233,10 +233,10 @@ export default function AboutPage() {
                 {/* The Strategist */}
                 <Reveal delay={700}>
                   <div 
-                    className={`bg-white/[0.02] backdrop-blur-sm p-10 rounded-2xl border transition-all duration-500 text-center group relative overflow-hidden cursor-pointer ${
+                    className={`bg-surface p-10 rounded-2xl border transition-all duration-500 text-center group relative overflow-hidden cursor-pointer ${
                       activeTeamMember === 0 
-                        ? 'border-alira-gold shadow-2xl bg-white/[0.05] scale-105' 
-                        : 'border-white/10 hover:border-white/20 hover:shadow-2xl hover:bg-white/[0.04]'
+                        ? 'border-alira-gold shadow-2xl bg-bg-muted scale-105' 
+                        : 'border-borderToken-subtle hover:border-accent hover:shadow-2xl hover:bg-bg-muted'
                     }`}
                     onClick={() => setActiveTeamMember(activeTeamMember === 0 ? null : 0)}
                     onMouseEnter={() => setActiveTeamMember(0)}
@@ -256,21 +256,21 @@ export default function AboutPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                       </svg>
                     </div>
-                    <h4 className="text-2xl font-serif font-normal text-alira-white mb-4">The Strategist</h4>
-                    <p className="text-alira-white/80 leading-relaxed mb-6">
+                    <h4 className="text-2xl font-serif font-normal text-text-primary mb-4">The Strategist</h4>
+                    <p className="text-text-secondary leading-relaxed mb-6">
                       Sees the bigger picture and turns ideas into steps you can act on.
                     </p>
-                    <div className="text-sm text-alira-white/70 space-y-3 text-left">
-                      <p><span className="font-light text-alira-white">Runs clarity sessions and workshops</span> to define goals</p>
-                      <p><span className="font-light text-alira-white">Creates 90-day and 1-year growth roadmaps</span> for clear direction</p>
-                      <p><span className="font-light text-alira-white">Breaks complex challenges</span> into simple, actionable projects</p>
+                    <div className="text-sm text-text-secondary space-y-3 text-left">
+                      <p><span className="font-light text-text-primary">Runs clarity sessions and workshops</span> to define goals</p>
+                      <p><span className="font-light text-text-primary">Creates 90-day and 1-year growth roadmaps</span> for clear direction</p>
+                      <p><span className="font-light text-text-primary">Breaks complex challenges</span> into simple, actionable projects</p>
                     </div>
                     
                     {/* Interactive button */}
                     <div className={`mt-6 transition-all duration-300 ${
                       activeTeamMember === 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                     }`}>
-                      <button className="text-alira-gold text-sm font-sans font-light hover:text-alira-white transition-colors">
+                      <button className="text-alira-gold text-sm font-sans font-light hover:text-accent-dark transition-colors">
                         See How We Work →
                       </button>
                     </div>
@@ -280,10 +280,10 @@ export default function AboutPage() {
                 {/* The Marketing Lead */}
                 <Reveal delay={800}>
                   <div 
-                    className={`bg-white/[0.02] backdrop-blur-sm p-10 rounded-2xl border transition-all duration-500 text-center group relative overflow-hidden cursor-pointer ${
+                    className={`bg-surface p-10 rounded-2xl border transition-all duration-500 text-center group relative overflow-hidden cursor-pointer ${
                       activeTeamMember === 1 
-                        ? 'border-alira-gold shadow-2xl bg-white/[0.05] scale-105' 
-                        : 'border-white/10 hover:border-white/20 hover:shadow-2xl hover:bg-white/[0.04]'
+                        ? 'border-alira-gold shadow-2xl bg-bg-muted scale-105' 
+                        : 'border-borderToken-subtle hover:border-accent hover:shadow-2xl hover:bg-bg-muted'
                     }`}
                     onClick={() => setActiveTeamMember(activeTeamMember === 1 ? null : 1)}
                     onMouseEnter={() => setActiveTeamMember(1)}
@@ -303,21 +303,21 @@ export default function AboutPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2M9 8h6m-6 4h6m-6 4h6" />
                       </svg>
                     </div>
-                    <h4 className="text-2xl font-serif font-normal text-alira-white mb-4">The Marketing Lead</h4>
-                    <p className="text-alira-white/80 leading-relaxed mb-6">
+                    <h4 className="text-2xl font-serif font-normal text-text-primary mb-4">The Marketing Lead</h4>
+                    <p className="text-text-secondary leading-relaxed mb-6">
                       Knows how to make your brand impossible to ignore.
                     </p>
-                    <div className="text-sm text-alira-white/70 space-y-3 text-left">
-                      <p><span className="font-light text-alira-white">Improves your social media content</span> and campaigns for better engagement</p>
-                      <p><span className="font-light text-alira-white">Builds content calendars</span> to grow visibility and reach</p>
-                      <p><span className="font-light text-alira-white">Helps you reach the right customers</span> with clear, compelling messaging</p>
+                    <div className="text-sm text-text-secondary space-y-3 text-left">
+                      <p><span className="font-light text-text-primary">Improves your social media content</span> and campaigns for better engagement</p>
+                      <p><span className="font-light text-text-primary">Builds content calendars</span> to grow visibility and reach</p>
+                      <p><span className="font-light text-text-primary">Helps you reach the right customers</span> with clear, compelling messaging</p>
                     </div>
                     
                     {/* Interactive button */}
                     <div className={`mt-6 transition-all duration-300 ${
                       activeTeamMember === 1 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                     }`}>
-                      <button className="text-alira-gold text-sm font-sans font-light hover:text-alira-white transition-colors">
+                      <button className="text-alira-gold text-sm font-sans font-light hover:text-accent-dark transition-colors">
                         See How We Work →
                       </button>
                     </div>
@@ -327,10 +327,10 @@ export default function AboutPage() {
                 {/* The Systems Engineer */}
                 <Reveal delay={900}>
                   <div 
-                    className={`bg-white/[0.02] backdrop-blur-sm p-10 rounded-2xl border transition-all duration-500 text-center group relative overflow-hidden cursor-pointer ${
+                    className={`bg-surface p-10 rounded-2xl border transition-all duration-500 text-center group relative overflow-hidden cursor-pointer ${
                       activeTeamMember === 2 
-                        ? 'border-alira-gold shadow-2xl bg-white/[0.05] scale-105' 
-                        : 'border-white/10 hover:border-white/20 hover:shadow-2xl hover:bg-white/[0.04]'
+                        ? 'border-alira-gold shadow-2xl bg-bg-muted scale-105' 
+                        : 'border-borderToken-subtle hover:border-accent hover:shadow-2xl hover:bg-bg-muted'
                     }`}
                     onClick={() => setActiveTeamMember(activeTeamMember === 2 ? null : 2)}
                     onMouseEnter={() => setActiveTeamMember(2)}
@@ -351,21 +351,21 @@ export default function AboutPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </div>
-                    <h4 className="text-2xl font-serif font-normal text-alira-white mb-4">The Systems Engineer</h4>
-                    <p className="text-alira-white/80 leading-relaxed mb-6">
+                    <h4 className="text-2xl font-serif font-normal text-text-primary mb-4">The Systems Engineer</h4>
+                    <p className="text-text-secondary leading-relaxed mb-6">
                       Builds the tools and processes that unlock growth.
                     </p>
-                    <div className="text-sm text-alira-white/70 space-y-3 text-left">
-                      <p><span className="font-light text-alira-white">Designs and launches websites</span> and online platforms that convert</p>
-                      <p><span className="font-light text-alira-white">Integrates AI into daily workflows</span> to boost efficiency and insights</p>
-                      <p><span className="font-light text-alira-white">Automates repetitive tasks</span> to free up time and reduce chaos</p>
+                    <div className="text-sm text-text-secondary space-y-3 text-left">
+                      <p><span className="font-light text-text-primary">Designs and launches websites</span> and online platforms that convert</p>
+                      <p><span className="font-light text-text-primary">Integrates AI into daily workflows</span> to boost efficiency and insights</p>
+                      <p><span className="font-light text-text-primary">Automates repetitive tasks</span> to free up time and reduce chaos</p>
                     </div>
                     
                     {/* Interactive button */}
                     <div className={`mt-6 transition-all duration-300 ${
                       activeTeamMember === 2 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                     }`}>
-                      <button className="text-alira-gold text-sm font-sans font-light hover:text-alira-white transition-colors">
+                      <button className="text-alira-gold text-sm font-sans font-light hover:text-accent-dark transition-colors">
                         See How We Work →
                       </button>
                     </div>
@@ -378,8 +378,8 @@ export default function AboutPage() {
             <div className="mt-20">
               <Reveal delay={1000}>
                 <div className="text-center mb-12">
-                  <h3 className="text-3xl font-serif font-normal text-alira-white mb-4">How We Work Together</h3>
-                  <p className="text-lg text-alira-white/70 max-w-2xl mx-auto">
+                  <h3 className="text-3xl font-serif font-normal text-text-primary mb-4">How We Work Together</h3>
+                  <p className="text-lg text-text-secondary max-w-2xl mx-auto">
                     Our collaborative approach ensures you get the best of all three specializations working in harmony.
                   </p>
                 </div>
@@ -387,23 +387,23 @@ export default function AboutPage() {
 
               <div className="max-w-4xl mx-auto">
                 <Reveal delay={1100}>
-                  <div className="bg-white/[0.02] backdrop-blur-sm p-8 rounded-2xl border border-white/10">
+                  <div className="bg-surface p-8 rounded-2xl border border-borderToken-subtle">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                       <div>
-                        <h4 className="text-lg font-serif font-normal text-alira-white mb-3">Strategy First</h4>
-                        <p className="text-alira-white/70 text-sm">
+                        <h4 className="text-lg font-serif font-normal text-text-primary mb-3">Strategy First</h4>
+                        <p className="text-text-secondary text-sm">
                           Every project begins with clear objectives and a roadmap that makes sense for your situation.
                         </p>
                       </div>
                       <div>
-                        <h4 className="text-lg font-serif font-normal text-alira-white mb-3">Marketing Integration</h4>
-                        <p className="text-alira-white/70 text-sm">
+                        <h4 className="text-lg font-serif font-normal text-text-primary mb-3">Marketing Integration</h4>
+                        <p className="text-text-secondary text-sm">
                           Your message and reach are built into the plan from day one, not added as an afterthought.
                         </p>
                       </div>
                       <div>
-                        <h4 className="text-lg font-serif font-normal text-alira-white mb-3">Systems That Scale</h4>
-                        <p className="text-alira-white/70 text-sm">
+                        <h4 className="text-lg font-serif font-normal text-text-primary mb-3">Systems That Scale</h4>
+                        <p className="text-text-secondary text-sm">
                           Everything we build is designed to grow with you and reduce complexity over time.
                         </p>
                       </div>
@@ -417,15 +417,15 @@ export default function AboutPage() {
                     </section>
 
       {/* Our Principles Section */}
-      <section className="py-24 bg-black">
+      <section className="py-24 bg-bg-page">
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-serif font-normal text-alira-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-primary mb-6">
                 Our Principles
               </h2>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
-              <p className="text-xl text-alira-white/70 max-w-2xl mx-auto">
+              <p className="text-xl text-text-secondary max-w-2xl mx-auto">
                 The core beliefs that guide everything we do and every solution we create.
               </p>
             </div>
@@ -436,10 +436,10 @@ export default function AboutPage() {
               {/* Clarity over complexity */}
               <Reveal delay={200}>
                 <div 
-                  className={`bg-white/[0.02] p-8 rounded-xl border transition-all duration-300 cursor-pointer ${
+                  className={`bg-surface p-8 rounded-xl border transition-all duration-300 cursor-pointer ${
                     hoveredPrinciple === 0 
-                      ? 'border-alira-gold shadow-xl bg-white/[0.05] scale-105' 
-                      : 'border-white/10 hover:border-white/20 hover:shadow-lg'
+                      ? 'border-alira-gold shadow-xl bg-bg-muted scale-105' 
+                      : 'border-borderToken-subtle hover:border-accent hover:shadow-lg'
                   }`}
                   onMouseEnter={() => setHoveredPrinciple(0)}
                   onMouseLeave={() => setHoveredPrinciple(null)}
@@ -453,8 +453,8 @@ export default function AboutPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-serif font-normal text-alira-white mb-3">Clarity over complexity</h3>
-                      <p className="text-alira-white/80 leading-relaxed">
+                      <h3 className="text-xl font-serif font-normal text-text-primary mb-3">Clarity over complexity</h3>
+                      <p className="text-text-secondary leading-relaxed">
                         Simple solutions win over complicated frameworks every time. We believe in stripping away the noise to reveal what actually works.
                       </p>
                     </div>
@@ -465,10 +465,10 @@ export default function AboutPage() {
               {/* Small tests beat big theories */}
               <Reveal delay={300}>
                 <div 
-                  className={`bg-white/[0.02] p-8 rounded-xl border transition-all duration-300 cursor-pointer ${
+                  className={`bg-surface p-8 rounded-xl border transition-all duration-300 cursor-pointer ${
                     hoveredPrinciple === 1 
-                      ? 'border-alira-gold shadow-xl bg-white/[0.05] scale-105' 
-                      : 'border-white/10 hover:border-white/20 hover:shadow-lg'
+                      ? 'border-alira-gold shadow-xl bg-bg-muted scale-105' 
+                      : 'border-borderToken-subtle hover:border-accent hover:shadow-lg'
                   }`}
                   onMouseEnter={() => setHoveredPrinciple(1)}
                   onMouseLeave={() => setHoveredPrinciple(null)}
@@ -482,8 +482,8 @@ export default function AboutPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-serif font-normal text-alira-white mb-3">Small tests beat big theories</h3>
-                      <p className="text-alira-white/80 leading-relaxed">
+                      <h3 className="text-xl font-serif font-normal text-text-primary mb-3">Small tests beat big theories</h3>
+                      <p className="text-text-secondary leading-relaxed">
                         Progress is proven in action, not speculation. We prefer quick experiments over lengthy planning sessions.
                       </p>
                     </div>
@@ -494,10 +494,10 @@ export default function AboutPage() {
               {/* Focus creates movement */}
               <Reveal delay={400}>
                 <div 
-                  className={`bg-white/[0.02] p-8 rounded-xl border transition-all duration-300 cursor-pointer ${
+                  className={`bg-surface p-8 rounded-xl border transition-all duration-300 cursor-pointer ${
                     hoveredPrinciple === 2 
-                      ? 'border-alira-gold shadow-xl bg-white/[0.05] scale-105' 
-                      : 'border-white/10 hover:border-white/20 hover:shadow-lg'
+                      ? 'border-alira-gold shadow-xl bg-bg-muted scale-105' 
+                      : 'border-borderToken-subtle hover:border-accent hover:shadow-lg'
                   }`}
                   onMouseEnter={() => setHoveredPrinciple(2)}
                   onMouseLeave={() => setHoveredPrinciple(null)}
@@ -511,8 +511,8 @@ export default function AboutPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-serif font-normal text-alira-white mb-3">Focus creates movement</h3>
-                      <p className="text-alira-white/80 leading-relaxed">
+                      <h3 className="text-xl font-serif font-normal text-text-primary mb-3">Focus creates movement</h3>
+                      <p className="text-text-secondary leading-relaxed">
                         Clear priorities are what drive results. We help you identify what matters most and eliminate distractions.
                       </p>
                     </div>
@@ -523,10 +523,10 @@ export default function AboutPage() {
               {/* Systems should serve you */}
               <Reveal delay={500}>
                 <div 
-                  className={`bg-white/[0.02] p-8 rounded-xl border transition-all duration-300 cursor-pointer ${
+                  className={`bg-surface p-8 rounded-xl border transition-all duration-300 cursor-pointer ${
                     hoveredPrinciple === 3 
-                      ? 'border-alira-gold shadow-xl bg-white/[0.05] scale-105' 
-                      : 'border-white/10 hover:border-white/20 hover:shadow-lg'
+                      ? 'border-alira-gold shadow-xl bg-bg-muted scale-105' 
+                      : 'border-borderToken-subtle hover:border-accent hover:shadow-lg'
                   }`}
                   onMouseEnter={() => setHoveredPrinciple(3)}
                   onMouseLeave={() => setHoveredPrinciple(null)}
@@ -541,8 +541,8 @@ export default function AboutPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-serif font-normal text-alira-white mb-3">Systems should serve you</h3>
-                      <p className="text-alira-white/80 leading-relaxed">
+                      <h3 className="text-xl font-serif font-normal text-text-primary mb-3">Systems should serve you</h3>
+                      <p className="text-text-secondary leading-relaxed">
                         Work smarter, not harder. We build tools and processes that free up your time and reduce chaos.
                       </p>
                     </div>
@@ -555,17 +555,17 @@ export default function AboutPage() {
       </section>
 
       {/* Company Credentials & Trust Section */}
-      <section className="py-24 bg-black relative overflow-hidden">
+      <section className="py-24 bg-bg-page relative overflow-hidden">
         <GradientBars />
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-serif font-normal text-alira-white mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-6">
                   Trust & Credibility
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
-                <p className="text-lg text-alira-white/70 max-w-2xl mx-auto">
+                <p className="text-lg text-text-secondary max-w-2xl mx-auto">
                   We're committed to transparency, security, and delivering on our promises.
                 </p>
               </div>
@@ -573,14 +573,14 @@ export default function AboutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <Reveal delay={200}>
-                <div className="bg-white/[0.02] p-6 rounded-xl border border-white/10 text-center hover:border-alira-gold hover:shadow-lg transition-all duration-300 group cursor-pointer">
+                <div className="bg-surface p-6 rounded-xl border border-borderToken-subtle text-center hover:border-alira-gold hover:shadow-lg transition-all duration-300 group cursor-pointer">
                   <div className="w-12 h-12 bg-alira-gold/10 rounded-lg mx-auto mb-4 flex items-center justify-center group-hover:bg-alira-gold/20 group-hover:scale-110 transition-all duration-300">
                     <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-serif font-normal text-alira-white mb-3">Company Registration</h3>
-                  <p className="text-alira-white/70 text-sm">
+                  <h3 className="text-lg font-serif font-normal text-text-primary mb-3">Company Registration</h3>
+                  <p className="text-text-secondary text-sm">
                     ALIRA Capital Ventures Ltd<br />
                     Registered in England & Wales<br />
                     Company No: 16419663
@@ -589,28 +589,28 @@ export default function AboutPage() {
               </Reveal>
 
               <Reveal delay={300}>
-                <div className="bg-white/[0.02] p-6 rounded-xl border border-white/10 text-center hover:border-alira-gold hover:shadow-lg transition-all duration-300 group cursor-pointer">
+                <div className="bg-surface p-6 rounded-xl border border-borderToken-subtle text-center hover:border-alira-gold hover:shadow-lg transition-all duration-300 group cursor-pointer">
                   <div className="w-12 h-12 bg-alira-gold/10 rounded-lg mx-auto mb-4 flex items-center justify-center group-hover:bg-alira-gold/20 group-hover:scale-110 transition-all duration-300">
                     <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-serif font-normal text-alira-white mb-3">Privacy & Security</h3>
-                  <p className="text-alira-white/70 text-sm">
+                  <h3 className="text-lg font-serif font-normal text-text-primary mb-3">Privacy & Security</h3>
+                  <p className="text-text-secondary text-sm">
                     All client information is kept strictly confidential. We use secure systems and never share your data without permission.
                   </p>
                 </div>
               </Reveal>
 
               <Reveal delay={400}>
-                <div className="bg-white/[0.02] p-6 rounded-xl border border-white/10 text-center hover:border-alira-gold hover:shadow-lg transition-all duration-300 group cursor-pointer">
+                <div className="bg-surface p-6 rounded-xl border border-borderToken-subtle text-center hover:border-alira-gold hover:shadow-lg transition-all duration-300 group cursor-pointer">
                   <div className="w-12 h-12 bg-alira-gold/10 rounded-lg mx-auto mb-4 flex items-center justify-center group-hover:bg-alira-gold/20 group-hover:scale-110 transition-all duration-300">
                     <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-serif font-normal text-alira-white mb-3">Our Commitment</h3>
-                  <p className="text-alira-white/70 text-sm">
+                  <h3 className="text-lg font-serif font-normal text-text-primary mb-3">Our Commitment</h3>
+                  <p className="text-text-secondary text-sm">
                     We're committed to delivering clear value in every interaction. No hidden fees, no complicated contracts, just straightforward results.
                   </p>
                 </div>
@@ -625,10 +625,10 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-serif font-normal text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-inverse mb-6">
                 Ready to work with us?
               </h2>
-              <p className="text-xl text-white/80 mb-8 leading-relaxed">
+              <p className="text-xl text-text-inverse/80 mb-8 leading-relaxed">
                 Let's turn your ambition into clear action. Start with a simple plan and build from there.
               </p>
               <CTAButton 

@@ -179,10 +179,10 @@ export default function RefinementChat({
             <div className="w-16 h-16 bg-alira-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Sparkles className="w-8 h-8 text-alira-gold" />
             </div>
-            <h3 className="text-lg font-serif text-alira-white mb-2">
+            <h3 className="text-lg font-serif text-text-primary mb-2">
               Refine Your Plan with AI
             </h3>
-            <p className="text-alira-white/60 text-sm max-w-md mx-auto">
+            <p className="text-text-secondary text-sm max-w-md mx-auto">
               Ask me to improve specific sections, add more detail, make it more concise, or any other changes you'd like.
             </p>
           </div>
@@ -205,7 +205,7 @@ export default function RefinementChat({
                       ? 'bg-alira-gold text-alira-black'
                       : message.type === 'system'
                       ? 'bg-red-500/10 text-red-400 border border-red-500/20'
-                      : 'bg-white/[0.05] text-alira-white border border-white/10'
+                      : 'bg-bg-muted text-text-primary border border-borderToken-subtle'
                   }`}
                 >
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">
@@ -228,7 +228,7 @@ export default function RefinementChat({
                       size="sm"
                       variant="ghost"
                       onClick={() => handleRejectSuggestion(message)}
-                      className="text-alira-white/40 hover:text-alira-white hover:bg-white/5"
+                      className="text-text-tertiary hover:text-text-primary hover:bg-bg-muted"
                     >
                       <X className="w-3 h-3 mr-1" />
                       Reject
@@ -243,7 +243,7 @@ export default function RefinementChat({
                   </div>
                 )}
 
-                <div className="mt-1 text-xs text-alira-white/30">
+                <div className="mt-1 text-xs text-text-tertiary">
                   {message.timestamp.toLocaleTimeString('en-GB', { 
                     hour: '2-digit', 
                     minute: '2-digit' 
@@ -265,10 +265,10 @@ export default function RefinementChat({
             <div className="flex-shrink-0 w-8 h-8 bg-alira-gold/10 rounded-full flex items-center justify-center">
               <Bot className="w-4 h-4 text-alira-gold" />
             </div>
-            <div className="bg-white/[0.05] rounded-2xl px-4 py-3 border border-white/10">
+            <div className="bg-bg-muted rounded-2xl px-4 py-3 border border-borderToken-subtle">
               <div className="flex items-center gap-2">
-                <Loader2 className="w-4 h-4 animate-spin text-alira-gold" />
-                <span className="text-sm text-alira-white/60">Analyzing and refining...</span>
+                <Loader2 className="w-4 h-4 animate-spin text-accent" />
+                <span className="text-sm text-text-secondary">Analyzing and refining...</span>
               </div>
             </div>
           </div>
@@ -279,14 +279,14 @@ export default function RefinementChat({
 
       {/* Quick Actions */}
       {quickActions.length > 0 && messages.length === 0 && (
-        <div className="px-4 py-3 border-t border-white/10">
-          <div className="text-xs text-alira-white/40 mb-2">Quick actions:</div>
+        <div className="px-4 py-3 border-t border-borderToken-subtle">
+          <div className="text-xs text-text-tertiary mb-2">Quick actions:</div>
           <div className="flex flex-wrap gap-2">
             {quickActions.slice(0, 3).map((action, idx) => (
               <button
                 key={idx}
                 onClick={() => handleQuickAction(action)}
-                className="px-3 py-1.5 rounded-lg text-xs bg-white/[0.03] hover:bg-white/[0.08] text-alira-white/70 hover:text-alira-white border border-white/10 hover:border-alira-gold/30 transition-all"
+                className="px-3 py-1.5 rounded-lg text-xs bg-bg-muted hover:bg-surface text-text-secondary hover:text-text-primary border border-borderToken-subtle hover:border-accent transition-all"
               >
                 {action}
               </button>
@@ -296,7 +296,7 @@ export default function RefinementChat({
       )}
 
       {/* Input Area */}
-      <div className="px-4 py-4 border-t border-white/10">
+      <div className="px-4 py-4 border-t border-borderToken-subtle">
         <div className="flex gap-2">
           <Textarea
             ref={textareaRef}
@@ -311,7 +311,7 @@ export default function RefinementChat({
             placeholder={focusSection 
               ? `Ask me to improve ${focusSection}...` 
               : "Ask me to refine your plan..."}
-            className="flex-1 min-h-[80px] bg-white/[0.03] border-white/10 text-alira-white placeholder:text-alira-white/40 resize-none"
+            className="flex-1 min-h-[80px] bg-bg-muted border-borderToken-subtle text-text-primary placeholder:text-text-tertiary resize-none"
             disabled={isLoading}
           />
           <Button
@@ -327,7 +327,7 @@ export default function RefinementChat({
             )}
           </Button>
         </div>
-        <div className="mt-2 text-xs text-alira-white/30">
+        <div className="mt-2 text-xs text-text-tertiary">
           Press Enter to send, Shift+Enter for new line
         </div>
       </div>

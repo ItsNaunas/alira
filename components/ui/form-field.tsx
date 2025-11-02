@@ -35,7 +35,7 @@ export function FormField({
       {label && (
         <label
           htmlFor={htmlFor}
-          className="block text-sm sm:text-base font-light text-alira-primary/90 dark:text-alira-white/90"
+          className="block text-sm sm:text-base font-light text-alira-primary/90"
         >
           {label}
           {required && <span className="text-red-500 ml-1" aria-label="required">*</span>}
@@ -57,7 +57,7 @@ export function FormField({
       {hint && !error && !success && (
         <p
           id={hintId}
-          className="text-sm text-alira-primary/60 dark:text-alira-white/60 flex items-start gap-1.5"
+          className="text-sm text-alira-primary/60 flex items-start gap-1.5"
         >
           <Info className="w-4 h-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
           <span>{hint}</span>

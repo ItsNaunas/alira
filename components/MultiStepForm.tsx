@@ -239,7 +239,7 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
   return (
     <div className="flex flex-col h-[calc(100vh-120px)] max-w-4xl mx-auto">
       {/* Progress Bar */}
-      <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-md border-b border-white/10 p-4 sm:p-6">
+      <div className="sticky top-0 z-10 bg-bg-page/95 backdrop-blur-md border-b border-borderToken-subtle p-4 sm:p-6 pt-safe">
         <ProgressBar
           current={completedSteps}
           total={formSteps.length}
@@ -267,10 +267,10 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
                   Step {currentStep.stepNumber} of {formSteps.length}
                 </span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-serif font-normal text-alira-white mb-3">
+              <h2 className="text-3xl sm:text-4xl font-serif font-normal text-text-primary mb-3">
                 {currentStep.title}
               </h2>
-              <p className="text-lg sm:text-xl text-alira-white/70 font-light">
+              <p className="text-lg sm:text-xl text-text-secondary font-light">
                 {currentStep.question}
               </p>
             </div>
@@ -280,9 +280,9 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
               <div className="space-y-4">
                 {/* Primary Input */}
                 <div className={cn(
-                  'rounded-2xl bg-white/5 backdrop-blur-md ring-1 ring-white/10 transition-all duration-300',
-                  'focus-within:ring-2 focus-within:ring-alira-gold/50 focus-within:bg-white/[0.07]',
-                  'shadow-[inset_0_1px_2px_rgba(0,0,0,0.1)]'
+                  'rounded-2xl bg-bg-muted backdrop-blur-md ring-1 ring-borderToken-subtle transition-all duration-300',
+                  'focus-within:ring-2 focus-within:ring-accent focus-within:bg-surface',
+                  'shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]'
                 )}>
                   <Textarea
                     ref={textareaRef}
@@ -292,13 +292,13 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
                     placeholder={currentStep.placeholder}
                     className={cn(
                       'w-full px-6 py-5 bg-transparent border-none',
-                      'text-base sm:text-lg text-alira-white placeholder:text-alira-white/40',
+                      'text-base sm:text-lg text-text-primary placeholder:text-text-tertiary',
                       'focus:outline-none focus-visible:ring-0 resize-none',
                       'min-h-[180px] sm:min-h-[220px]'
                     )}
                     disabled={isSubmitting}
                   />
-                  <div className="px-6 pb-4 flex items-center justify-between text-xs text-alira-white/50">
+                  <div className="px-6 pb-4 flex items-center justify-between text-xs text-text-tertiary">
                     <span>{currentStep.helperText}</span>
                     <span>{currentInput.length} characters</span>
                   </div>
@@ -323,7 +323,7 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
                           </div>
                           <div className="flex-1">
                             <p className="text-sm text-alira-gold font-light mb-2">ALIRA asks:</p>
-                            <p className="text-base text-alira-white/90 font-light">{followUp}</p>
+                            <p className="text-base text-text-primary font-light">{followUp}</p>
                           </div>
                         </div>
                         <Textarea
@@ -331,9 +331,9 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
                           onChange={(e) => handleFollowUpChange(index, e.target.value)}
                           placeholder="Your answer..."
                           className={cn(
-                            'w-full px-4 py-3 bg-black/20 border border-white/10 rounded-lg',
-                            'text-base text-alira-white placeholder:text-alira-white/30',
-                            'focus:outline-none focus:ring-2 focus:ring-alira-gold/30 focus:border-alira-gold/50',
+                            'w-full px-4 py-3 bg-bg-muted border border-borderToken-subtle rounded-lg',
+                            'text-base text-text-primary placeholder:text-text-tertiary',
+                            'focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent',
                             'resize-none min-h-[80px]'
                           )}
                           disabled={isSubmitting}
@@ -359,7 +359,7 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
             ) : (
               // Multiselect for Service Interest
               <div className="space-y-6">
-                <p className="text-center text-sm text-alira-white/60 font-light">
+                <p className="text-center text-sm text-text-secondary font-light">
                   {currentStep.helperText}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -371,16 +371,16 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
                         'group relative p-4 sm:p-5 rounded-xl border-2 text-left transition-all duration-200',
                         'hover:scale-[1.02] active:scale-[0.98]',
                         selectedServices.includes(option.value)
-                          ? 'border-alira-gold bg-gradient-to-br from-alira-gold/20 to-alira-gold/5 shadow-[0_0_20px_rgba(160,107,0,0.3)]'
-                          : 'border-white/10 bg-white/5 hover:border-alira-gold/50 hover:bg-white/[0.07]'
+                          ? 'border-accent bg-gradient-to-br from-accent/20 to-accent/5 shadow-[0_0_20px_rgba(203,163,73,0.2)]'
+                          : 'border-borderToken-subtle bg-bg-muted hover:border-accent hover:bg-surface'
                       )}
                     >
                       <div className="flex items-start gap-3">
                         <div className={cn(
                           'flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center mt-0.5 transition-all',
                           selectedServices.includes(option.value)
-                            ? 'border-alira-gold bg-alira-gold scale-110'
-                            : 'border-white/30 group-hover:border-alira-gold/50'
+                            ? 'border-accent bg-accent scale-110'
+                            : 'border-borderToken-subtle group-hover:border-accent'
                         )}>
                           {selectedServices.includes(option.value) && (
                             <CheckCircle className="w-3.5 h-3.5 text-black" />
@@ -390,13 +390,13 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
                           <h4 className={cn(
                             'text-base font-medium mb-1 transition-colors',
                             selectedServices.includes(option.value)
-                              ? 'text-alira-gold'
-                              : 'text-alira-white group-hover:text-alira-gold/90'
+                              ? 'text-accent'
+                              : 'text-text-primary group-hover:text-accent'
                           )}>
                             {option.label}
                           </h4>
                           {option.description && (
-                            <p className="text-xs sm:text-sm text-alira-white/60 font-light">
+                            <p className="text-xs sm:text-sm text-text-secondary font-light">
                               {option.description}
                             </p>
                           )}
@@ -451,7 +451,7 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
                 )}
               </Button>
               {currentStep.type === 'text' && !isSubmitting && (
-                <p className="text-center text-xs text-alira-white/40 mt-3 font-light">
+                <p className="text-center text-xs text-text-tertiary mt-3 font-light">
                   Press Ctrl + Enter to continue
                 </p>
               )}

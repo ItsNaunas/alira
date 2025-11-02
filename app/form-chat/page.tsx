@@ -123,19 +123,19 @@ function FormChatContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="min-h-screen flex items-center justify-center bg-bg-page">
         <Spinner size="lg" color="gold" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-bg-page">
       {/* Header */}
-      <header className="border-b border-white/10 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
+      <header className="border-b border-borderToken-subtle bg-bg-page/95 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-serif font-normal text-alira-white">
+            <h1 className="text-2xl font-serif font-normal text-text-primary">
               ALIRA<span className="text-alira-gold">.</span>
             </h1>
             <button
@@ -143,7 +143,7 @@ function FormChatContent() {
                 await auth.signOut();
                 router.push('/');
               }}
-              className="text-sm text-alira-white/60 hover:text-alira-white transition-colors"
+              className="text-sm text-text-tertiary hover:text-text-primary transition-colors"
             >
               Sign Out
             </button>
@@ -166,7 +166,7 @@ function FormChatContent() {
 export default function FormChatPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="min-h-screen flex items-center justify-center bg-bg-page">
         <Spinner size="lg" color="gold" />
       </div>
     }>

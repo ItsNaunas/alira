@@ -27,16 +27,16 @@ export default function WhatYouGet() {
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="text-center mb-16 md:mb-20">
-          <p className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-light">
+          <p className="text-sm tracking-wide uppercase text-accent mb-4 font-sans font-light">
             WHAT YOU GET
           </p>
           <h2
             id="what-you-get-heading"
-            className="text-3xl md:text-4xl font-serif font-normal tracking-tight text-alira-primary dark:text-alira-white leading-tight mb-6"
+            className="text-3xl md:text-4xl font-serif font-normal tracking-tight text-brand dark:text-text-inverse leading-tight mb-6"
           >
             What You Get
           </h2>
-          <p className="text-lg text-alira-primary dark:text-alira-white/70 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-text-primary dark:text-text-inverse/70 max-w-2xl mx-auto leading-relaxed">
             In minutes, you'll receive a simple PDF that shows everything you need to move forward.
           </p>
         </div>
@@ -46,7 +46,7 @@ export default function WhatYouGet() {
           {items.map(({ icon: Icon, title, desc }) => (
             <article
               key={title}
-              className="group rounded-2xl border border-alira-primary/5 dark:border-alira-white/5 bg-white dark:bg-alira-primary p-8 lg:p-10 transition-all duration-300 hover:-translate-y-1 hover:border-alira-gold/20 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-alira-gold"
+              className="group rounded-2xl border border-borderToken-subtle bg-surface dark:bg-brand p-8 lg:p-10 transition-all duration-300 hover:-translate-y-1 hover:border-accent/20 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent"
               tabIndex={0}
             >
               <div className="flex items-start space-x-4">

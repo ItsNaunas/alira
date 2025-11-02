@@ -78,8 +78,8 @@ export default function Header() {
   }, [isMobileMenuOpen])
 
   return (
-    <header className={"fixed top-0 left-0 right-0 z-50 bg-bg-page border-b border-borderToken-subtle"}>
-        <div className="flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <header className={"fixed top-0 left-0 right-0 z-50 bg-bg-page border-b border-borderToken-subtle pt-safe"}>
+        <div className="flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Left side - Logo */}
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="text-alira-gold font-serif font-normal tracking-wider text-lg sm:text-xl lg:text-2xl whitespace-nowrap">
@@ -295,7 +295,7 @@ export default function Header() {
             >
               <button
                 onClick={() => setShowAuthModal(false)}
-                className="absolute top-4 right-4 text-alira-primary/50 dark:text-alira-white/50 hover:text-alira-primary dark:hover:text-alira-white transition-colors"
+                className="absolute top-4 right-4 text-text-tertiary hover:text-text-primary transition-colors"
                 aria-label="Close dialog"
               >
                 <X className="w-5 h-5" />
@@ -398,11 +398,11 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
     <>
       <h2 
         id="auth-modal-title"
-        className="text-xl sm:text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-2"
+        className="text-xl sm:text-2xl font-serif font-normal text-text-primary mb-2"
       >
         {isSignUp ? 'Create your account' : 'Welcome back'}
       </h2>
-      <p className="text-xs sm:text-sm text-alira-primary/70 dark:text-alira-white/70 mb-4 sm:mb-6">
+      <p className="text-xs sm:text-sm text-text-secondary mb-4 sm:mb-6">
         {isSignUp 
           ? 'Sign up to save your progress and access your business plans anytime.'
           : 'Log in to continue and access your dashboard.'}
@@ -417,7 +417,7 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
       <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
         {isSignUp && (
           <div>
-            <label htmlFor="auth-name" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+            <label htmlFor="auth-name" className="block text-sm sm:text-base font-sans font-light text-text-primary mb-2">
               Your Name
             </label>
             <input
@@ -427,14 +427,16 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., John Smith"
               required
-              className="w-full text-base px-3 py-2 rounded-lg border border-alira-primary/20 dark:border-white/20 bg-white dark:bg-alira-primary text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:outline-none focus:ring-2 focus:ring-alira-gold"
+              className="w-full text-base px-3 py-2 rounded-lg border border-borderToken-subtle bg-surface text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-2 focus:ring-alira-gold"
               aria-required="true"
+              autoComplete="name"
+              autoCapitalize="words"
             />
           </div>
         )}
         
         <div>
-          <label htmlFor="auth-email" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+          <label htmlFor="auth-email" className="block text-sm sm:text-base font-sans font-light text-text-primary mb-2">
             Email Address
           </label>
           <input
@@ -444,13 +446,17 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
             onChange={(e) => setEmail(e.target.value)}
             placeholder="e.g., john@example.com"
             required
-            className="w-full text-base px-3 py-2 rounded-lg border border-alira-primary/20 dark:border-white/20 bg-white dark:bg-alira-primary text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:outline-none focus:ring-2 focus:ring-alira-gold"
+            className="w-full text-base px-3 py-2 rounded-lg border border-borderToken-subtle bg-surface text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-2 focus:ring-alira-gold"
             aria-required="true"
+            autoComplete="email"
+            inputMode="email"
+            autoCapitalize="off"
+            autoCorrect="off"
           />
         </div>
         
         <div>
-          <label htmlFor="auth-password" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+          <label htmlFor="auth-password" className="block text-sm sm:text-base font-sans font-light text-text-primary mb-2">
             Password
           </label>
           <input
@@ -461,12 +467,15 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
             placeholder={isSignUp ? "Create a secure password" : "Enter your password"}
             required
             minLength={6}
-            className="w-full text-base px-3 py-2 rounded-lg border border-alira-primary/20 dark:border-white/20 bg-white dark:bg-alira-primary text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:outline-none focus:ring-2 focus:ring-alira-gold"
+            className="w-full text-base px-3 py-2 rounded-lg border border-borderToken-subtle bg-surface text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-2 focus:ring-alira-gold"
             aria-required="true"
             aria-describedby={isSignUp ? "password-hint" : undefined}
+            autoComplete={isSignUp ? "new-password" : "current-password"}
+            autoCapitalize="off"
+            autoCorrect="off"
           />
           {isSignUp && (
-            <p id="password-hint" className="text-xs sm:text-sm text-alira-primary/50 dark:text-alira-white/50 mt-1">
+            <p id="password-hint" className="text-xs sm:text-sm text-text-tertiary mt-1">
               Minimum 6 characters
             </p>
           )}
@@ -491,7 +500,7 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
               setIsSignUp(!isSignUp)
               setAuthError('')
             }}
-            className="text-xs sm:text-sm text-alira-primary/70 dark:text-alira-white/70 hover:text-alira-gold transition-colors"
+            className="text-xs sm:text-sm text-text-secondary hover:text-alira-gold transition-colors"
           >
             {isSignUp 
               ? 'Already have an account? Sign in' 
@@ -499,7 +508,7 @@ function AuthModalContent({ isSignUp, setIsSignUp, onSuccess }: AuthModalContent
           </button>
         </div>
         
-        <p className="text-[10px] sm:text-xs text-alira-primary/50 dark:text-alira-white/50 text-center">
+        <p className="text-xs sm:text-sm text-text-tertiary text-center">
           🔒 Your information is secure and private
         </p>
       </form>

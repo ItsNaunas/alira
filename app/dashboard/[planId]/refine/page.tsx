@@ -153,7 +153,7 @@ export default function RefinePlanPage() {
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <RefreshCw className="w-12 h-12 text-alira-gold animate-spin mx-auto mb-4" />
-            <p className="text-alira-white/60">Loading plan...</p>
+            <p className="text-text-tertiary">Loading plan...</p>
           </div>
         </div>
       </DashboardLayout>
@@ -164,15 +164,15 @@ export default function RefinePlanPage() {
     return (
       <DashboardLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <Card className="bg-white/[0.02] border-white/10 max-w-md">
+          <Card className="bg-surface border-borderToken-subtle max-w-md">
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <AlertCircle className="w-8 h-8 text-red-400" />
               </div>
-              <h2 className="text-xl font-serif text-alira-white mb-2">
+              <h2 className="text-xl font-serif text-text-primary mb-2">
                 Unable to Load Plan
               </h2>
-              <p className="text-alira-white/60 mb-6">
+              <p className="text-text-tertiary mb-6">
                 This plan has no content to refine yet.
               </p>
               <Button
@@ -202,19 +202,19 @@ export default function RefinePlanPage() {
           {/* Left Side - Plan Preview or Diff */}
           <div className={`${
             showPreview ? 'w-full md:w-1/2' : 'w-0 md:w-0'
-          } transition-all duration-300 overflow-hidden border-r border-white/10`}>
+          } transition-all duration-300 overflow-hidden border-r border-borderToken-subtle`}>
             <div className="h-full overflow-y-auto">
               <div className="p-4 md:p-6">
                 {/* Toggle Button */}
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-lg font-serif text-alira-white">
+                  <h2 className="text-lg font-serif text-text-primary">
                     {pendingSuggestion ? 'Review Changes' : 'Current Plan'}
                   </h2>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowPreview(!showPreview)}
-                    className="text-alira-white/60 hover:text-alira-white md:hidden"
+                    className="text-text-tertiary hover:text-text-primary md:hidden"
                   >
                     {showPreview ? <PanelLeftClose className="w-4 h-4" /> : <PanelLeftOpen className="w-4 h-4" />}
                   </Button>

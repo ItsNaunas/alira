@@ -51,7 +51,7 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section className="py-24 bg-white/30 dark:bg-alira-primary/30 relative overflow-hidden">
+    <section className="py-24 bg-white/30 relative overflow-hidden">
       {/* Architectural grid background */}
       <ArchitecturalGrid 
         variant="subtle" 
@@ -66,11 +66,11 @@ export default function Experience() {
             <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-light">
               PROVEN RESULTS
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-normal text-alira-primary mb-6">
               Measurable Impact
             </h2>
             <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
-            <p className="text-lg text-alira-primary/70 dark:text-alira-white/70 max-w-3xl mx-auto">
+            <p className="text-lg text-alira-primary/70 max-w-3xl mx-auto">
               Real outcomes from real engagements. Every number represents a business challenge solved and value delivered across 10+ years of transformation experience.
             </p>
           </div>

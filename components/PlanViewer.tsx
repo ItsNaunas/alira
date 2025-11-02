@@ -31,19 +31,19 @@ function Section({ title, icon, children, collapsible = false, defaultExpanded =
   const [isExpanded, setIsExpanded] = useState(defaultExpanded)
 
   return (
-    <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all">
+    <Card className="bg-surface border-borderToken-subtle hover:border-accent transition-all">
       <CardContent className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="flex-shrink-0 w-10 h-10 bg-alira-gold/10 rounded-lg flex items-center justify-center">
               {icon}
             </div>
-            <h3 className="text-xl font-serif text-alira-white">{title}</h3>
+            <h3 className="text-xl font-serif text-text-primary">{title}</h3>
           </div>
           {collapsible && (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="text-alira-white/40 hover:text-alira-white transition-colors"
+              className="text-text-tertiary hover:text-text-primary transition-colors"
             >
               <ArrowRight className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
             </button>
@@ -63,7 +63,7 @@ export default function PlanViewer({ content, className = '', collapsible = true
   if (!content) {
     return (
       <div className="text-center py-12">
-        <p className="text-alira-white/60">No plan content available</p>
+        <p className="text-text-tertiary">No plan content available</p>
       </div>
     )
   }
@@ -77,7 +77,7 @@ export default function PlanViewer({ content, className = '', collapsible = true
           icon={<Lightbulb className="w-5 h-5 text-alira-gold" />}
           collapsible={collapsible}
         >
-          <p className="text-alira-white/80 leading-relaxed">
+          <p className="text-text-secondary leading-relaxed">
             {content.problem_statement}
           </p>
         </Section>
@@ -96,7 +96,7 @@ export default function PlanViewer({ content, className = '', collapsible = true
                 <div className="flex-shrink-0 w-6 h-6 bg-alira-gold/10 rounded-full flex items-center justify-center mt-0.5">
                   <span className="text-xs text-alira-gold font-medium">{index + 1}</span>
                 </div>
-                <p className="text-alira-white/80 leading-relaxed">{objective}</p>
+                <p className="text-text-secondary leading-relaxed">{objective}</p>
               </li>
             ))}
           </ul>
@@ -110,7 +110,7 @@ export default function PlanViewer({ content, className = '', collapsible = true
           icon={<TrendingUp className="w-5 h-5 text-alira-gold" />}
           collapsible={collapsible}
         >
-          <p className="text-alira-white/80 leading-relaxed">
+          <p className="text-text-secondary leading-relaxed">
             {content.current_state}
           </p>
         </Section>
@@ -125,9 +125,9 @@ export default function PlanViewer({ content, className = '', collapsible = true
         >
           <div className="space-y-4">
             {content.proposed_solution.map((solution, index) => (
-              <div key={index} className="bg-white/[0.03] rounded-lg p-4 border border-white/5">
+              <div key={index} className="bg-bg-muted rounded-lg p-4 border border-borderToken-subtle">
                 <div className="flex items-start justify-between mb-3">
-                  <h4 className="text-lg font-serif text-alira-white">{solution.pillar}</h4>
+                  <h4 className="text-lg font-serif text-text-primary">{solution.pillar}</h4>
                   <div className="flex gap-2">
                     <span className={`px-2 py-0.5 rounded text-xs ${
                       solution.effort === 'high' 
@@ -153,17 +153,17 @@ export default function PlanViewer({ content, className = '', collapsible = true
                   {solution.actions.map((action, actionIndex) => (
                     <li key={actionIndex} className="flex items-start gap-2">
                       <ArrowRight className="w-4 h-4 text-alira-gold/60 flex-shrink-0 mt-0.5" />
-                      <span className="text-alira-white/80 text-sm leading-relaxed">{action}</span>
+                      <span className="text-text-secondary text-sm leading-relaxed">{action}</span>
                     </li>
                   ))}
                 </ul>
                 {(solution as any).timeline && (
-                  <div className="mt-3 text-xs text-alira-white/50">
+                  <div className="mt-3 text-xs text-text-tertiary">
                     Timeline: {(solution as any).timeline}
                   </div>
                 )}
                 {(solution as any).investment && (
-                  <div className="mt-1 text-xs text-alira-white/50">
+                  <div className="mt-1 text-xs text-text-tertiary">
                     Investment: {(solution as any).investment}
                   </div>
                 )}
@@ -184,7 +184,7 @@ export default function PlanViewer({ content, className = '', collapsible = true
             {content.expected_outcomes.map((outcome, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-alira-gold/70 flex-shrink-0 mt-0.5" />
-                <p className="text-alira-white/80 leading-relaxed">{outcome}</p>
+                <p className="text-text-secondary leading-relaxed">{outcome}</p>
               </li>
             ))}
           </ul>
@@ -204,7 +204,7 @@ export default function PlanViewer({ content, className = '', collapsible = true
                 <div className="flex-shrink-0 w-7 h-7 bg-alira-gold/20 rounded-full flex items-center justify-center">
                   <span className="text-sm text-alira-gold font-medium">{index + 1}</span>
                 </div>
-                <p className="text-alira-white/80 leading-relaxed pt-0.5">{step}</p>
+                <p className="text-text-secondary leading-relaxed pt-0.5">{step}</p>
               </li>
             ))}
           </ol>
@@ -219,7 +219,7 @@ export default function PlanViewer({ content, className = '', collapsible = true
           collapsible={collapsible}
           defaultExpanded={false}
         >
-          <p className="text-alira-white/80 leading-relaxed">
+          <p className="text-text-secondary leading-relaxed">
             {(content as any).risk_assessment}
           </p>
         </Section>
@@ -233,7 +233,7 @@ export default function PlanViewer({ content, className = '', collapsible = true
           collapsible={collapsible}
           defaultExpanded={false}
         >
-          <p className="text-alira-white/80 leading-relaxed">
+          <p className="text-text-secondary leading-relaxed">
             {(content as any).competitive_advantage}
           </p>
         </Section>

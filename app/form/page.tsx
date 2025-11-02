@@ -31,18 +31,18 @@ export default function Form() {
       <div className="min-h-screen overflow-y-auto">
         {/* Hero Section */}
         <section 
-          className="py-12 md:py-16 flex items-center justify-center bg-alira-white dark:bg-alira-primary relative overflow-hidden"
+          className="py-12 md:py-16 flex items-center justify-center bg-alira-white relative overflow-hidden"
           aria-labelledby="form-heading"
         >
           {/* Clean background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-alira-white/20 via-white to-alira-white/10 dark:from-alira-primary/20 dark:via-alira-primary dark:to-alira-primary/10"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-alira-white/20 via-white to-alira-white/10"></div>
           
           <div className="container mx-auto px-6 lg:px-8 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               {/* Brand Seal */}
               <Reveal delay={100}>
                 <div className="mb-12">
-                  <span className="block text-2xl tracking-[0.2em] uppercase text-alira-primary dark:text-alira-white font-serif font-normal mb-4 font-serif">
+                  <span className="block text-2xl tracking-[0.2em] uppercase text-alira-primary font-serif font-normal mb-4 font-serif">
                     ALIRA.
                   </span>
                   <div className="w-20 h-[3px] bg-alira-gold mx-auto mb-8"></div>
@@ -51,14 +51,14 @@ export default function Form() {
               
               {/* Headline */}
               <Reveal delay={200}>
-                <h1 id="form-heading" className="text-4xl md:text-6xl font-serif font-normal text-alira-primary dark:text-alira-white leading-[0.95] tracking-tight mb-6">
+                <h1 id="form-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-normal text-alira-primary leading-[0.95] tracking-tight mb-6">
                   Start Your Business Case
                 </h1>
               </Reveal>
               
               {/* Subheadline */}
               <Reveal delay={250}>
-                <p className="text-lg md:text-xl text-alira-black/80 dark:text-alira-white/80 max-w-[50ch] mx-auto leading-snug mb-12">
+                <p className="text-lg md:text-xl text-alira-black/80 max-w-[50ch] mx-auto leading-snug mb-12">
                   Answer 4 quick questions to see your business case preview, then get your complete customized business case delivered to your inbox.
                 </p>
               </Reveal>
@@ -67,7 +67,7 @@ export default function Form() {
         </section>
 
         {/* Form Section */}
-        <section className="py-8 md:py-12 bg-gradient-to-br from-alira-white/20 via-white to-alira-white/10 dark:from-alira-primary/20 dark:via-alira-primary dark:to-alira-primary/10 relative overflow-hidden">
+        <section className="py-8 md:py-12 bg-gradient-to-br from-alira-white/20 via-white to-alira-white/10 relative overflow-hidden">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 relative z-10">
             <Reveal>
               <FormWizard 
@@ -80,38 +80,38 @@ export default function Form() {
         </section>
 
         {/* Process Information */}
-        <section className="py-16 md:py-20 bg-alira-primary/5 dark:bg-alira-primary/20">
+        <section className="py-16 md:py-20 bg-alira-primary/5">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 <div>
-                  <h3 className="text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6">
+                  <h3 className="text-2xl font-serif font-normal text-alira-primary mb-6">
                     What Happens Next?
                   </h3>
                   <ul className="space-y-4">
                     <li className="flex items-start space-x-4">
                       <span className="text-alira-gold font-serif font-normal text-lg">1.</span>
-                      <span className="text-alira-primary/70 dark:text-alira-white/70">Answer 4 quick questions to see your business case preview</span>
+                      <span className="text-alira-primary/70">Answer 4 quick questions to see your business case preview</span>
                     </li>
                     <li className="flex items-start space-x-4">
                       <span className="text-alira-gold font-serif font-normal text-lg">2.</span>
-                      <span className="text-alira-primary/70 dark:text-alira-white/70">Complete the full form to get your complete business case</span>
+                      <span className="text-alira-primary/70">Complete the full form to get your complete business case</span>
                     </li>
                     <li className="flex items-start space-x-4">
                       <span className="text-alira-gold font-serif font-normal text-lg">3.</span>
-                      <span className="text-alira-primary/70 dark:text-alira-white/70">We'll review your information and reach out within minutes</span>
+                      <span className="text-alira-primary/70">We'll review your information and reach out within minutes</span>
                     </li>
                     <li className="flex items-start space-x-4">
                       <span className="text-alira-gold font-serif font-normal text-lg">4.</span>
-                      <span className="text-alira-primary/70 dark:text-alira-white/70">Schedule a consultation call to discuss your business case</span>
+                      <span className="text-alira-primary/70">Schedule a consultation call to discuss your business case</span>
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6">
+                  <h3 className="text-2xl font-serif font-normal text-alira-primary mb-6">
                     Why This Approach?
                   </h3>
-                  <p className="text-alira-primary/70 dark:text-alira-white/70 leading-relaxed">
+                  <p className="text-alira-primary/70 leading-relaxed">
                     We believe every business owner deserves to see value before committing. Our preview-first approach ensures you understand exactly what you'll receive, while our comprehensive form captures all the details needed for your complete, customized business case.
                   </p>
                 </div>

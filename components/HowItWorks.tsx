@@ -5,7 +5,7 @@ import Image from 'next/image'
 export default function HowItWorks() {
   // Force deployment update
   return (
-    <section className="py-16 md:py-24 bg-alira-white dark:bg-alira-primary relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-alira-white relative overflow-hidden">
       {/* Subtle pattern overlay */}
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">
@@ -14,7 +14,7 @@ export default function HowItWorks() {
               <div className="text-sm font-sans font-light text-alira-gold uppercase tracking-wider mb-4">
                 How it works
               </div>
-              <h2 className="text-4xl md:text-5xl font-serif font-normal text-alira-primary dark:text-alira-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif font-normal text-alira-primary mb-6">
                 Steps to your <span className="text-alira-gold">next move</span>
               </h2>
             </div>
@@ -35,10 +35,10 @@ export default function HowItWorks() {
                     </svg>
                   </div>
                   
-                  <h3 className="text-xl font-serif font-normal text-alira-primary dark:text-alira-white mb-4 group-hover:text-alira-gold transition-colors duration-300">
+                  <h3 className="text-xl font-serif font-normal text-alira-primary mb-4 group-hover:text-alira-gold transition-colors duration-300">
                     Answer questions
                   </h3>
-                  <p className="text-alira-primary/70 dark:text-alira-white/70 leading-relaxed mb-8 font-sans">
+                  <p className="text-alira-primary/70 leading-relaxed mb-8 font-sans">
                     Tell us about your idea or business through our quick, structured questionnaire.
                   </p>
                   
@@ -75,10 +75,10 @@ export default function HowItWorks() {
                     </svg>
                   </div>
                   
-                  <h3 className="text-xl font-serif font-normal text-alira-primary dark:text-alira-white mb-4 group-hover:text-alira-gold transition-colors duration-300">
+                  <h3 className="text-xl font-serif font-normal text-alira-primary mb-4 group-hover:text-alira-gold transition-colors duration-300">
                     AI analysis
                   </h3>
-                  <p className="text-alira-primary/70 dark:text-alira-white/70 leading-relaxed mb-8 font-sans">
+                  <p className="text-alira-primary/70 leading-relaxed mb-8 font-sans">
                     Our AI processes your information using strategic frameworks to create actionable insights.
                   </p>
                   
@@ -115,10 +115,10 @@ export default function HowItWorks() {
                     </svg>
                   </div>
                   
-                  <h3 className="text-xl font-serif font-normal text-alira-primary dark:text-alira-white mb-4 group-hover:text-alira-gold transition-colors duration-300">
+                  <h3 className="text-xl font-serif font-normal text-alira-primary mb-4 group-hover:text-alira-gold transition-colors duration-300">
                     Get your plan
                   </h3>
-                  <p className="text-alira-primary/70 dark:text-alira-white/70 leading-relaxed mb-8 font-sans">
+                  <p className="text-alira-primary/70 leading-relaxed mb-8 font-sans">
                     Receive a comprehensive PDF business plan tailored to your specific situation and goals.
                   </p>
                   

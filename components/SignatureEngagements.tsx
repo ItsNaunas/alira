@@ -76,7 +76,7 @@ export default function SignatureEngagements() {
         Signature Engagements
       </SectionHeading>
       
-      <p className="mt-6 text-center text-alira-primary/70 dark:text-alira-white/70 max-w-2xl mx-auto">
+      <p className="mt-6 text-center text-text-primary/70 dark:text-text-inverse/70 max-w-2xl mx-auto">
         Four distinct approaches to deliver clarity, structure, and systems that last.
       </p>
 
@@ -92,40 +92,40 @@ export default function SignatureEngagements() {
               className={`group ${isRightColumn ? 'lg:mt-10' : ''}`}
             >
               {/* Gold rule */}
-              <div className="h-px w-12 bg-alira-gold mb-6"></div>
+              <div className="h-px w-12 bg-accent mb-6"></div>
               
               {/* Tag */}
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-xs font-sans font-light tracking-wide uppercase text-alira-gold">
+                <span className="text-xs font-sans font-light tracking-wide uppercase text-accent">
                   {service.tag}
                 </span>
-                <Icon className="h-3 w-3 text-alira-gold" aria-hidden />
+                <Icon className="h-3 w-3 text-accent" aria-hidden />
               </div>
               
               {/* Title */}
-              <h3 className="text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-3 underline-grow">
+              <h3 className="text-2xl font-serif font-normal text-brand dark:text-text-inverse mb-3 underline-grow">
                 <a href={service.href || "/contact"}>
                   {service.title}
                 </a>
               </h3>
               
               {/* Tagline */}
-              <p className="text-alira-primary/70 dark:text-alira-white/70 italic mb-6 leading-relaxed">
+              <p className="text-text-primary/70 dark:text-text-inverse/70 italic mb-6 leading-relaxed">
                 {service.tagline}
               </p>
               
               {/* Outcomes */}
               <ul className="space-y-2 mb-6">
                 {service.outcomes.map((outcome, outcomeIndex) => (
-                  <li key={outcomeIndex} className="flex items-start gap-3 text-sm text-alira-primary/80">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-alira-gold flex-shrink-0"></span>
+                  <li key={outcomeIndex} className="flex items-start gap-3 text-sm text-text-primary/80">
+                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent flex-shrink-0"></span>
                     <span>{outcome}</span>
                   </li>
                 ))}
               </ul>
               
               {/* Duration */}
-              <p className="text-xs text-alira-primary/50">
+              <p className="text-xs text-text-tertiary">
                 Duration: {service.duration}
               </p>
             </article>

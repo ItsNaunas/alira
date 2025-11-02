@@ -101,8 +101,8 @@ export default function VersionHistory({
     return (
       <div className={`text-center py-8 ${className}`}>
         <div className="animate-pulse">
-          <div className="h-4 bg-white/10 rounded w-3/4 mx-auto mb-4"></div>
-          <div className="h-4 bg-white/10 rounded w-1/2 mx-auto"></div>
+          <div className="h-4 bg-bg-muted rounded w-3/4 mx-auto mb-4"></div>
+          <div className="h-4 bg-bg-muted rounded w-1/2 mx-auto"></div>
         </div>
       </div>
     )
@@ -110,15 +110,15 @@ export default function VersionHistory({
 
   if (error) {
     return (
-      <Card className={`bg-white/[0.02] border-white/10 ${className}`}>
+      <Card className={`bg-surface border-borderToken-subtle ${className}`}>
         <CardContent className="p-6 text-center">
           <AlertCircle className="w-8 h-8 text-red-400 mx-auto mb-2" />
-          <p className="text-alira-white/60 text-sm">{error}</p>
+          <p className="text-text-secondary text-sm">{error}</p>
           <Button
             onClick={loadVersions}
             size="sm"
             variant="outline"
-            className="mt-4 border-white/20 text-alira-white hover:bg-white/5"
+            className="mt-4 border-borderToken-subtle text-text-primary hover:bg-bg-muted"
           >
             Retry
           </Button>
@@ -129,10 +129,10 @@ export default function VersionHistory({
 
   if (versions.length === 0) {
     return (
-      <Card className={`bg-white/[0.02] border-white/10 ${className}`}>
+      <Card className={`bg-surface border-borderToken-subtle ${className}`}>
         <CardContent className="p-6 text-center">
-          <Clock className="w-8 h-8 text-alira-white/40 mx-auto mb-2" />
-          <p className="text-alira-white/60 text-sm">No version history yet</p>
+          <Clock className="w-8 h-8 text-text-tertiary mx-auto mb-2" />
+          <p className="text-text-secondary text-sm">No version history yet</p>
         </CardContent>
       </Card>
     )
@@ -141,8 +141,8 @@ export default function VersionHistory({
   return (
     <div className={`space-y-3 ${className}`}>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-serif text-alira-white">Version History</h3>
-        <span className="text-sm text-alira-white/60">{versions.length} versions</span>
+        <h3 className="text-lg font-serif text-text-primary">Version History</h3>
+        <span className="text-sm text-text-secondary">{versions.length} versions</span>
       </div>
 
       <div className="space-y-2">
@@ -154,8 +154,8 @@ export default function VersionHistory({
           return (
             <Card 
               key={version.id}
-              className={`bg-white/[0.02] border-white/10 hover:border-white/20 transition-all ${
-                isCurrent ? 'border-alira-gold/30 bg-alira-gold/5' : ''
+              className={`bg-surface border-borderToken-subtle hover:border-accent transition-all ${
+                isCurrent ? 'border-accent bg-accent/5' : ''
               }`}
             >
               <CardContent className="p-4">
@@ -164,7 +164,7 @@ export default function VersionHistory({
                     {/* Version Header */}
                     <div className="flex items-center gap-2 mb-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-alira-white">
+                        <span className="text-sm font-medium text-text-primary">
                           Version {version.version}
                         </span>
                         {isLatest && (
@@ -182,7 +182,7 @@ export default function VersionHistory({
                     </div>
 
                     {/* Version Info */}
-                    <div className="text-xs text-alira-white/60 mb-2">
+                    <div className="text-xs text-text-secondary mb-2">
                       <Clock className="w-3 h-3 inline mr-1" />
                       {new Date(version.created_at).toLocaleString('en-GB', {
                         day: 'numeric',
@@ -195,15 +195,15 @@ export default function VersionHistory({
 
                     {/* Changes Summary */}
                     {version.changes_summary && (
-                      <p className="text-sm text-alira-white/80 leading-relaxed line-clamp-2">
+                      <p className="text-sm text-text-primary leading-relaxed line-clamp-2">
                         {version.changes_summary}
                       </p>
                     )}
 
                     {/* Expanded Content */}
                     {isExpanded && version.content && (
-                      <div className="mt-3 p-3 bg-white/[0.03] rounded border border-white/10">
-                        <pre className="text-xs text-alira-white/70 overflow-x-auto whitespace-pre-wrap">
+                      <div className="mt-3 p-3 bg-bg-muted rounded border border-borderToken-subtle">
+                        <pre className="text-xs text-text-secondary overflow-x-auto whitespace-pre-wrap">
                           {JSON.stringify(version.content, null, 2)}
                         </pre>
                       </div>
@@ -218,11 +218,11 @@ export default function VersionHistory({
                         variant="outline"
                         onClick={() => handleRestore(version.id)}
                         disabled={restoringId === version.id}
-                        className="border-white/20 text-alira-white hover:bg-white/5"
+                        className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
                       >
                         {restoringId === version.id ? (
                           <>
-                            <div className="w-3 h-3 border-2 border-alira-white/30 border-t-alira-white rounded-full animate-spin mr-1"></div>
+                            <div className="w-3 h-3 border-2 border-text-tertiary border-t-text-primary rounded-full animate-spin mr-1"></div>
                             Restoring...
                           </>
                         ) : (
@@ -238,7 +238,7 @@ export default function VersionHistory({
                       size="sm"
                       variant="ghost"
                       onClick={() => toggleExpand(version.id)}
-                      className="text-alira-white/40 hover:text-alira-white hover:bg-white/5"
+                      className="text-text-tertiary hover:text-text-primary hover:bg-bg-muted"
                     >
                       {isExpanded ? (
                         <ChevronUp className="w-4 h-4" />

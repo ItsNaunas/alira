@@ -97,9 +97,9 @@ export default function ResultsPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-bg-page">
       {/* Hero Section */}
-      <section className="py-24 bg-black relative overflow-hidden">
+      <section className="py-24 bg-bg-page relative overflow-hidden pt-28 md:pt-32">
         <GradientBars />
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -108,11 +108,11 @@ export default function ResultsPage() {
                 <span className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-light block">
                   PROVEN RESULTS
                 </span>
-                <h1 className="text-5xl md:text-6xl font-serif font-normal text-alira-white leading-tight mb-6">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-normal text-text-primary leading-tight mb-6">
                   Enterprise Transformation Results
                 </h1>
                 <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
-                <p className="text-xl md:text-2xl text-alira-white/70 max-w-3xl mx-auto leading-relaxed">
+                <p className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
                   Delivered comprehensive transformation programmes focused on improving efficiency, value for money, and operational performance.
                 </p>
               </div>
@@ -122,12 +122,12 @@ export default function ResultsPage() {
       </section>
 
       {/* Results Grid */}
-      <section className="py-20 bg-black">
+      <section className="py-20 bg-bg-page">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-serif font-normal text-alira-white mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-6">
                   Measurable Impact
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto"></div>
@@ -137,8 +137,8 @@ export default function ResultsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               {results.map((category, index) => (
                 <Reveal key={index} delay={index * 150}>
-                  <div className="bg-white/[0.02] rounded-2xl p-8 border border-white/10 hover:border-alira-gold hover:shadow-xl transition-all duration-300">
-                    <h3 className="text-xl font-serif font-normal text-alira-white mb-6 text-center">
+                  <div className="bg-surface rounded-2xl p-8 border border-borderToken-subtle hover:border-accent hover:shadow-xl transition-all duration-300">
+                    <h3 className="text-xl font-serif font-normal text-text-primary mb-6 text-center">
                       {category.category}
                     </h3>
                     <div className="space-y-4">
@@ -150,10 +150,10 @@ export default function ResultsPage() {
                               <IconComponent className="w-5 h-5 text-alira-gold" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="text-xl font-serif font-normal text-alira-white">
+                              <div className="text-xl font-serif font-normal text-text-primary">
                                 {metric.value}
                               </div>
-                              <div className="text-sm text-alira-white/70">
+                              <div className="text-sm text-text-secondary">
                                 {metric.label}
                               </div>
                             </div>
@@ -169,11 +169,11 @@ export default function ResultsPage() {
             {/* Impact Summary */}
             <Reveal delay={600}>
               <div className="text-center">
-                <div className="inline-block bg-alira-gold/10 rounded-2xl px-12 py-8 border border-alira-gold/30">
-                  <div className="text-3xl font-serif font-normal text-alira-white mb-2">
+                <div className="inline-block bg-alira-gold/10 rounded-2xl px-12 py-8 border border-accent">
+                  <div className="text-3xl font-serif font-normal text-text-primary mb-2">
                     £21,000 Total Annual Savings
                   </div>
-                  <div className="text-lg text-alira-white/70">
+                  <div className="text-lg text-text-secondary">
                     Secured through efficiency measures, contract reviews, and stakeholder negotiations
                   </div>
                 </div>
@@ -184,12 +184,12 @@ export default function ResultsPage() {
       </section>
 
       {/* Key Achievements */}
-      <section className="py-20 bg-black">
+      <section className="py-20 bg-bg-page">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-serif font-normal text-alira-white mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-6">
                 Key Achievements
               </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto"></div>
@@ -197,14 +197,14 @@ export default function ResultsPage() {
             </Reveal>
 
             <Reveal delay={200}>
-              <div className="bg-white/[0.02] rounded-2xl p-8 lg:p-12 border border-white/10 shadow-xl">
+              <div className="bg-surface rounded-2xl p-8 lg:p-12 border border-borderToken-subtle shadow-xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {keyAchievements.map((achievement, index) => (
                     <div key={index} className="flex items-start space-x-3">
                       <div className="flex-shrink-0 w-6 h-6 bg-alira-gold/10 rounded-full flex items-center justify-center mt-0.5">
                         <CheckCircle className="w-4 h-4 text-alira-gold" />
                       </div>
-                      <p className="text-alira-white/80 leading-relaxed">
+                      <p className="text-text-secondary leading-relaxed">
                         {achievement}
                       </p>
                     </div>
@@ -217,16 +217,16 @@ export default function ResultsPage() {
       </section>
 
       {/* Case Studies */}
-      <section className="py-20 bg-black">
+      <section className="py-20 bg-bg-page">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-serif font-normal text-alira-white mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-6">
                   Case Studies
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto mb-6"></div>
-                <p className="text-xl text-alira-white/70 max-w-3xl mx-auto">
+                <p className="text-xl text-text-secondary max-w-3xl mx-auto">
                   Real projects, real results — see how we've helped organizations transform their operations.
                 </p>
               </div>
@@ -235,36 +235,36 @@ export default function ResultsPage() {
             <div className="space-y-8">
               {caseStudies.map((study, index) => (
                 <Reveal key={index} delay={index * 200}>
-                  <div className="bg-white/[0.02] rounded-2xl p-8 border border-white/10 hover:border-alira-gold hover:shadow-xl transition-all duration-300">
+                  <div className="bg-surface rounded-2xl p-8 border border-borderToken-subtle hover:border-accent hover:shadow-xl transition-all duration-300">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                       <div>
-                        <h3 className="text-2xl font-serif font-normal text-alira-white mb-4">
+                        <h3 className="text-2xl font-serif font-normal text-text-primary mb-4">
                           {study.title}
                         </h3>
                         <div className="space-y-4">
                           <div>
                             <h4 className="font-serif font-normal text-alira-gold mb-2">Challenge</h4>
-                            <p className="text-alira-white/80 text-sm">
+                            <p className="text-text-secondary text-sm">
                               {study.challenge}
                             </p>
                           </div>
                           <div>
                             <h4 className="font-serif font-normal text-alira-gold mb-2">Solution</h4>
-                            <p className="text-alira-white/80 text-sm">
+                            <p className="text-text-secondary text-sm">
                               {study.solution}
                             </p>
                           </div>
                         </div>
                       </div>
                       <div className="space-y-4">
-                        <div className="bg-alira-gold/5 rounded-xl p-6 border border-alira-gold/20">
+                        <div className="bg-alira-gold/5 rounded-xl p-6 border border-accent">
                           <h4 className="font-serif font-normal text-alira-gold mb-2">Result</h4>
-                          <p className="text-alira-white/80 text-sm mb-4">
+                          <p className="text-text-secondary text-sm mb-4">
                             {study.result}
                           </p>
-                          <div className="border-t border-alira-gold/20 pt-4">
+                          <div className="border-t border-accent pt-4">
                             <h4 className="font-serif font-normal text-alira-gold mb-2">Impact</h4>
-                            <p className="text-alira-white/80 text-sm font-sans font-light">
+                            <p className="text-text-secondary text-sm font-sans font-light">
                               {study.impact}
                             </p>
                           </div>
@@ -280,13 +280,13 @@ export default function ResultsPage() {
       </section>
 
       {/* Client Testimonials */}
-      <section className="py-20 bg-black relative overflow-hidden">
+      <section className="py-20 bg-bg-page relative overflow-hidden">
         <GradientBars />
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-serif font-normal text-alira-white mb-6">
+                <h2 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-6">
                   Client Testimonials
                 </h2>
                 <div className="w-16 h-px bg-alira-gold mx-auto"></div>
@@ -296,7 +296,7 @@ export default function ResultsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {clientTestimonials.map((testimonial, index) => (
                 <Reveal key={index} delay={index * 150}>
-                  <div className="bg-white/[0.02] rounded-2xl p-8 border border-white/10 hover:border-alira-gold hover:shadow-xl transition-all duration-300 relative">
+                  <div className="bg-surface rounded-2xl p-8 border border-borderToken-subtle hover:border-accent hover:shadow-xl transition-all duration-300 relative">
                     {/* Quote icon */}
                     <div className="absolute top-6 right-6">
                       <Quote className="w-8 h-8 text-alira-gold/30" />
@@ -310,16 +310,16 @@ export default function ResultsPage() {
                     </div>
                     
                     {/* Quote */}
-                    <blockquote className="text-alira-white/80 italic mb-6 leading-relaxed">
+                    <blockquote className="text-text-secondary italic mb-6 leading-relaxed">
                       "{testimonial.quote}"
                     </blockquote>
                     
                     {/* Author */}
-                    <div className="border-t border-white/10 pt-4">
-                      <div className="font-serif font-normal text-alira-white">
+                    <div className="border-t border-borderToken-subtle pt-4">
+                      <div className="font-serif font-normal text-text-primary">
                         {testimonial.author}
                       </div>
-                      <div className="text-sm text-alira-white/60">
+                      <div className="text-sm text-text-tertiary">
                         {testimonial.company}
                       </div>
                     </div>
@@ -338,10 +338,10 @@ export default function ResultsPage() {
             <Reveal>
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-4xl md:text-5xl font-serif font-normal text-white mb-6 leading-tight">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-normal text-text-inverse mb-6 leading-tight">
                     Ready to achieve similar results?
                   </h2>
-                  <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+                  <p className="text-xl text-text-inverse/80 mb-8 max-w-2xl mx-auto">
                     Let's create a clear plan for your business transformation.
                   </p>
                   <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
@@ -356,7 +356,7 @@ export default function ResultsPage() {
                   >
                     Start My Plan
                   </CTAButton>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-text-inverse/70">
                     Free • Private • No card required • Delivered in minutes
                   </p>
                 </div>

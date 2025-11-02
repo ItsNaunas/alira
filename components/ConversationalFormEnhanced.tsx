@@ -472,19 +472,19 @@ export default function ConversationalFormEnhanced({
   };
 
   return (
-    <div className="flex flex-col h-[600px] max-w-3xl mx-auto bg-black/40 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
+    <div className="flex flex-col h-[600px] max-w-3xl mx-auto bg-bg-page/95 backdrop-blur-sm rounded-2xl border border-borderToken-subtle overflow-hidden">
       {/* Progress Indicator */}
       {!showReview && (
-        <div className="border-b border-white/10 bg-black/60 px-6 py-4">
+        <div className="border-b border-borderToken-subtle bg-bg-section px-6 py-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="text-sm font-medium text-white">
+            <div className="text-sm font-medium text-text-primary">
               Step {currentQuestionIndex + 1} of {questions.length}
             </div>
-            <div className="text-xs text-white/60">
+            <div className="text-xs text-text-secondary">
               {currentQuestion?.section}
             </div>
           </div>
-          <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+          <div className="w-full h-1.5 bg-borderToken-subtle rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-gradient-to-r from-alira-gold to-yellow-400"
               initial={{ width: 0 }}
@@ -507,8 +507,8 @@ export default function ConversationalFormEnhanced({
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-alira-gold/20 mb-4">
                 <Sparkles className="w-8 h-8 text-alira-gold" />
               </div>
-              <h2 className="text-2xl font-bold text-white mb-2">Review Your Information</h2>
-              <p className="text-white/60">
+              <h2 className="text-2xl font-bold text-text-primary mb-2">Review Your Information</h2>
+              <p className="text-text-secondary">
                 Here's what we've learned about your business. Everything look good?
               </p>
             </div>
@@ -533,17 +533,17 @@ export default function ConversationalFormEnhanced({
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-alira-gold/30 transition-colors"
+                    className="bg-surface rounded-xl p-6 border border-borderToken-subtle hover:border-accent transition-colors"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <CheckCircle className="w-5 h-5 text-alira-gold flex-shrink-0" />
-                          <h3 className="text-sm font-medium text-white/80">
+                          <h3 className="text-sm font-medium text-text-primary">
                             {question.question}
                           </h3>
                         </div>
-                        <p className="text-white text-base leading-relaxed pl-7">
+                        <p className="text-text-primary text-base leading-relaxed pl-7">
                           {displayValue}
                         </p>
                       </div>
@@ -557,7 +557,7 @@ export default function ConversationalFormEnhanced({
               <Button
                 variant="outline"
                 onClick={() => setShowReview(false)}
-                className="flex-1 border-white/20 text-white hover:bg-white/5"
+                className="flex-1 border-borderToken-subtle text-text-primary hover:bg-bg-muted"
               >
                 Go Back
               </Button>
@@ -592,12 +592,12 @@ export default function ConversationalFormEnhanced({
               {message.type !== 'user' && (
                 <div className={cn(
                   'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
-                  message.type === 'bot' ? 'bg-alira-gold/20' : 'bg-white/10'
+                  message.type === 'bot' ? 'bg-accent/20' : 'bg-bg-muted'
                 )}>
                   {message.type === 'bot' ? (
                     <Bot className="w-5 h-5 text-alira-gold" />
                   ) : (
-                    <Sparkles className="w-5 h-5 text-white/60" />
+                    <Sparkles className="w-5 h-5 text-text-tertiary" />
                   )}
                 </div>
               )}
@@ -609,11 +609,11 @@ export default function ConversationalFormEnhanced({
                     ? 'bg-alira-gold text-alira-black ml-auto max-w-[80%]'
                     :                   message.type === 'bot'
                     ? message.isFollowUp 
-                      ? 'bg-alira-gold/10 text-white border border-alira-gold/30 max-w-[80%]'
-                      : 'bg-white/5 text-white border border-white/10 max-w-[80%]'
+                      ? 'bg-accent/10 text-text-primary border border-accent max-w-[80%]'
+                      : 'bg-bg-muted text-text-primary border border-borderToken-subtle max-w-[80%]'
                     : message.content.includes('✨')
-                    ? 'w-full bg-gradient-to-r from-alira-gold/20 via-alira-gold/10 to-transparent border-l-4 border-alira-gold text-white'
-                    : 'bg-white/[0.03] text-white/70 italic border border-white/5 max-w-[80%]'
+                    ? 'w-full bg-gradient-to-r from-accent/20 via-accent/10 to-transparent border-l-4 border-accent text-text-primary'
+                    : 'bg-bg-muted text-text-secondary italic border border-borderToken-subtle max-w-[80%]'
                 )}
               >
                 <p className={cn(
@@ -630,8 +630,8 @@ export default function ConversationalFormEnhanced({
               </div>
 
               {message.type === 'user' && (
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <User className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 rounded-full bg-bg-muted flex items-center justify-center flex-shrink-0">
+                  <User className="w-5 h-5 text-text-primary" />
                 </div>
               )}
             </motion.div>
@@ -647,7 +647,7 @@ export default function ConversationalFormEnhanced({
             <div className="w-8 h-8 rounded-full bg-alira-gold/20 flex items-center justify-center">
               <Bot className="w-5 h-5 text-alira-gold" />
             </div>
-            <div className="bg-white/5 text-white border border-white/10 rounded-2xl px-4 py-3 flex items-center gap-2">
+            <div className="bg-bg-muted text-text-primary border border-borderToken-subtle rounded-2xl px-4 py-3 flex items-center gap-2">
               <Spinner size="sm" color="gold" />
               <span className="text-sm">Analyzing your response...</span>
             </div>
@@ -659,11 +659,11 @@ export default function ConversationalFormEnhanced({
 
           {/* Input Area */}
           {!isSubmitting && (
-        <div className="border-t border-white/10 p-4 sm:p-6 bg-black/40">
+        <div className="border-t border-borderToken-subtle p-4 sm:p-6 bg-bg-section">
           {isMultiSelect ? (
             // Service Selection
             <div className="space-y-4">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-text-secondary">
                 {currentQuestion.helper}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -679,16 +679,16 @@ export default function ConversationalFormEnhanced({
                       className={cn(
                         'p-4 rounded-lg border-2 text-left transition-all',
                         selectedServices.includes(optionValue)
-                          ? 'border-alira-gold bg-alira-gold/10 text-white'
-                          : 'border-white/20 bg-white/5 text-white/80 hover:border-white/40'
+                          ? 'border-accent bg-accent/10 text-text-primary'
+                          : 'border-borderToken-subtle bg-bg-muted text-text-secondary hover:border-accent'
                       )}
                     >
                       <div className="flex items-start gap-3">
                         <div className={cn(
                           'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5',
                           selectedServices.includes(optionValue)
-                            ? 'border-alira-gold bg-alira-gold'
-                            : 'border-white/40'
+                            ? 'border-accent bg-accent'
+                            : 'border-borderToken-subtle'
                         )}>
                           {selectedServices.includes(optionValue) && (
                             <CheckCircle className="w-4 h-4 text-black" />
@@ -697,7 +697,7 @@ export default function ConversationalFormEnhanced({
                         <div className="flex-1">
                           <div className="text-sm font-medium">{optionLabel}</div>
                           {optionDescription && (
-                            <div className="text-xs text-white/60 mt-1">{optionDescription}</div>
+                            <div className="text-xs text-text-tertiary mt-1">{optionDescription}</div>
                           )}
                         </div>
                       </div>
@@ -725,7 +725,7 @@ export default function ConversationalFormEnhanced({
                 onKeyDown={handleKeyPress}
                 placeholder={getPlaceholderText(currentQuestion)}
                 disabled={isEvaluating}
-                className="flex-1 min-h-[60px] max-h-[120px] resize-none bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-alira-gold"
+                className="flex-1 min-h-[60px] max-h-[120px] resize-none bg-bg-muted border-borderToken-subtle text-text-primary placeholder:text-text-tertiary focus:border-accent"
               />
               <Button
                 onClick={handleSend}
@@ -739,7 +739,7 @@ export default function ConversationalFormEnhanced({
           )}
           
           {!isMultiSelect && (
-            <p className="text-xs text-white/50 mt-2">
+            <p className="text-xs text-text-tertiary mt-2">
               💡 {currentQuestion.helper}
             </p>
           )}

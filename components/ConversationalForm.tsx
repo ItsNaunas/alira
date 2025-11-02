@@ -216,8 +216,8 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
                 className={cn(
                   'max-w-[85%] sm:max-w-[80%] rounded-xl sm:rounded-2xl px-4 py-3 sm:px-6 sm:py-4',
                   message.type === 'user'
-                    ? 'bg-gradient-to-r from-alira-gold to-[#8B5A00] text-white'
-                    : 'bg-white/10 dark:bg-alira-primary/50 text-alira-white border border-white/10'
+                    ? 'bg-gradient-to-r from-accent to-accent-dark text-text-inverse'
+                    : 'bg-bg-muted text-text-primary border border-borderToken-subtle'
                 )}
               >
                 {message.type === 'bot' && (
@@ -241,7 +241,7 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
             animate={{ opacity: 1 }}
             className="flex justify-start"
           >
-            <div className="bg-white/10 dark:bg-alira-primary/50 rounded-2xl px-6 py-4 border border-white/10">
+            <div className="bg-bg-muted rounded-2xl px-6 py-4 border border-borderToken-subtle">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1">
                   <span className="w-2 h-2 bg-alira-gold rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
@@ -260,7 +260,7 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
             animate={{ opacity: 1 }}
             className="text-center"
           >
-            <p className="text-xs text-alira-white/50 font-light italic">
+            <p className="text-xs text-text-tertiary font-light italic">
               {currentQuestion?.helper}
             </p>
           </motion.div>
@@ -270,7 +270,7 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
       </div>
 
       {/* Input Area */}
-      <div className="border-t border-white/10 bg-black/20 backdrop-blur-sm p-4 sm:p-6">
+      <div className="border-t border-borderToken-subtle bg-bg-page/95 backdrop-blur-sm p-4 sm:p-6">
         {currentQuestion?.type === 'multiselect' ? (
           // Multiselect UI
           <div className="space-y-3 sm:space-y-4">
@@ -282,24 +282,24 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
                   className={cn(
                     'text-left p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all duration-200',
                     selectedServices.includes(option.value)
-                      ? 'border-alira-gold bg-alira-gold/10'
-                      : 'border-white/10 bg-white/5 hover:border-white/20'
+                      ? 'border-accent bg-accent/10'
+                      : 'border-borderToken-subtle bg-bg-muted hover:border-accent'
                   )}
                 >
                   <div className="flex items-start gap-2 sm:gap-3">
                     <div className={cn(
                       'mt-0.5 sm:mt-1 w-4 h-4 sm:w-5 sm:h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0',
                       selectedServices.includes(option.value)
-                        ? 'border-alira-gold bg-alira-gold'
-                        : 'border-white/30'
+                        ? 'border-accent bg-accent'
+                        : 'border-borderToken-subtle'
                     )}>
                       {selectedServices.includes(option.value) && (
                         <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-black" />
                       )}
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-alira-white font-medium text-sm sm:text-base">{option.label}</h4>
-                      <p className="text-xs sm:text-sm text-alira-white/60 mt-1">{option.description}</p>
+                      <h4 className="text-text-primary font-medium text-sm sm:text-base">{option.label}</h4>
+                      <p className="text-xs sm:text-sm text-text-secondary mt-1">{option.description}</p>
                     </div>
                   </div>
                 </button>
@@ -312,8 +312,8 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
               loading={isSubmitting}
               className={cn(
                 'w-full flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-all duration-200',
-                'bg-gradient-to-r from-alira-gold to-[#8B5A00] text-black',
-                'hover:shadow-[0_0_20px_rgba(160,107,0,0.4)] hover:scale-[1.02]',
+                'bg-gradient-to-r from-accent to-accent-dark text-text-primary',
+                'hover:shadow-[0_0_20px_rgba(203,163,73,0.4)] hover:scale-[1.02]',
                 'active:scale-95',
                 'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none'
               )}
@@ -331,8 +331,8 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
         ) : (
           // Text Input UI
           <div className={cn(
-            'rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-md ring-1 ring-white/10',
-            'focus-within:ring-alira-gold/50 transition-all duration-300'
+            'rounded-xl sm:rounded-2xl bg-bg-muted backdrop-blur-md ring-1 ring-borderToken-subtle',
+            'focus-within:ring-accent transition-all duration-300'
           )}>
             <Textarea
               ref={textareaRef}
@@ -340,17 +340,17 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={currentQuestion?.placeholder}
-              className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-transparent border-none text-sm sm:text-base text-alira-white placeholder:text-alira-white/40 focus:outline-none focus-visible:ring-0 resize-none min-h-[60px] sm:min-h-[80px]"
+              className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-transparent border-none text-sm sm:text-base text-text-primary placeholder:text-text-tertiary focus:outline-none focus-visible:ring-0 resize-none min-h-[60px] sm:min-h-[80px]"
             />
             
-            <div className="flex items-center justify-end p-3 sm:p-4 border-t border-white/5">
+            <div className="flex items-center justify-end p-3 sm:p-4 border-t border-borderToken-subtle">
               <button
                 onClick={handleSend}
                 disabled={!inputValue.trim()}
                 className={cn(
                   'flex items-center gap-1.5 sm:gap-2 rounded-lg px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-all duration-200',
-                  'bg-gradient-to-r from-alira-gold to-[#8B5A00] text-black',
-                  'hover:shadow-[0_0_15px_rgba(160,107,0,0.4)] hover:scale-105',
+                  'bg-gradient-to-r from-accent to-accent-dark text-text-primary',
+                  'hover:shadow-[0_0_15px_rgba(203,163,73,0.4)] hover:scale-105',
                   'active:scale-95',
                   'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none'
                 )}

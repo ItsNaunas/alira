@@ -48,14 +48,14 @@ export default function HeroCards() {
       <div className="relative text-center">
         {/* Subheading Section */}
         <div className="mb-12 lg:mb-16">
-          <h2 className="text-3xl font-serif font-normal text-alira-primary dark:text-alira-white mb-3">
+          <h2 className="text-3xl font-serif font-normal text-alira-primary mb-3">
             What you get
           </h2>
           
           {/* Gold divider */}
           <div className="w-16 h-px bg-alira-gold/30 mx-auto mb-4"></div>
           
-          <p className="text-lg md:text-xl font-sans font-light text-alira-primary/70 dark:text-alira-white/70 max-w-[60ch] mx-auto">
+          <p className="text-lg md:text-xl font-sans font-light text-alira-primary/70 max-w-[60ch] mx-auto">
             Every business case draft contains these four building blocks, delivered with instant clarity.
           </p>
         </div>
@@ -76,9 +76,9 @@ export default function HeroCards() {
                     animationDelay: `${index * 100}ms`
                   }}
                 >
-                  <article className="h-full rounded-3xl bg-white/90 dark:bg-alira-primary/90 ring-1 ring-black/5 dark:ring-white/5 shadow-[0_1px_1px_rgba(0,0,0,0.06),0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300 will-change-transform hover:-translate-y-1.5 group-hover:ring-alira-gold/35">
+                  <article className="h-full rounded-3xl bg-white/90 ring-1 ring-black/5 shadow-[0_1px_1px_rgba(0,0,0,0.06),0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300 will-change-transform hover:-translate-y-1.5 group-hover:ring-alira-gold/35">
                     {/* Icon safe area */}
-                    <div className="overflow-hidden rounded-t-3xl aspect-[4/3] bg-alira-white dark:bg-alira-primary relative">
+                    <div className="overflow-hidden rounded-t-3xl aspect-[4/3] bg-alira-white relative">
                       <Image 
                         src={card.image}
                         alt={card.title}
@@ -97,25 +97,25 @@ export default function HeroCards() {
                       <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent"></div>
                       
                       {/* Icon on porcelain plinth */}
-                      <div className="absolute bottom-4 right-4 w-12 h-12 bg-white/95 dark:bg-alira-primary/95 rounded-xl border border-alira-primary/10 dark:border-alira-white/10 flex items-center justify-center group-hover:rotate-3 transition-transform duration-300">
-                        <IconComponent className="w-6 h-6 text-alira-primary dark:text-alira-white" />
+                      <div className="absolute bottom-4 right-4 w-12 h-12 bg-white/95 rounded-xl border border-alira-primary/10 flex items-center justify-center group-hover:rotate-3 transition-transform duration-300">
+                        <IconComponent className="w-6 h-6 text-alira-primary" />
                       </div>
                     </div>
                     
                     {/* Card body */}
                     <div className="p-6 lg:p-7 space-y-3">
                       {/* Eyebrow */}
-                      <span className="tracking-wide text-[11px] font-sans font-light text-alira-primary/50 dark:text-alira-white/50 uppercase">
+                      <span className="tracking-wide text-xs font-sans font-light text-alira-primary/50 uppercase">
                         {card.model}
                       </span>
                       
                       {/* Title */}
-                      <h3 className="text-[18px] sm:text-[20px] font-serif font-normal tracking-tight text-alira-primary dark:text-alira-white leading-tight">
+                      <h3 className="text-[18px] sm:text-[20px] font-serif font-normal tracking-tight text-alira-primary leading-tight">
                         {card.title}
                       </h3>
                       
                       {/* Description */}
-                      <p className="text-[13.5px] font-sans leading-6 text-alira-primary/70 dark:text-alira-white/70 max-w-prose text-balance">
+                      <p className="text-[13.5px] font-sans leading-6 text-alira-primary/70 max-w-prose text-balance">
                         {card.description}
                       </p>
                     </div>
@@ -129,7 +129,7 @@ export default function HeroCards() {
           <div className="mt-12 text-center">
             <Link
               href="#how-it-works"
-              className="inline-flex items-center rounded-full bg-alira-primary dark:bg-alira-white text-white dark:text-alira-primary px-5 py-2.5 text-sm font-sans font-light border border-transparent hover:border-alira-gold hover:shadow-lg hover:shadow-black/10 transition-all duration-200"
+              className="inline-flex items-center rounded-full bg-alira-primary text-white px-5 py-2.5 text-sm font-sans font-light border border-transparent hover:border-alira-gold hover:shadow-lg hover:shadow-black/10 transition-all duration-200"
             >
               See How It Works
               <ArrowRight className="ml-2 w-4 h-4" />

@@ -35,7 +35,7 @@ export function ErrorState({
       className={cn(
         "rounded-xl p-6 sm:p-8",
         variant === "default" && "border border-red-500/20 bg-red-500/10",
-        variant === "subtle" && "border border-white/10 bg-white/5",
+        variant === "subtle" && "border border-borderToken-subtle bg-bg-muted",
         className
       )}
       role="alert"
@@ -50,26 +50,26 @@ export function ErrorState({
           className={cn(
             "w-16 h-16 rounded-full flex items-center justify-center",
             variant === "default" && "bg-red-500/20",
-            variant === "subtle" && "bg-white/10"
+            variant === "subtle" && "bg-bg-muted"
           )}
         >
           <AlertCircle 
             className={cn(
               "w-8 h-8",
-              variant === "default" && "text-red-400",
-              variant === "subtle" && "text-white/60"
+            variant === "default" && "text-red-400",
+            variant === "subtle" && "text-text-tertiary"
             )} 
             aria-hidden="true" 
           />
         </motion.div>
 
         {/* Title */}
-        <h3 className="text-xl sm:text-2xl font-serif font-normal text-alira-white">
+        <h3 className="text-xl sm:text-2xl font-serif font-normal text-text-primary">
           {title}
         </h3>
 
         {/* Message */}
-        <p className="text-base text-alira-white/80 max-w-md">
+        <p className="text-base text-text-secondary max-w-md">
           {message}
         </p>
 
@@ -104,7 +104,7 @@ export function ErrorState({
               onClick={onContactSupport}
               variant="ghost"
               size="sm"
-              className="text-white/60 hover:text-white"
+              className="text-text-tertiary hover:text-text-primary"
             >
               <Mail className="w-4 h-4 mr-2" aria-hidden="true" />
               Contact Support

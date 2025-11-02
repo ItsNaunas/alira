@@ -57,14 +57,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       label: "Dashboard",
       href: "/dashboard",
       icon: (
-        <IconLayoutDashboard className="h-5 w-5 shrink-0 text-alira-white/70" />
+        <IconLayoutDashboard className="h-5 w-5 shrink-0 text-text-secondary" />
       ),
     },
     {
       label: "New Plan",
       href: "/#start-chat",
       icon: (
-        <IconPlus className="h-5 w-5 shrink-0 text-alira-white/70" />
+        <IconPlus className="h-5 w-5 shrink-0 text-text-secondary" />
       ),
     },
   ];
@@ -72,12 +72,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div
       className={cn(
-        "flex w-full flex-col bg-black md:flex-row",
+        "flex w-full flex-col bg-bg-page md:flex-row",
         "min-h-screen"
       )}
     >
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10 !bg-black md:!bg-black">
+        <SidebarBody className="justify-between gap-10 !bg-surface md:!bg-surface">
           <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
@@ -86,19 +86,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               ))}
             </div>
           </div>
-          <div className="border-t border-white/10 pt-4">
+          <div className="border-t border-borderToken-subtle pt-4">
             {/* Back to Website Link */}
             <a
               href="/"
-              className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-white/5 transition-colors w-full mb-2"
+              className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-bg-muted transition-colors w-full mb-2"
             >
-              <IconHome className="h-5 w-5 shrink-0 text-alira-white/70" />
+              <IconHome className="h-5 w-5 shrink-0 text-text-secondary" />
               <motion.span
                 animate={{
                   display: open ? "inline-block" : "none",
                   opacity: open ? 1 : 0,
                 }}
-                className="text-alira-white/80 text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-alira-white transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+                className="text-text-secondary text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-text-primary transition duration-150 whitespace-pre inline-block !p-0 !m-0"
               >
                 Back to Website
               </motion.span>
@@ -107,15 +107,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {/* Logout Button */}
             <button
               onClick={handleSignOut}
-              className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-white/5 transition-colors w-full"
+              className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-bg-muted transition-colors w-full"
             >
-              <IconLogout className="h-5 w-5 shrink-0 text-alira-white/70" />
+              <IconLogout className="h-5 w-5 shrink-0 text-text-secondary" />
               <motion.span
                 animate={{
                   display: open ? "inline-block" : "none",
                   opacity: open ? 1 : 0,
                 }}
-                className="text-alira-white/80 text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-alira-white transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+                className="text-text-secondary text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-text-primary transition duration-150 whitespace-pre inline-block !p-0 !m-0"
               >
                 Logout
               </motion.span>
@@ -123,7 +123,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </SidebarBody>
       </Sidebar>
-      <div id="main-content" className="flex flex-1 flex-col w-full overflow-y-auto bg-black">
+      <div id="main-content" className="flex flex-1 flex-col w-full overflow-y-auto bg-bg-page">
         {children}
       </div>
     </div>

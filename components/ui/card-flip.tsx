@@ -43,6 +43,17 @@ export default function CardFlip({
       className="group relative h-[360px] w-full max-w-[300px] [perspective:2000px]"
       onMouseEnter={() => setIsFlipped(true)}
       onMouseLeave={() => setIsFlipped(false)}
+      onClick={() => setIsFlipped(!isFlipped)}
+      onTouchStart={() => setIsFlipped(!isFlipped)}
+      role="button"
+      tabIndex={0}
+      aria-label={`Flip card to see ${title} details`}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          setIsFlipped(!isFlipped)
+        }
+      }}
     >
       <div
         className={cn(
@@ -86,7 +97,7 @@ export default function CardFlip({
               <img
                 src={imageSrc}
                 alt={imageAlt}
-                className={`w-full h-full object-cover relative z-10 ${
+                className={`w-full h-full max-w-full object-cover relative z-10 ${
                   imagePosition === 'bottom' 
                     ? 'object-top' 
                     : imagePosition === 'top' 
@@ -106,10 +117,10 @@ export default function CardFlip({
           <div className="absolute right-0 bottom-0 left-0 p-5">
             <div className="flex items-center justify-between gap-3">
               <div className="space-y-1.5 relative z-10">
-                <h3 className="text-lg leading-snug font-serif font-normal tracking-tight text-alira-white transition-all duration-500 ease-out group-hover:translate-y-[-4px]">
+                <h3 className="text-lg leading-snug font-serif font-normal tracking-tight text-text-inverse transition-all duration-500 ease-out group-hover:translate-y-[-4px]">
                   {title}
                 </h3>
-                <p className="line-clamp-2 text-sm tracking-tight text-alira-white/90 transition-all delay-[50ms] duration-500 ease-out group-hover:translate-y-[-4px]">
+                <p className="line-clamp-2 text-sm tracking-tight text-text-inverse/90 transition-all delay-[50ms] duration-500 ease-out group-hover:translate-y-[-4px]">
                   {subtitle}
                 </p>
               </div>
@@ -187,7 +198,7 @@ export default function CardFlip({
             </div>
           </div>
           
-          <div className="relative z-10 mt-auto border-t border-white/20 pt-4">
+          <div className="relative z-10 mt-auto border-t border-borderToken-subtle pt-4">
             <div
               className={cn(
                 'group/start relative',

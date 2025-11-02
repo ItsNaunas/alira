@@ -43,7 +43,7 @@ export default function Home() {
         aria-labelledby="hero-heading"
       >
         {/* Animated Gradient Bars Background */}
-        <GradientBars bars={20} colors={['#0B1D51', 'transparent']} />
+        <GradientBars bars={20} colors={['var(--brand)', 'transparent']} />
         
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-none mx-auto">

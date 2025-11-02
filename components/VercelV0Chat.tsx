@@ -204,10 +204,10 @@ export function VercelV0Chat() {
             }
           }}
         >
-          <div className="bg-white dark:bg-alira-primary rounded-xl sm:rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-alira-primary/50 dark:text-alira-white/50 hover:text-alira-primary dark:hover:text-alira-white transition-colors"
+              className="absolute top-4 right-4 text-text-tertiary hover:text-text-primary transition-colors"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" />
@@ -215,11 +215,11 @@ export function VercelV0Chat() {
             
             <h2 
               id="auth-modal-title"
-              className="text-xl sm:text-2xl font-serif font-normal text-alira-primary dark:text-alira-white mb-2"
+              className="text-xl sm:text-2xl font-serif font-normal text-text-primary mb-2"
             >
               {isSignUp ? 'Create your account' : 'Welcome back'}
             </h2>
-            <p className="text-xs sm:text-sm text-alira-primary/70 dark:text-alira-white/70 mb-4 sm:mb-6">
+            <p className="text-xs sm:text-sm text-text-secondary mb-4 sm:mb-6">
               {isSignUp 
                 ? 'Sign up to save your progress and access your business plans anytime.'
                 : 'Log in to continue building your business plan.'}
@@ -234,7 +234,7 @@ export function VercelV0Chat() {
             <form onSubmit={handleModalSubmit} className="space-y-3 sm:space-y-4">
               {isSignUp && (
                 <div>
-                  <label htmlFor="auth-name" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+                  <label htmlFor="auth-name" className="block text-sm sm:text-base font-sans font-light text-text-primary mb-2">
                     Your Name
                   </label>
                   <Input
@@ -246,12 +246,14 @@ export function VercelV0Chat() {
                     required
                     className="w-full text-base"
                     aria-required="true"
+                    autoComplete="name"
+                    autoCapitalize="words"
                   />
                 </div>
               )}
               
               <div>
-                <label htmlFor="auth-email" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+                <label htmlFor="auth-email" className="block text-sm sm:text-base font-sans font-light text-text-primary mb-2">
                   Email Address
                 </label>
                 <Input
@@ -263,11 +265,15 @@ export function VercelV0Chat() {
                   required
                   className="w-full text-base"
                   aria-required="true"
+                  autoComplete="email"
+                  inputMode="email"
+                  autoCapitalize="off"
+                  autoCorrect="off"
                 />
               </div>
               
               <div>
-                <label htmlFor="auth-password" className="block text-sm sm:text-base font-sans font-light text-alira-primary dark:text-alira-white mb-2">
+                <label htmlFor="auth-password" className="block text-sm sm:text-base font-sans font-light text-text-primary mb-2">
                   Password
                 </label>
                 <Input
@@ -281,9 +287,12 @@ export function VercelV0Chat() {
                   className="w-full text-base"
                   aria-required="true"
                   aria-describedby={isSignUp ? "password-hint" : undefined}
+                  autoComplete={isSignUp ? "new-password" : "current-password"}
+                  autoCapitalize="off"
+                  autoCorrect="off"
                 />
                 {isSignUp && (
-                  <p id="password-hint" className="text-xs sm:text-sm text-alira-primary/50 dark:text-alira-white/50 mt-1">
+                  <p id="password-hint" className="text-xs sm:text-sm text-text-tertiary mt-1">
                     Minimum 6 characters
                   </p>
                 )}
@@ -294,8 +303,8 @@ export function VercelV0Chat() {
                 loading={isSubmitting}
                 className={cn(
                   'w-full flex items-center justify-center gap-1.5 sm:gap-2 rounded-lg px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-all duration-200',
-                  'bg-gradient-to-r from-alira-gold to-[#8B5A00] text-alira-black',
-                  'hover:shadow-[0_0_15px_rgba(160,107,0,0.4)] hover:scale-105',
+                  'bg-gradient-to-r from-accent to-accent-dark text-text-primary',
+                  'hover:shadow-[0_0_15px_rgba(203,163,73,0.4)] hover:scale-105',
                   'active:scale-95',
                   'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none'
                 )}
@@ -317,7 +326,7 @@ export function VercelV0Chat() {
                     setIsSignUp(!isSignUp);
                     setAuthError('');
                   }}
-                  className="text-xs sm:text-sm text-alira-primary/70 dark:text-alira-white/70 hover:text-alira-gold transition-colors"
+                  className="text-xs sm:text-sm text-text-secondary hover:text-accent transition-colors"
                 >
                   {isSignUp 
                     ? 'Already have an account? Sign in' 
@@ -325,7 +334,7 @@ export function VercelV0Chat() {
                 </button>
               </div>
               
-              <p className="text-[10px] sm:text-xs text-alira-primary/50 dark:text-alira-white/50 text-center">
+              <p className="text-xs sm:text-sm text-text-tertiary text-center">
                 🔒 Your information is secure and private
               </p>
             </form>
@@ -341,9 +350,9 @@ export function VercelV0Chat() {
         <div className={cn(
           'relative rounded-lg sm:rounded-xl lg:rounded-2xl min-h-[80px] sm:min-h-[100px] lg:min-h-[120px] transition-all duration-300',
           'bg-white/5 backdrop-blur-md ring-1 ring-white/10',
-          'shadow-[0_0_20px_rgba(160,107,0,0.15)]',
-          'hover:shadow-[0_0_30px_rgba(160,107,0,0.2)]',
-          isFocused && 'ring-alira-gold/50 shadow-[0_0_25px_rgba(160,107,0,0.25)] min-h-[100px] sm:min-h-[120px] lg:min-h-[140px]'
+          'shadow-[0_0_20px_rgba(203,163,73,0.15)]',
+          'hover:shadow-[0_0_30px_rgba(203,163,73,0.2)]',
+          isFocused && 'ring-accent/50 shadow-[0_0_25px_rgba(203,163,73,0.25)] min-h-[100px] sm:min-h-[120px] lg:min-h-[140px]'
         )}>
           {/* Gradient highlight from top */}
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent rounded-t-2xl"></div>
@@ -386,8 +395,8 @@ export function VercelV0Chat() {
               disabled={!value.trim()}
               className={cn(
                 'flex items-center gap-1.5 sm:gap-2 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-all duration-200 min-h-[44px] min-w-[44px]',
-                'bg-gradient-to-r from-alira-gold to-[#8B5A00] text-alira-black',
-                'hover:shadow-[0_0_15px_rgba(160,107,0,0.4)] hover:scale-105',
+                'bg-gradient-to-r from-accent to-accent-dark text-text-primary',
+                'hover:shadow-[0_0_15px_rgba(203,163,73,0.4)] hover:scale-105',
                 'active:scale-95',
                 'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none'
               )}

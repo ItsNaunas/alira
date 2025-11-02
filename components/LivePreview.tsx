@@ -98,8 +98,8 @@ export default function LivePreview({ data }: LivePreviewProps) {
   const preview = generatePreview()
 
   return (
-    <Card className="shadow-xl border-0 bg-white/95 dark:bg-alira-primary/95 backdrop-blur-sm rounded-2xl overflow-hidden sticky top-8">
-      <CardHeader className="bg-gradient-to-r from-alira-gold/5 to-alira-primary/5 dark:from-alira-gold/10 dark:to-alira-primary/10 border-b border-alira-primary/10 dark:border-alira-white/10">
+    <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden sticky top-8">
+      <CardHeader className="bg-gradient-to-r from-alira-gold/5 to-alira-primary/5 border-b border-alira-primary/10">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-alira-gold/10 rounded-xl flex items-center justify-center">
             <svg className="w-5 h-5 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,10 +107,10 @@ export default function LivePreview({ data }: LivePreviewProps) {
             </svg>
           </div>
           <div>
-            <CardTitle className="text-lg font-serif font-normal text-alira-primary dark:text-alira-white">
+            <CardTitle className="text-lg font-serif font-normal text-alira-primary">
               Your Plan Preview
             </CardTitle>
-            <p className="text-xs text-alira-primary/60 dark:text-alira-white/60">
+            <p className="text-xs text-alira-primary/60">
               Updates as you type
             </p>
           </div>
@@ -119,25 +119,25 @@ export default function LivePreview({ data }: LivePreviewProps) {
       <CardContent className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
         {/* Current Situation */}
         <div>
-          <h4 className="font-light text-alira-primary dark:text-alira-white mb-3 text-xs uppercase tracking-wide">
+          <h4 className="font-light text-alira-primary mb-3 text-xs uppercase tracking-wide">
             Current Situation
           </h4>
           <div className="space-y-3">
-            <div className="p-3 bg-alira-primary/5 dark:bg-alira-primary/20 rounded-lg border border-alira-primary/10 dark:border-alira-white/10">
+            <div className="p-3 bg-alira-primary/5 rounded-lg border border-alira-primary/10">
               <h5 className="text-xs font-sans font-light text-alira-gold mb-1">Your Business</h5>
-              <p className="text-xs text-alira-primary/80 dark:text-alira-white/80 leading-relaxed line-clamp-3">
+              <p className="text-xs text-alira-primary/80 leading-relaxed line-clamp-3">
                 {preview.currentSituation.business}
               </p>
             </div>
-            <div className="p-3 bg-alira-primary/5 dark:bg-alira-primary/20 rounded-lg border border-alira-primary/10 dark:border-alira-white/10">
+            <div className="p-3 bg-alira-primary/5 rounded-lg border border-alira-primary/10">
               <h5 className="text-xs font-sans font-light text-alira-gold mb-1">Current Challenges</h5>
-              <p className="text-xs text-alira-primary/80 dark:text-alira-white/80 leading-relaxed line-clamp-3">
+              <p className="text-xs text-alira-primary/80 leading-relaxed line-clamp-3">
                 {preview.currentSituation.challenges}
               </p>
             </div>
-            <div className="p-3 bg-alira-primary/5 dark:bg-alira-primary/20 rounded-lg border border-alira-primary/10 dark:border-alira-white/10">
+            <div className="p-3 bg-alira-primary/5 rounded-lg border border-alira-primary/10">
               <h5 className="text-xs font-sans font-light text-alira-gold mb-1">Growth Goals</h5>
-              <p className="text-xs text-alira-primary/80 dark:text-alira-white/80 leading-relaxed line-clamp-3">
+              <p className="text-xs text-alira-primary/80 leading-relaxed line-clamp-3">
                 {preview.currentSituation.goals}
               </p>
             </div>
@@ -146,25 +146,25 @@ export default function LivePreview({ data }: LivePreviewProps) {
 
         {/* Identified Gaps */}
         <div>
-          <h4 className="font-light text-alira-primary dark:text-alira-white mb-3 text-xs uppercase tracking-wide">
+          <h4 className="font-light text-alira-primary mb-3 text-xs uppercase tracking-wide">
             Identified Gaps
           </h4>
           <div className="space-y-2">
-            <div className="p-2 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800/30">
-              <h5 className="text-xs font-sans font-light text-red-700 dark:text-red-400 mb-1">Key Problems</h5>
-              <p className="text-xs text-red-600 dark:text-red-300 leading-relaxed line-clamp-2">
+            <div className="p-2 bg-red-50 rounded border border-red-200">
+              <h5 className="text-xs font-sans font-light text-red-700 mb-1">Key Problems</h5>
+              <p className="text-xs text-red-600 leading-relaxed line-clamp-2">
                 {preview.identifiedGaps.problems}
               </p>
             </div>
-            <div className="p-2 bg-alira-primary/5 dark:bg-alira-primary/20 rounded border border-alira-primary/10 dark:border-alira-white/10">
+            <div className="p-2 bg-alira-primary/5 rounded border border-alira-primary/10">
               <h5 className="text-xs font-sans font-light text-alira-gold mb-1">Current Tools</h5>
-              <p className="text-xs text-alira-primary/80 dark:text-alira-white/80 leading-relaxed line-clamp-2">
+              <p className="text-xs text-alira-primary/80 leading-relaxed line-clamp-2">
                 {preview.identifiedGaps.currentTools}
               </p>
             </div>
-            <div className="p-2 bg-alira-primary/5 dark:bg-alira-primary/20 rounded border border-alira-primary/10 dark:border-alira-white/10">
+            <div className="p-2 bg-alira-primary/5 rounded border border-alira-primary/10">
               <h5 className="text-xs font-sans font-light text-alira-gold mb-1">Service Focus</h5>
-              <p className="text-xs text-alira-primary/80 dark:text-alira-white/80 leading-relaxed line-clamp-2">
+              <p className="text-xs text-alira-primary/80 leading-relaxed line-clamp-2">
                 {preview.identifiedGaps.serviceFocus}
               </p>
             </div>
@@ -173,25 +173,25 @@ export default function LivePreview({ data }: LivePreviewProps) {
 
         {/* ALIRA Solutions */}
         <div>
-          <h4 className="font-light text-alira-primary dark:text-alira-white mb-3 text-xs uppercase tracking-wide">
+          <h4 className="font-light text-alira-primary mb-3 text-xs uppercase tracking-wide">
             ALIRA Solutions
           </h4>
           <div className="space-y-2">
-            <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800/30">
-              <h5 className="text-xs font-sans font-light text-green-700 dark:text-green-400 mb-1">Recommended Services</h5>
-              <p className="text-xs text-green-600 dark:text-green-300 leading-relaxed line-clamp-2">
+            <div className="p-2 bg-green-50 rounded border border-green-200">
+              <h5 className="text-xs font-sans font-light text-green-700 mb-1">Recommended Services</h5>
+              <p className="text-xs text-green-600 leading-relaxed line-clamp-2">
                 {preview.aliraSolutions.recommendedServices}
               </p>
             </div>
-            <div className="p-2 bg-alira-gold/5 dark:bg-alira-gold/10 rounded border border-alira-gold/20">
+            <div className="p-2 bg-alira-gold/5 rounded border border-alira-gold/20">
               <h5 className="text-xs font-sans font-light text-alira-gold mb-1">Our Approach</h5>
-              <p className="text-xs text-alira-primary/80 dark:text-alira-white/80 leading-relaxed line-clamp-2">
+              <p className="text-xs text-alira-primary/80 leading-relaxed line-clamp-2">
                 {preview.aliraSolutions.implementationApproach}
               </p>
             </div>
-            <div className="p-2 bg-alira-gold/5 dark:bg-alira-gold/10 rounded border border-alira-gold/20">
+            <div className="p-2 bg-alira-gold/5 rounded border border-alira-gold/20">
               <h5 className="text-xs font-sans font-light text-alira-gold mb-1">Expected Results</h5>
-              <p className="text-xs text-alira-primary/80 dark:text-alira-white/80 leading-relaxed line-clamp-2">
+              <p className="text-xs text-alira-primary/80 leading-relaxed line-clamp-2">
                 {preview.aliraSolutions.expectedOutcomes}
               </p>
             </div>
@@ -200,8 +200,8 @@ export default function LivePreview({ data }: LivePreviewProps) {
 
 
         {/* Preview Note */}
-        <div className="pt-3 border-t border-alira-primary/10 dark:border-alira-white/10">
-          <p className="text-xs text-alira-primary/50 dark:text-alira-white/50 text-center leading-relaxed">
+        <div className="pt-3 border-t border-alira-primary/10">
+          <p className="text-xs text-alira-primary/50 text-center leading-relaxed">
             This preview identifies key gaps and ALIRA solutions. Complete the form to receive your detailed implementation roadmap and next steps.
           </p>
         </div>

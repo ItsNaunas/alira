@@ -134,20 +134,20 @@ export default function PlanHeader({
   }
 
   return (
-    <div className="border-b border-white/10 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
+    <div className="border-b border-borderToken-subtle bg-bg-page/95 backdrop-blur-sm sticky top-0 z-10">
       <div className="px-4 md:px-6 py-4 md:py-5">
         <div className="max-w-7xl mx-auto">
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-2 text-sm mb-4">
             <Link 
               href="/dashboard" 
-              className="text-alira-white/60 hover:text-alira-white transition-colors flex items-center gap-1"
+              className="text-text-secondary hover:text-text-primary transition-colors flex items-center gap-1"
             >
               <Home className="w-4 h-4" />
               Dashboard
             </Link>
-            <ChevronRight className="w-4 h-4 text-alira-white/30" />
-            <span className="text-alira-white flex items-center gap-1">
+            <ChevronRight className="w-4 h-4 text-text-tertiary" />
+            <span className="text-text-primary flex items-center gap-1">
               <FileText className="w-4 h-4" />
               {plan.business_name || 'Business Plan'}
             </span>
@@ -158,7 +158,7 @@ export default function PlanHeader({
             {/* Title and Status */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl md:text-3xl font-serif font-normal text-alira-white truncate">
+                <h1 className="text-2xl md:text-3xl font-serif font-normal text-text-primary truncate">
                   {plan.business_name || 'Business Plan'}
                 </h1>
                 <span className={`px-3 py-1 rounded-full text-xs border ${
@@ -175,7 +175,7 @@ export default function PlanHeader({
               </div>
               
               {/* Metadata */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-alira-white/50">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-text-secondary">
                 <span>
                   Created {new Date(plan.created_at).toLocaleDateString('en-GB', { 
                     day: 'numeric',
@@ -185,7 +185,7 @@ export default function PlanHeader({
                 </span>
                 {totalVersions > 1 && (
                   <>
-                    <span className="text-alira-white/20">•</span>
+                    <span className="text-text-tertiary">•</span>
                     <div className="flex items-center gap-2">
                       <span>Version {currentVersion} of {totalVersions}</span>
                       {onVersionChange && (
@@ -212,7 +212,7 @@ export default function PlanHeader({
                   onClick={handleEdit}
                   variant="outline"
                   size="sm"
-                  className="border-white/20 text-alira-white hover:bg-white/5"
+                  className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
                 >
                   <Edit3 className="w-4 h-4 mr-2" />
                   Edit
@@ -222,7 +222,7 @@ export default function PlanHeader({
                   onClick={handleRefine}
                   variant="outline"
                   size="sm"
-                  className="border-white/20 text-alira-white hover:bg-white/5"
+                  className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
                 >
                   <MessageSquare className="w-4 h-4 mr-2" />
                   Refine with AI
@@ -232,7 +232,7 @@ export default function PlanHeader({
                   onClick={handleDownloadPDF}
                   variant="outline"
                   size="sm"
-                  className="border-white/20 text-alira-white hover:bg-white/5"
+                  className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
                   disabled={generatingPDF}
                 >
                   {generatingPDF ? (
@@ -252,7 +252,7 @@ export default function PlanHeader({
                   onClick={() => setDeleteDialogOpen(true)}
                   variant="outline"
                   size="sm"
-                  className="border-white/20 text-red-400 hover:bg-red-500/10 hover:border-red-500/30"
+                  className="border-borderToken-subtle text-red-400 hover:bg-red-500/10 hover:border-red-500/30"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
                   Delete

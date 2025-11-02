@@ -185,7 +185,7 @@ export default function EditPlanPage() {
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <RefreshCw className="w-12 h-12 text-alira-gold animate-spin mx-auto mb-4" />
-            <p className="text-alira-white/60">Loading plan...</p>
+            <p className="text-text-tertiary">Loading plan...</p>
           </div>
         </div>
       </DashboardLayout>
@@ -196,15 +196,15 @@ export default function EditPlanPage() {
     return (
       <DashboardLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <Card className="bg-white/[0.02] border-white/10 max-w-md">
+          <Card className="bg-surface border-borderToken-subtle max-w-md">
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <AlertCircle className="w-8 h-8 text-red-400" />
               </div>
-              <h2 className="text-xl font-serif text-alira-white mb-2">
+              <h2 className="text-xl font-serif text-text-primary mb-2">
                 Unable to Load Plan
               </h2>
-              <p className="text-alira-white/60 mb-6">
+              <p className="text-text-tertiary mb-6">
                 This plan has no content to edit yet.
               </p>
               <Button
@@ -224,14 +224,14 @@ export default function EditPlanPage() {
     <DashboardLayout>
       <div className="min-h-screen flex flex-col">
         {/* Header */}
-        <div className="border-b border-white/10 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
+        <div className="border-b border-borderToken-subtle bg-bg-page/95 backdrop-blur-sm sticky top-0 z-10">
           <div className="px-4 md:px-6 py-4">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
               <div>
-                <h1 className="text-2xl md:text-3xl font-serif font-normal text-alira-white">
+                <h1 className="text-2xl md:text-3xl font-serif font-normal text-text-primary">
                   Edit Plan
                 </h1>
-                <p className="text-sm text-alira-white/60 mt-1">
+                <p className="text-sm text-text-secondary mt-1">
                   {plan.business_name}
                   {hasUnsavedChanges && (
                     <span className="ml-2 text-yellow-400">• Unsaved changes</span>
@@ -243,7 +243,7 @@ export default function EditPlanPage() {
                   onClick={() => setShowVersionHistory(!showVersionHistory)}
                   variant="outline"
                   size="sm"
-                  className="border-white/20 text-alira-white hover:bg-white/5"
+                  className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
                 >
                   <History className="w-4 h-4 mr-2" />
                   History
@@ -252,7 +252,7 @@ export default function EditPlanPage() {
                   onClick={handleCancel}
                   variant="outline"
                   size="sm"
-                  className="border-white/20 text-alira-white hover:bg-white/5"
+                  className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
                 >
                   <X className="w-4 h-4 mr-2" />
                   Cancel
@@ -278,15 +278,15 @@ export default function EditPlanPage() {
 
           {/* Version History Sidebar */}
           {showVersionHistory && (
-            <div className="w-full md:w-96 border-l border-white/10 bg-alira-primary/50 overflow-y-auto">
+            <div className="w-full md:w-96 border-l border-borderToken-subtle bg-bg-section overflow-y-auto">
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-serif text-alira-white">Version History</h3>
+                  <h3 className="text-lg font-serif text-text-primary">Version History</h3>
                   <Button
                     onClick={() => setShowVersionHistory(false)}
                     variant="ghost"
                     size="sm"
-                    className="text-alira-white/60 hover:text-alira-white md:hidden"
+                    className="text-text-tertiary hover:text-text-primary md:hidden"
                   >
                     <X className="w-4 h-4" />
                   </Button>

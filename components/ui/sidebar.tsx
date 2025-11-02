@@ -88,7 +88,7 @@ export const DesktopSidebar = ({
     <>
       <motion.div
         className={cn(
-          "h-screen px-4 py-4 hidden md:flex md:flex-col bg-alira-primary border-r border-white/10 w-[300px] shrink-0 sticky top-0",
+          "h-screen px-4 py-4 hidden md:flex md:flex-col bg-alira-primary border-r border-borderToken-subtle w-[300px] shrink-0 sticky top-0",
           className
         )}
         animate={{
@@ -114,7 +114,7 @@ export const MobileSidebar = ({
     <>
       <div
         className={cn(
-          "h-16 px-4 py-4 flex flex-row md:hidden items-center justify-between bg-alira-primary border-b border-white/10 w-full"
+          "h-16 px-4 py-4 flex flex-row md:hidden items-center justify-between bg-alira-primary border-b border-borderToken-subtle w-full"
         )}
         {...props}
       >
@@ -123,7 +123,7 @@ export const MobileSidebar = ({
             ALIRA<span className="text-alira-gold">.</span>
           </span>
           <IconMenu2
-            className="text-alira-white cursor-pointer"
+            className="text-text-primary cursor-pointer"
             onClick={() => setOpen(!open)}
           />
         </div>
@@ -143,7 +143,7 @@ export const MobileSidebar = ({
               )}
             >
               <div
-                className="absolute right-10 top-10 z-50 text-alira-white cursor-pointer"
+                className="absolute right-10 top-10 z-50 text-text-primary cursor-pointer"
                 onClick={() => setOpen(!open)}
               >
                 <IconX />
@@ -171,7 +171,7 @@ export const SidebarLink = ({
     <a
       href={link.href}
       className={cn(
-        "flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-white/5 transition-colors",
+        "flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-bg-muted transition-colors",
         className
       )}
       {...props}
@@ -183,7 +183,7 @@ export const SidebarLink = ({
           display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
-        className="text-alira-white/80 text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-alira-white transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+        className="text-text-secondary text-sm group-hover/sidebar:translate-x-1 group-hover/sidebar:text-text-primary transition duration-150 whitespace-pre inline-block !p-0 !m-0"
       >
         {link.label}
       </motion.span>

@@ -42,16 +42,16 @@ function SectionEditor({
   // Handle text content
   if (type === 'text') {
     return (
-      <Card className="bg-white/[0.02] border-white/10">
+      <Card className="bg-surface border-borderToken-subtle">
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-sm font-serif text-alira-white/90">{title}</h4>
+            <h4 className="text-sm font-serif text-text-primary">{title}</h4>
             {onToggle && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={onToggle}
-                className="text-alira-white/40 hover:text-alira-white"
+                className="text-text-tertiary hover:text-text-primary"
               >
                 {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </Button>
@@ -63,7 +63,7 @@ function SectionEditor({
               value={value || ''}
               onChange={(e) => onChange(e.target.value)}
               placeholder={`Enter ${title.toLowerCase()}...`}
-              className="min-h-[120px] bg-white/[0.03] border-white/10 text-alira-white placeholder:text-alira-white/40"
+              className="min-h-[120px] bg-bg-muted border-borderToken-subtle text-text-primary placeholder:text-text-tertiary"
             />
           )}
         </CardContent>
@@ -76,16 +76,16 @@ function SectionEditor({
     const items = Array.isArray(value) ? value : []
     
     return (
-      <Card className="bg-white/[0.02] border-white/10">
+      <Card className="bg-surface border-borderToken-subtle">
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-sm font-serif text-alira-white/90">{title}</h4>
+            <h4 className="text-sm font-serif text-text-primary">{title}</h4>
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => onChange([...items, ''])}
-                className="text-alira-gold hover:text-alira-gold/80"
+                className="text-accent hover:text-accent-dark"
               >
                 <Plus className="w-4 h-4" />
               </Button>
@@ -94,7 +94,7 @@ function SectionEditor({
                   variant="ghost"
                   size="sm"
                   onClick={onToggle}
-                  className="text-alira-white/40 hover:text-alira-white"
+                  className="text-text-tertiary hover:text-text-primary"
                 >
                   {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </Button>
@@ -114,7 +114,7 @@ function SectionEditor({
                       onChange(newItems)
                     }}
                     placeholder={`Item ${index + 1}...`}
-                    className="flex-1 min-h-[60px] bg-white/[0.03] border-white/10 text-alira-white placeholder:text-alira-white/40"
+                    className="flex-1 min-h-[60px] bg-bg-muted border-borderToken-subtle text-text-primary placeholder:text-text-tertiary"
                   />
                   <Button
                     variant="ghost"
@@ -128,7 +128,7 @@ function SectionEditor({
               ))}
               
               {items.length === 0 && (
-                <p className="text-sm text-alira-white/40 text-center py-4">
+                <p className="text-sm text-text-tertiary text-center py-4">
                   No items yet. Click + to add one.
                 </p>
               )}
@@ -144,10 +144,10 @@ function SectionEditor({
     const solutions = Array.isArray(value) ? value : []
     
     return (
-      <Card className="bg-white/[0.02] border-white/10">
+      <Card className="bg-surface border-borderToken-subtle">
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-sm font-serif text-alira-white/90">{title}</h4>
+            <h4 className="text-sm font-serif text-text-primary">{title}</h4>
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
@@ -158,7 +158,7 @@ function SectionEditor({
                   effort: 'medium',
                   impact: 'medium'
                 }])}
-                className="text-alira-gold hover:text-alira-gold/80"
+                className="text-accent hover:text-accent-dark"
               >
                 <Plus className="w-4 h-4" />
               </Button>
@@ -167,7 +167,7 @@ function SectionEditor({
                   variant="ghost"
                   size="sm"
                   onClick={onToggle}
-                  className="text-alira-white/40 hover:text-alira-white"
+                  className="text-text-tertiary hover:text-text-primary"
                 >
                   {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </Button>
@@ -178,7 +178,7 @@ function SectionEditor({
           {isExpanded && (
             <div className="space-y-4">
               {solutions.map((solution, index) => (
-                <div key={index} className="bg-white/[0.03] rounded-lg p-3 border border-white/5 space-y-3">
+                <div key={index} className="bg-bg-muted rounded-lg p-3 border border-borderToken-subtle space-y-3">
                   <div className="flex justify-between items-start">
                     <input
                       type="text"
@@ -189,7 +189,7 @@ function SectionEditor({
                         onChange(newSolutions)
                       }}
                       placeholder="Pillar name..."
-                      className="flex-1 bg-transparent border-none text-alira-white placeholder:text-alira-white/40 focus:outline-none font-serif"
+                      className="flex-1 bg-transparent border-none text-text-primary placeholder:text-text-tertiary focus:outline-none font-serif"
                     />
                     <Button
                       variant="ghost"
@@ -209,7 +209,7 @@ function SectionEditor({
                         newSolutions[index] = { ...solution, effort: e.target.value as any }
                         onChange(newSolutions)
                       }}
-                      className="text-xs bg-white/[0.05] border border-white/10 text-alira-white rounded px-2 py-1"
+                      className="text-xs bg-bg-muted border border-borderToken-subtle text-text-primary rounded px-2 py-1"
                     >
                       <option value="low">Effort: Low</option>
                       <option value="medium">Effort: Medium</option>
@@ -223,7 +223,7 @@ function SectionEditor({
                         newSolutions[index] = { ...solution, impact: e.target.value as any }
                         onChange(newSolutions)
                       }}
-                      className="text-xs bg-white/[0.05] border border-white/10 text-alira-white rounded px-2 py-1"
+                      className="text-xs bg-bg-muted border border-borderToken-subtle text-text-primary rounded px-2 py-1"
                     >
                       <option value="low">Impact: Low</option>
                       <option value="medium">Impact: Medium</option>
@@ -232,7 +232,7 @@ function SectionEditor({
                   </div>
                   
                   <div>
-                    <div className="text-xs text-alira-white/60 mb-1">Actions:</div>
+                    <div className="text-xs text-text-secondary mb-1">Actions:</div>
                     {(solution.actions || []).map((action: string, actionIndex: number) => (
                       <div key={actionIndex} className="flex gap-2 mb-1">
                         <input
@@ -246,7 +246,7 @@ function SectionEditor({
                             onChange(newSolutions)
                           }}
                           placeholder="Action..."
-                          className="flex-1 text-xs bg-white/[0.03] border border-white/10 rounded px-2 py-1 text-alira-white placeholder:text-alira-white/40"
+                          className="flex-1 text-xs bg-bg-muted border border-borderToken-subtle rounded px-2 py-1 text-text-primary placeholder:text-text-tertiary"
                         />
                         <button
                           onClick={() => {
@@ -270,7 +270,7 @@ function SectionEditor({
                         }
                         onChange(newSolutions)
                       }}
-                      className="text-xs text-alira-gold hover:text-alira-gold/80 mt-1"
+                      className="text-xs text-accent hover:text-accent-dark mt-1"
                     >
                       + Add action
                     </button>
@@ -279,7 +279,7 @@ function SectionEditor({
               ))}
               
               {solutions.length === 0 && (
-                <p className="text-sm text-alira-white/40 text-center py-4">
+                <p className="text-sm text-text-tertiary text-center py-4">
                   No solutions yet. Click + to add one.
                 </p>
               )}
@@ -324,9 +324,9 @@ export default function PlanEditor({
   return (
     <div className={`space-y-4 ${className}`}>
       {/* Save Button */}
-      <div className="sticky top-0 z-10 bg-alira-primary/90 backdrop-blur-sm p-4 -mx-4 -mt-4 mb-4 border-b border-white/10">
+      <div className="sticky top-0 z-10 bg-bg-page/95 backdrop-blur-sm p-4 -mx-4 -mt-4 mb-4 border-b border-borderToken-subtle">
         <div className="flex justify-between items-center">
-          <h3 className="text-lg font-serif text-alira-white">Edit Plan</h3>
+          <h3 className="text-lg font-serif text-text-primary">Edit Plan</h3>
           <Button
             onClick={onSave}
             disabled={isSaving}

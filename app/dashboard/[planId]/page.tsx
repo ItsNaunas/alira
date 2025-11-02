@@ -115,7 +115,7 @@ export default function PlanDetailPage() {
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <RefreshCw className="w-12 h-12 text-alira-gold animate-spin mx-auto mb-4" />
-            <p className="text-alira-white/60">Loading plan...</p>
+            <p className="text-text-tertiary">Loading plan...</p>
           </div>
         </div>
       </DashboardLayout>
@@ -126,15 +126,15 @@ export default function PlanDetailPage() {
     return (
       <DashboardLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <Card className="bg-white/[0.02] border-white/10 max-w-md">
+          <Card className="bg-surface border-borderToken-subtle max-w-md">
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <AlertCircle className="w-8 h-8 text-red-400" />
               </div>
-              <h2 className="text-xl font-serif text-alira-white mb-2">
+              <h2 className="text-xl font-serif text-text-primary mb-2">
                 {error || 'Plan Not Found'}
               </h2>
-              <p className="text-alira-white/60 mb-6">
+              <p className="text-text-tertiary mb-6">
                 {error 
                   ? 'There was an error loading this plan. Please try again.'
                   : 'This plan does not exist or you do not have permission to view it.'
@@ -157,7 +157,7 @@ export default function PlanDetailPage() {
     <DashboardLayout>
       <div className="min-h-screen">
         {/* Breadcrumbs */}
-        <div className="px-4 md:px-6 pt-4 pb-2 border-b border-white/5">
+        <div className="px-4 md:px-6 pt-4 pb-2 border-b border-borderToken-subtle">
           <div className="max-w-5xl mx-auto">
             <Breadcrumbs
               items={[
@@ -182,32 +182,32 @@ export default function PlanDetailPage() {
             {plan.generation?.content ? (
               <>
                 {/* Plan Metadata Card */}
-                <Card className="bg-white/[0.02] border-white/10 mb-6">
+                <Card className="bg-surface border-borderToken-subtle mb-6">
                   <CardContent className="p-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       {plan.current_challenges && (
                         <div>
-                          <h4 className="text-xs text-alira-white/40 mb-2 uppercase tracking-wide">
+                          <h4 className="text-xs text-text-tertiary mb-2 uppercase tracking-wide">
                             Current Challenge
                           </h4>
-                          <p className="text-sm text-alira-white/80 leading-relaxed line-clamp-3">
+                          <p className="text-sm text-text-secondary leading-relaxed line-clamp-3">
                             {plan.current_challenges}
                           </p>
                         </div>
                       )}
                       {plan.immediate_goals && (
                         <div>
-                          <h4 className="text-xs text-alira-white/40 mb-2 uppercase tracking-wide">
+                          <h4 className="text-xs text-text-tertiary mb-2 uppercase tracking-wide">
                             Immediate Goals
                           </h4>
-                          <p className="text-sm text-alira-white/80 leading-relaxed line-clamp-3">
+                          <p className="text-sm text-text-secondary leading-relaxed line-clamp-3">
                             {plan.immediate_goals}
                           </p>
                         </div>
                       )}
                       {plan.service_interest && plan.service_interest.length > 0 && (
                         <div>
-                          <h4 className="text-xs text-alira-white/40 mb-2 uppercase tracking-wide">
+                          <h4 className="text-xs text-text-tertiary mb-2 uppercase tracking-wide">
                             Services of Interest
                           </h4>
                           <div className="flex flex-wrap gap-2">
@@ -233,21 +233,21 @@ export default function PlanDetailPage() {
                 />
               </>
             ) : (
-              <Card className="bg-white/[0.02] border-white/10">
+              <Card className="bg-surface border-borderToken-subtle">
                 <CardContent className="p-12 text-center">
                   <div className="w-16 h-16 bg-alira-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <RefreshCw className="w-8 h-8 text-alira-gold animate-spin" />
                   </div>
-                  <h3 className="text-xl font-serif text-alira-white mb-2">
+                  <h3 className="text-xl font-serif text-text-primary mb-2">
                     Generating Plan
                   </h3>
-                  <p className="text-alira-white/60 mb-6">
+                  <p className="text-text-secondary mb-6">
                     Your AI-powered business analysis is being created...
                   </p>
                   <Button
                     onClick={loadPlan}
                     variant="outline"
-                    className="border-white/20 text-alira-white hover:bg-white/5"
+                    className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
                   >
                     <RefreshCw className="w-4 h-4 mr-2" />
                     Refresh

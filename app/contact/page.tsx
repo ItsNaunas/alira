@@ -63,9 +63,9 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-bg-page">
       {/* Hero Section */}
-      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+      <section className="py-24 md:py-32 bg-bg-page relative overflow-hidden pt-28 md:pt-32">
         <GradientBars />
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <Reveal>
@@ -73,11 +73,11 @@ export default function ContactPage() {
               <div className="text-alira-gold text-sm tracking-wide uppercase mb-4 font-sans font-light">
                 Get in Touch
               </div>
-              <h1 className="text-4xl md:text-6xl font-serif font-normal text-alira-white mb-8">
+              <h1 className="text-4xl md:text-6xl font-serif font-normal text-text-primary mb-8">
                 Contact Us
               </h1>
               <div className="w-16 h-px bg-alira-gold mx-auto mb-8"></div>
-              <p className="text-xl text-alira-white/80 leading-relaxed max-w-2xl mx-auto">
+              <p className="text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto">
                 Every enquiry is private and secure. We'll get back to you within 24 hours.
               </p>
             </div>
@@ -86,16 +86,16 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form & Details Section */}
-      <section className="py-24 bg-black">
+      <section className="py-24 bg-bg-page">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               
               {/* Contact Form */}
               <Reveal delay={200}>
-                <div className="bg-white/[0.02] p-8 rounded-2xl border border-white/10">
-                  <h2 className="text-3xl font-serif font-normal text-alira-white mb-6">Send us a message</h2>
-                  <p className="text-alira-white/70 mb-8">
+                <div className="bg-surface p-8 rounded-2xl border border-borderToken-subtle">
+                  <h2 className="text-3xl font-serif font-normal text-text-primary mb-6">Send us a message</h2>
+                  <p className="text-text-secondary mb-8">
                     Tell us about your project, idea, or challenge. We're here to help you move forward.
                   </p>
                   
@@ -190,14 +190,14 @@ export default function ContactPage() {
               <Reveal delay={400}>
                 <div className="space-y-8">
                   <div>
-                    <h2 className="text-3xl font-serif font-normal text-alira-white mb-6">Direct Contact</h2>
-                    <p className="text-alira-white/70 mb-8">
+                    <h2 className="text-3xl font-serif font-normal text-text-primary mb-6">Direct Contact</h2>
+                    <p className="text-text-secondary mb-8">
                       Prefer to reach out directly? Here's how you can get in touch with us.
                     </p>
                   </div>
 
                   {/* Email */}
-                  <div className="bg-white/[0.02] p-6 rounded-xl border border-white/10 hover:border-alira-gold/30 transition-colors">
+                  <div className="bg-surface p-6 rounded-xl border border-borderToken-subtle hover:border-accent transition-colors">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-alira-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -205,14 +205,14 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-lg font-serif font-normal text-alira-white mb-2">Email</h3>
+                        <h3 className="text-lg font-serif font-normal text-text-primary mb-2">Email</h3>
                         <a 
                           href="mailto:Enquiries@aliracapital.co.uk" 
-                          className="text-alira-gold hover:text-alira-gold/80 transition-colors font-sans font-light"
+                          className="text-alira-gold hover:text-accent-dark transition-colors font-sans font-light"
                         >
                           Enquiries@aliracapital.co.uk
                         </a>
-                        <p className="text-alira-white/70 text-sm mt-1">
+                        <p className="text-text-secondary text-sm mt-1">
                           We typically respond within 24 hours
                         </p>
                       </div>
@@ -220,7 +220,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* Company Information */}
-                  <div className="bg-white/[0.02] p-6 rounded-xl border border-white/10">
+                  <div className="bg-surface p-6 rounded-xl border border-borderToken-subtle">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-alira-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,8 +228,8 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-lg font-serif font-normal text-alira-white mb-2">Company Details</h3>
-                        <div className="text-alira-white/80 space-y-1 font-sans">
+                        <h3 className="text-lg font-serif font-normal text-text-primary mb-2">Company Details</h3>
+                        <div className="text-text-secondary space-y-1 font-sans">
                           <p><strong>ALIRA Capital Ventures Ltd</strong></p>
                           <p>Registered in England & Wales</p>
                           <p>Company No: 16419663</p>
@@ -239,7 +239,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* Response Time */}
-                  <div className="bg-white/[0.02] p-6 rounded-xl border border-alira-gold/30">
+                  <div className="bg-surface p-6 rounded-xl border border-accent">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-alira-gold/20 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg className="w-6 h-6 text-alira-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -247,8 +247,8 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-lg font-serif font-normal text-alira-white mb-2">Quick Response</h3>
-                        <p className="text-alira-white/80 font-sans">
+                        <h3 className="text-lg font-serif font-normal text-text-primary mb-2">Quick Response</h3>
+                        <p className="text-text-secondary font-sans">
                           We understand that time matters. Most enquiries receive a response within 24 hours, 
                           and urgent matters are prioritized.
                         </p>
@@ -267,10 +267,10 @@ export default function ContactPage() {
         <div className="container mx-auto px-6 lg:px-8">
           <Reveal>
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-serif font-normal text-white mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-normal text-text-inverse mb-6">
                 Ready to get started?
               </h2>
-              <p className="text-xl text-white/80 mb-8 leading-relaxed">
+              <p className="text-xl text-text-inverse/80 mb-8 leading-relaxed">
                 Don't wait for the perfect moment. The best time to start is now.
               </p>
               <CTAButton 

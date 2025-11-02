@@ -31,7 +31,7 @@ export default function ProgressBar({ current, total, contextMessage, className 
       {/* Progress Bar */}
       <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
         <motion.div
-          className="bg-gradient-to-r from-alira-gold to-[#8B5A00] h-full rounded-full"
+          className="bg-gradient-to-r from-accent to-accent-dark h-full rounded-full"
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
           transition={{ 

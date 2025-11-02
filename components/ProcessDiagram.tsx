@@ -53,6 +53,7 @@ export default function ProcessDiagram() {
                 className="relative"
                 onMouseEnter={() => setHoveredStep(step.id)}
                 onMouseLeave={() => setHoveredStep(null)}
+                onClick={() => setHoveredStep(hoveredStep === step.id ? null : step.id)}
               >
                 {/* Step Container */}
                 <div className="flex flex-col items-center text-center space-y-8">
@@ -63,7 +64,7 @@ export default function ProcessDiagram() {
                       role="img"
                       aria-label={`${step.title} step`}
                     >
-                      <IconComponent className="w-8 h-8 text-alira-primary dark:text-alira-white transition-colors duration-200 group-hover:text-alira-gold" />
+                      <IconComponent className="w-8 h-8 text-alira-primary transition-colors duration-200 group-hover:text-alira-gold" />
                     </div>
                     {/* Info indicator */}
                     <div className="absolute -top-2 -right-2 w-6 h-6 bg-alira-gold/10 rounded-full flex items-center justify-center border border-alira-gold/20">
@@ -83,7 +84,7 @@ export default function ProcessDiagram() {
                     {/* Detailed description on hover */}
                     {isHovered && (
                       <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-80 bg-white border border-alira-primary/10 rounded-lg shadow-lg p-4 z-20">
-                        <div className="text-sm text-alira-primary/80 dark:text-alira-white/80 leading-relaxed">
+                        <div className="text-sm text-alira-primary/80 leading-relaxed">
                           {step.detailedDescription}
                         </div>
                         {/* Arrow pointing up */}
@@ -120,6 +121,7 @@ export default function ProcessDiagram() {
                 className="relative"
                 onMouseEnter={() => setHoveredStep(step.id)}
                 onMouseLeave={() => setHoveredStep(null)}
+                onClick={() => setHoveredStep(hoveredStep === step.id ? null : step.id)}
               >
                 {/* Step Container */}
                 <div className="flex items-start space-x-6">
@@ -130,7 +132,7 @@ export default function ProcessDiagram() {
                       role="img"
                       aria-label={`${step.title} step`}
                     >
-                      <IconComponent className="w-6 h-6 text-alira-primary dark:text-alira-white transition-colors duration-200 group-hover:text-alira-gold" />
+                      <IconComponent className="w-6 h-6 text-alira-primary transition-colors duration-200 group-hover:text-alira-gold" />
                     </div>
                     {/* Info indicator */}
                     <div className="absolute -top-1 -right-1 w-5 h-5 bg-alira-gold/10 rounded-full flex items-center justify-center border border-alira-gold/20">
@@ -150,7 +152,7 @@ export default function ProcessDiagram() {
                     {/* Detailed description on hover */}
                     {isHovered && (
                       <div className="mt-4 p-4 bg-alira-primary/5 rounded-lg border border-alira-primary/10">
-                        <div className="text-sm text-alira-primary/80 dark:text-alira-white/80 leading-relaxed">
+                        <div className="text-sm text-alira-primary/80 leading-relaxed">
                           {step.detailedDescription}
                         </div>
                       </div>

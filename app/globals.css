@@ -43,6 +43,11 @@ body {
   font-weight: 400;
   font-size: 18px; /* Increased from default 16px */
   line-height: 1.6;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 /* ALIRA. Typography */
@@ -551,6 +556,31 @@ select:focus-visible {
   }
 }
 
+/* Safe Area Insets for iOS devices (notch and home indicator) */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pl-safe {
+  padding-left: env(safe-area-inset-left);
+}
+
+.pr-safe {
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Combined safe area utilities */
+.p-safe {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
 /* Mobile-optimized grid layouts */
 .grid-mobile {
   display: grid;
@@ -804,8 +834,8 @@ select:focus-visible {
     --text-tertiary: #5b6474;
     --text-inverse: #ffffff;
     /* Brand */
-    --brand: #0a66ff;
-    --brand-hover: #0852cc;
+    --brand: #0B1D51;
+    --brand-hover: #081640;
     --accent: #cba349;
     --accent-dark: #936f25;
     /* Surfaces */

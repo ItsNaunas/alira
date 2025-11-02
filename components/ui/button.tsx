@@ -31,11 +31,11 @@ const buttonVariants = cva(
         aliraOutline: "border-2 border-brand text-brand hover:bg-brand hover:text-text-inverse transition-all duration-200 shadow-token-sm hover:shadow-token-lg active:scale-[0.98]",
       },
       size: {
-        default: "h-10 px-4 py-2 text-sm",
-        sm: "h-9 px-3 text-sm",
-        lg: "h-11 px-8 text-base",
-        xl: "h-14 px-10 text-lg",
-        icon: "h-10 w-10",
+        default: "min-h-[44px] h-11 px-4 py-2 text-sm",
+        sm: "min-h-[44px] h-10 px-3 text-sm",
+        lg: "min-h-[44px] h-12 px-8 text-base",
+        xl: "min-h-[44px] h-14 px-10 text-lg",
+        icon: "min-h-[44px] min-w-[44px] h-11 w-11",
       },
     },
     defaultVariants: {

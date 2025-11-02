@@ -319,7 +319,7 @@ Ready to create your personalized business plan?
   return (
     <div className="flex flex-col h-[calc(100vh-120px)] sm:h-[calc(100vh-160px)] lg:h-[calc(100vh-200px)] max-w-4xl mx-auto">
       {/* Progress Bar */}
-      <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-sm border-b border-white/10 p-4">
+      <div className="sticky top-0 z-10 bg-bg-page/95 backdrop-blur-sm border-b border-borderToken-subtle p-4">
         <div className="max-w-4xl mx-auto">
           <ProgressBar
             current={progress.currentStep + 1}
@@ -347,8 +347,8 @@ Ready to create your personalized business plan?
                 className={cn(
                   'max-w-[85%] sm:max-w-[80%] rounded-xl sm:rounded-2xl px-4 py-3 sm:px-6 sm:py-4',
                   message.type === 'user'
-                    ? 'bg-gradient-to-r from-alira-gold to-[#8B5A00] text-white'
-                    : 'bg-white/10 dark:bg-alira-primary/50 text-alira-white border border-white/10'
+                    ? 'bg-gradient-to-r from-accent to-accent-dark text-text-inverse'
+                    : 'bg-bg-muted text-text-primary border border-borderToken-subtle'
                 )}
               >
                 {message.type === 'bot' && (
@@ -372,14 +372,14 @@ Ready to create your personalized business plan?
             animate={{ opacity: 1 }}
             className="flex justify-start"
           >
-            <div className="bg-white/10 dark:bg-alira-primary/50 rounded-2xl px-6 py-4 border border-white/10">
+            <div className="bg-bg-muted rounded-2xl px-6 py-4 border border-borderToken-subtle">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1">
                   <span className="w-2 h-2 bg-alira-gold rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
                   <span className="w-2 h-2 bg-alira-gold rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
                   <span className="w-2 h-2 bg-alira-gold rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                 </div>
-                <span className="text-xs text-alira-white/70">ALIRA is thinking...</span>
+                <span className="text-xs text-text-secondary">ALIRA is thinking...</span>
               </div>
             </div>
           </motion.div>
@@ -390,11 +390,11 @@ Ready to create your personalized business plan?
 
       {/* Input Area */}
       {!showSummary && !isSubmitting && (
-        <div className="border-t border-white/10 bg-black/50 backdrop-blur-sm p-4 sm:p-6">
+        <div className="border-t border-borderToken-subtle bg-bg-section backdrop-blur-sm p-4 sm:p-6">
           <div className="max-w-4xl mx-auto">
             {currentQuestion.type === 'multiselect' ? (
               <div className="space-y-4">
-                <p className="text-sm text-alira-white/70 mb-3">{currentQuestion.helper}</p>
+                <p className="text-sm text-text-secondary mb-3">{currentQuestion.helper}</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {currentQuestion.options?.map((option) => (
                     <button
@@ -403,16 +403,16 @@ Ready to create your personalized business plan?
                       className={cn(
                         'p-3 rounded-lg border text-left transition-all duration-200',
                         selectedServices.includes(option.value)
-                          ? 'border-alira-gold bg-alira-gold/10 text-alira-gold'
-                          : 'border-white/20 bg-white/5 text-alira-white hover:border-alira-gold/50 hover:bg-alira-gold/5'
+                          ? 'border-accent bg-accent/10 text-accent'
+                          : 'border-borderToken-subtle bg-bg-muted text-text-secondary hover:border-accent hover:bg-surface'
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <div className={cn(
                           'w-4 h-4 rounded border-2 flex items-center justify-center',
                           selectedServices.includes(option.value)
-                            ? 'border-alira-gold bg-alira-gold'
-                            : 'border-white/40'
+                            ? 'border-accent bg-accent'
+                            : 'border-borderToken-subtle'
                         )}>
                           {selectedServices.includes(option.value) && (
                             <CheckCircle className="w-3 h-3 text-black" />
@@ -426,14 +426,14 @@ Ready to create your personalized business plan?
                 <Button
                   onClick={handleSend}
                   disabled={selectedServices.length === 0}
-                  className="w-full bg-gradient-to-r from-alira-gold to-[#8B5A00] hover:from-[#8B5A00] hover:to-alira-gold text-black font-medium"
+                  className="w-full bg-gradient-to-r from-accent to-accent-dark hover:from-accent-dark hover:to-accent text-text-primary font-medium"
                 >
                   Continue
                 </Button>
               </div>
             ) : (
               <div className="space-y-3">
-                <p className="text-sm text-alira-white/70">{currentQuestion.helper}</p>
+                <p className="text-sm text-text-secondary">{currentQuestion.helper}</p>
                 <div className="flex gap-2">
                   <Textarea
                     ref={textareaRef}
@@ -441,14 +441,14 @@ Ready to create your personalized business plan?
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder={currentQuestion.placeholder}
-                    className="flex-1 min-h-[60px] max-h-[120px] resize-none bg-white/5 border-white/20 text-alira-white placeholder:text-alira-white/50 focus:border-alira-gold focus:ring-alira-gold/20"
+                    className="flex-1 min-h-[60px] max-h-[120px] resize-none bg-bg-muted border-borderToken-subtle text-text-primary placeholder:text-text-tertiary focus:border-accent focus:ring-accent/20"
                     disabled={isTyping}
                   />
                   <Button
                     onClick={handleSend}
                     disabled={!inputValue.trim() || isTyping}
                     size="sm"
-                    className="bg-gradient-to-r from-alira-gold to-[#8B5A00] hover:from-[#8B5A00] hover:to-alira-gold text-black font-medium px-3"
+                    className="bg-gradient-to-r from-accent to-accent-dark hover:from-accent-dark hover:to-accent text-text-primary font-medium px-3"
                   >
                     <ArrowUpIcon className="w-4 h-4" />
                   </Button>
@@ -461,12 +461,12 @@ Ready to create your personalized business plan?
 
       {/* Summary Confirmation */}
       {showSummary && !isSubmitting && (
-        <div className="border-t border-white/10 bg-black/50 backdrop-blur-sm p-4 sm:p-6">
+        <div className="border-t border-borderToken-subtle bg-bg-section backdrop-blur-sm p-4 sm:p-6">
           <div className="max-w-4xl mx-auto">
             <div className="flex gap-3">
               <Button
                 onClick={handleConfirmSummary}
-                className="flex-1 bg-gradient-to-r from-alira-gold to-[#8B5A00] hover:from-[#8B5A00] hover:to-alira-gold text-black font-medium"
+                className="flex-1 bg-gradient-to-r from-accent to-accent-dark hover:from-accent-dark hover:to-accent text-text-primary font-medium"
               >
                 <Target className="w-4 h-4 mr-2" />
                 Create My Business Plan
@@ -478,7 +478,7 @@ Ready to create your personalized business plan?
 
       {/* Processing State */}
       {isSubmitting && (
-        <div className="border-t border-white/10 bg-black/50 backdrop-blur-sm p-4 sm:p-6">
+        <div className="border-t border-borderToken-subtle bg-bg-section backdrop-blur-sm p-4 sm:p-6">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-center gap-3 text-alira-gold">
               <Zap className="w-5 h-5 animate-pulse" />

@@ -65,20 +65,25 @@ export default function FAQ() {
                     <button
                       onClick={() => toggleFAQ(index)}
                       className="w-full p-4 sm:p-6 text-left flex items-center justify-between hover:bg-bg-muted transition-colors duration-200 min-h-[44px] touch-target"
+                      aria-expanded={openIndex === index}
+                      aria-controls={`faq-answer-${index}`}
                     >
-                      <h3 className="text-base sm:text-lg font-serif font-normal text-text-primary pr-4 text-left">
+                      <h3 id={`faq-question-${index}`} className="text-base sm:text-lg font-serif font-normal text-text-primary pr-4 text-left">
                         {faq.q}
                       </h3>
                       <div className="flex-shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center">
                         {openIndex === index ? (
-                          <ChevronUp className="w-5 h-5 text-accent" />
+                          <ChevronUp className="w-5 h-5 text-accent" aria-hidden="true" />
                         ) : (
-                          <ChevronDown className="w-5 h-5 text-text-secondary" />
+                          <ChevronDown className="w-5 h-5 text-text-secondary" aria-hidden="true" />
                         )}
                       </div>
                     </button>
                     
                     <div 
+                      id={`faq-answer-${index}`}
+                      role="region"
+                      aria-labelledby={`faq-question-${index}`}
                       className={`overflow-hidden transition-all duration-300 ease-in-out ${
                         openIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
                       }`}

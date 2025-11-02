@@ -1,0 +1,5492 @@
+{
+  "files": [
+    {
+      "path": "app\\about\\page.tsx",
+      "bgClasses": [
+        "bg-bg-page",
+        "bg-bg-page",
+        "bg-alira-gold",
+        "bg-surface",
+        "bg-surface",
+        "bg-bg-muted",
+        "bg-bg-page",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-bg-page",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-surface",
+        "bg-bg-muted",
+        "bg-bg-muted",
+        "bg-surface",
+        "bg-bg-muted",
+        "bg-bg-muted",
+        "bg-surface",
+        "bg-bg-muted",
+        "bg-bg-muted",
+        "bg-surface",
+        "bg-bg-page",
+        "bg-alira-gold",
+        "bg-surface",
+        "bg-bg-muted",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-surface",
+        "bg-bg-muted",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-surface",
+        "bg-bg-muted",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-surface",
+        "bg-bg-muted",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-bg-page",
+        "bg-alira-gold",
+        "bg-surface",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-surface",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-surface",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-primary",
+        "text-text-primary",
+        "text-alira-gold",
+        "text-accent",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-primary",
+        "text-text-primary",
+        "text-alira-gold",
+        "text-accent",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-primary",
+        "text-text-primary",
+        "text-alira-gold",
+        "text-accent",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-white",
+        "text-white"
+      ],
+      "borderClasses": [
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-borderToken-subtle",
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-borderToken-subtle",
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-borderToken-subtle",
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-alira-gold",
+        "border-borderToken-subtle",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-alira-gold/30",
+        "bg-alira-gold/20",
+        "bg-alira-gold/30",
+        "bg-alira-gold/20",
+        "bg-alira-gold/10",
+        "bg-alira-gold/20",
+        "bg-alira-gold/10",
+        "bg-alira-gold/20",
+        "bg-alira-gold/10",
+        "bg-alira-gold/20",
+        "bg-alira-gold/10",
+        "bg-alira-gold/10",
+        "bg-alira-gold/20",
+        "bg-alira-gold/10",
+        "bg-alira-gold/20",
+        "bg-alira-gold/10",
+        "bg-alira-gold/20",
+        "text-white/80"
+      ],
+      "inconsistencies": [
+        "Mixed legacy and semantic tokens",
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "app\\contact\\page.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-black",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-white",
+        "text-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/80",
+        "border-white/10",
+        "text-alira-white/70",
+        "bg-alira-gold/90",
+        "text-alira-white/70",
+        "border-white/10",
+        "border-alira-gold/30",
+        "bg-alira-gold/10",
+        "text-alira-gold/80",
+        "text-alira-white/70",
+        "border-white/10",
+        "bg-alira-gold/10",
+        "text-alira-white/80",
+        "border-alira-gold/30",
+        "bg-alira-gold/20",
+        "text-alira-white/80",
+        "text-white/80"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "app\\dashboard\\page.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-black",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-black"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-white/10",
+        "bg-black/50",
+        "bg-alira-gold/90",
+        "text-alira-white/60",
+        "bg-white/5",
+        "border-white/10",
+        "bg-black/40",
+        "border-white/15",
+        "text-alira-white/40",
+        "text-alira-white/40",
+        "bg-white/5",
+        "border-white/10",
+        "bg-alira-gold/90",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/10",
+        "text-alira-white/50",
+        "text-alira-white/80",
+        "text-alira-white/40",
+        "border-white/10",
+        "text-alira-white/80",
+        "text-alira-white/40",
+        "text-alira-white/50",
+        "text-alira-white/40",
+        "border-white/10",
+        "bg-black/40",
+        "border-white/15",
+        "text-alira-white/40",
+        "bg-alira-gold/90",
+        "text-alira-white/50",
+        "text-alira-white/50",
+        "text-alira-white/40",
+        "text-alira-white/80",
+        "border-white/10",
+        "bg-alira-gold/10",
+        "text-alira-white/60",
+        "bg-alira-gold/90",
+        "border-white/10",
+        "border-white/20",
+        "bg-white/5",
+        "border-alira-gold/30",
+        "text-alira-gold/80",
+        "text-alira-white/70",
+        "text-alira-gold/80",
+        "text-alira-white/70",
+        "border-white/20",
+        "bg-white/5",
+        "bg-white/5",
+        "border-white/10",
+        "text-alira-white/20",
+        "text-alira-white/40",
+        "border-white/20",
+        "text-alira-white/50",
+        "border-white/10",
+        "border-white/20",
+        "text-alira-gold/70",
+        "text-alira-white/80",
+        "text-alira-gold/70",
+        "text-alira-white/80",
+        "text-alira-gold/70",
+        "text-alira-white/80",
+        "text-alira-gold/70",
+        "text-alira-white/80",
+        "text-alira-white/40",
+        "border-white/10",
+        "border-white/20",
+        "text-alira-white/40",
+        "bg-alira-gold/10",
+        "border-alira-gold/20",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/20",
+        "bg-alira-gold/90"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "app\\dashboard\\[planId]\\edit\\page.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-black",
+        "bg-white",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/60",
+        "border-white/10",
+        "text-alira-white/60",
+        "bg-alira-gold/90",
+        "border-white/10",
+        "bg-black/50",
+        "text-alira-white/60",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/10",
+        "bg-alira-primary/50",
+        "text-alira-white/60",
+        "bg-alira-gold/90"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "app\\dashboard\\[planId]\\page.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/60",
+        "border-white/10",
+        "text-alira-white/60",
+        "bg-alira-gold/90",
+        "border-white/5",
+        "border-white/10",
+        "text-alira-white/40",
+        "text-alira-white/80",
+        "text-alira-white/40",
+        "text-alira-white/80",
+        "text-alira-white/40",
+        "bg-alira-gold/10",
+        "border-alira-gold/20",
+        "border-white/10",
+        "bg-alira-gold/10",
+        "text-alira-white/60",
+        "border-white/20",
+        "bg-white/5"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "app\\dashboard\\[planId]\\refine\\page.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/60",
+        "border-white/10",
+        "text-alira-white/60",
+        "bg-alira-gold/90",
+        "border-white/10",
+        "text-alira-white/60",
+        "bg-alira-gold/90"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "app\\form\\page.tsx",
+      "bgClasses": [
+        "bg-alira-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-black/80",
+        "text-alira-white/80",
+        "bg-alira-primary/5",
+        "bg-alira-primary/20",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "app\\form\\success\\page.tsx",
+      "bgClasses": [
+        "bg-alira-white",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-primary"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-alira-gold/20",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-gold/10",
+        "border-alira-gold/20",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-primary/90",
+        "border-alira-primary/10",
+        "text-alira-primary/60",
+        "text-alira-primary/70"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "app\\form-chat\\page.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-black",
+        "bg-black",
+        "bg-black"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-white/10",
+        "bg-black/50",
+        "text-alira-white/60"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "app\\globals.css",
+      "bgClasses": [
+        "bg-muted",
+        "bg-background"
+      ],
+      "textClasses": [
+        "text-secondary",
+        "text-primary",
+        "text-primary",
+        "text-secondary",
+        "text-secondary",
+        "text-primary",
+        "text-secondary",
+        "text-tertiary",
+        "text-inverse",
+        "text-foreground"
+      ],
+      "borderClasses": [
+        "border-border"
+      ],
+      "hardcodedHex": [
+        "#0B1D51",
+        "#A06B00",
+        "#000000",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#0B1D51",
+        "#FFFFFF",
+        "#0B1D51",
+        "#0f0847",
+        "#0f0847",
+        "#8f6929",
+        "#A06B00",
+        "#A06B00",
+        "#A06B00",
+        "#A06B00",
+        "#A06B00",
+        "#A06B00",
+        "#000000",
+        "#A06B00",
+        "#ffffff",
+        "#f7f9fc",
+        "#eef2f7",
+        "#0a0d14",
+        "#394150",
+        "#5b6474",
+        "#ffffff",
+        "#0a66ff",
+        "#0852cc",
+        "#cba349",
+        "#936f25",
+        "#ffffff",
+        "#e3e8ef",
+        "#cbd5e1",
+        "#117a37",
+        "#b35c00",
+        "#b42318"
+      ],
+      "hardcodedRgba": [
+        "rgba(24, 12, 102, 0.1)",
+        "rgba(180, 138, 57, 0.3)",
+        "rgba(0, 0, 0, 0.15)",
+        "rgba(0, 0, 0, 0.1)",
+        "rgba(0, 0, 0, 0.25)",
+        "rgba(180, 138, 57, 0.5)",
+        "rgba(24, 12, 102, 0.05)",
+        "rgba(24, 12, 102, 0.06)",
+        "rgba(24, 12, 102, 0.04)",
+        "rgba(255, 255, 255, 0.6)",
+        "rgba(24, 12, 102, 0.08)",
+        "rgba(24, 12, 102, 0.1)",
+        "rgba(24, 12, 102, 0.08)",
+        "rgba(255, 255, 255, 0.6)",
+        "rgba(255, 255, 255, 0.80)",
+        "rgba(255, 255, 255, 0.65)",
+        "rgba(255, 255, 255, 0.95)",
+        "rgba(255, 255, 255, 0.85)",
+        "rgba(255, 255, 255, 0.70)",
+        "rgba(16,24,40,0.06)",
+        "rgba(16,24,40,0.08)",
+        "rgba(17,122,55,0.1)",
+        "rgba(179,92,0,0.1)",
+        "rgba(180,35,24,0.1)",
+        "rgba(10,102,255,0.35)"
+      ],
+      "opacityModifiers": [],
+      "inconsistencies": [
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "app\\how-it-works\\page.tsx",
+      "bgClasses": [
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-white",
+        "bg-alira-white",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-white",
+        "text-white",
+        "text-white"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/70",
+        "border-alira-primary/5",
+        "border-alira-white/5",
+        "bg-alira-primary/80",
+        "border-alira-gold/20",
+        "bg-alira-gold/10",
+        "text-alira-white/70",
+        "bg-alira-white/20",
+        "bg-alira-white/5",
+        "text-alira-white/60",
+        "bg-alira-primary/20",
+        "text-alira-white/60",
+        "bg-alira-primary/20",
+        "text-alira-white/60",
+        "text-alira-white/70",
+        "bg-alira-primary/80",
+        "border-alira-primary/10",
+        "border-alira-gold/20",
+        "bg-alira-gold/10",
+        "text-alira-white/80",
+        "text-alira-white/70",
+        "text-white/80",
+        "text-white/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "app\\layout.tsx",
+      "bgClasses": [
+        "bg-bg-page"
+      ],
+      "textClasses": [
+        "text-text-primary"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "app\\page.tsx",
+      "bgClasses": [
+        "bg-bg-page",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-text-primary",
+        "text-text-secondary"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [
+        "#0B1D51"
+      ],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": [
+        "Mixed legacy and semantic tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "app\\results\\page.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-white",
+        "text-white",
+        "text-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-white",
+        "border-alira-gold",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/70",
+        "border-white/10",
+        "bg-alira-gold/10",
+        "text-alira-white/70",
+        "bg-alira-gold/10",
+        "border-alira-gold/30",
+        "text-alira-white/70",
+        "border-white/10",
+        "bg-alira-gold/10",
+        "text-alira-white/80",
+        "text-alira-white/70",
+        "border-white/10",
+        "text-alira-white/80",
+        "text-alira-white/80",
+        "bg-alira-gold/5",
+        "border-alira-gold/20",
+        "text-alira-white/80",
+        "border-alira-gold/20",
+        "text-alira-white/80",
+        "border-white/10",
+        "text-alira-gold/30",
+        "text-alira-white/80",
+        "border-white/10",
+        "text-alira-white/60",
+        "text-white/80",
+        "text-white/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "app\\services\\page.tsx",
+      "bgClasses": [
+        "bg-bg-page",
+        "bg-bg-section",
+        "bg-accent",
+        "bg-bg-page",
+        "bg-surface",
+        "bg-accent",
+        "bg-surface",
+        "bg-accent",
+        "bg-surface",
+        "bg-accent",
+        "bg-accent",
+        "bg-bg-section",
+        "bg-accent",
+        "bg-surface",
+        "bg-surface",
+        "bg-surface",
+        "bg-surface"
+      ],
+      "textClasses": [
+        "text-text-primary",
+        "text-text-primary",
+        "text-accent",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-tertiary",
+        "text-text-primary",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-tertiary",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-tertiary",
+        "text-text-primary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-accent",
+        "border-borderToken-subtle",
+        "border-borderToken-subtle",
+        "border-borderToken-subtle",
+        "border-borderToken-subtle"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "app\\what-you-get\\page.tsx",
+      "bgClasses": [
+        "bg-bg-page",
+        "bg-bg-section",
+        "bg-accent",
+        "bg-bg-page",
+        "bg-accent",
+        "bg-surface",
+        "bg-accent",
+        "bg-accent",
+        "bg-surface",
+        "bg-borderToken-subtle",
+        "bg-borderToken-subtle",
+        "bg-bg-section",
+        "bg-accent",
+        "bg-surface",
+        "bg-accent",
+        "bg-accent",
+        "bg-accent"
+      ],
+      "textClasses": [
+        "text-accent",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-accent",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-tertiary",
+        "text-text-primary",
+        "text-text-tertiary",
+        "text-text-primary",
+        "text-text-tertiary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-inverse",
+        "text-text-inverse",
+        "text-text-inverse"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-borderToken-subtle",
+        "border-borderToken-subtle",
+        "border-accent"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\AdaptiveQuestioning.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-black",
+        "bg-black"
+      ],
+      "textClasses": [
+        "text-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-black",
+        "text-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-black",
+        "text-black",
+        "text-alira-gold"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [
+        "#8B5A00",
+        "#8B5A00",
+        "#8B5A00",
+        "#8B5A00",
+        "#8B5A00",
+        "#8B5A00",
+        "#8B5A00"
+      ],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-black/80",
+        "border-white/10",
+        "bg-white/10",
+        "bg-alira-primary/50",
+        "border-white/10",
+        "bg-white/10",
+        "bg-alira-primary/50",
+        "border-white/10",
+        "text-alira-white/70",
+        "border-white/10",
+        "bg-black/50",
+        "text-alira-white/70",
+        "bg-alira-gold/10",
+        "border-white/20",
+        "bg-white/5",
+        "border-alira-gold/50",
+        "bg-alira-gold/5",
+        "border-white/40",
+        "text-alira-white/70",
+        "bg-white/5",
+        "border-white/20",
+        "text-alira-white/50",
+        "border-white/10",
+        "bg-black/50",
+        "border-white/10",
+        "bg-black/50"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\ArchitecturalGrid.tsx",
+      "bgClasses": [],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/10",
+        "text-alira-white/15"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\BackButton.tsx",
+      "bgClasses": [],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/80"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\Breadcrumbs.tsx",
+      "bgClasses": [],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/40",
+        "text-alira-white/60",
+        "text-alira-white/80"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ClientResults.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-alira-primary/20",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-white/30",
+        "bg-alira-primary/30",
+        "border-alira-primary/5",
+        "border-alira-white/10",
+        "bg-alira-gold/10",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-alira-primary/5",
+        "bg-alira-primary/20",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "bg-alira-gold/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-gold/10",
+        "bg-alira-gold/20",
+        "border-alira-gold/20",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-alira-primary/30",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "text-alira-primary/60",
+        "text-alira-white/60"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\ConversationalForm.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-black"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [
+        "#8B5A00",
+        "#8B5A00",
+        "#8B5A00"
+      ],
+      "hardcodedRgba": [
+        "rgba(160,107,0,0.4)",
+        "rgba(160,107,0,0.4)"
+      ],
+      "opacityModifiers": [
+        "bg-white/10",
+        "bg-alira-primary/50",
+        "border-white/10",
+        "bg-white/10",
+        "bg-alira-primary/50",
+        "border-white/10",
+        "text-alira-white/50",
+        "border-white/10",
+        "bg-black/20",
+        "bg-alira-gold/10",
+        "border-white/10",
+        "bg-white/5",
+        "border-white/20",
+        "border-white/30",
+        "text-alira-white/60",
+        "bg-white/5",
+        "text-alira-white/40",
+        "border-white/5"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\ConversationalFormEnhanced.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-black",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-white",
+        "text-white",
+        "text-alira-gold",
+        "text-white",
+        "text-white",
+        "text-alira-gold",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-black",
+        "text-alira-gold",
+        "text-white",
+        "text-alira-black",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-alira-gold",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-black",
+        "text-white",
+        "text-black",
+        "text-white",
+        "text-white",
+        "text-black",
+        "text-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-black/40",
+        "border-white/10",
+        "border-white/10",
+        "bg-black/60",
+        "text-white/60",
+        "bg-white/10",
+        "bg-alira-gold/20",
+        "text-white/60",
+        "bg-white/5",
+        "border-white/10",
+        "border-alira-gold/30",
+        "text-white/80",
+        "border-white/20",
+        "bg-white/5",
+        "bg-alira-gold/90",
+        "bg-alira-gold/20",
+        "bg-white/10",
+        "text-white/60",
+        "bg-alira-gold/10",
+        "border-alira-gold/30",
+        "bg-white/5",
+        "border-white/10",
+        "text-white/70",
+        "border-white/5",
+        "bg-white/10",
+        "bg-alira-gold/20",
+        "bg-white/5",
+        "border-white/10",
+        "border-white/10",
+        "bg-black/40",
+        "text-white/70",
+        "bg-alira-gold/10",
+        "border-white/20",
+        "bg-white/5",
+        "text-white/80",
+        "border-white/40",
+        "border-white/40",
+        "text-white/60",
+        "bg-alira-gold/90",
+        "bg-white/5",
+        "border-white/20",
+        "text-white/40",
+        "bg-alira-gold/90",
+        "text-white/50"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\DashboardLayout.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-black",
+        "bg-black",
+        "bg-white",
+        "bg-white",
+        "bg-black"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/70",
+        "text-alira-white/70",
+        "border-white/10",
+        "bg-white/5",
+        "text-alira-white/70",
+        "text-alira-white/80",
+        "bg-white/5",
+        "text-alira-white/70",
+        "text-alira-white/80"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\DesignerPricing.tsx",
+      "bgClasses": [
+        "bg-bg-page",
+        "bg-surface",
+        "bg-brand",
+        "bg-brand",
+        "bg-brand",
+        "bg-bg-muted",
+        "bg-surface",
+        "bg-brand",
+        "bg-brand",
+        "bg-brand",
+        "bg-bg-muted",
+        "bg-surface",
+        "bg-accent",
+        "bg-brand",
+        "bg-brand",
+        "bg-bg-muted"
+      ],
+      "textClasses": [
+        "text-text-primary",
+        "text-accent",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-brand",
+        "text-brand",
+        "text-brand",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-tertiary",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-brand",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-tertiary",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-text-inverse",
+        "text-brand",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-tertiary",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-text-tertiary"
+      ],
+      "borderClasses": [
+        "border-brand",
+        "border-brand",
+        "border-brand",
+        "border-borderToken-subtle",
+        "border-borderToken-strong",
+        "border-borderToken-subtle",
+        "border-brand",
+        "border-brand",
+        "border-brand",
+        "border-borderToken-subtle",
+        "border-borderToken-strong",
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-accent",
+        "border-borderToken-subtle",
+        "border-borderToken-strong",
+        "border-borderToken-subtle"
+      ],
+      "hardcodedHex": [
+        "#1E3A8A",
+        "#1E3A8A"
+      ],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": [
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\EnhancedProof.tsx",
+      "bgClasses": [
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-primary/50",
+        "text-alira-primary/70",
+        "text-alira-primary/70",
+        "text-alira-primary/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\ErrorBoundary.tsx",
+      "bgClasses": [
+        "bg-alira-white",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-alira-primary/90",
+        "text-alira-primary/60",
+        "bg-alira-primary/5"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\Experience.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-white/30",
+        "bg-alira-primary/30",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-alira-gold/30",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-white/50",
+        "bg-alira-primary/20",
+        "border-alira-primary/5",
+        "border-alira-white/10",
+        "bg-alira-gold/10",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-alira-gold/20",
+        "bg-alira-primary/30",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\FAQ.tsx",
+      "bgClasses": [
+        "bg-bg-section",
+        "bg-accent",
+        "bg-surface",
+        "bg-bg-muted"
+      ],
+      "textClasses": [
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-accent",
+        "text-text-secondary",
+        "text-text-secondary"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle",
+        "border-borderToken-strong"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\FinalCTA.tsx",
+      "bgClasses": [
+        "bg-alira-primary",
+        "bg-alira-white",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-white",
+        "text-alira-primary",
+        "text-white",
+        "text-alira-primary",
+        "text-white",
+        "text-alira-primary"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-white/80",
+        "text-alira-primary/80",
+        "text-white/70",
+        "text-alira-primary/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\Footer.tsx",
+      "bgClasses": [
+        "bg-surface"
+      ],
+      "textClasses": [
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-brand"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\FormLayout.tsx",
+      "bgClasses": [
+        "bg-alira-white",
+        "bg-alira-primary",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/70",
+        "text-alira-white/70",
+        "text-alira-white/70",
+        "bg-white/5",
+        "text-alira-white/70",
+        "text-alira-white/80"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\FormWizard.tsx",
+      "bgClasses": [
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-primary-",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-primary-",
+        "border-alira-primary",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [
+        "rgba(0,0,0,0.35)"
+      ],
+      "opacityModifiers": [
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "bg-alira-primary/10",
+        "bg-alira-primary/80",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "text-alira-primary/90",
+        "text-alira-white/90",
+        "bg-alira-primary/10",
+        "bg-alira-primary/80",
+        "text-alira-primary/40",
+        "text-alira-white/40",
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "bg-alira-primary/5",
+        "bg-alira-primary/80",
+        "text-alira-primary/75",
+        "text-alira-white/75",
+        "text-alira-primary/90",
+        "text-alira-white/90",
+        "bg-alira-primary/10",
+        "bg-alira-primary/80",
+        "text-alira-primary/40",
+        "text-alira-white/40",
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "bg-alira-primary/5",
+        "bg-alira-primary/80",
+        "text-alira-primary/75",
+        "text-alira-white/75",
+        "text-alira-primary/90",
+        "text-alira-white/90",
+        "bg-alira-primary/10",
+        "bg-alira-primary/80",
+        "text-alira-primary/40",
+        "text-alira-white/40",
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "bg-alira-primary/5",
+        "bg-alira-primary/80",
+        "text-alira-primary/75",
+        "text-alira-white/75",
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "border-alira-gold/40",
+        "border-alira-gold/60",
+        "border-alira-primary/20",
+        "border-alira-white/30",
+        "text-alira-primary/60",
+        "text-alira-white/60",
+        "border-alira-primary/10",
+        "border-alira-white/20",
+        "border-alira-gold/20",
+        "border-alira-gold/40",
+        "border-alira-primary/20",
+        "border-alira-white/30",
+        "bg-white/30",
+        "border-alira-primary/10",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/60",
+        "text-alira-white/60",
+        "bg-white/95",
+        "border-alira-primary/10",
+        "bg-alira-gold/10",
+        "text-alira-primary/60",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-gold/10",
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "bg-alira-primary/5",
+        "bg-alira-primary/70",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "bg-white/5",
+        "bg-white/5",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "border-alira-primary/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-primary/90",
+        "bg-alira-primary/90",
+        "bg-alira-gold/90",
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "text-alira-primary/40",
+        "text-alira-white/40",
+        "bg-alira-primary/50",
+        "bg-alira-primary/5",
+        "bg-alira-primary/20",
+        "text-alira-primary/60",
+        "text-alira-primary/50"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\Header.tsx",
+      "bgClasses": [
+        "bg-bg-page",
+        "bg-alira-gold",
+        "bg-bg-muted",
+        "bg-bg-muted",
+        "bg-bg-muted",
+        "bg-brand",
+        "bg-brand",
+        "bg-bg-muted",
+        "bg-bg-page",
+        "bg-brand",
+        "bg-brand",
+        "bg-bg-muted",
+        "bg-brand",
+        "bg-brand",
+        "bg-bg-muted",
+        "bg-black",
+        "bg-surface",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-brand",
+        "text-text-secondary",
+        "text-brand",
+        "text-text-primary",
+        "text-text-primary",
+        "text-text-primary",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-brand",
+        "text-text-primary",
+        "text-brand",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle",
+        "border-borderToken-subtle",
+        "border-borderToken-subtle",
+        "border-borderToken-subtle",
+        "border-borderToken-subtle",
+        "border-alira-primary",
+        "border-white",
+        "border-alira-primary",
+        "border-white",
+        "border-alira-primary",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-black/50",
+        "text-alira-primary/50",
+        "text-alira-white/50",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "border-alira-primary/20",
+        "border-white/20",
+        "text-alira-primary/40",
+        "text-alira-white/40",
+        "border-alira-primary/20",
+        "border-white/20",
+        "text-alira-primary/40",
+        "text-alira-white/40",
+        "border-alira-primary/20",
+        "border-white/20",
+        "text-alira-primary/40",
+        "text-alira-white/40",
+        "text-alira-primary/50",
+        "text-alira-white/50",
+        "bg-alira-gold/90",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/50",
+        "text-alira-white/50"
+      ],
+      "inconsistencies": [
+        "Mixed legacy and semantic tokens",
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\HeroCards.tsx",
+      "bgClasses": [
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-white",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-white"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-white",
+        "text-alira-primary"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [
+        "rgba(0,0,0,0.06)",
+        "rgba(0,0,0,0.06)"
+      ],
+      "opacityModifiers": [
+        "bg-alira-gold/30",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-white/90",
+        "bg-alira-primary/90",
+        "bg-white/95",
+        "bg-alira-primary/95",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "text-alira-primary/50",
+        "text-alira-white/50",
+        "text-alira-primary/70",
+        "text-alira-white/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\HeroRotator.tsx",
+      "bgClasses": [],
+      "textClasses": [
+        "text-alira-gold"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-gold/80"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\HowItWorks.tsx",
+      "bgClasses": [
+        "bg-alira-white",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-gold/80",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-gold/80",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-gold/80",
+        "text-alira-primary/70",
+        "text-alira-white/70"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\HowItWorksScroll.tsx",
+      "bgClasses": [
+        "bg-accent",
+        "bg-surface"
+      ],
+      "textClasses": [
+        "text-text-primary",
+        "text-text-inverse",
+        "text-accent",
+        "text-text-primary",
+        "text-text-secondary"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle",
+        "border-borderToken-strong"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\LivePreview.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-white/95",
+        "bg-alira-primary/95",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "bg-alira-gold/10",
+        "text-alira-primary/60",
+        "text-alira-white/60",
+        "bg-alira-primary/5",
+        "bg-alira-primary/20",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-primary/5",
+        "bg-alira-primary/20",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-primary/5",
+        "bg-alira-primary/20",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-primary/5",
+        "bg-alira-primary/20",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-primary/5",
+        "bg-alira-primary/20",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-gold/5",
+        "bg-alira-gold/10",
+        "border-alira-gold/20",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-gold/5",
+        "bg-alira-gold/10",
+        "border-alira-gold/20",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "text-alira-primary/50",
+        "text-alira-white/50"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\LogoMark.tsx",
+      "bgClasses": [],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-gold"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\MaintenanceMessage.tsx",
+      "bgClasses": [
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary"
+      ],
+      "borderClasses": [
+        "border-alira-gold",
+        "border-alira-primary"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-alira-gold/20",
+        "bg-alira-gold/5",
+        "bg-alira-gold/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "text-alira-primary/70",
+        "bg-alira-primary/5",
+        "border-alira-primary/10",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-alira-primary/90",
+        "text-alira-primary/60"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\MeetTheFounder.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-gold",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/80",
+        "text-alira-white/70",
+        "text-alira-white/70",
+        "text-alira-white/70",
+        "text-alira-white/80",
+        "text-alira-white/80",
+        "text-alira-white/80",
+        "border-alira-gold/30",
+        "bg-alira-gold/20",
+        "bg-alira-gold/30",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-white/80",
+        "bg-alira-primary/80",
+        "border-alira-primary/10",
+        "border-alira-gold/30",
+        "bg-alira-gold/5",
+        "border-alira-gold/30",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "bg-white/80",
+        "bg-alira-primary/80",
+        "border-alira-primary/10",
+        "border-alira-gold/30",
+        "bg-alira-gold/5",
+        "border-alira-gold/30",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\MiniCaseStudy.tsx",
+      "bgClasses": [
+        "bg-alira-primary",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary"
+      ],
+      "borderClasses": [
+        "border-alira-primary"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-alira-primary/5",
+        "border-alira-primary/10",
+        "text-alira-primary/70",
+        "text-alira-primary/70",
+        "text-alira-primary/70",
+        "text-alira-primary/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\MiniForm.tsx",
+      "bgClasses": [],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-alira-gold/20",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/40",
+        "text-alira-white/40",
+        "text-alira-primary/40",
+        "text-alira-white/40",
+        "text-alira-primary/40",
+        "text-alira-white/40"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\MultiStepForm.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-black",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-black",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-black",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-white",
+        "border-alira-gold",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [
+        "#8B5A00"
+      ],
+      "hardcodedRgba": [
+        "rgba(0,0,0,0.1)",
+        "rgba(160,107,0,0.3)",
+        "rgba(160,107,0,0.5)"
+      ],
+      "opacityModifiers": [
+        "bg-black/80",
+        "border-white/10",
+        "bg-alira-gold/10",
+        "border-alira-gold/20",
+        "text-alira-white/70",
+        "bg-white/5",
+        "text-alira-white/40",
+        "text-alira-white/50",
+        "border-alira-gold/30",
+        "bg-alira-gold/20",
+        "text-alira-white/90",
+        "bg-black/20",
+        "border-white/10",
+        "text-alira-white/30",
+        "border-alira-gold/50",
+        "bg-alira-gold/10",
+        "border-alira-gold/30",
+        "text-alira-white/60",
+        "border-white/10",
+        "bg-white/5",
+        "border-alira-gold/50",
+        "border-white/30",
+        "border-alira-gold/50",
+        "text-alira-gold/90",
+        "text-alira-white/60",
+        "bg-alira-gold/10",
+        "border-alira-gold/30",
+        "text-alira-white/40"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\OurPhilosophy.tsx",
+      "bgClasses": [
+        "bg-alira-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-primary/60",
+        "text-alira-white/60",
+        "bg-alira-gold/30",
+        "bg-alira-gold/60",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/90",
+        "text-alira-white/90",
+        "text-alira-primary/80",
+        "text-alira-white/80"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\PlanDiffViewer.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/80",
+        "text-alira-white/40",
+        "text-alira-white/70",
+        "text-alira-white/40",
+        "text-alira-white/40",
+        "text-alira-white/80",
+        "text-alira-white/40",
+        "text-alira-white/80",
+        "text-alira-white/40",
+        "text-alira-white/70",
+        "text-alira-white/40",
+        "text-alira-white/40",
+        "text-alira-white/80",
+        "text-alira-white/40",
+        "text-alira-white/60",
+        "text-alira-white/60",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/10",
+        "text-alira-white/60",
+        "text-alira-white/40",
+        "text-alira-white/60"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\PlanEditor.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-black"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-white/10",
+        "text-alira-white/90",
+        "text-alira-white/40",
+        "border-white/10",
+        "text-alira-white/40",
+        "border-white/10",
+        "text-alira-white/90",
+        "text-alira-gold/80",
+        "text-alira-white/40",
+        "border-white/10",
+        "text-alira-white/40",
+        "text-alira-white/40",
+        "border-white/10",
+        "text-alira-white/90",
+        "text-alira-gold/80",
+        "text-alira-white/40",
+        "border-white/5",
+        "text-alira-white/40",
+        "border-white/10",
+        "border-white/10",
+        "text-alira-white/60",
+        "border-white/10",
+        "text-alira-white/40",
+        "text-alira-gold/80",
+        "text-alira-white/40",
+        "bg-alira-primary/90",
+        "border-white/10",
+        "bg-alira-gold/90",
+        "border-alira-black/30"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\PlanHeader.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-white",
+        "bg-white",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-white/10",
+        "bg-black/50",
+        "text-alira-white/60",
+        "text-alira-white/30",
+        "text-alira-white/50",
+        "text-alira-white/20",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/20"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\PlanViewer.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-white/10",
+        "border-white/20",
+        "bg-alira-gold/10",
+        "text-alira-white/40",
+        "text-alira-white/60",
+        "text-alira-white/80",
+        "bg-alira-gold/10",
+        "text-alira-white/80",
+        "text-alira-white/80",
+        "border-white/5",
+        "text-alira-gold/60",
+        "text-alira-white/80",
+        "text-alira-white/50",
+        "text-alira-white/50",
+        "text-alira-gold/70",
+        "text-alira-white/80",
+        "bg-alira-gold/20",
+        "text-alira-white/80",
+        "text-alira-white/80",
+        "text-alira-white/80"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\ProcessDiagram.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-primary",
+        "border-alira-primary",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-primary"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-alira-gold/10",
+        "border-alira-gold/20",
+        "border-alira-primary/10",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "border-alira-primary/10",
+        "bg-alira-gold/10",
+        "border-alira-gold/20",
+        "bg-alira-primary/5",
+        "border-alira-primary/10",
+        "text-alira-primary/80",
+        "text-alira-white/80"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\ProofOfClarity.tsx",
+      "bgClasses": [
+        "bg-accent",
+        "bg-surface",
+        "bg-accent"
+      ],
+      "textClasses": [
+        "text-text-inverse",
+        "text-text-inverse",
+        "text-accent",
+        "text-accent",
+        "text-text-secondary",
+        "text-text-primary",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-accent",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-secondary"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle",
+        "border-accent",
+        "border-borderToken-subtle"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ProvenOutcomes.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-alira-primary/20",
+        "border-alira-gold/20",
+        "text-alira-primary/60",
+        "text-alira-white/60",
+        "bg-alira-gold/30",
+        "bg-alira-gold/30",
+        "bg-alira-gold/30",
+        "bg-alira-primary/30",
+        "border-alira-primary/5",
+        "border-alira-white/10",
+        "bg-alira-gold/20",
+        "text-alira-primary/80",
+        "text-alira-white/80",
+        "bg-alira-gold/10",
+        "text-alira-primary/60",
+        "text-alira-white/60"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\RefinementChat.tsx",
+      "bgClasses": [
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-alira-gold/10",
+        "text-alira-white/60",
+        "bg-alira-gold/10",
+        "border-white/10",
+        "text-alira-white/40",
+        "bg-white/5",
+        "text-alira-white/30",
+        "bg-alira-gold/10",
+        "border-white/10",
+        "text-alira-white/60",
+        "border-white/10",
+        "text-alira-white/40",
+        "text-alira-white/70",
+        "border-white/10",
+        "border-alira-gold/30",
+        "border-white/10",
+        "border-white/10",
+        "text-alira-white/40",
+        "bg-alira-gold/90",
+        "text-alira-white/30"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\SelectedOutcomes.tsx",
+      "bgClasses": [
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-gold",
+        "text-alira-primary"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-alira-primary/5",
+        "text-alira-primary/70",
+        "text-alira-primary/70"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ServicesDeliverables.tsx",
+      "bgClasses": [
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary",
+        "text-alira-primary"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-primary/70",
+        "text-alira-primary/70",
+        "text-alira-primary/70"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ServicesGrid.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-primary",
+        "border-alira-primary",
+        "border-alira-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "border-alira-gold/30",
+        "bg-white/50",
+        "bg-alira-primary/50",
+        "bg-white/80",
+        "bg-alira-primary/80",
+        "bg-alira-gold/10",
+        "bg-alira-gold/20",
+        "text-alira-primary/60",
+        "text-alira-white/60",
+        "border-alira-primary/10",
+        "text-alira-primary/50",
+        "text-alira-white/50",
+        "bg-alira-primary/5",
+        "bg-white/5",
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "bg-alira-gold/10",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\SignatureEngagements.tsx",
+      "bgClasses": [
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-primary"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/80",
+        "text-alira-primary/50"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\StickyCTA.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-alira-primary/10",
+        "border-white/10",
+        "text-alira-primary/70",
+        "text-alira-white/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\SummaryConfirmation.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-black",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-black",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-black",
+        "border-white"
+      ],
+      "hardcodedHex": [
+        "#8B5A00",
+        "#8B5A00",
+        "#8B5A00"
+      ],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/70",
+        "bg-white/5",
+        "border-white/10",
+        "bg-alira-gold/20",
+        "text-alira-white/80",
+        "bg-white/5",
+        "border-white/10",
+        "text-alira-white/80",
+        "bg-white/5",
+        "border-white/10",
+        "text-alira-white/80",
+        "bg-white/5",
+        "border-white/10",
+        "bg-alira-gold/10",
+        "border-black/20",
+        "border-white/20",
+        "bg-white/10"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\TeamFlipCards.tsx",
+      "bgClasses": [
+        "bg-bg-page",
+        "bg-accent",
+        "bg-brand",
+        "bg-brand"
+      ],
+      "textClasses": [
+        "text-accent",
+        "text-text-primary",
+        "text-accent",
+        "text-text-secondary",
+        "text-text-secondary",
+        "text-text-inverse"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\alert-dialog.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-white",
+        "text-alira-black"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [
+        "#0A0A0A"
+      ],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-black/80",
+        "border-white/20",
+        "text-alira-white/60",
+        "text-alira-white/40",
+        "border-white/10",
+        "border-white/20",
+        "bg-white/5",
+        "bg-alira-gold/90"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\ui\\button.tsx",
+      "bgClasses": [
+        "bg-primary",
+        "bg-primary",
+        "bg-destructive",
+        "bg-destructive",
+        "bg-surface",
+        "bg-bg-muted",
+        "bg-secondary",
+        "bg-secondary",
+        "bg-bg-muted",
+        "bg-brand",
+        "bg-brand",
+        "bg-brand",
+        "bg-bg-muted",
+        "bg-brand",
+        "bg-brand",
+        "bg-brand"
+      ],
+      "textClasses": [
+        "text-primary",
+        "text-destructive",
+        "text-text-primary",
+        "text-secondary",
+        "text-text-primary",
+        "text-brand",
+        "text-text-inverse",
+        "text-brand",
+        "text-text-inverse",
+        "text-text-primary",
+        "text-text-inverse",
+        "text-brand",
+        "text-text-inverse"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle",
+        "border-brand",
+        "border-brand"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\card-flip.tsx",
+      "bgClasses": [
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-alira-gold",
+        "text-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [
+        "rgba(160, 107, 0, 0.1)",
+        "rgba(11, 29, 81, 0.2)"
+      ],
+      "opacityModifiers": [
+        "bg-alira-primary/20",
+        "bg-alira-primary/30",
+        "text-alira-white/90",
+        "bg-alira-primary/20",
+        "bg-alira-primary/30",
+        "text-white/70",
+        "text-white/80",
+        "bg-alira-gold/20",
+        "border-white/20"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\ui\\card.tsx",
+      "bgClasses": [
+        "bg-surface",
+        "bg-surface",
+        "bg-surface",
+        "bg-surface"
+      ],
+      "textClasses": [
+        "text-text-primary",
+        "text-muted"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle",
+        "border-borderToken-subtle",
+        "border-borderToken-subtle",
+        "border-borderToken-subtle"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\checkbox.tsx",
+      "bgClasses": [
+        "bg-brand"
+      ],
+      "textClasses": [
+        "text-text-inverse"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\container-scroll-animation.tsx",
+      "bgClasses": [],
+      "textClasses": [],
+      "borderClasses": [],
+      "hardcodedHex": [
+        "#000000",
+        "#000000",
+        "#000000",
+        "#000000",
+        "#000000",
+        "#000000",
+        "#6C6C6C",
+        "#222222"
+      ],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": [
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\ui\\error-state.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-white",
+        "text-white"
+      ],
+      "borderClasses": [
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-white/10",
+        "bg-white/5",
+        "bg-white/10",
+        "text-white/60",
+        "text-alira-white/80",
+        "text-white/60"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\ui\\form-field.tsx",
+      "bgClasses": [],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-primary/90",
+        "text-alira-white/90",
+        "text-alira-primary/60",
+        "text-alira-white/60"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\form-progress.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-white",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-black",
+        "text-alira-gold",
+        "text-white",
+        "text-alira-white",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-white/10",
+        "border-white/20",
+        "text-white/40",
+        "text-white/40",
+        "text-white/60",
+        "text-white/30",
+        "text-alira-white/80",
+        "text-alira-white/60",
+        "bg-white/10"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\ui\\form-success.tsx",
+      "bgClasses": [],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-white/80"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\gradient-bars.tsx",
+      "bgClasses": [],
+      "textClasses": [],
+      "borderClasses": [],
+      "hardcodedHex": [
+        "#0B1D51"
+      ],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": [
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\ui\\input.tsx",
+      "bgClasses": [
+        "bg-surface"
+      ],
+      "textClasses": [
+        "text-muted"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\outline-button.tsx",
+      "bgClasses": [
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-white",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-alira-primary/20",
+        "border-alira-white/20",
+        "bg-alira-gold/5",
+        "bg-alira-gold/10",
+        "border-alira-white/30",
+        "bg-alira-gold/10"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\popover.tsx",
+      "bgClasses": [
+        "bg-popover"
+      ],
+      "textClasses": [],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\progress-bar.tsx",
+      "bgClasses": [
+        "bg-alira-gold",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [
+        "#8B5A00"
+      ],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-white/10",
+        "text-alira-white/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\ui\\SectionHeading.tsx",
+      "bgClasses": [
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "text-alira-gold/80",
+        "bg-alira-gold/80"
+      ],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\select.tsx",
+      "bgClasses": [
+        "bg-surface",
+        "bg-popover",
+        "bg-accent",
+        "bg-muted"
+      ],
+      "textClasses": [
+        "text-muted",
+        "text-accent"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\sidebar.tsx",
+      "bgClasses": [
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-alira-primary",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-white/10",
+        "border-white/10",
+        "bg-white/5",
+        "text-alira-white/80"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\ui\\spinner.tsx",
+      "bgClasses": [],
+      "textClasses": [],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-white",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\textarea.tsx",
+      "bgClasses": [
+        "bg-surface"
+      ],
+      "textClasses": [
+        "text-muted"
+      ],
+      "borderClasses": [
+        "border-borderToken-subtle"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [],
+      "inconsistencies": []
+    },
+    {
+      "path": "components\\ui\\wobble-card.tsx",
+      "bgClasses": [
+        "bg-alira-primary"
+      ],
+      "textClasses": [],
+      "borderClasses": [],
+      "hardcodedHex": [
+        "#fff"
+      ],
+      "hardcodedRgba": [
+        "rgba(255,255,255,0.1)",
+        "rgba(255,255,255,0)",
+        "rgba(11, 29, 81, 0.3)",
+        "rgba(0, 0, 0, 0.05)",
+        "rgba(160, 107, 0, 0.1)",
+        "rgba(11, 29, 81, 0.2)",
+        "rgba(11, 29, 81, 0.15)"
+      ],
+      "opacityModifiers": [],
+      "inconsistencies": [
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\ValuePillars.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-muted"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-alira-primary/10",
+        "border-alira-white/10",
+        "border-alira-gold/30",
+        "border-alira-gold/20"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\VercelV0Chat.tsx",
+      "bgClasses": [
+        "bg-black",
+        "bg-white",
+        "bg-alira-primary",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-black",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-black"
+      ],
+      "borderClasses": [
+        "border-white"
+      ],
+      "hardcodedHex": [
+        "#8B5A00",
+        "#8B5A00"
+      ],
+      "hardcodedRgba": [
+        "rgba(160,107,0,0.4)",
+        "rgba(160,107,0,0.15)",
+        "rgba(160,107,0,0.2)",
+        "rgba(160,107,0,0.25)",
+        "rgba(160,107,0,0.4)"
+      ],
+      "opacityModifiers": [
+        "bg-black/50",
+        "text-alira-primary/50",
+        "text-alira-white/50",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/50",
+        "text-alira-white/50",
+        "text-alira-primary/70",
+        "text-alira-white/70",
+        "text-alira-primary/50",
+        "text-alira-white/50",
+        "bg-white/5",
+        "text-alira-white/60",
+        "border-white/5"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\VersionHistory.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-white",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-white",
+        "bg-white",
+        "bg-white"
+      ],
+      "textClasses": [
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-white",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-white",
+        "border-white",
+        "border-alira-white"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "bg-white/10",
+        "bg-white/10",
+        "border-white/10",
+        "text-alira-white/60",
+        "border-white/20",
+        "bg-white/5",
+        "border-white/10",
+        "text-alira-white/40",
+        "text-alira-white/60",
+        "text-alira-white/60",
+        "border-white/10",
+        "border-white/20",
+        "border-alira-gold/30",
+        "bg-alira-gold/5",
+        "bg-alira-gold/10",
+        "border-alira-gold/20",
+        "text-alira-white/60",
+        "text-alira-white/80",
+        "border-white/10",
+        "text-alira-white/70",
+        "border-white/20",
+        "bg-white/5",
+        "border-alira-white/30",
+        "text-alira-white/40",
+        "bg-white/5"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens"
+      ]
+    },
+    {
+      "path": "components\\WhatYouGet.tsx",
+      "bgClasses": [
+        "bg-white",
+        "bg-alira-primary",
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-primary",
+        "bg-alira-primary"
+      ],
+      "textClasses": [
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-gold",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white",
+        "text-alira-primary",
+        "text-alira-white"
+      ],
+      "borderClasses": [
+        "border-alira-primary",
+        "border-alira-white",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [],
+      "hardcodedRgba": [
+        "rgba(0,0,0,0.08)"
+      ],
+      "opacityModifiers": [
+        "text-alira-white/70",
+        "border-alira-primary/5",
+        "border-alira-white/5",
+        "border-alira-gold/20",
+        "bg-alira-gold/10",
+        "text-alira-white/70",
+        "text-alira-white/60",
+        "bg-alira-primary/20",
+        "text-alira-white/60",
+        "bg-alira-primary/20",
+        "text-alira-white/60"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    },
+    {
+      "path": "components\\wobble-card-demo.tsx",
+      "bgClasses": [
+        "bg-alira-gold",
+        "bg-alira-gold",
+        "bg-alira-gold"
+      ],
+      "textClasses": [
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-alira-black",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-alira-black",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-white",
+        "text-alira-black"
+      ],
+      "borderClasses": [
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-gold",
+        "border-alira-gold"
+      ],
+      "hardcodedHex": [
+        "#0F1B35",
+        "#050A17",
+        "#0F1B35",
+        "#0A1628",
+        "#1A2942",
+        "#0B1524"
+      ],
+      "hardcodedRgba": [],
+      "opacityModifiers": [
+        "border-alira-gold/30",
+        "text-white/90",
+        "text-white/70",
+        "border-alira-gold/30",
+        "text-white/90",
+        "text-white/70",
+        "border-alira-gold/50",
+        "text-white/90",
+        "text-white/70"
+      ],
+      "inconsistencies": [
+        "Uses hardcoded black/white instead of tokens",
+        "Contains hardcoded color values"
+      ]
+    }
+  ],
+  "statistics": {
+    "bgUsage": {
+      "bg-bg-page": 16,
+      "bg-alira-gold": 197,
+      "bg-surface": 39,
+      "bg-bg-muted": 24,
+      "bg-black": 35,
+      "bg-white": 142,
+      "bg-alira-primary": 103,
+      "bg-alira-white": 11,
+      "bg-muted": 2,
+      "bg-background": 1,
+      "bg-bg-section": 5,
+      "bg-accent": 21,
+      "bg-borderToken-subtle": 2,
+      "bg-brand": 23,
+      "bg-alira-primary-": 1,
+      "bg-primary": 2,
+      "bg-destructive": 2,
+      "bg-secondary": 2,
+      "bg-popover": 2
+    },
+    "textUsage": {
+      "text-alira-gold": 194,
+      "text-text-primary": 98,
+      "text-text-secondary": 84,
+      "text-accent": 29,
+      "text-white": 62,
+      "text-alira-white": 511,
+      "text-alira-black": 25,
+      "text-alira-primary": 268,
+      "text-secondary": 5,
+      "text-primary": 4,
+      "text-tertiary": 1,
+      "text-inverse": 1,
+      "text-foreground": 1,
+      "text-text-inverse": 23,
+      "text-text-tertiary": 10,
+      "text-black": 15,
+      "text-brand": 27,
+      "text-destructive": 1,
+      "text-muted": 5
+    },
+    "borderUsage": {
+      "border-alira-gold": 90,
+      "border-borderToken-subtle": 47,
+      "border-accent": 16,
+      "border-white": 130,
+      "border-alira-primary": 54,
+      "border-border": 1,
+      "border-alira-white": 36,
+      "border-brand": 8,
+      "border-borderToken-strong": 5,
+      "border-alira-primary-": 1,
+      "border-alira-black": 1,
+      "border-black": 1
+    },
+    "hardcodedValues": [
+      {
+        "type": "hex",
+        "value": "#0B1D51",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#A06B00",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#000000",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#FFFFFF",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#FFFFFF",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#0B1D51",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#FFFFFF",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#0B1D51",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#0f0847",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#0f0847",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#8f6929",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#A06B00",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#A06B00",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#A06B00",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#A06B00",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#A06B00",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#A06B00",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#000000",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#A06B00",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#ffffff",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#f7f9fc",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#eef2f7",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#0a0d14",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#394150",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#5b6474",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#ffffff",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#0a66ff",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#0852cc",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#cba349",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#936f25",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#ffffff",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#e3e8ef",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#cbd5e1",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#117a37",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#b35c00",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#b42318",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(24, 12, 102, 0.1)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(180, 138, 57, 0.3)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(0, 0, 0, 0.15)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(0, 0, 0, 0.1)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(0, 0, 0, 0.25)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(180, 138, 57, 0.5)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(24, 12, 102, 0.05)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(24, 12, 102, 0.06)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(24, 12, 102, 0.04)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(255, 255, 255, 0.6)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(24, 12, 102, 0.08)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(24, 12, 102, 0.1)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(24, 12, 102, 0.08)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(255, 255, 255, 0.6)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(255, 255, 255, 0.80)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(255, 255, 255, 0.65)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(255, 255, 255, 0.95)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(255, 255, 255, 0.85)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(255, 255, 255, 0.70)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(16,24,40,0.06)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(16,24,40,0.08)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(17,122,55,0.1)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(179,92,0,0.1)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(180,35,24,0.1)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(10,102,255,0.35)",
+        "file": "app\\globals.css"
+      },
+      {
+        "type": "hex",
+        "value": "#0B1D51",
+        "file": "app\\page.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\AdaptiveQuestioning.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\AdaptiveQuestioning.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\AdaptiveQuestioning.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\AdaptiveQuestioning.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\AdaptiveQuestioning.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\AdaptiveQuestioning.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\AdaptiveQuestioning.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\ConversationalForm.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\ConversationalForm.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\ConversationalForm.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160,107,0,0.4)",
+        "file": "components\\ConversationalForm.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160,107,0,0.4)",
+        "file": "components\\ConversationalForm.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#1E3A8A",
+        "file": "components\\DesignerPricing.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#1E3A8A",
+        "file": "components\\DesignerPricing.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(0,0,0,0.35)",
+        "file": "components\\FormWizard.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(0,0,0,0.06)",
+        "file": "components\\HeroCards.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(0,0,0,0.06)",
+        "file": "components\\HeroCards.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\MultiStepForm.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(0,0,0,0.1)",
+        "file": "components\\MultiStepForm.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160,107,0,0.3)",
+        "file": "components\\MultiStepForm.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160,107,0,0.5)",
+        "file": "components\\MultiStepForm.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\SummaryConfirmation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\SummaryConfirmation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\SummaryConfirmation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#0A0A0A",
+        "file": "components\\ui\\alert-dialog.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160, 107, 0, 0.1)",
+        "file": "components\\ui\\card-flip.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(11, 29, 81, 0.2)",
+        "file": "components\\ui\\card-flip.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#000000",
+        "file": "components\\ui\\container-scroll-animation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#000000",
+        "file": "components\\ui\\container-scroll-animation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#000000",
+        "file": "components\\ui\\container-scroll-animation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#000000",
+        "file": "components\\ui\\container-scroll-animation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#000000",
+        "file": "components\\ui\\container-scroll-animation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#000000",
+        "file": "components\\ui\\container-scroll-animation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#6C6C6C",
+        "file": "components\\ui\\container-scroll-animation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#222222",
+        "file": "components\\ui\\container-scroll-animation.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#0B1D51",
+        "file": "components\\ui\\gradient-bars.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\ui\\progress-bar.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#fff",
+        "file": "components\\ui\\wobble-card.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(255,255,255,0.1)",
+        "file": "components\\ui\\wobble-card.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(255,255,255,0)",
+        "file": "components\\ui\\wobble-card.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(11, 29, 81, 0.3)",
+        "file": "components\\ui\\wobble-card.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(0, 0, 0, 0.05)",
+        "file": "components\\ui\\wobble-card.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160, 107, 0, 0.1)",
+        "file": "components\\ui\\wobble-card.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(11, 29, 81, 0.2)",
+        "file": "components\\ui\\wobble-card.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(11, 29, 81, 0.15)",
+        "file": "components\\ui\\wobble-card.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\VercelV0Chat.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#8B5A00",
+        "file": "components\\VercelV0Chat.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160,107,0,0.4)",
+        "file": "components\\VercelV0Chat.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160,107,0,0.15)",
+        "file": "components\\VercelV0Chat.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160,107,0,0.2)",
+        "file": "components\\VercelV0Chat.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160,107,0,0.25)",
+        "file": "components\\VercelV0Chat.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(160,107,0,0.4)",
+        "file": "components\\VercelV0Chat.tsx"
+      },
+      {
+        "type": "rgba",
+        "value": "rgba(0,0,0,0.08)",
+        "file": "components\\WhatYouGet.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#0F1B35",
+        "file": "components\\wobble-card-demo.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#050A17",
+        "file": "components\\wobble-card-demo.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#0F1B35",
+        "file": "components\\wobble-card-demo.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#0A1628",
+        "file": "components\\wobble-card-demo.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#1A2942",
+        "file": "components\\wobble-card-demo.tsx"
+      },
+      {
+        "type": "hex",
+        "value": "#0B1524",
+        "file": "components\\wobble-card-demo.tsx"
+      }
+    ],
+    "inconsistencies": []
+  }
+}

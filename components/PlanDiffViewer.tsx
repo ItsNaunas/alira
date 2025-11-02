@@ -30,40 +30,40 @@ function DiffSection({
 
     return (
       <div className="space-y-3">
-        <h4 className="text-sm font-serif text-alira-white/80">{title}</h4>
+        <h4 className="text-sm font-serif text-text-primary">{title}</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Original */}
           <div className="space-y-2">
-            <div className="text-xs text-alira-white/40 uppercase tracking-wide">Before</div>
+            <div className="text-xs text-text-tertiary uppercase tracking-wide">Before</div>
             <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-3">
               {origArray.length > 0 ? (
                 <ul className="space-y-2">
                   {origArray.map((item: any, idx: number) => (
-                    <li key={idx} className="text-sm text-alira-white/70 leading-relaxed">
+                    <li key={idx} className="text-sm text-text-secondary leading-relaxed">
                       {typeof item === 'object' ? JSON.stringify(item, null, 2) : item}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-alira-white/40 italic">None</p>
+                <p className="text-sm text-text-tertiary italic">None</p>
               )}
             </div>
           </div>
 
           {/* Refined */}
           <div className="space-y-2">
-            <div className="text-xs text-alira-white/40 uppercase tracking-wide">After</div>
+            <div className="text-xs text-text-tertiary uppercase tracking-wide">After</div>
             <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
               {refArray.length > 0 ? (
                 <ul className="space-y-2">
                   {refArray.map((item: any, idx: number) => (
-                    <li key={idx} className="text-sm text-alira-white/80 leading-relaxed">
+                    <li key={idx} className="text-sm text-text-primary leading-relaxed">
                       {typeof item === 'object' ? JSON.stringify(item, null, 2) : item}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-alira-white/40 italic">None</p>
+                <p className="text-sm text-text-tertiary italic">None</p>
               )}
             </div>
           </div>
@@ -75,24 +75,24 @@ function DiffSection({
   // Handle strings
   return (
     <div className="space-y-3">
-      <h4 className="text-sm font-serif text-alira-white/80">{title}</h4>
+      <h4 className="text-sm font-serif text-text-primary">{title}</h4>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Original */}
         <div className="space-y-2">
-          <div className="text-xs text-alira-white/40 uppercase tracking-wide">Before</div>
+          <div className="text-xs text-text-tertiary uppercase tracking-wide">Before</div>
           <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-3">
-            <p className="text-sm text-alira-white/70 leading-relaxed">
-              {original || <span className="italic text-alira-white/40">None</span>}
+            <p className="text-sm text-text-secondary leading-relaxed">
+              {original || <span className="italic text-text-tertiary">None</span>}
             </p>
           </div>
         </div>
 
         {/* Refined */}
         <div className="space-y-2">
-          <div className="text-xs text-alira-white/40 uppercase tracking-wide">After</div>
+          <div className="text-xs text-text-tertiary uppercase tracking-wide">After</div>
           <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
-            <p className="text-sm text-alira-white/80 leading-relaxed">
-              {refined || <span className="italic text-alira-white/40">None</span>}
+            <p className="text-sm text-text-primary leading-relaxed">
+              {refined || <span className="italic text-text-tertiary">None</span>}
             </p>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function PlanDiffViewer({
   if (affectedSections.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-alira-white/60">No changes to review</p>
+        <p className="text-text-secondary">No changes to review</p>
       </div>
     )
   }
@@ -122,10 +122,10 @@ export default function PlanDiffViewer({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-xl font-serif text-alira-white mb-1">
+          <h3 className="text-xl font-serif text-text-primary mb-1">
             Review Changes
           </h3>
-          <p className="text-sm text-alira-white/60">
+          <p className="text-sm text-text-secondary">
             {affectedSections.length} section{affectedSections.length > 1 ? 's' : ''} updated
           </p>
         </div>
@@ -134,7 +134,7 @@ export default function PlanDiffViewer({
             onClick={onReject}
             variant="outline"
             size="sm"
-            className="border-white/20 text-alira-white hover:bg-white/5"
+            className="border-borderToken-subtle text-text-primary hover:bg-bg-muted"
           >
             <X className="w-4 h-4 mr-2" />
             Reject All
@@ -160,7 +160,7 @@ export default function PlanDiffViewer({
           if (!refValue) return null
 
           return (
-            <Card key={section} className="bg-white/[0.02] border-white/10">
+            <Card key={section} className="bg-surface border-borderToken-subtle">
               <CardContent className="p-6">
                 <DiffSection
                   title={planSectionLabels[section as keyof typeof planSectionLabels] || section}
@@ -177,12 +177,12 @@ export default function PlanDiffViewer({
       <div className="flex items-center justify-center gap-4 py-4">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 bg-red-500/30 rounded-full"></div>
-          <span className="text-xs text-alira-white/60">Removed/Original</span>
+          <span className="text-xs text-text-secondary">Removed/Original</span>
         </div>
-        <ArrowRight className="w-4 h-4 text-alira-white/40" />
+        <ArrowRight className="w-4 h-4 text-text-tertiary" />
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 bg-green-500/30 rounded-full"></div>
-          <span className="text-xs text-alira-white/60">Added/Refined</span>
+          <span className="text-xs text-text-secondary">Added/Refined</span>
         </div>
       </div>
     </div>
