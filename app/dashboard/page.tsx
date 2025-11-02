@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient, auth } from '@/lib/supabase-client';
+import { formatDistanceToNow } from 'date-fns';
 import { 
   FileText, 
   Download, 
@@ -29,6 +30,7 @@ import DashboardLayout from '@/components/DashboardLayout';
 interface BusinessPlan {
   id: string;
   created_at: string;
+  updated_at?: string;
   business_name: string;
   current_challenges?: string;
   immediate_goals?: string;
@@ -36,6 +38,11 @@ interface BusinessPlan {
   form_data?: any;
   pdf_url?: string | null;
   status: string;
+  progress?: {
+    completed: number;
+    total: number;
+    percentage: number;
+  };
   generations?: {
     id: string;
     type: string;
@@ -54,6 +61,8 @@ export default function DashboardPage() {
   const [planToDelete, setPlanToDelete] = useState<BusinessPlan | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<string>('newest');
   const [tasks, setTasks] = useState<any[]>([]);
   const [isLoadingTasks, setIsLoadingTasks] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -87,7 +96,41 @@ export default function DashboardPage() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setPlans(data || []);
+      
+      // Fetch progress for each plan
+      const plansWithProgress = await Promise.all(
+        (data || []).map(async (plan) => {
+          try {
+            const response = await fetch(`/api/plan/progress?planId=${plan.id}`);
+            if (response.ok) {
+              const result = await response.json();
+              const progressData = result.data?.progress || { objective: {}, next_step: {} };
+              const content = plan.generations?.[0]?.content;
+              
+              if (content) {
+                const objectivesTotal = content.objectives?.length || 0;
+                const nextStepsTotal = content.next_steps?.length || 0;
+                const total = objectivesTotal + nextStepsTotal;
+                
+                const objectivesCompleted = Object.values(progressData.objective || {}).filter(Boolean).length;
+                const nextStepsCompleted = Object.values(progressData.next_step || {}).filter(Boolean).length;
+                const completed = objectivesCompleted + nextStepsCompleted;
+                
+                plan.progress = {
+                  completed,
+                  total,
+                  percentage: total > 0 ? Math.round((completed / total) * 100) : 0
+                };
+              }
+            }
+          } catch (error) {
+            console.error(`Error loading progress for plan ${plan.id}:`, error);
+          }
+          return plan;
+        })
+      );
+      
+      setPlans(plansWithProgress);
     } catch (error) {
       console.error('Error loading plans:', error);
     } finally {
@@ -178,6 +221,31 @@ export default function DashboardPage() {
       .slice(0,5);
   }, [plans]);
 
+  const filteredPlans = useMemo(() => {
+    let filtered = plans.filter(p => {
+      const matchesSearch = (p.business_name || '').toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesStatus = statusFilter === 'all' || p.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+
+    // Sort plans
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'oldest':
+          return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+        case 'updated':
+          const aUpdated = a.updated_at ? new Date(a.updated_at).getTime() : new Date(a.created_at).getTime();
+          const bUpdated = b.updated_at ? new Date(b.updated_at).getTime() : new Date(b.created_at).getTime();
+          return bUpdated - aUpdated; // Most recently updated first
+        case 'newest':
+        default:
+          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      }
+    });
+
+    return filtered;
+  }, [plans, searchQuery, statusFilter, sortBy]);
+
   if (loading) {
     return (
       <DashboardLayout>
@@ -196,9 +264,33 @@ export default function DashboardPage() {
   // Plans are "completed" if they have generated content
   const completed = plans.filter(p => p.generations && p.generations.length > 0).length;
 
-  const filteredPlans = plans.filter(p =>
-    (p.business_name || '').toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Helper function to get status badge
+  const getStatusBadge = (status: string) => {
+    const statusMap: Record<string, { label: string; className: string }> = {
+      'draft': { 
+        label: 'Draft', 
+        className: 'bg-gray-500/10 text-gray-400 border-gray-500/20' 
+      },
+      'in_progress': { 
+        label: 'In Progress', 
+        className: 'bg-blue-500/10 text-blue-400 border-blue-500/20' 
+      },
+      'complete': { 
+        label: 'Complete', 
+        className: 'bg-green-500/10 text-green-400 border-green-500/20' 
+      },
+      'archived': { 
+        label: 'Archived', 
+        className: 'bg-slate-500/10 text-slate-400 border-slate-500/20' 
+      }
+    };
+    const statusInfo = statusMap[status] || statusMap['draft'];
+    return (
+      <span className={`px-2 py-0.5 rounded-full text-xs border ${statusInfo.className}`}>
+        {statusInfo.label}
+      </span>
+    );
+  };
 
   // task actions
   const handleAddTask = async () => {
@@ -284,13 +376,33 @@ export default function DashboardPage() {
           <div className="bg-surface border border-borderToken-subtle rounded-lg px-4 md:px-6 py-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <h2 className="text-lg font-serif text-text-primary">All Plans</h2>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <Input
                   placeholder="Search plans..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-bg-muted border-borderToken-subtle text-text-primary placeholder:text-text-tertiary"
+                  className="bg-bg-muted border-borderToken-subtle text-text-primary placeholder:text-text-tertiary flex-1 min-w-[200px]"
                 />
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="bg-bg-muted border border-borderToken-subtle rounded-md px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-alira-gold"
+                >
+                  <option value="all">All Status</option>
+                  <option value="complete">Complete</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="draft">Draft</option>
+                  <option value="archived">Archived</option>
+                </select>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="bg-bg-muted border border-borderToken-subtle rounded-md px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-alira-gold"
+                >
+                  <option value="newest">Newest First</option>
+                  <option value="oldest">Oldest First</option>
+                  <option value="updated">Recently Updated</option>
+                </select>
                 <Button
                   onClick={loadPlans}
                   variant="ghost"
@@ -579,17 +691,38 @@ export default function DashboardPage() {
                       <CardContent className="p-5">
                         <div className="flex items-center justify-between gap-4">
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-base font-serif text-text-primary mb-1 truncate group-hover:text-alira-gold transition-colors">
-                              {plan.business_name || 'Business Plan'}
-                            </h3>
+                            <div className="flex items-center gap-2 mb-1">
+                              <h3 className="text-base font-serif text-text-primary truncate group-hover:text-alira-gold transition-colors">
+                                {plan.business_name || 'Business Plan'}
+                              </h3>
+                              {getStatusBadge(plan.status)}
+                            </div>
                             <div className="flex items-center gap-3 flex-wrap">
                               <span className="text-xs text-text-tertiary">
-                                {new Date(plan.created_at).toLocaleDateString('en-US', { 
+                                Created {new Date(plan.created_at).toLocaleDateString('en-US', { 
                                   month: 'short', 
                                   day: 'numeric',
                                   year: 'numeric' 
                                 })}
                               </span>
+                              {plan.updated_at && plan.updated_at !== plan.created_at && (
+                                <span className="text-xs text-text-tertiary">
+                                  • Updated {formatDistanceToNow(new Date(plan.updated_at), { addSuffix: true })}
+                                </span>
+                              )}
+                              {plan.progress && plan.progress.total > 0 && (
+                                <div className="flex items-center gap-2">
+                                  <div className="w-16 h-1.5 bg-bg-muted rounded-full overflow-hidden">
+                                    <div 
+                                      className="h-full bg-alira-gold rounded-full transition-all duration-300"
+                                      style={{ width: `${plan.progress.percentage}%` }}
+                                    />
+                                  </div>
+                                  <span className="text-xs text-text-tertiary">
+                                    {plan.progress.percentage}% complete
+                                  </span>
+                                </div>
+                              )}
                               {plan.current_challenges && (
                                 <span className="px-2 py-0.5 rounded-full bg-alira-gold/10 border border-accent text-alira-gold text-xs">
                                   Challenge
