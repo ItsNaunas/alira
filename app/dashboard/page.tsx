@@ -273,7 +273,7 @@ export default function DashboardPage() {
       },
       'in_progress': { 
         label: 'In Progress', 
-        className: 'bg-blue-500/10 text-blue-400 border-blue-500/20' 
+        className: 'bg-alira-primary/10 text-alira-primary border-alira-primary/30' 
       },
       'complete': { 
         label: 'Complete', 
@@ -342,10 +342,10 @@ export default function DashboardPage() {
   return (
     <DashboardLayout>
       {/* Page Header */}
-      <div className="border-b border-borderToken-subtle bg-bg-page/95 backdrop-blur-sm sticky top-0 z-10">
+      <div className="border-b border-alira-primary/20 bg-alira-primary/5 backdrop-blur-sm sticky top-0 z-10">
         <div className="px-4 md:px-6 py-4 md:py-5">
           <div className="flex items-center justify-between max-w-7xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-serif font-normal text-text-primary">
+            <h1 className="text-3xl md:text-4xl font-serif font-normal text-alira-primary">
               Dashboard
             </h1>
             <div className="flex items-center gap-2 md:gap-3">
@@ -373,9 +373,9 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
           
           {/* Plans Toolbar */}
-          <div className="bg-surface border border-borderToken-subtle rounded-lg px-4 md:px-6 py-4">
+          <div className="bg-surface border border-alira-primary/20 rounded-lg px-4 md:px-6 py-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <h2 className="text-lg font-serif text-text-primary">All Plans</h2>
+              <h2 className="text-lg font-serif text-alira-primary">All Plans</h2>
               <div className="flex items-center gap-3 flex-wrap">
                 <Input
                   placeholder="Search plans..."
@@ -386,7 +386,7 @@ export default function DashboardPage() {
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="bg-bg-muted border border-borderToken-subtle rounded-md px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-alira-gold"
+                  className="bg-bg-muted border border-borderToken-subtle rounded-md px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-alira-primary/50"
                 >
                   <option value="all">All Status</option>
                   <option value="complete">Complete</option>
@@ -397,7 +397,7 @@ export default function DashboardPage() {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-bg-muted border border-borderToken-subtle rounded-md px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-alira-gold"
+                  className="bg-bg-muted border border-borderToken-subtle rounded-md px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-alira-primary/50"
                 >
                   <option value="newest">Newest First</option>
                   <option value="oldest">Oldest First</option>
@@ -420,7 +420,7 @@ export default function DashboardPage() {
           {/* Widgets: Quick Actions, Recent Activity, Versions, Checklist */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             {/* Quick Actions */}
-            <Card className="bg-surface border-borderToken-subtle">
+            <Card className="bg-surface border-alira-primary/20">
               <CardContent className="p-5 space-y-3">
                 <h3 className="text-lg font-serif text-text-primary">Quick Actions</h3>
                 <div className="grid grid-cols-2 gap-2">
@@ -441,7 +441,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Recent Activity */}
-            <Card className="bg-surface border-borderToken-subtle">
+            <Card className="bg-surface border-alira-primary/20">
               <CardContent className="p-5">
                 <h3 className="text-lg font-serif text-text-primary mb-3">Recent Activity</h3>
                 <div className="space-y-2 max-h-40 overflow-auto pr-1">
@@ -458,7 +458,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* Plan Versions (latest) */}
-            <Card className="bg-surface border-borderToken-subtle">
+            <Card className="bg-surface border-alira-primary/20">
               <CardContent className="p-5">
                 <h3 className="text-lg font-serif text-text-primary mb-3">Plan Versions</h3>
                 <div className="space-y-2 max-h-40 overflow-auto pr-1">
@@ -474,13 +474,13 @@ export default function DashboardPage() {
                   )}
                 </div>
                 {currentPlanId && (
-                  <button className="text-xs text-text-tertiary hover:text-alira-gold mt-2" onClick={() => router.push(`/dashboard/${currentPlanId}`)}>Open plan →</button>
+                  <button className="text-xs text-text-tertiary hover:text-alira-primary mt-2" onClick={() => router.push(`/dashboard/${currentPlanId}`)}>Open plan →</button>
                 )}
               </CardContent>
             </Card>
 
             {/* Checklist */}
-            <Card className="bg-surface border-borderToken-subtle">
+            <Card className="bg-surface border-alira-primary/20">
               <CardContent className="p-5">
                 <h3 className="text-lg font-serif text-text-primary mb-3">Checklist</h3>
                 <div className="flex gap-2 mb-3">
@@ -510,7 +510,7 @@ export default function DashboardPage() {
 
           {plans.length === 0 ? (
             /* Empty State */
-            <Card className="bg-surface border-borderToken-subtle">
+            <Card className="bg-surface border-alira-primary/20">
               <CardContent className="p-16 text-center">
                 <div className="p-6 rounded-full bg-alira-gold/10 w-fit mx-auto mb-6">
                   <FileText className="w-16 h-16 text-alira-gold" />
@@ -538,7 +538,7 @@ export default function DashboardPage() {
                 
                 {/* Generated Plan Preview */}
                 <Card 
-                  className="bg-surface border-borderToken-subtle hover:border-accent transition-all cursor-pointer focus-within:ring-2 focus-within:ring-alira-gold focus-within:ring-offset-2 focus-within:ring-offset-bg-page" 
+                  className="bg-surface border-alira-primary/20 hover:border-alira-primary/40 transition-all cursor-pointer focus-within:ring-2 focus-within:ring-alira-primary/50 focus-within:ring-offset-2 focus-within:ring-offset-bg-page" 
                   onClick={() => currentPlan?.generations && currentPlan.generations.length > 0 && router.push(`/dashboard/${currentPlan.id}`)}
                   onKeyDown={(e) => {
                     if ((e.key === 'Enter' || e.key === ' ') && currentPlan?.generations && currentPlan.generations.length > 0) {
@@ -556,7 +556,7 @@ export default function DashboardPage() {
                       {currentPlan?.generations && currentPlan.generations.length > 0 ? (
                         <>
                           {/* Compact preview box with text excerpt */}
-                          <div className="h-48 bg-bg-muted border border-accent rounded-lg p-4 overflow-hidden relative group">
+                          <div className="h-48 bg-bg-muted border border-alira-primary/30 rounded-lg p-4 overflow-hidden relative group">
                             <div className="space-y-2">
                               {/* Problem Statement Preview */}
                               {currentPlan.generations[0].content?.problem_statement && (
@@ -588,7 +588,7 @@ export default function DashboardPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="w-full border-borderToken-subtle text-text-primary hover:bg-bg-muted"
+                            className="w-full border-alira-primary/30 text-text-primary hover:bg-alira-primary/5 hover:border-alira-primary/50"
                             onClick={(e) => {
                               e.stopPropagation();
                               router.push(`/dashboard/${currentPlan.id}`);
@@ -621,7 +621,7 @@ export default function DashboardPage() {
                 </Card>
 
                 {/* Next Steps */}
-                <Card className="bg-surface border-borderToken-subtle hover:border-accent transition-all">
+                <Card className="bg-surface border-alira-primary/20 hover:border-alira-primary/40 transition-all">
                   <CardContent className="p-6">
                     <h3 className="text-lg font-serif text-text-primary mb-4">Next Steps</h3>
                     {/* Compact next steps preview */}
@@ -629,7 +629,7 @@ export default function DashboardPage() {
                       {currentPlan?.generations?.[0]?.content?.next_steps ? (
                         currentPlan.generations[0].content.next_steps.slice(0, 5).map((step: string, idx: number) => (
                           <div key={idx} className="flex gap-3">
-                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0 mt-0.5">{idx + 1}</div>
+                            <div className="text-sm font-medium text-alira-primary/80 flex-shrink-0 mt-0.5">{idx + 1}</div>
                             <div className="text-sm text-text-secondary leading-relaxed">
                               {step.length > 120 ? step.substring(0, 120) + '...' : step}
                             </div>
@@ -638,19 +638,19 @@ export default function DashboardPage() {
                       ) : (
                         <>
                           <div className="flex gap-3">
-                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0">1</div>
+                            <div className="text-sm font-medium text-alira-primary/80 flex-shrink-0">1</div>
                             <div className="text-sm text-text-secondary leading-relaxed">
                               Complete your plan inputs
                             </div>
                           </div>
                           <div className="flex gap-3">
-                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0">2</div>
+                            <div className="text-sm font-medium text-alira-primary/80 flex-shrink-0">2</div>
                             <div className="text-sm text-text-secondary leading-relaxed">
                               Review AI-generated insights
                             </div>
                           </div>
                           <div className="flex gap-3">
-                            <div className="text-sm font-medium text-alira-gold/70 flex-shrink-0">3</div>
+                            <div className="text-sm font-medium text-alira-primary/80 flex-shrink-0">3</div>
                             <div className="text-sm text-text-secondary leading-relaxed">
                               Download your strategic plan
                             </div>
@@ -660,7 +660,7 @@ export default function DashboardPage() {
                     </div>
                     {currentPlan?.generations?.[0]?.content?.next_steps && currentPlan.generations[0].content.next_steps.length > 5 && (
                       <button 
-                        className="text-xs text-text-tertiary hover:text-alira-gold transition-colors mt-3"
+                        className="text-xs text-text-tertiary hover:text-alira-primary transition-colors mt-3"
                         onClick={() => router.push(`/dashboard/${currentPlan.id}`)}
                       >
                         View all {currentPlan.generations[0].content.next_steps.length} steps →
@@ -676,7 +676,7 @@ export default function DashboardPage() {
                   {filteredPlans.map((plan) => (
                     <Card 
                       key={plan.id} 
-                      className="bg-surface border-borderToken-subtle hover:border-accent hover:shadow-lg hover:shadow-bg-page/20 transition-all cursor-pointer group hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-alira-gold focus-within:ring-offset-2 focus-within:ring-offset-bg-page"
+                      className="bg-surface border-alira-primary/20 hover:border-alira-primary/40 hover:shadow-lg hover:shadow-alira-primary/10 transition-all cursor-pointer group hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-alira-primary/50 focus-within:ring-offset-2 focus-within:ring-offset-bg-page"
                       onClick={() => router.push(`/dashboard/${plan.id}`)}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
@@ -692,7 +692,7 @@ export default function DashboardPage() {
                         <div className="flex items-center justify-between gap-4">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                              <h3 className="text-base font-serif text-text-primary truncate group-hover:text-alira-gold transition-colors">
+                              <h3 className="text-base font-serif text-alira-primary truncate group-hover:text-alira-primary-dark transition-colors">
                                 {plan.business_name || 'Business Plan'}
                               </h3>
                               {getStatusBadge(plan.status)}
@@ -714,7 +714,7 @@ export default function DashboardPage() {
                                 <div className="flex items-center gap-2">
                                   <div className="w-16 h-1.5 bg-bg-muted rounded-full overflow-hidden">
                                     <div 
-                                      className="h-full bg-alira-gold rounded-full transition-all duration-300"
+                                      className="h-full bg-alira-primary rounded-full transition-all duration-300"
                                       style={{ width: `${plan.progress.percentage}%` }}
                                     />
                                   </div>
@@ -724,7 +724,7 @@ export default function DashboardPage() {
                                 </div>
                               )}
                               {plan.current_challenges && (
-                                <span className="px-2 py-0.5 rounded-full bg-alira-gold/10 border border-accent text-alira-gold text-xs">
+                                <span className="px-2 py-0.5 rounded-full bg-alira-primary/10 border border-alira-primary/30 text-alira-primary text-xs">
                                   Challenge
                                 </span>
                               )}

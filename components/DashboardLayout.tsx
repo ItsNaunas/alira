@@ -77,7 +77,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       )}
     >
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10 !bg-surface md:!bg-surface">
+        <SidebarBody className="justify-between gap-10">
           <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
@@ -86,11 +86,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               ))}
             </div>
           </div>
-          <div className="border-t border-borderToken-subtle pt-4">
+          <div className="border-t border-white/10 pt-4">
             {/* Back to Website Link */}
             <a
               href="/"
-              className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-bg-muted transition-colors w-full mb-2"
+              className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-alira-primary-light transition-colors w-full mb-2"
             >
               <IconHome className="h-5 w-5 shrink-0 text-white" />
               <motion.span
@@ -107,7 +107,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {/* Logout Button */}
             <button
               onClick={handleSignOut}
-              className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-bg-muted transition-colors w-full"
+              className="flex items-center justify-start gap-2 group/sidebar py-2 px-2 rounded-lg hover:bg-alira-primary-light transition-colors w-full"
             >
               <IconLogout className="h-5 w-5 shrink-0 text-white" />
               <motion.span
