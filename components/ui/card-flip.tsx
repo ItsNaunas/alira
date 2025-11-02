@@ -120,7 +120,7 @@ export default function CardFlip({
                 <h3 className="text-lg leading-snug font-serif font-normal tracking-tight text-text-inverse transition-all duration-500 ease-out group-hover:translate-y-[-4px]">
                   {title}
                 </h3>
-                <p className="line-clamp-2 text-sm tracking-tight text-text-inverse/90 transition-all delay-[50ms] duration-500 ease-out group-hover:translate-y-[-4px]">
+                <p className="line-clamp-2 text-sm tracking-tight text-text-inverse/90 transition-all duration-500 ease-out group-hover:translate-y-[-4px]">
                   {subtitle}
                 </p>
               </div>

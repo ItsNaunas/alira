@@ -18,7 +18,7 @@ interface TeamMember {
 interface TeamProps {
   title?: string;
   subtitle?: string;
-  members: TeamMember[];
+  members?: TeamMember[];
   className?: string;
 }
 
