@@ -74,6 +74,7 @@ module.exports = {
 					subtle: 'var(--border-subtle)',
 					strong: 'var(--border-strong)'
 				},
+				surface: 'var(--surface)',
   			alira: {
   				primary: '#0B1D51',
   				gold: '#A06B00',
