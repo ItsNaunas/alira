@@ -148,7 +148,7 @@ export function VercelV0Chat() {
         
         if (needsEmailConfirmation) {
           // Email confirmation is required (this is the normal flow)
-          setAuthError('🎉 Account created! Please check your email and click the confirmation link. You\'ll be automatically logged in after confirming.');
+          setAuthError('Account created! Please check your email and click the confirmation link. You\'ll be automatically logged in after confirming.');
           setIsSubmitting(false);
           return;
         }
@@ -189,7 +189,7 @@ export function VercelV0Chat() {
       {/* Email Gating Modal */}
       {showModal && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-bg-page p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="auth-modal-title"
@@ -335,7 +335,7 @@ export function VercelV0Chat() {
               </div>
               
               <p className="text-xs sm:text-sm text-text-tertiary text-center">
-                🔒 Your information is secure and private
+                Your information is secure and private
               </p>
             </form>
           </div>
