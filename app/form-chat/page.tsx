@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { auth, createClient } from '@/lib/supabase-client';
 import { Spinner } from '@/components/ui/spinner';
-import FormWizard from '@/components/FormWizard';
+import SegmentedConversationForm from '@/components/SegmentedConversationForm';
 
 function FormChatContent() {
   const router = useRouter();
@@ -151,9 +151,9 @@ function FormChatContent() {
         </div>
       </header>
 
-      {/* Enhanced Form Wizard with all new features */}
-      <main className="container mx-auto px-6 py-8">
-        <FormWizard
+      {/* Segmented AI Conversation Form */}
+      <main>
+        <SegmentedConversationForm
           initialData={initialIdea ? { business_idea: initialIdea } : undefined}
           onComplete={handleFormComplete}
           useAuthenticatedFlow={true}
