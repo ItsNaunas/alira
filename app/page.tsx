@@ -60,8 +60,8 @@ export default function Home() {
               {/* Main Headline */}
               <Reveal delay={200}>
                 <h1 id="hero-heading" className="font-serif font-normal text-text-primary leading-tight tracking-tight mb-6 text-4xl md:text-5xl lg:text-6xl xl:text-7xl" style={{ fontSize: 'clamp(48px, 8vw, 96px)' }}>
-                  Turn your idea into a business<br />
-                  in a few clicks.
+                  Turn your ideas into income<br />
+                  with a few clicks.
                 </h1>
               </Reveal>
               
