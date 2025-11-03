@@ -307,7 +307,7 @@ export async function generateBusinessCase(
 METHODOLOGY INSIGHTS FROM CONVERSATION:
 - Challenge Keywords Identified: ${methodologyContext.challengeKeywords.join(', ') || 'None'}
 - Industry Metrics Mentioned: ${methodologyContext.mentionedMetrics.join(', ') || 'None'}
-- Quantified Impacts Found: ${methodologyContext.quantifiedImpacts.map(i => `${i.type}: ${i.value}`).join(', ') || 'None'}
+- Quantified Impacts Found: ${methodologyContext.quantifiedImpacts.map((i: { type: string; value: string }) => `${i.type}: ${i.value}`).join(', ') || 'None'}
 - Root Cause Indicators: ${methodologyContext.rootCauseIndicators.join(', ') || 'None'}
 
 Use these insights to build a more accurate 5 Whys chain. The challenge keywords likely represent symptoms - dig deeper to find root causes.

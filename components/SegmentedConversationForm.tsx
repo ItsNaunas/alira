@@ -659,7 +659,7 @@ export default function SegmentedConversationForm({
         }
       }, 300)
     }
-  }, [currentSegment.isComplete, currentSegmentIndex, isMobile])
+  }, [currentSegment.isComplete, currentSegmentIndex, isMobile, segments.length])
 
   // Auto-save integration
   const formDataForAutoSave: Partial<WizardFormData> = {

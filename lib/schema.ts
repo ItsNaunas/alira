@@ -66,8 +66,21 @@ export const saveRequestSchema = z.object({
 // Business case outline schema
 export const businessCaseOutlineSchema = z.object({
   problem_statement: z.string(),
+  root_cause_analysis: z.object({
+    five_whys_chain: z.array(z.string()),
+    root_cause: z.string(),
+    symptoms_vs_causes: z.array(z.object({
+      symptom: z.string(),
+      root_cause: z.string()
+    }))
+  }).optional(),
   objectives: z.array(z.string()),
   current_state: z.string(),
+  industry_analysis: z.object({
+    context: z.string(),
+    benchmarks_comparison: z.record(z.string(), z.string()),
+    stage_specific_insights: z.string()
+  }).optional(),
   proposed_solution: z.array(z.object({
     pillar: z.string(),
     actions: z.array(z.string()),
@@ -75,7 +88,10 @@ export const businessCaseOutlineSchema = z.object({
     impact: z.enum(['low', 'med', 'medium', 'high'])
   })),
   expected_outcomes: z.array(z.string()),
-  next_steps: z.array(z.string())
+  next_steps: z.array(z.string()),
+  risk_assessment: z.string().optional(),
+  competitive_advantage: z.string().optional(),
+  methodology_applied: z.array(z.string()).optional()
 })
 
 // Types

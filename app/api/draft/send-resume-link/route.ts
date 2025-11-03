@@ -2,12 +2,23 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+// Lazy-load clients to avoid build-time errors
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!url || !key) {
+    throw new Error('Supabase environment variables are not configured')
+  }
+  return createClient(url, key)
+}
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    throw new Error('Resend API key is not configured')
+  }
+  return new Resend(apiKey)
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,6 +32,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get draft to retrieve resume token
+    const supabase = getSupabaseClient()
     const { data: draft, error: draftError } = await supabase
       .from('intake_forms')
       .select('resume_token, name')
@@ -45,6 +57,7 @@ export async function POST(request: NextRequest) {
     const resumeLink = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/form?resume=${draft.resume_token}`
 
     // Send email
+    const resend = getResendClient()
     const { data: emailResult, error: emailError } = await resend.emails.send({
       from: 'ALIRA <noreply@alirapartners.co.uk>',
       to: email,
