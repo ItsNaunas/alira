@@ -62,7 +62,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     },
     {
       label: "New Plan",
-      href: "/#start-chat",
+      href: "/form-chat",
       icon: (
         <IconPlus className="h-5 w-5 shrink-0 text-white" />
       ),
