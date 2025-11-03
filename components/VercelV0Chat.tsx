@@ -419,14 +419,14 @@ export function VercelV0Chat() {
               aria-label="Get started"
               className={cn(
                 'flex items-center gap-2 sm:gap-2.5 rounded-lg px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-semibold transition-all duration-200 min-h-[44px] min-w-[44px]',
-                'bg-gradient-to-r from-accent to-accent-dark text-white',
+                'bg-gradient-to-r from-accent to-accent-dark text-black',
                 'shadow-[0_4px_16px_rgba(203,163,73,0.5)]',
                 'ring-2 ring-accent/40 border-2 border-accent-dark/30',
                 'hover:shadow-[0_0_30px_rgba(203,163,73,0.7)] hover:scale-105 hover:ring-accent/60 hover:border-accent-dark/50',
                 'active:scale-95',
                 'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-[0_4px_16px_rgba(203,163,73,0.5)]'
               )}
-              style={{ textShadow: '0 1px 3px rgba(0,0,0,0.2)' }}
+              style={{ textShadow: 'none' }}
             >
               <span className="whitespace-nowrap font-medium">Get Started</span>
               <ArrowUpIcon className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
