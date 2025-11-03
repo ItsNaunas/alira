@@ -98,7 +98,7 @@ export default function MeetTheTeam() {
             <Reveal delay={600}>
               <div className="text-center mb-12">
                 <h3 className="text-3xl font-serif font-normal text-alira-primary mb-4">Meet Our Specialists</h3>
-                <p className="text-lg text-alira-primary/70 max-w-2xl mx-auto font-serif italic font-light">
+                <p className="text-lg text-alira-primary/70 max-w-2xl mx-auto font-serif font-light">
                   Two experts working together to deliver reach and systems that work.
                 </p>
               </div>

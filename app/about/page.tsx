@@ -128,7 +128,7 @@ export default function AboutPage() {
             {/* Our Founder Subsection */}
             <div className="mb-16">
               <Reveal delay={100}>
-                <div className="text-center mb-12">
+                <div className="text-center mb-12 bg-surface rounded-2xl p-8 border border-borderToken-subtle shadow-sm">
                   <h3 className="text-3xl font-serif font-normal text-text-primary mb-4">Our Founder</h3>
                   <p className="text-lg text-text-secondary max-w-2xl mx-auto">
                     ALIRA began with one person's frustration: seeing brilliant ideas stall in complexity.
@@ -141,11 +141,11 @@ export default function AboutPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 {/* Left column - Story */}
                 <Reveal delay={200}>
-                <div className="space-y-8">
+                <div className="space-y-8 bg-surface rounded-2xl p-8 border border-borderToken-subtle shadow-sm">
                   {/* Opening statement */}
                   <div className="relative">
                     <div className="absolute -left-4 top-0 w-1 h-full bg-alira-gold/30"></div>
-                    <p className="text-2xl text-text-primary font-serif italic leading-relaxed pl-6">
+                    <p className="text-2xl text-text-primary font-serif leading-relaxed pl-6">
                       "I know what it feels like to have ambition but no clear path."
                     </p>
                   </div>
@@ -187,18 +187,18 @@ export default function AboutPage() {
                           </div>
 
                   {/* Credentials/Experience */}
-                  <div className="space-y-4">
+                  <div className="space-y-4 bg-surface rounded-2xl p-6 border border-borderToken-subtle shadow-sm">
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-text-secondary font-sans font-light">10+ years in project management</span>
+                      <span className="text-text-primary font-sans font-light">10+ years in project management</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-text-secondary font-sans font-light">Experience leading teams across multiple industries</span>
+                      <span className="text-text-primary font-sans font-light">Experience leading teams across multiple industries</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-text-secondary font-sans font-light">Delivered projects that saved organisations time and money</span>
+                      <span className="text-text-primary font-sans font-light">Delivered projects that saved organisations time and money</span>
                     </div>
                   </div>
 

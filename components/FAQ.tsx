@@ -55,7 +55,7 @@ export default function FAQ() {
                 Frequently Asked Questions
               </h2>
               <div className="w-16 h-px bg-accent mx-auto mb-8"></div>
-              <p className="text-xl text-text-secondary max-w-2xl mx-auto font-serif italic font-light">
+              <p className="text-xl text-text-secondary max-w-2xl mx-auto font-serif font-light">
                 Everything you need to know about our services and how we can help you grow.
               </p>
             </div>

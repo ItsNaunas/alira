@@ -67,9 +67,9 @@ export const typography = {
     muted: `${FONTS.sans} ${WEIGHTS.regular} text-text-tertiary`,
   },
   
-  // Subtext - Instrument Serif Light Italic
+  // Subtext - Instrument Serif Light
   subtext: {
-    main: `${FONTS.serif} italic ${WEIGHTS.light} text-text-secondary`,
+    main: `${FONTS.serif} ${WEIGHTS.light} text-text-secondary`,
   },
 } as const
 
@@ -78,7 +78,7 @@ export const getHeadingClass = () => 'font-serif font-bold text-text-primary'
 export const getSubHeadingClass = () => 'font-serif font-semibold text-text-primary'
 export const getBodyClass = () => 'font-sans font-normal text-text-secondary'
 export const getLabelClass = () => 'font-sans font-medium text-text-primary'
-export const getSubtextClass = () => 'font-serif italic font-light text-text-secondary'
+export const getSubtextClass = () => 'font-serif font-light text-text-secondary'
 export const getInputClass = () => 'text-text-primary placeholder:text-text-tertiary'
 
 // CSS-in-JS styles (for non-Tailwind usage)
@@ -102,7 +102,6 @@ export const fontStyles = {
   subtext: {
     fontFamily: '"Instrument Serif", "Georgia", serif',
     fontWeight: 300,
-    fontStyle: 'italic',
   },
 } as const
 

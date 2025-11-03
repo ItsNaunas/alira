@@ -766,7 +766,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   {evaluateAnswerQuality(watchedValues.business_idea || '', 10).suggestions.length > 0 && (
                     <div className="hidden sm:flex flex-wrap gap-1">
                       {evaluateAnswerQuality(watchedValues.business_idea || '', 10).suggestions.slice(0, 1).map((suggestion, idx) => (
-                        <span key={idx} className="text-alira-primary/50 dark:text-alira-white/50 italic text-xs">
+                        <span key={idx} className="text-alira-primary/50 dark:text-alira-white/50 text-xs">
                           {suggestion}
                         </span>
                       ))}
@@ -972,7 +972,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   {evaluateAnswerQuality(watchedValues.current_challenges || '', 10).suggestions.length > 0 && (
                     <div className="hidden sm:flex flex-wrap gap-1">
                       {evaluateAnswerQuality(watchedValues.current_challenges || '', 10).suggestions.slice(0, 1).map((suggestion, idx) => (
-                        <span key={idx} className="text-alira-primary/50 dark:text-alira-white/50 italic text-xs">
+                        <span key={idx} className="text-alira-primary/50 dark:text-alira-white/50 text-xs">
                           {suggestion}
                         </span>
                       ))}
@@ -1146,7 +1146,7 @@ export default function FormWizard({ resumeToken, initialData, draftId: propDraf
                   {evaluateAnswerQuality(watchedValues.immediate_goals || '', 10).suggestions.length > 0 && (
                     <div className="hidden sm:flex flex-wrap gap-1">
                       {evaluateAnswerQuality(watchedValues.immediate_goals || '', 10).suggestions.slice(0, 1).map((suggestion, idx) => (
-                        <span key={idx} className="text-alira-primary/50 dark:text-alira-white/50 italic text-xs">
+                        <span key={idx} className="text-alira-primary/50 dark:text-alira-white/50 text-xs">
                           {suggestion}
                         </span>
                       ))}

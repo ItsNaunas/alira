@@ -99,7 +99,7 @@ export default function Experience() {
                     <h3 className="text-xl font-serif font-normal text-alira-primary dark:text-alira-white mb-2">
                       {experience.title}
                     </h3>
-                    <div className="text-base font-sans font-light text-alira-primary/80 dark:text-alira-white/80 italic mb-3">
+                    <div className="text-base font-sans font-light text-alira-primary/80 dark:text-alira-white/80 mb-3">
                       {experience.context}
                     </div>
                     <p className="text-alira-primary/70 dark:text-alira-white/70 leading-relaxed mb-6">

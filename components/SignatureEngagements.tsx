@@ -110,7 +110,7 @@ export default function SignatureEngagements() {
               </h3>
               
               {/* Tagline */}
-              <p className="text-text-primary/70 dark:text-text-inverse/70 italic mb-6 leading-relaxed">
+              <p className="text-text-primary/70 dark:text-text-inverse/70 mb-6 leading-relaxed">
                 {service.tagline}
               </p>
               

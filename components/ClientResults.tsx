@@ -138,7 +138,7 @@ export default function ClientResults() {
               <div className="text-sm tracking-wide uppercase text-alira-gold mb-4 font-sans font-light">
                 CLIENT TESTIMONIAL
               </div>
-              <blockquote className="text-lg text-alira-primary/80 dark:text-alira-white/80 italic mb-4 max-w-3xl mx-auto">
+              <blockquote className="text-lg text-alira-primary/80 dark:text-alira-white/80 mb-4 max-w-3xl mx-auto">
                 "I was consistently impressed by his creativity to solve problems and deliver results. His ability to quickly learn new skills and build relationships consistently contributed to the success of our team projects that had internal and external stakeholders, and a national and international reach."
               </blockquote>
               <div className="text-sm text-alira-primary/60 dark:text-alira-white/60">

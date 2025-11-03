@@ -423,7 +423,7 @@ export default function ConversationalForm({ userId, initialData, onComplete }: 
             animate={{ opacity: 1 }}
             className="text-center"
           >
-            <p className="text-xs text-text-tertiary font-light italic">
+            <p className="text-xs text-text-tertiary font-light">
               {currentQuestion?.helper}
             </p>
           </motion.div>

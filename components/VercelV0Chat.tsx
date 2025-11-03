@@ -371,13 +371,13 @@ export function VercelV0Chat() {
         <div className="w-full">
         <div className={cn(
           'relative rounded-lg sm:rounded-xl lg:rounded-2xl min-h-[80px] sm:min-h-[100px] lg:min-h-[120px] transition-all duration-300',
-          'bg-white/5 backdrop-blur-md ring-1 ring-white/10',
-          'shadow-[0_0_20px_rgba(203,163,73,0.15)]',
+          'bg-surface/95 backdrop-blur-md ring-1 ring-borderToken-subtle',
+          'shadow-[0_0_20px_rgba(203,163,73,0.15)] border border-borderToken-subtle',
           'hover:shadow-[0_0_30px_rgba(203,163,73,0.2)]',
           isFocused && 'ring-accent/50 shadow-[0_0_25px_rgba(203,163,73,0.25)] min-h-[100px] sm:min-h-[120px] lg:min-h-[140px]'
         )}>
           {/* Gradient highlight from top */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent rounded-t-2xl"></div>
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent rounded-t-2xl"></div>
           
           <div className="overflow-y-auto">
             <Textarea
@@ -396,10 +396,10 @@ export function VercelV0Chat() {
                 'resize-none',
                 'bg-transparent',
                 'border-none',
-                'text-sm sm:text-base lg:text-lg text-alira-white',
+                'text-sm sm:text-base lg:text-lg text-text-primary',
                 'focus:outline-none',
                 'focus-visible:ring-0 focus-visible:ring-offset-0',
-                'placeholder:text-alira-white/60',
+                'placeholder:text-text-tertiary',
                 'min-h-[50px] sm:min-h-[60px] lg:min-h-[80px] transition-all duration-300',
                 isFocused && 'min-h-[80px] sm:min-h-[100px] lg:min-h-[120px]'
               )}
@@ -409,7 +409,7 @@ export function VercelV0Chat() {
             />
           </div>
           
-          <div className="flex items-center justify-end p-2 sm:p-3 lg:p-4 border-t border-white/5">
+          <div className="flex items-center justify-end p-2 sm:p-3 lg:p-4 border-t border-borderToken-subtle">
             {/* Primary Send Button */}
             <button
               type="button"

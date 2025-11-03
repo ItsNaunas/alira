@@ -52,7 +52,7 @@ export default function OurPhilosophy() {
         {/* Premium Pull Quote */}
         <Reveal delay={150}>
           <div className="text-center mb-20">
-            <blockquote className="text-3xl md:text-4xl text-alira-primary dark:text-alira-white font-serif italic font-light max-w-4xl mx-auto leading-tight">
+            <blockquote className="text-3xl md:text-4xl text-alira-primary dark:text-alira-white font-serif font-light max-w-4xl mx-auto leading-tight">
               "Simple systems outlast complicated ones."
             </blockquote>
           </div>

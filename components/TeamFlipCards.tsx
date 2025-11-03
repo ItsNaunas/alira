@@ -63,7 +63,7 @@ export default function TeamFlipCards({
           <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-primary mb-6">
             {title}
           </h2>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 font-serif italic font-light">
+          <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 font-serif font-light">
             {subtitle}
           </p>
           <div className="w-16 h-px bg-accent mx-auto"></div>

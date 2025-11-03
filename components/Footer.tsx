@@ -5,7 +5,6 @@ import CTAButton from './CTAButton'
 const navigation = {
   main: [
     { name: 'Home', href: '/' },
-    { name: 'What You Get', href: '/what-you-get' },
     { name: 'Services', href: '/services' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },

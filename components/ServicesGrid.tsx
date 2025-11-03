@@ -56,7 +56,7 @@ export default function ServicesGrid() {
                         <CardTitle className="text-3xl alira-heading text-alira-primary dark:text-alira-white group-hover:text-alira-gold transition-colors duration-300">
                           {service.label}
                         </CardTitle>
-                        <p className="text-lg text-alira-gold font-sans font-light italic">
+                        <p className="text-lg text-alira-gold font-sans font-light">
                           {details.tagline}
                         </p>
                       </div>

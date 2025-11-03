@@ -37,7 +37,7 @@ export default function Services() {
             
             {/* Subheadline */}
             <Reveal delay={250}>
-              <p className="text-2xl md:text-3xl text-text-secondary font-serif italic font-light max-w-[60ch] mx-auto leading-tight mb-8">
+              <p className="text-2xl md:text-3xl text-text-secondary font-serif font-light max-w-[60ch] mx-auto leading-tight mb-8">
                 Content strategy, systems automation, or complete growth solutions. Pick what matches your needs right now.
               </p>
             </Reveal>

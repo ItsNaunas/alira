@@ -310,7 +310,7 @@ export default function ResultsPage() {
                     </div>
                     
                     {/* Quote */}
-                    <blockquote className="text-text-secondary italic mb-6 leading-relaxed">
+                    <blockquote className="text-text-secondary mb-6 leading-relaxed">
                       "{testimonial.quote}"
                     </blockquote>
                     

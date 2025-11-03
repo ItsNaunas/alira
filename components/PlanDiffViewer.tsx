@@ -45,7 +45,7 @@ function DiffSection({
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-text-tertiary italic">None</p>
+                <p className="text-sm text-text-tertiary">None</p>
               )}
             </div>
           </div>
@@ -63,7 +63,7 @@ function DiffSection({
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-text-tertiary italic">None</p>
+                <p className="text-sm text-text-tertiary">None</p>
               )}
             </div>
           </div>
@@ -82,7 +82,7 @@ function DiffSection({
           <div className="text-xs text-text-tertiary uppercase tracking-wide">Before</div>
           <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-3">
             <p className="text-sm text-text-secondary leading-relaxed">
-              {original || <span className="italic text-text-tertiary">None</span>}
+              {original || <span className="text-text-tertiary">None</span>}
             </p>
           </div>
         </div>
@@ -92,7 +92,7 @@ function DiffSection({
           <div className="text-xs text-text-tertiary uppercase tracking-wide">After</div>
           <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
             <p className="text-sm text-text-primary leading-relaxed">
-              {refined || <span className="italic text-text-tertiary">None</span>}
+              {refined || <span className="text-text-tertiary">None</span>}
             </p>
           </div>
         </div>

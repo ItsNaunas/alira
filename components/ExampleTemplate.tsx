@@ -189,7 +189,7 @@ export function ExampleTemplate({ questionId, onFillExample, className }: Exampl
               {!selectedTemplate && (
                 <div className="p-4 border-t border-alira-primary/10 dark:border-alira-white/10">
                   <p className="text-xs text-text-tertiary mb-2">Quick Preview:</p>
-                  <p className="text-xs text-text-secondary italic line-clamp-2">
+                  <p className="text-xs text-text-secondary line-clamp-2">
                     "{previewTemplate.content.substring(0, 150)}..."
                   </p>
                 </div>

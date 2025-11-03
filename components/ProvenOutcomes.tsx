@@ -139,7 +139,7 @@ export default function ProvenOutcomes() {
                    <div className="absolute top-0 left-0 right-0 h-1 bg-alira-gold/20 rounded-t-lg"></div>
                    
                    {/* Quote */}
-                   <p className="text-alira-primary/80 dark:text-alira-white/80 italic mb-6 leading-relaxed text-lg">
+                   <p className="text-alira-primary/80 dark:text-alira-white/80 mb-6 leading-relaxed text-lg">
                      "{testimonial.quote}"
                    </p>
                    
