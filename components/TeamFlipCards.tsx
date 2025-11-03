@@ -25,7 +25,7 @@ interface TeamProps {
 // Team data with actual images and roles
 const defaultMembers: TeamMember[] = [
   {
-    name: 'Shuheyb',
+    name: 'Shuhayb',
     role: 'Founder & CEO',
     bio: 'Visionary founder who built ALIRA from the ground up. Combines technical expertise with deep market insight to help brands scale through intelligent systems.',
     imageUrl: '/images/assets/founder.jpg',
@@ -85,12 +85,12 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
   let baseTransform = '';
   let objectPosition = 'center';
   
-  if (member.name === 'Shuheyb') {
+  if (member.name === 'Shuhayb') {
     // Zoom in (scale 1.05) and position
     baseTransform = 'scale(1.05)';
     objectPosition = 'center 35%'; // 35% from top
   } else if (member.name === 'Naufal') {
-    // Position consistent with Shuheyb
+    // Position consistent with Shuhayb
     baseTransform = '';
     objectPosition = 'center 35%'; // 35% from top
   } else if (member.name === 'Etomi') {
@@ -138,7 +138,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
           </div>
         )}
 
-        <h3 className="mb-1 text-xl font-serif font-normal text-text-primary flex-shrink-0">{member.name}</h3>
+        <h3 className="mb-1 text-lg sm:text-xl font-serif font-normal text-text-primary flex-shrink-0 break-words">{member.name}</h3>
         <p className="text-accent-dark mb-3 text-sm font-sans font-medium flex-shrink-0">{member.role}</p>
         <div className="flex-1 min-h-0 flex items-start">
           <p className="text-text-secondary text-sm font-sans font-light leading-relaxed">{member.bio}</p>
