@@ -270,7 +270,7 @@ export default function ContactPage() {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-normal text-text-inverse mb-6">
                 Ready to get started?
               </h2>
-              <p className="text-xl text-text-inverse/80 mb-8 leading-relaxed">
+              <p className="text-xl text-white mb-8 leading-relaxed">
                 Don't wait for the perfect moment. The best time to start is now.
               </p>
               <CTAButton 

@@ -171,7 +171,7 @@ export default function AboutPage() {
               <Reveal delay={400}>
                 <div className="space-y-8">
                                             {/* Founder photo with elegant styling */}
-                          <div className="relative">
+                          <div className="relative -mt-8">
                           <div className="w-full h-80 rounded-2xl overflow-hidden border border-borderToken-subtle shadow-lg">
                             <Image 
                               src="/images/assets/founder.jpg" 
@@ -379,7 +379,7 @@ export default function AboutPage() {
               <Reveal delay={1000}>
                 <div className="text-center mb-12">
                   <h3 className="text-3xl font-serif font-normal text-text-primary mb-4">How We Work Together</h3>
-                  <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+                  <p className="text-lg text-white max-w-2xl mx-auto">
                     Our collaborative approach ensures you get the best of all three specializations working in harmony.
                   </p>
                 </div>
@@ -628,7 +628,7 @@ export default function AboutPage() {
               <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-inverse mb-6">
                 Ready to work with us?
               </h2>
-              <p className="text-xl text-text-inverse/80 mb-8 leading-relaxed">
+              <p className="text-xl text-white mb-8 leading-relaxed">
                 Let's turn your ambition into clear action. Start with a simple plan and build from there.
               </p>
               <CTAButton 
