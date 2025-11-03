@@ -37,10 +37,42 @@
 }
 
 body {
-  @apply font-sans font-normal text-lg leading-relaxed;
+  @apply font-sans font-normal leading-relaxed;
+  font-size: clamp(18px, 2.5vw, 20px); /* Mobile-first: 18px minimum on small screens, up to 20px on larger */
   color: hsl(var(--foreground));
   background: hsl(var(--background));
   overflow-x: hidden;
+}
+
+/* Ensure larger text on very small mobile devices */
+@media (max-width: 480px) {
+  body {
+    font-size: 19px; /* Even larger on very small phones */
+  }
+}
+
+/* Mobile-friendly form elements */
+@media (max-width: 640px) {
+  input,
+  textarea,
+  select {
+    font-size: 18px !important; /* Prevent iOS zoom and ensure readable text */
+  }
+  
+  /* Ensure buttons and interactive elements are readable */
+  button {
+    font-size: 18px;
+  }
+  
+  /* Larger text for labels and smaller UI text */
+  label,
+  .text-sm {
+    font-size: 16px !important;
+  }
+  
+  .text-xs {
+    font-size: 14px !important;
+  }
 }
 
 html {
@@ -88,7 +120,7 @@ html {
 /* dark variant removed */
 
 .copy {
-  font-size: 1.125rem; /* Increased from 1rem */
+  font-size: clamp(1rem, 2vw, 1.125rem); /* Responsive: 16px mobile → 18px desktop */
   line-height: 1.6;
   color: var(--text-secondary);
 }
