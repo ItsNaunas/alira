@@ -131,36 +131,75 @@ function FormChatContent() {
 
   return (
     <div className="min-h-screen bg-bg-page">
-      {/* Header */}
-      <header className="border-b border-borderToken-subtle bg-bg-page/95 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-serif font-normal text-text-primary">
-              ALIRA<span className="text-alira-gold">.</span>
-            </h1>
-            <button
-              onClick={async () => {
-                await auth.signOut();
-                router.push('/');
-              }}
-              className="text-sm text-text-tertiary hover:text-text-primary transition-colors"
-            >
-              Sign Out
-            </button>
-          </div>
-        </div>
-      </header>
+      {/* Desktop Container Box */}
+      <div className="hidden md:flex md:justify-center min-h-screen">
+        <div className="w-full max-w-3xl">
+          {/* Header inside container */}
+          <header className="border-b border-borderToken-subtle bg-bg-page/95 backdrop-blur-sm sticky top-0 z-10">
+            <div className="px-6 py-4">
+              <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-serif font-normal text-text-primary">
+                  ALIRA<span className="text-alira-gold">.</span>
+                </h1>
+                <button
+                  onClick={async () => {
+                    await auth.signOut();
+                    router.push('/');
+                  }}
+                  className="text-sm text-text-tertiary hover:text-text-primary transition-colors"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </header>
 
-      {/* Segmented AI Conversation Form */}
-      <main>
-        <SegmentedConversationForm
-          initialData={initialIdea ? { business_idea: initialIdea } : undefined}
-          onComplete={handleFormComplete}
-          useAuthenticatedFlow={true}
-          userId={user?.id}
-          skipDraftLoad={true} // Always start fresh when clicking "New Plan"
-        />
-      </main>
+          {/* Segmented AI Conversation Form in container */}
+          <main>
+            <SegmentedConversationForm
+              initialData={initialIdea ? { business_idea: initialIdea } : undefined}
+              onComplete={handleFormComplete}
+              useAuthenticatedFlow={true}
+              userId={user?.id}
+              skipDraftLoad={true} // Always start fresh when clicking "New Plan"
+            />
+          </main>
+        </div>
+      </div>
+
+      {/* Mobile Layout - Full Width */}
+      <div className="md:hidden min-h-screen">
+        {/* Header */}
+        <header className="border-b border-borderToken-subtle bg-bg-page/95 backdrop-blur-sm sticky top-0 z-10">
+          <div className="px-6 py-4">
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-serif font-normal text-text-primary">
+                ALIRA<span className="text-alira-gold">.</span>
+              </h1>
+              <button
+                onClick={async () => {
+                  await auth.signOut();
+                  router.push('/');
+                }}
+                className="text-sm text-text-tertiary hover:text-text-primary transition-colors"
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Segmented AI Conversation Form */}
+        <main>
+          <SegmentedConversationForm
+            initialData={initialIdea ? { business_idea: initialIdea } : undefined}
+            onComplete={handleFormComplete}
+            useAuthenticatedFlow={true}
+            userId={user?.id}
+            skipDraftLoad={true} // Always start fresh when clicking "New Plan"
+          />
+        </main>
+      </div>
     </div>
   );
 }
