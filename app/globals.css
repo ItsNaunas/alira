@@ -37,12 +37,9 @@
 }
 
 body {
+  @apply font-sans font-normal text-lg leading-relaxed;
   color: hsl(var(--foreground));
   background: hsl(var(--background));
-  font-family: 'Lato', sans-serif;
-  font-weight: 400;
-  font-size: 18px; /* Increased from default 16px */
-  line-height: 1.6;
   overflow-x: hidden;
 }
 
@@ -52,14 +49,11 @@ html {
 
 /* ALIRA. Typography */
 .alira-heading {
-  font-family: 'Lato', sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  @apply font-serif font-bold tracking-tight;
 }
 
 .alira-body {
-  font-family: 'Lato', sans-serif;
-  font-weight: 400;
+  @apply font-sans font-normal;
 }
 
 /* ALIRA. Design System Utilities */
@@ -78,33 +72,17 @@ html {
 }
 
 .heading-eyebrow {
-  font-family: 'Lato', sans-serif;
-  font-size: 1rem; /* Increased from 0.875rem */
-  line-height: 1.5;
-  font-weight: 700;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  @apply font-sans text-base leading-normal font-bold text-text-secondary uppercase tracking-wider;
 }
 
 .h2 {
-  font-family: 'Lato', sans-serif;
-  font-size: 2.75rem; /* Increased from 2.25rem */
-  line-height: 1.2;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  @apply font-sans text-4xl leading-tight font-bold text-text-primary tracking-tight;
 }
 
 /* dark variant removed */
 
 .h3 {
-  font-family: 'Lato', sans-serif;
-  font-size: 1.875rem; /* Increased from 1.5rem */
-  line-height: 1.4;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  @apply font-sans text-2xl leading-snug font-bold text-text-primary tracking-tight;
 }
 
 /* dark variant removed */
@@ -613,127 +591,79 @@ select:focus-visible {
 
 /* Display Text - Large, attention-grabbing headlines */
 .text-display-1 {
-  font-family: 'Instrument Serif', Georgia, serif;
+  @apply font-serif font-normal leading-none tracking-tight;
   font-size: clamp(3rem, 8vw, 6rem);
-  line-height: 1.1;
-  font-weight: 400;
-  letter-spacing: -0.02em;
 }
 
 .text-display-2 {
-  font-family: 'Instrument Serif', Georgia, serif;
+  @apply font-serif font-normal leading-none tracking-tight;
   font-size: clamp(2.5rem, 6vw, 4.5rem);
-  line-height: 1.1;
-  font-weight: 400;
-  letter-spacing: -0.02em;
 }
 
 /* Headings - Section and subsection titles */
 .text-heading-1 {
-  font-family: 'Instrument Serif', Georgia, serif;
+  @apply font-serif font-normal leading-tight tracking-tight;
   font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.2;
-  font-weight: 400;
-  letter-spacing: -0.02em;
 }
 
 .text-heading-2 {
-  font-family: 'Lato', sans-serif;
+  @apply font-serif font-bold leading-tight tracking-tight;
   font-size: clamp(1.75rem, 4vw, 2.75rem);
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.02em;
 }
 
 .text-heading-3 {
-  font-family: 'Lato', sans-serif;
+  @apply font-serif font-bold leading-snug tracking-tight;
   font-size: clamp(1.5rem, 3vw, 2rem);
-  line-height: 1.3;
-  font-weight: 700;
-  letter-spacing: -0.01em;
 }
 
 .text-heading-4 {
-  font-family: 'Lato', sans-serif;
-  font-size: 1.25rem;
-  line-height: 1.4;
-  font-weight: 600;
+  @apply font-serif text-xl leading-snug font-semibold;
 }
 
 .text-heading-5 {
-  font-family: 'Lato', sans-serif;
-  font-size: 1.125rem;
-  line-height: 1.4;
-  font-weight: 600;
+  @apply font-serif text-lg leading-snug font-semibold;
 }
 
 /* Body Text - Main content text */
 .text-body-xl {
-  font-family: 'Lato', sans-serif;
-  font-size: 1.25rem;
-  line-height: 1.7;
-  font-weight: 400;
+  @apply font-sans text-xl leading-relaxed font-normal;
 }
 
 .text-body-large {
-  font-family: 'Lato', sans-serif;
-  font-size: 1.125rem;
-  line-height: 1.6;
-  font-weight: 400;
+  @apply font-sans text-lg leading-relaxed font-normal;
 }
 
 .text-body {
-  font-family: 'Lato', sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  font-weight: 400;
+  @apply font-sans text-base leading-relaxed font-normal;
 }
 
 .text-body-small {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  font-weight: 400;
+  @apply font-sans text-sm leading-normal font-normal;
 }
 
 /* Captions & Labels - Small, supplementary text */
 .text-caption {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.75rem;
-  line-height: 1.4;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  @apply font-sans text-xs leading-snug font-normal uppercase tracking-wider;
 }
 
 .text-label {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.4;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  @apply font-sans text-sm leading-snug font-semibold tracking-tight;
 }
 
 /* Eyebrow Text - Small overline text above headings */
 .text-eyebrow {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-secondary);
+  @apply font-sans text-sm leading-normal font-bold uppercase tracking-wider text-text-secondary;
 }
 
 /* gold reserved for accents; not body copy */
 
 /* Utility Text Classes */
 .text-serif {
-  font-family: 'Instrument Serif', Georgia, serif;
+  @apply font-serif;
 }
 
 .text-sans {
-  font-family: 'Lato', sans-serif;
+  @apply font-sans;
 }
 
 /* Text Weights */

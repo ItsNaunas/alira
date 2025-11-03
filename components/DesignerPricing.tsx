@@ -1,12 +1,6 @@
 'use client';
 
-import { Instrument_Serif } from 'next/font/google';
 import { cn } from '@/lib/utils';
-
-const serif = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
-});
 
 export default function DesignerPricing() {
   return (
@@ -18,8 +12,7 @@ export default function DesignerPricing() {
               <h1 className="mb-6 text-4xl leading-tight font-serif font-bold tracking-tight sm:text-5xl lg:text-6xl">
                 <span
                   className={cn(
-                    'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal tracking-tight text-accent-dark',
-                    serif.className,
+                    'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-normal tracking-tight text-accent-dark',
                   )}
                 >
                   Choose Your
@@ -27,8 +20,7 @@ export default function DesignerPricing() {
                 <br />
                 <span
                   className={cn(
-                    'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-text-primary',
-                    serif.className,
+                    'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-normal tracking-tight text-text-primary',
                   )}
                 >
                   Growth Journey

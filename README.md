@@ -13,7 +13,7 @@ This website is **only the first step** of a larger system where every client en
 - **Purpose:** ALIRA. exists to bring clarity and structure to overloaded business owners. Every new enquiry should feel like the start of a tailored, professional journey - no blank pages, no wasted time.
 - **Branding:** Clarity over clutter, discipline over distraction, elegance over noise, systems that last.
 - **Identity:** Minimal, high contrast, restrained accents. Logo always "ALIRA." with full stop.
-- **Visuals:** Onyx black, porcelain white, royal gold, midnight blue. Times New Roman for formal headings/documents; Inter/Helvetica Neue for digital UI.
+- **Visuals:** Onyx black, porcelain white, royal gold, midnight blue. Instrument Serif for headings; Lato for body text and UI.
 
 ## Tech Stack
 

@@ -286,6 +286,9 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
                 )}>
                   <Textarea
                     ref={textareaRef}
+                    id={`step-${currentStep.stepNumber}-input`}
+                    aria-label={currentStep.question}
+                    aria-describedby={`step-${currentStep.stepNumber}-helper`}
                     value={currentInput}
                     onChange={(e) => setCurrentInput(e.target.value)}
                     onKeyDown={handleKeyDown}
@@ -299,8 +302,8 @@ export default function MultiStepForm({ userId, initialData, onComplete }: Multi
                     disabled={isSubmitting}
                   />
                   <div className="px-6 pb-4 flex items-center justify-between text-xs text-text-tertiary">
-                    <span>{currentStep.helperText}</span>
-                    <span>{currentInput.length} characters</span>
+                    <span id={`step-${currentStep.stepNumber}-helper`}>{currentStep.helperText}</span>
+                    <span aria-live="polite" aria-atomic="true">{currentInput.length} characters</span>
                   </div>
                 </div>
 

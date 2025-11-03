@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       to: email,
       subject: 'Continue Your Business Plan Form',
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="font-family: 'Lato', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h1 style="color: #1a1a1a; margin-bottom: 20px;">Don't lose your progress!</h1>
           
           <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">

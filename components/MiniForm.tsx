@@ -7,6 +7,7 @@ import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { Card, CardContent } from './ui/card'
+import { FormField } from './ui/form-field'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import { conversionEvents } from '@/lib/analytics'
 import { miniFormSchema, type MiniFormData } from '@/lib/schema'
@@ -91,48 +92,52 @@ export default function MiniForm({ onSuccess }: MiniFormProps) {
 
   return (
     <Card className="max-w-md mx-auto">
-      <CardContent className="p-6">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
-              First Name *
-            </label>
+      <CardContent className="p-4 sm:p-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            label="First Name"
+            htmlFor="firstName"
+            required
+            hint="Please provide your first name"
+            error={errors.firstName?.message}
+          >
             <Input
+              id="firstName"
               {...register('firstName')}
               placeholder="Your first name"
-              className="w-full text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40"
+              className="w-full"
             />
-            {errors.firstName && (
-              <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.firstName.message}</p>
-            )}
-          </div>
+          </FormField>
 
-          <div>
-            <label className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
-              Email *
-            </label>
+          <FormField
+            label="Email"
+            htmlFor="email"
+            required
+            hint="We'll use this to contact you"
+            error={errors.email?.message}
+          >
             <Input
+              id="email"
               {...register('email')}
               type="email"
               placeholder="your@email.com"
-              className="w-full text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40"
+              className="w-full"
             />
-            {errors.email && (
-              <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.email.message}</p>
-            )}
-          </div>
+          </FormField>
 
-          <div>
-            <label className="block text-sm font-sans font-light text-alira-primary dark:text-alira-white mb-2">
-              Tell us your idea in one line (optional)
-            </label>
+          <FormField
+            label="Tell us your idea in one line"
+            htmlFor="idea"
+            hint="Optional - A brief description of your business idea"
+          >
             <Textarea
+              id="idea"
               {...register('idea')}
               placeholder="e.g., A mobile app for local food delivery"
               rows={2}
-              className="w-full resize-none text-alira-primary dark:text-alira-white placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40"
+              className="w-full resize-none"
             />
-          </div>
+          </FormField>
 
           <Button
             type="submit"

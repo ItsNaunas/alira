@@ -13,7 +13,6 @@
  * Protected Routes:
  * - /dashboard - User dashboard
  * - /form-chat - Conversational form
- * - /results - Results page
  * - /api/generate - AI generation endpoints
  * - /api/draft/* - Draft management endpoints
  */
@@ -28,7 +27,6 @@ import { NextResponse, type NextRequest } from 'next/server'
 const PROTECTED_ROUTES = [
   '/dashboard',
   '/form-chat',
-  '/results',
   '/api/generate',
   '/api/draft/create',
   '/api/draft/save',

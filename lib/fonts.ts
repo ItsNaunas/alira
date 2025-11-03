@@ -92,11 +92,11 @@ export const fontStyles = {
     fontWeight: 600,
   },
   body: {
-    fontFamily: '"Lato", "Inter", "Helvetica Neue", sans-serif',
+    fontFamily: '"Lato", "Helvetica Neue", "Arial", sans-serif',
     fontWeight: 400,
   },
   label: {
-    fontFamily: '"Lato", "Inter", "Helvetica Neue", sans-serif',
+    fontFamily: '"Lato", "Helvetica Neue", "Arial", sans-serif',
     fontWeight: 500,
   },
   subtext: {
