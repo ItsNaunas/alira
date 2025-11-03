@@ -158,6 +158,7 @@ function FormChatContent() {
           onComplete={handleFormComplete}
           useAuthenticatedFlow={true}
           userId={user?.id}
+          skipDraftLoad={true} // Always start fresh when clicking "New Plan"
         />
       </main>
     </div>

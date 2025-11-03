@@ -50,6 +50,7 @@ interface SegmentedConversationFormProps {
   onComplete: (data: WizardFormData) => Promise<void>
   useAuthenticatedFlow?: boolean
   userId?: string
+  skipDraftLoad?: boolean // If true, skip loading drafts (for new plans)
 }
 
 // Simple industry inference from text
@@ -137,7 +138,8 @@ export default function SegmentedConversationForm({
   initialData,
   onComplete,
   useAuthenticatedFlow = false,
-  userId
+  userId,
+  skipDraftLoad = false
 }: SegmentedConversationFormProps) {
   const [segments, setSegments] = useState<ConversationSegment[]>(() => {
     return SEGMENT_DEFINITIONS.map(def => ({
@@ -186,6 +188,13 @@ export default function SegmentedConversationForm({
   // Load draft on mount
   useEffect(() => {
     const loadDraft = async () => {
+      // Skip draft loading if explicitly requested (for new plans)
+      if (skipDraftLoad) {
+        setIsLoadingDraft(false)
+        initializeFirstQuestion()
+        return
+      }
+      
       if (!useAuthenticatedFlow || !userId) {
         setIsLoadingDraft(false)
         initializeFirstQuestion()
@@ -368,7 +377,7 @@ export default function SegmentedConversationForm({
 
     loadDraft()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [useAuthenticatedFlow, userId])
+  }, [useAuthenticatedFlow, userId, skipDraftLoad])
 
   // Handle user sending a message (defined early for use in initialization)
   const handleUserMessage = async (messageContent: string) => {
