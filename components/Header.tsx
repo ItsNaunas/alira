@@ -305,7 +305,7 @@ export default function Header() {
                 setIsSignUp={setIsSignUp}
                 onSuccess={() => {
                   setShowAuthModal(false)
-                  router.push('/dashboard')
+                  // Stay on current page after login - user can navigate to dashboard manually
                 }}
               />
             </motion.div>

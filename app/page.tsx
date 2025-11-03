@@ -1,9 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import React from 'react'
-import { useRouter } from 'next/navigation'
-import { auth } from '@/lib/supabase-client'
 
 import WhatYouGet from '@/components/WhatYouGet'
 import TeamFlipCards from '@/components/TeamFlipCards'
@@ -29,22 +26,6 @@ import Link from 'next/link'
 import { conversionEvents } from '@/lib/analytics'
 
 export default function Home() {
-  const router = useRouter()
-  
-  // Check if user is logged in and redirect to dashboard
-  React.useEffect(() => {
-    const checkAuthAndRedirect = async () => {
-      const { user } = await auth.getUser()
-      
-      // If user is logged in, redirect to dashboard
-      if (user) {
-        router.push('/dashboard')
-      }
-    }
-    
-    checkAuthAndRedirect()
-  }, [router])
-  
   // Track page view
   React.useEffect(() => {
     if (typeof window !== 'undefined') {

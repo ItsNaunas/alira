@@ -62,7 +62,7 @@ export const auth = {
         data: {
           full_name: fullName,
         },
-        emailRedirectTo: `${getURL()}auth/callback?next=/dashboard`, // Redirect to auth callback, then dashboard
+        emailRedirectTo: `${getURL()}auth/callback`, // Redirect to auth callback, defaults to homepage
       },
     })
     
