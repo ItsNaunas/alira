@@ -1,139 +1,172 @@
 <!-- 24e953d5-db3c-4166-89e2-704689cf5654 722401c0-9f25-41dc-b55b-36be2c40a067 -->
-# Smart Follow-Up Question System Implementation
+# Enhanced Plan Generation & Security Fixes
 
-## Overview
+## Phase 1: Security Fixes - Plan Ownership Protection
 
-Reduce annoying follow-up questions by implementing smarter evaluation logic that uses segment-specific thresholds, respects AI's boolean assessment, and offers optional clarifications instead of forced prompts.
+### 1.1 Database Migration: Secure Generations Table
 
-## Files to Modify
+**File**: `db/migrations/009_secure_generations_user_id.sql`
 
-### 1. `components/SegmentedConversationForm.tsx`
+- Backfill any NULL user_ids from dashboard ownership
+- Delete orphaned generations that can't be recovered
+- Add NOT NULL constraint to `generations.user_id` column
+- Ensure RLS is enabled
+- Recreate RLS policies with explicit NULL checks
+- Add index on `user_id` for performance
 
-#### Add Helper Functions (after SEGMENT_DEFINITIONS, around line 110)
+**Security Impact**: Prevents future orphaned plans and ensures all plans are properly associated with users.
 
-- Add `getThresholdForSegment(segmentIndex: number): number` function
-  - Returns segment-specific detail score thresholds
-  - Business idea (0): 7, Challenges (1): 6, Goals (2): 6, Services (3): 5
-- Add `getMaxLengthForSegment(segmentIndex: number): number` function
-  - Returns maximum acceptable response length per segment
-  - Business idea: 150 chars, Challenges: 120, Goals: 120, Services: 50
+### 1.2 API Code Fix: Remove Fallback Logic
 
-#### Update Follow-Up Logic (replace lines 419-495)
+**File**: `app/api/generate-plan/route.ts` (lines 188-294)
 
-Replace current `needsFollowUp` calculation with smart multi-tier logic:
+- Remove fallback logic that creates plans without user_id
+- Require user_id in insertData (never optional)
+- Fail hard with clear error if user_id column issue detected
+- Add verification check after insert to ensure user_id was set correctly
+- Delete and throw error if generation created without proper user_id
+- Always filter dashboard updates by user_id for security
 
-1. **Primary check**: Use `hasEnoughDetail` boolean as primary gate
-   ```typescript
-   const definitelyNeedsFollowUp = !evaluation.hasEnoughDetail 
-     && evaluation.detailScore < getThresholdForSegment(currentSegmentIndex)
-     && responseLength < getMaxLengthForSegment(currentSegmentIndex)
-     && currentSegment.followUpCount < currentSegment.maxFollowUps
-   ```
+**Security Impact**: Prevents bypassing user ownership checks and ensures API enforces security.
 
-2. **Optional follow-up check**: For "good but could be better" (scores 6-7)
-   ```typescript
-   const optionalFollowUp = evaluation.hasEnoughDetail 
-     && evaluation.detailScore >= 6 
-     && evaluation.detailScore < 8
-     && currentSegment.followUpCount === 0
-     && evaluation.suggestedImprovements?.length > 0
-   ```
+## Phase 2: Enhanced Plan Generation - Active Methodology Application
 
-3. **Flow control**:
+### 2.1 Enhanced Business Case Prompt Structure
 
-   - If `definitelyNeedsFollowUp`: Show required follow-up question (current behavior)
-   - Else if `optionalFollowUp`: Show optional prompt with "Add More Detail" button
-   - Else: Accept and complete segment
+**File**: `lib/openai.ts` - `buildBusinessCasePrompt()` function (lines 41-118)
 
-#### Add Optional Follow-Up UI Component (new component or inline)
+**Changes**:
 
-Create inline optional prompt UI that shows when `optionalFollowUp` is true:
+- Transform from passive methodology mention to mandatory framework application
+- Require explicit "5 Whys" chain in problem statement output
+- Mandate quantified impact using UK benchmarks
+- Force industry-specific metrics in objectives and outcomes
+- Require stage-appropriate timeline and investment ranges
+- Add explicit framework demonstration requirements
 
-- Display friendly message: "This is good! Want to add more detail? It'll help us create an even better plan."
-- Show "Add More Detail" button (triggers follow-up question)
-- Show "That's Enough" button (accepts and completes segment)
-- Style similar to SegmentCompletion but with gold/blue accent
-- Position after user message, before completion screen
+**Key Enhancement**: Change from "Use 5 Whys" to "MUST include 5 Whys chain: [format]"
 
-#### Update Segment Completion Flow
+### 2.2 Extended Business Case Interface
 
-When optional follow-up is skipped, show standard completion screen. When "Add More Detail" is clicked, generate and show follow-up question.
+**File**: `lib/openai.ts` - `BusinessCaseOutline` interface (lines 120-136)
 
-### 2. `lib/ai-conversation.ts`
+**Add new fields**:
 
-#### Improve Evaluation Prompt (lines 49-79)
+```typescript
+root_cause_analysis: {
+  five_whys_chain: string[]  // Explicit chain
+  root_cause: string
+  symptoms_vs_causes: { symptom: string, root_cause: string }[]
+}
+industry_analysis: {
+  context: string
+  benchmarks_comparison: Record<string, string>
+  stage_specific_insights: string
+}
+methodology_applied: string[]  // ["5 Whys", "UK Benchmarking", etc.]
+```
 
-Update system prompt to be more lenient for "good enough" answers:
+### 2.3 Enhanced Prompt Instructions
 
-1. Update scoring guidance:
+**File**: `lib/openai.ts` - Update prompt JSON schema (lines 79-117)
 
-   - Change "5-7: Good but could use more detail" to "6-7: Good detail, acceptable but could be enhanced"
-   - Add note: "Accept answers with score 6+ as sufficient unless they're very short"
+**Changes**:
 
-2. Improve `hasEnoughDetail` logic:
+- Update problem_statement requirement to explicitly format 5 Whys chain
+- Add root_cause_analysis section with mandatory chain
+- Add industry_analysis section requiring benchmark comparisons
+- Add methodology_applied array tracking which frameworks were used
+- Enhance expected_outcomes to require specific metric comparisons to benchmarks
 
-   - Set `hasEnoughDetail: true` for scores 6+ if response shows understanding
-   - Only set `hasEnoughDetail: false` for scores < 6 or very vague answers
-   - Add instruction: "Be reasonable - if answer addresses the question clearly, mark hasEnoughDetail: true even if score is 6-7"
+### 2.4 Methodology Context Extraction from Conversation
 
-3. Update consistency check (lines 106-111):
+**File**: `app/api/generate-plan/route.ts` (around line 111)
 
-   - Adjust to accept scores 6+ as "hasEnoughDetail: true"
-   - Only force `hasEnoughDetail: false` for scores < 5
+**Add before generateBusinessCase call**:
 
-### 3. Optional: Create `components/OptionalFollowUp.tsx` (optional - can be inline)
+- Extract methodology insights from conversation segments
+- Build explicit 5 Whys chain from user's challenge responses
+- Extract mentioned metrics and quantify impacts
+- Pass methodology context to AI generation
 
-If we extract to separate component:
+### 2.5 Conversation Integration - Methodology Indicators
 
-- Props: `onAddMore: () => void`, `onSkip: () => void`, `suggestions?: string[]`
-- Styling: Matches existing design system (alira-gold accents, rounded borders)
-- Animation: Fade in similar to SegmentCompletion
-- Mobile: Responsive button layout
+**File**: `components/SegmentedConversationForm.tsx`
 
-## Implementation Details
+**Add visual indicators**:
 
-### Smart Threshold Logic
+- Show methodology badges during conversation ("Applying 5 Whys Analysis", "Industry Context Active")
+- Display mini-progress: "Analyzing root causes...", "Applying UK benchmarks..."
+- Add contextual hints explaining why specific questions are asked
+- Show which frameworks are being applied in real-time
 
-- Business Idea segment: Needs most detail (threshold: 7, max length: 150)
-- Challenges segment: Moderate detail okay (threshold: 6, max length: 120)
-- Goals segment: Moderate detail okay (threshold: 6, max length: 120)
-- Services segment: Minimal (threshold: 5, max length: 50) - though this is selection-based
+**Location**: Around message rendering area (lines 1087-1102)
 
-### User Experience Flow
+## Phase 3: Output Display Enhancements
 
-1. User submits answer
-2. AI evaluates (returns score + hasEnoughDetail boolean)
-3. If definitely needs follow-up (score < threshold AND hasEnoughDetail = false):
+### 3.1 Dashboard Plan Display
 
-   - Show required follow-up question
+**Files**: Dashboard components showing generated plans
 
-4. Else if optional follow-up (score 6-7 AND first follow-up):
+**Add**:
 
-   - Show optional prompt with two buttons
+- Methodology framework badges on plan sections
+- Visual indicators showing which frameworks were applied
+- Framework-specific sections display (5 Whys chain visualization, benchmark comparisons)
+- Industry analysis section with metrics comparison
 
-5. Else (good enough):
+### 3.2 PDF Generation Updates
 
-   - Accept and show completion screen
+**File**: `lib/enhanced-pdf.ts` or PDF generation files
 
-### Error Handling
+**Add**:
 
-- Maintain existing error handling for API failures
-- If optional follow-up generation fails, just accept the answer (better UX than blocking)
+- Methodology sections in PDF output
+- Visual representation of 5 Whys chain
+- Industry benchmark comparison tables
+- Framework badges/indicators in PDF layout
 
-## Testing Considerations
+## Phase 4: Validation & Quality Checks
 
-- Test with very short answers (<50 chars) - should trigger required follow-up
-- Test with medium answers (100-150 chars, score 6-7) - should show optional prompt
-- Test with good answers (200+ chars, score 8+) - should accept immediately
-- Test each segment to ensure thresholds work correctly
-- Test edge cases: API failures, invalid responses
+### 4.1 Enhanced Quality Validation
 
-## Expected Outcomes
+**File**: `lib/business-case-quality.ts` (if exists) or create new
 
-- 60-70% reduction in forced follow-up questions
-- Better user experience with choice-based flow
-- Still maintains quality by asking when truly needed
-- More respectful of user intent via AI's boolean assessment
+**Add checks**:
+
+- Verify 5 Whys chain exists and is complete
+- Validate root cause vs symptoms distinction
+- Check industry metrics are included
+- Verify UK benchmarks are referenced
+- Ensure methodology_applied array is populated
+
+### 4.2 Logging & Monitoring
+
+**Files**: `app/api/generate-plan/route.ts`, `lib/openai.ts`
+
+**Add**:
+
+- Log which methodologies were applied
+- Track if root cause analysis was properly executed
+- Monitor benchmark usage in generated plans
+- Alert if methodology sections are missing
+
+## Implementation Order
+
+1. **Phase 1** (Security) - Critical, do first
+2. **Phase 2.1-2.3** (Prompt & Interface) - Core methodology enhancement
+3. **Phase 2.4** (Context Extraction) - Improves AI input
+4. **Phase 2.5** (UI Indicators) - User experience
+5. **Phase 3** (Display) - Output presentation
+6. **Phase 4** (Validation) - Quality assurance
+
+## Testing Requirements
+
+- Security: Verify all plans have user_id and RLS blocks unauthorized access
+- Methodology: Verify 5 Whys chains appear in generated plans
+- Industry Context: Verify benchmarks and metrics are used appropriately
+- UI: Verify methodology indicators show during conversation
+- Output: Verify framework badges appear on generated plans
 
 ### To-dos
 

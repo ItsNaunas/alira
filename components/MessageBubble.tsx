@@ -24,8 +24,9 @@ export function MessageBubble({ role, content, timestamp, isTyping = false }: Me
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       className={cn(
-        'flex items-start gap-3 mb-4',
-        isUser ? 'justify-end' : 'justify-start'
+        'flex items-start gap-3',
+        isUser ? 'justify-end' : 'justify-start',
+        isMobile ? 'mb-4' : 'mb-6' // More spacing on desktop
       )}
     >
       {isAssistant && (
@@ -38,12 +39,15 @@ export function MessageBubble({ role, content, timestamp, isTyping = false }: Me
 
       <div
         className={cn(
-          'max-w-[70%] sm:max-w-[75%] rounded-2xl px-4 py-3',
-          'text-sm sm:text-base shadow-sm',
+          'rounded-2xl px-4 py-3 shadow-sm',
+          'text-sm sm:text-base',
           isUser
             ? 'bg-alira-gold text-alira-primary rounded-br-sm shadow-md'
             : 'bg-alira-primary/10 dark:bg-alira-primary/80 text-alira-primary dark:text-alira-white rounded-bl-sm border border-alira-primary/20 dark:border-alira-white/20',
-          isMobile && 'max-w-[85%]'
+          // Width: mobile gets 85%, tablet 75%, desktop gets wider (60-70%)
+          isMobile 
+            ? 'max-w-[85%]' 
+            : 'max-w-[65%] md:max-w-[70%]'
         )}
       >
         {isTyping ? (

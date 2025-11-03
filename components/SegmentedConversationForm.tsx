@@ -13,7 +13,7 @@ import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard'
 import { useAutoSave } from '@/hooks/use-auto-save'
 import { createClient } from '@/lib/supabase-client'
 import { cn } from '@/lib/utils'
-import { ArrowUpIcon, Bot } from 'lucide-react'
+import { ArrowUpIcon, Bot, ArrowRight } from 'lucide-react'
 import { Spinner } from '@/components/ui/spinner'
 import type { ResponseEvaluation } from '@/lib/ai-conversation'
 import type { WizardFormData } from '@/lib/schema'
@@ -642,6 +642,25 @@ export default function SegmentedConversationForm({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [currentSegment.messages, isEvaluating])
 
+  // Auto-scroll when segment completes
+  const completionRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (currentSegment.isComplete && currentSegmentIndex < segments.length - 1) {
+      // Small delay to ensure completion card is rendered, then scroll to show it and hint at floating button
+      setTimeout(() => {
+        if (completionRef.current) {
+          completionRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+        // Also scroll a bit more on mobile to show floating button hint
+        if (isMobile) {
+          setTimeout(() => {
+            window.scrollBy({ top: 100, behavior: 'smooth' })
+          }, 500)
+        }
+      }, 300)
+    }
+  }, [currentSegment.isComplete, currentSegmentIndex, isMobile])
+
   // Auto-save integration
   const formDataForAutoSave: Partial<WizardFormData> = {
     business_idea: segments[0].data || undefined,
@@ -817,8 +836,11 @@ export default function SegmentedConversationForm({
           totalSegments={segments.length}
         />
 
-        <div className="flex-1 container mx-auto px-4 sm:px-6 py-6 max-w-4xl">
-          <div className="max-w-2xl mx-auto">
+        <div className="flex-1 container mx-auto px-4 sm:px-6 py-6 max-w-5xl">
+          <div className={cn(
+            "mx-auto",
+            isMobile ? "max-w-full" : "max-w-4xl"
+          )}>
             <h2 className="text-2xl font-sans font-medium text-text-primary mb-2">
               {currentSegment.title}
             </h2>
@@ -880,8 +902,11 @@ export default function SegmentedConversationForm({
           totalSegments={segments.length}
         />
 
-        <div className="flex-1 container mx-auto px-4 sm:px-6 py-6 max-w-4xl">
-          <div className="max-w-2xl mx-auto">
+        <div className="flex-1 container mx-auto px-4 sm:px-6 py-6 max-w-5xl">
+          <div className={cn(
+            "mx-auto",
+            isMobile ? "max-w-full" : "max-w-4xl"
+          )}>
             <h2 className="text-2xl font-sans font-medium text-text-primary mb-2">
               Review Your Answers
             </h2>
@@ -964,8 +989,11 @@ export default function SegmentedConversationForm({
       />
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto container mx-auto px-4 sm:px-6 py-6 max-w-4xl">
-        <div className="max-w-2xl mx-auto">
+      <div className="flex-1 overflow-y-auto container mx-auto px-4 sm:px-6 py-6 max-w-5xl">
+        <div className={cn(
+          "mx-auto transition-all duration-300",
+          isMobile ? "max-w-full" : "max-w-4xl"
+        )}>
           {/* Show optional follow-up prompt */}
           {currentSegment.showOptionalFollowUp && (
             <motion.div
@@ -1067,23 +1095,63 @@ export default function SegmentedConversationForm({
 
           {/* Show completion if segment just completed */}
           {currentSegment.isComplete && currentSegmentIndex < segments.length - 1 && (
-            <SegmentCompletion
-              segmentTitle={currentSegment.title}
-              summary={`We've gathered enough detail about ${currentSegment.title.toLowerCase()}. Ready to move on?`}
-              onContinue={moveToNextSegment}
-            />
+            <div ref={completionRef} className="mb-4 sm:mb-6">
+              <SegmentCompletion
+                segmentTitle={currentSegment.title}
+                summary={`We've gathered enough detail about ${currentSegment.title.toLowerCase()}. Ready to move on?`}
+                onContinue={moveToNextSegment}
+              />
+            </div>
           )}
 
           {/* Messages */}
           <AnimatePresence>
-            {currentSegment.messages.map((message) => (
-              <MessageBubble
-                key={message.id}
-                role={message.role}
-                content={message.content}
-                timestamp={message.timestamp}
-              />
-            ))}
+            {currentSegment.messages.map((message, index) => {
+              // Show methodology indicators for assistant messages in challenge/goals segments
+              const showMethodologyIndicators = 
+                message.role === 'assistant' && 
+                (currentSegment.id === 'challenges' || currentSegment.id === 'goals')
+              
+              // Determine which frameworks are active based on segment
+              const activeMethodologies = showMethodologyIndicators
+                ? (currentSegment.id === 'challenges'
+                    ? ['5 Whys Analysis', 'Root Cause Analysis']
+                    : currentSegment.id === 'goals'
+                    ? ['UK Benchmarking', 'Industry Metrics']
+                    : [])
+                : []
+              
+              return (
+                <div key={message.id}>
+                  {showMethodologyIndicators && activeMethodologies.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-2 flex flex-wrap gap-2 items-center"
+                    >
+                      <span className="text-xs text-text-tertiary font-medium">
+                        Applying:
+                      </span>
+                      {activeMethodologies.map((methodology) => (
+                        <motion.span
+                          key={methodology}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          className="px-2 py-1 text-xs font-medium rounded-full bg-alira-gold/20 dark:bg-alira-gold/10 text-alira-gold border border-alira-gold/30"
+                        >
+                          {methodology}
+                        </motion.span>
+                      ))}
+                    </motion.div>
+                  )}
+                  <MessageBubble
+                    role={message.role}
+                    content={message.content}
+                    timestamp={message.timestamp}
+                  />
+                </div>
+              )
+            })}
           </AnimatePresence>
 
           {/* AI Processing indicator */}
@@ -1099,7 +1167,10 @@ export default function SegmentedConversationForm({
                   <Bot className="w-4 h-4 text-alira-primary dark:text-alira-white animate-pulse" />
                 </div>
               </div>
-              <div className="max-w-[70%] sm:max-w-[75%] rounded-2xl rounded-bl-sm px-4 py-3 bg-alira-primary/10 dark:bg-alira-primary/80 border border-alira-primary/20 dark:border-alira-white/20">
+              <div className={cn(
+                "rounded-2xl rounded-bl-sm px-4 py-3 bg-alira-primary/10 dark:bg-alira-primary/80 border border-alira-primary/20 dark:border-alira-white/20",
+                isMobile ? "max-w-[85%]" : "max-w-[65%] md:max-w-[70%]"
+              )}>
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-alira-primary/70 dark:text-alira-white/70">Analyzing your response</span>
                   <div className="flex gap-1">
@@ -1128,55 +1199,98 @@ export default function SegmentedConversationForm({
         </div>
       </div>
 
-      {/* Input area */}
-      <div className="sticky bottom-0 bg-bg-page/95 backdrop-blur-sm border-t border-borderToken-subtle px-4 sm:px-6 py-4 safe-area-inset-bottom">
-        <div className="max-w-2xl mx-auto">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              handleUserMessage(inputValue)
-            }}
-            className="flex items-end gap-3"
+      {/* Floating Continue Button - Shows when segment is complete */}
+      {currentSegment.isComplete && currentSegmentIndex < segments.length - 1 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.3 }}
+          className={cn(
+            "fixed left-1/2 transform -translate-x-1/2 z-50 px-4 w-full mx-auto",
+            isMobile ? "bottom-4 pb-safe" : "bottom-6",
+            !isMobile && "max-w-sm"
+          )}
+          style={isMobile ? { paddingBottom: 'env(safe-area-inset-bottom)' } : {}}
+        >
+          <Button
+            onClick={moveToNextSegment}
+            className={cn(
+              'w-full bg-alira-gold text-alira-primary hover:bg-alira-gold/90',
+              'shadow-2xl shadow-alira-gold/30',
+              'font-medium rounded-xl transition-all',
+              'active:scale-95',
+              !isMobile && 'hover:scale-105',
+              isMobile 
+                ? 'text-base py-4 px-5 min-h-[52px]' // Larger mobile touch target
+                : 'text-base py-4 px-6'
+            )}
           >
-            <Textarea
-              ref={inputRef}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
-                  if (inputValue.trim() && !isEvaluating) {
-                    handleUserMessage(inputValue)
-                  }
-                }
+            Continue to Next Section
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
+        </motion.div>
+      )}
+
+      {/* Input area - Hidden when segment is complete */}
+      {!currentSegment.isComplete && (
+        <div className="sticky bottom-0 bg-bg-page/95 backdrop-blur-sm border-t border-borderToken-subtle px-4 sm:px-6 py-4 safe-area-inset-bottom shadow-lg">
+          <div className={cn(
+            "mx-auto transition-all duration-300",
+            isMobile ? "max-w-full" : "max-w-4xl"
+          )}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                handleUserMessage(inputValue)
               }}
-              placeholder={isEvaluating ? "AI is analyzing..." : "Type your answer here..."}
-              rows={isMobile ? 3 : 2}
-              disabled={isEvaluating}
               className={cn(
-                'flex-1 resize-none rounded-xl border-2 transition-all',
-                isEvaluating 
-                  ? 'bg-alira-primary/5 dark:bg-alira-primary/40 border-alira-primary/20 dark:border-alira-white/10 cursor-wait placeholder:text-alira-primary/30'
-                  : 'bg-alira-primary/10 dark:bg-alira-primary/80 border-alira-primary/20 dark:border-alira-white/20 placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20',
-                'text-alira-primary dark:text-alira-white',
-                'text-base focus:outline-none', // Prevent zoom on iOS
-                isMobile && 'text-base' // Ensure 16px+ on mobile
-              )}
-            />
-            <Button
-              type="submit"
-              disabled={!inputValue.trim() || isEvaluating}
-              className={cn(
-                'rounded-xl bg-alira-gold text-alira-primary hover:bg-alira-gold/90',
-                'min-w-[44px] min-h-[44px]', // Mobile touch target
-                'disabled:opacity-50 disabled:cursor-not-allowed'
+                "flex items-end gap-3",
+                !isMobile && "gap-4" // More spacing on desktop
               )}
             >
-              <ArrowUpIcon className="w-5 h-5" />
-            </Button>
-          </form>
+              <Textarea
+                ref={inputRef}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    if (inputValue.trim() && !isEvaluating) {
+                      handleUserMessage(inputValue)
+                    }
+                  }
+                }}
+                placeholder={isEvaluating ? "AI is analyzing..." : "Type your answer here..."}
+                rows={isMobile ? 3 : 3}
+                disabled={isEvaluating}
+                className={cn(
+                  'flex-1 resize-none rounded-xl border-2 transition-all',
+                  isEvaluating 
+                    ? 'bg-alira-primary/5 dark:bg-alira-primary/40 border-alira-primary/20 dark:border-alira-white/10 cursor-wait placeholder:text-alira-primary/30'
+                    : 'bg-alira-primary/10 dark:bg-alira-primary/80 border-alira-primary/20 dark:border-alira-white/20 placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20',
+                  'text-alira-primary dark:text-alira-white',
+                  'text-base focus:outline-none', // Prevent zoom on iOS
+                  isMobile && 'text-base', // Ensure 16px+ on mobile
+                  !isMobile && 'px-5 py-4 text-base' // Better desktop sizing
+                )}
+              />
+              <Button
+                type="submit"
+                disabled={!inputValue.trim() || isEvaluating}
+                className={cn(
+                  'rounded-xl bg-alira-gold text-alira-primary hover:bg-alira-gold/90 transition-all',
+                  'min-w-[44px] min-h-[44px]', // Mobile touch target
+                  'disabled:opacity-50 disabled:cursor-not-allowed',
+                  !isMobile && 'min-w-[52px] min-h-[52px] shadow-md hover:shadow-lg hover:scale-105 active:scale-95' // Enhanced desktop button
+                )}
+              >
+                <ArrowUpIcon className="w-5 h-5 transition-transform" />
+              </Button>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

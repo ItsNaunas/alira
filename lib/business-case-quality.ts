@@ -196,6 +196,98 @@ export function checkBusinessCaseQuality(
     }
   }
 
+  // Check methodology application completeness
+  if (!businessCase.methodology_applied || businessCase.methodology_applied.length === 0) {
+    missingElements.push("Methodology framework not explicitly applied")
+    suggestions.push("Include methodology_applied array listing frameworks used (e.g., ['5 Whys', 'UK Benchmarking', 'Impact vs Effort'])")
+    score -= 1
+  } else {
+    // Check if root cause analysis methodology is mentioned
+    const hasRootCauseMethod = businessCase.methodology_applied.some(m => 
+      m.toLowerCase().includes('5 whys') || 
+      m.toLowerCase().includes('root cause') || 
+      m.toLowerCase().includes('why')
+    )
+    if (!hasRootCauseMethod) {
+      suggestions.push("Consider adding '5 Whys' or 'Root Cause Analysis' to methodology_applied")
+    }
+  }
+
+  // Check root cause analysis section (if available)
+  if (businessCase.root_cause_analysis) {
+    const rca = businessCase.root_cause_analysis
+    
+    // Check 5 Whys chain completeness
+    if (!rca.five_whys_chain || rca.five_whys_chain.length < 5) {
+      issues.push("5 Whys chain is incomplete (expected minimum 5 levels)")
+      suggestions.push("Complete the 5 Whys chain from symptom through to root cause (minimum 5 levels)")
+      score -= 1.5
+    } else if (rca.five_whys_chain.length >= 5) {
+      // Validate chain progression
+      const hasSymptom = rca.five_whys_chain[0]?.toLowerCase().includes('symptom') || 
+                        rca.five_whys_chain[0]?.toLowerCase().includes('surface')
+      const hasRootCause = rca.five_whys_chain[rca.five_whys_chain.length - 1]?.toLowerCase().includes('root') ||
+                          rca.root_cause
+      
+      if (!hasSymptom || !hasRootCause) {
+        suggestions.push("5 Whys chain should start with surface symptom and end with identified root cause")
+        score -= 0.5
+      }
+    }
+    
+    // Check root cause summary
+    if (!rca.root_cause || rca.root_cause.length < 20) {
+      issues.push("Root cause summary is missing or too brief")
+      suggestions.push("Provide a clear root cause summary statement")
+      score -= 1
+    }
+    
+    // Check symptoms vs causes
+    if (!rca.symptoms_vs_causes || rca.symptoms_vs_causes.length === 0) {
+      suggestions.push("Consider adding symptoms_vs_causes array to distinguish symptoms from root causes")
+      score -= 0.5
+    }
+  } else {
+    // Root cause analysis section is optional but recommended
+    suggestions.push("Consider adding root_cause_analysis section with 5 Whys chain for deeper problem understanding")
+    score -= 0.5
+  }
+
+  // Check industry analysis section (if available)
+  if (businessCase.industry_analysis) {
+    const ia = businessCase.industry_analysis
+    
+    // Check benchmark comparisons
+    if (!ia.benchmarks_comparison || Object.keys(ia.benchmarks_comparison).length === 0) {
+      missingElements.push("Industry benchmark comparisons missing")
+      suggestions.push("Include benchmarks_comparison object with UK market benchmark comparisons")
+      score -= 1
+    } else {
+      // Validate benchmark format
+      const benchmarkEntries = Object.entries(ia.benchmarks_comparison)
+      if (benchmarkEntries.length < 2) {
+        suggestions.push("Include at least 2-3 benchmark comparisons for comprehensive industry analysis")
+        score -= 0.5
+      }
+    }
+    
+    // Check industry context
+    if (!ia.context || ia.context.length < 50) {
+      suggestions.push("Expand industry context to provide more detailed industry-specific insights")
+      score -= 0.3
+    }
+    
+    // Check stage-specific insights
+    if (!ia.stage_specific_insights || ia.stage_specific_insights.length < 30) {
+      suggestions.push("Include stage_specific_insights for business stage-appropriate recommendations")
+      score -= 0.3
+    }
+  } else {
+    // Industry analysis is optional but recommended
+    suggestions.push("Consider adding industry_analysis section with benchmark comparisons for industry-relevant insights")
+    score -= 0.5
+  }
+
   // Normalize score to 1-10 range
   score = Math.max(1, Math.min(10, score))
 

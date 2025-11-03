@@ -103,12 +103,99 @@ export async function POST(request: NextRequest) {
     // Map business_stage to BusinessStageType
     const businessStage = (formData.business_stage || 'early') as 'idea' | 'early' | 'growing' | 'established'
     
+    // Extract methodology insights from conversation data
+    const extractMethodologyInsights = (formData: Record<string, any>) => {
+      const insights: {
+        challengeKeywords: string[]
+        mentionedMetrics: string[]
+        quantifiedImpacts: Array<{ type: string; value: string }>
+        rootCauseIndicators: string[]
+      } = {
+        challengeKeywords: [],
+        mentionedMetrics: [],
+        quantifiedImpacts: [],
+        rootCauseIndicators: []
+      }
+      
+      // Extract from challenges
+      const challengesText = (formData.current_challenges || '').toLowerCase()
+      const goalsText = (formData.immediate_goals || '').toLowerCase()
+      const businessIdeaText = (formData.business_idea || '').toLowerCase()
+      
+      // Extract challenge keywords (potential symptoms)
+      const symptomKeywords = ['not getting', 'struggling', 'failing', 'low', 'high', 'lack of', 'unable to', 'difficult', 'slow']
+      symptomKeywords.forEach(keyword => {
+        if (challengesText.includes(keyword)) {
+          insights.challengeKeywords.push(keyword)
+        }
+      })
+      
+      // Extract mentioned metrics from industry-specific metrics
+      const industryMetrics = {
+        tech_saas: ['mrr', 'ltv', 'cac', 'churn', 'conversion', 'activation', 'retention'],
+        retail_ecommerce: ['aov', 'conversion', 'inventory', 'return rate', 'lifetime value', 'repeat purchase'],
+        service: ['utilization', 'margin', 'acquisition cost', 'nps', 'retention', 'project value'],
+        other: ['revenue', 'growth', 'acquisition cost', 'conversion', 'retention', 'efficiency']
+      }
+      
+      const relevantMetrics = industryMetrics[inferredIndustry] || industryMetrics.other
+      relevantMetrics.forEach(metric => {
+        if (challengesText.includes(metric) || goalsText.includes(metric) || businessIdeaText.includes(metric)) {
+          insights.mentionedMetrics.push(metric)
+        }
+      })
+      
+      // Extract quantified impacts (numbers, percentages, time periods)
+      const numberPattern = /£?\d+[kkm]?|\d+%|\d+\s*(hours?|days?|weeks?|months?|years?)/gi
+      const challengesMatches = challengesText.match(numberPattern) || []
+      const goalsMatches = goalsText.match(numberPattern) || []
+      
+      ;[...challengesMatches, ...goalsMatches].forEach(match => {
+        if (!insights.quantifiedImpacts.find(i => i.value === match)) {
+          insights.quantifiedImpacts.push({
+            type: match.includes('£') ? 'cost' : match.includes('%') ? 'percentage' : match.match(/\d+\s*(hour|day|week|month|year)/) ? 'time' : 'number',
+            value: match
+          })
+        }
+      })
+      
+      // Identify root cause indicators
+      const rootCauseIndicators = ['because', 'due to', 'result of', 'caused by', 'lack of', 'missing', 'no', 'without']
+      rootCauseIndicators.forEach(indicator => {
+        if (challengesText.includes(indicator)) {
+          insights.rootCauseIndicators.push(indicator)
+        }
+      })
+      
+      return insights
+    }
+    
+    const methodologyInsights = extractMethodologyInsights(formData)
+    
+    // Enhance mappedFormData with methodology context
+    const enhancedMappedFormData = {
+      ...mappedFormData,
+      methodologyContext: {
+        challengeKeywords: methodologyInsights.challengeKeywords,
+        mentionedMetrics: methodologyInsights.mentionedMetrics,
+        quantifiedImpacts: methodologyInsights.quantifiedImpacts,
+        rootCauseIndicators: methodologyInsights.rootCauseIndicators,
+        industry: inferredIndustry,
+        stage: businessStage
+      },
+      // Add explicit context for 5 Whys analysis
+      rootCausePrompt: formData.current_challenges 
+        ? `Analyze this challenge using 5 Whys: "${formData.current_challenges}". Identify the root cause, not just symptoms.`
+        : undefined
+    }
+    
     console.log('Mapped form data for AI:', mappedFormData);
+    console.log('Methodology insights extracted:', methodologyInsights);
     console.log('Inferred industry:', inferredIndustry, 'Stage:', businessStage);
     
     // Import and use the actual generateBusinessCase function
     const { generateBusinessCase, generateAIPlanSummary } = await import('@/lib/openai');
-    const businessPlan = await generateBusinessCase(mappedFormData, {
+    const businessPlan = await generateBusinessCase(enhancedMappedFormData, {
       industry: inferredIndustry,
       stage: businessStage
     });
@@ -196,102 +283,83 @@ export async function POST(request: NextRequest) {
       await verifyOwnership('dashboards', dashboardId, user.id, 'Dashboard');
     }
     
-    // Store the generated plan (use filtered version)
-    const insertData: any = {
+    // Store the generated plan - user_id is REQUIRED (security critical)
+    const insertData = {
       dashboard_id: dashboardId || null,
       type: 'business_plan',
       content: filteredBusinessPlan,
-      version: 1
+      version: 1,
+      user_id: user.id // REQUIRED - security critical, never optional
     };
-
-    // Only add user_id if the column exists (check by trying to insert)
-    try {
-      const { data: generation, error: insertError } = await supabase
-        .from('generations')
-        .insert({
-          ...insertData,
-          user_id: user.id
-        })
-        .select()
-        .single();
-
-      if (insertError) {
-        // If user_id column doesn't exist, try without it
-        if (insertError.message.includes('user_id') || insertError.message.includes('column')) {
-          console.log('user_id column not found, inserting without it');
-          const { data: generation2, error: insertError2 } = await supabase
-            .from('generations')
-            .insert(insertData)
-            .select()
-            .single();
-          
-          if (insertError2) {
-            console.error('Database error:', insertError2);
-            throw errors.internal('Failed to save generated plan');
-          }
-          
-          // Update the dashboard if it exists
-          if (dashboardId) {
-            const dashboardUpdate: any = {
-              form_data: { ...formData, generation_id: generation2.id }
-            };
-            
-            // Add new fields if they exist
-            if (miniFreePlan !== null) {
-              dashboardUpdate.mini_free_plan = miniFreePlan;
-            }
-            if (aiPlanSummaryText) {
-              dashboardUpdate.ai_plan_summary = aiPlanSummaryText;
-            }
-            dashboardUpdate.call_to_action = callToAction;
-            
-            await supabase
-              .from('dashboards')
-              .update(dashboardUpdate)
-              .eq('id', dashboardId)
-              .eq('user_id', user.id);
-          }
-
-          return successResponse({
-            generation: generation2,
-            dashboardId: dashboardId || null
-          });
-        } else {
-          console.error('Database error:', insertError);
-          throw errors.internal('Failed to save generated plan');
-        }
+    
+    // Insert generation - fail hard if user_id cannot be set (removed fallback logic)
+    const { data: generation, error: insertError } = await supabase
+      .from('generations')
+      .insert(insertData)
+      .select()
+      .single();
+    
+    if (insertError) {
+      console.error('Failed to insert generation:', insertError);
+      
+      // Security: If user_id column issue, this is a critical error - DO NOT FALLBACK
+      if (insertError.message.includes('user_id') || 
+          insertError.code === '42703' || 
+          (insertError.message.includes('column') && insertError.message.includes('user_id'))) {
+        throw errors.internal(
+          'Security: Database schema issue - user_id column missing or invalid. ' +
+          'Please run migration 009_secure_generations_user_id.sql'
+        );
       }
-
-      // Update the dashboard if it exists
-      if (dashboardId) {
-        const dashboardUpdate: any = {
-          form_data: { ...formData, generation_id: generation.id }
-        };
-        
-        // Add new fields if they exist
-        if (miniFreePlan !== null) {
-          dashboardUpdate.mini_free_plan = miniFreePlan;
-        }
-        if (aiPlanSummaryText) {
-          dashboardUpdate.ai_plan_summary = aiPlanSummaryText;
-        }
-        dashboardUpdate.call_to_action = callToAction;
-        
-        await supabase
-          .from('dashboards')
-          .update(dashboardUpdate)
-          .eq('id', dashboardId)
-          .eq('user_id', user.id);
-      }
-
-      return successResponse({
-        generation: generation,
-        dashboardId: dashboardId || null
-      });
-    } catch (dbError) {
-      console.error('Database operation failed:', dbError);
+      
       throw errors.internal('Failed to save generated plan');
     }
+    
+    // Verify user_id was actually set (defense in depth)
+    if (!generation?.user_id || generation.user_id !== user.id) {
+      console.error('SECURITY ALERT: Generation created without correct user_id', {
+        generationId: generation?.id,
+        expectedUserId: user.id,
+        actualUserId: generation?.user_id
+      });
+      
+      // Delete the incorrectly created generation if it exists
+      if (generation?.id) {
+        await supabase
+          .from('generations')
+          .delete()
+          .eq('id', generation.id);
+      }
+      
+      throw errors.internal('Security: Plan generation failed - user association error');
+    }
+    
+    // Update the dashboard if it exists
+    if (dashboardId) {
+      const dashboardUpdate: any = {
+        form_data: { ...formData, generation_id: generation.id }
+      };
+      
+      // Add new fields if they exist
+      if (miniFreePlan !== null) {
+        dashboardUpdate.mini_free_plan = miniFreePlan;
+      }
+      if (aiPlanSummaryText) {
+        dashboardUpdate.ai_plan_summary = aiPlanSummaryText;
+      }
+      dashboardUpdate.call_to_action = callToAction;
+      
+      await supabase
+        .from('dashboards')
+        .update(dashboardUpdate)
+        .eq('id', dashboardId)
+        .eq('user_id', user.id); // Security: Always filter by user_id
+    }
+    
+    return successResponse({
+      generation: generation,
+      dashboardId: dashboardId || null
+    });
 
   } catch (error) {
     // Step 8: Centralized error handling (never leaks sensitive data)

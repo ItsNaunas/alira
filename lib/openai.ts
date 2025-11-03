@@ -5,6 +5,7 @@ import {
   ROOT_CAUSE_ANALYSIS_PROMPT, 
   PROBLEM_STATEMENT_GUIDANCE,
   getUKMarketBenchmarks,
+  getStageAppropriateTimeline,
   INDUSTRY_METRICS,
   type IndustryType,
   type BusinessStageType
@@ -47,16 +48,45 @@ function buildBusinessCasePrompt(
   const industryMetrics = INDUSTRY_METRICS[industry].join(', ')
 
   return `
-You are ALIRA's senior strategy consultant. Create a comprehensive business analysis using proven business case development methodologies. Write with clarity, discipline, and calm authority.
+You are ALIRA's senior strategy consultant. You MUST actively apply specific business case development frameworks - don't just mention them, demonstrate them. Write with clarity, discipline, and calm authority.
 
 ${ALIRA_BRAND_VOICE}
 
-METHODOLOGY FRAMEWORK:
-1. Root Cause Analysis: Use "5 Whys" to identify root causes, not symptoms
-2. Problem Quantification: Measure impact in time, cost, and opportunity loss
-3. Stage-Appropriate Analysis: Tailor recommendations to business stage (idea/early/growing/established)
-4. Industry Context: Apply industry-specific frameworks and KPIs
-5. Solution Prioritisation: Use Impact vs Effort matrix for recommendations
+MANDATORY FRAMEWORK APPLICATION:
+
+1. PROBLEM STATEMENT - MUST INCLUDE:
+   - Explicit "5 Whys" chain showing root cause progression
+   - Quantified impact using UK market benchmarks (${ukBenchmarks})
+   - Symptoms vs Root Causes distinction
+   
+   Format: 
+   "Surface symptom: [X]
+    Why 1: [Y]
+    Why 2: [Z]
+    Root Cause: [ACTUAL ROOT]
+    Impact: £[AMOUNT] per month lost opportunity, [X]% slower growth"
+
+2. CURRENT STATE ANALYSIS - MUST INCLUDE:
+   - Industry-specific context: ${industryContext}
+   - Stage-appropriate challenges: ${stage} stage
+   - Reference to industry metrics: ${industryMetrics}
+   - UK market position context
+
+3. PROPOSED SOLUTION - MUST USE:
+   - Impact vs Effort matrix explicitly
+   - Each solution must reference which ALIRA service pillar addresses the root cause
+   - Timeline based on UK market realities (${stage} stage: ${getStageAppropriateTimeline(stage)})
+   - Investment levels using UK pricing: ${ukBenchmarks}
+
+4. EXPECTED OUTCOMES - MUST INCLUDE:
+   - Specific metrics from: ${industryMetrics}
+   - Comparisons to UK benchmarks: ${ukBenchmarks}
+   - Stage-appropriate targets for ${stage} stage
+
+5. RISK ASSESSMENT - MUST APPLY:
+   - Risk quantification using opportunity cost
+   - Industry-specific risk factors
+   - UK regulatory/economic context where relevant
 
 ${ROOT_CAUSE_ANALYSIS_PROMPT}
 
@@ -76,12 +106,29 @@ ALIRA Services:
 
 Your role: Generate a business analysis that identifies core challenges (root causes), quantifies impact, and positions ALIRA as the strategic solution provider. This analysis will be used in a structured PDF with 9 sections.
 
+CRITICAL: You MUST show your methodology work. Don't just use it - demonstrate it.
+
 Generate a comprehensive business analysis. Structure the response as a JSON object with the following sections:
 
 {
   "problem_statement": "Core business challenge with root causes and quantified impact (2-3 sentences). MUST: identify root cause (not symptoms), quantify impact (time/cost/opportunity), connect to business outcomes.",
-  "objectives": ["Primary strategic objective 1 with metrics", "Primary strategic objective 2 with metrics", "Primary strategic objective 3 with metrics"],
+  "root_cause_analysis": {
+    "five_whys_chain": ["Surface symptom: [description]", "Why 1: [first level]", "Why 2: [second level]", "Why 3: [third level]", "Why 4: [fourth level]", "Why 5: [fifth level]", "Root Cause: [final root cause]"],
+    "root_cause": "Clear statement of the actual root cause identified through 5 Whys analysis",
+    "symptoms_vs_causes": [
+      {"symptom": "Surface symptom description", "root_cause": "Underlying root cause"}
+    ]
+  },
+  "objectives": ["Primary strategic objective 1 with specific metrics (${industryMetrics})", "Primary strategic objective 2 with metrics", "Primary strategic objective 3 with metrics"],
   "current_state": "Current business position and key challenges (3-4 sentences covering market position, operational status, growth barriers). Reference industry-specific context where relevant.",
+  "industry_analysis": {
+    "context": "How ${industryContext} applies to this business",
+    "benchmarks_comparison": {
+      "metric_name": "Current vs UK Benchmark: [comparison]",
+      "metric_name_2": "Current vs UK Benchmark: [comparison]"
+    },
+    "stage_specific_insights": "Stage-appropriate insights for ${stage} stage businesses"
+  },
   "proposed_solution": [
     {
       "pillar": "Brand & Product Management|Content Management|Digital Solutions & AI Integration",
@@ -92,23 +139,27 @@ Generate a comprehensive business analysis. Structure the response as a JSON obj
       "investment": "Investment level (e.g., '£2,000-5,000', '£5,000-10,000', '£10,000+') - use UK market pricing"
     }
   ],
-  "expected_outcomes": ["Business outcome 1 with specific metrics (include ${industryMetrics} where relevant)", "Business outcome 2 with metrics", "Business outcome 3 with metrics"],
+  "expected_outcomes": ["Business outcome 1 with specific metrics (include ${industryMetrics}) and benchmark comparison", "Business outcome 2 with metrics and comparison", "Business outcome 3 with metrics and comparison"],
   "next_steps": ["Immediate action step 1", "Immediate action step 2", "Immediate action step 3"],
-  "risk_assessment": "Key risks if challenges are not addressed (2-3 sentences about business impact). Quantify risk impact where possible.",
-  "competitive_advantage": "How ALIRA's systematic approach provides competitive advantage (2-3 sentences about differentiation)"
+  "risk_assessment": "Key risks if challenges are not addressed (2-3 sentences about business impact). Quantify risk impact where possible using opportunity cost.",
+  "competitive_advantage": "How ALIRA's systematic approach provides competitive advantage (2-3 sentences about differentiation)",
+  "methodology_applied": ["5 Whys", "UK Benchmarking", "Impact vs Effort Matrix", "Industry-Specific Analysis"]
 }
 
 CRITICAL REQUIREMENTS:
 - Use British English throughout
 - PROBLEM STATEMENT: Must identify root cause (use "5 Whys"), not symptoms. Must quantify impact (include numbers: time, cost, opportunity loss). Must connect to business outcomes.
+- ROOT_CAUSE_ANALYSIS: MUST include complete 5 Whys chain (minimum 5 levels) showing progression from symptom to root cause. MUST distinguish symptoms from root causes.
 - OBJECTIVES: Must be measurable. Include industry-specific metrics (${industryMetrics}) where relevant. Set realistic timelines based on UK market context.
-- EXPECTED OUTCOMES: Must include specific metrics. Reference industry benchmarks where appropriate.
+- INDUSTRY_ANALYSIS: MUST compare business metrics to UK benchmarks (${ukBenchmarks}). MUST reference stage-specific insights for ${stage} stage.
+- EXPECTED OUTCOMES: Must include specific metrics. MUST compare to UK benchmarks (${ukBenchmarks}) where relevant.
 - Stage-Appropriate: Consider ${stage} stage challenges and realistic outcomes for this stage.
 - UK Market Context: Use realistic timelines (2-4 weeks for quick wins, 3-6 months for strategic initiatives) and budgets for UK businesses.
+- METHODOLOGY_APPLIED: MUST list all frameworks used (e.g., ["5 Whys", "UK Benchmarking", "Impact vs Effort", "Industry Analysis"])
 - Position ALIRA as the strategic solution provider
 - Focus on clarity, simplicity, and systematic execution
 - Provide actionable recommendations that demonstrate ALIRA's expertise
-- Maximum 2000 tokens total for comprehensive analysis
+- Maximum 2500 tokens total for comprehensive analysis (increased for methodology sections)
 - No placeholders - provide specific, actionable content based on their business
 - Maintain professional, authoritative tone
 - For effort and impact fields, use exactly: "low", "med", or "high" (not "medium")
@@ -119,8 +170,18 @@ CRITICAL REQUIREMENTS:
 
 export interface BusinessCaseOutline {
   problem_statement: string
+  root_cause_analysis?: {
+    five_whys_chain: string[]  // Explicit chain from surface symptom to root cause
+    root_cause: string
+    symptoms_vs_causes: Array<{ symptom: string; root_cause: string }>
+  }
   objectives: string[]
   current_state: string
+  industry_analysis?: {
+    context: string
+    benchmarks_comparison: Record<string, string>
+    stage_specific_insights: string
+  }
   proposed_solution: Array<{
     pillar: string
     actions: string[]
@@ -133,6 +194,7 @@ export interface BusinessCaseOutline {
   next_steps: string[]
   risk_assessment: string
   competitive_advantage: string
+  methodology_applied?: string[]  // ["5 Whys", "UK Benchmarking", "Impact vs Effort", etc.]
 }
 
 // Retry function with exponential backoff
@@ -239,6 +301,20 @@ export async function generateBusinessCase(
     // Build enhanced prompt with methodology
     const systemPrompt = buildBusinessCasePrompt(industry, stage)
     
+    // Build methodology context from extracted insights (if available)
+    const methodologyContext = formData.methodologyContext
+    const methodologySection = methodologyContext ? `
+METHODOLOGY INSIGHTS FROM CONVERSATION:
+- Challenge Keywords Identified: ${methodologyContext.challengeKeywords.join(', ') || 'None'}
+- Industry Metrics Mentioned: ${methodologyContext.mentionedMetrics.join(', ') || 'None'}
+- Quantified Impacts Found: ${methodologyContext.quantifiedImpacts.map(i => `${i.type}: ${i.value}`).join(', ') || 'None'}
+- Root Cause Indicators: ${methodologyContext.rootCauseIndicators.join(', ') || 'None'}
+
+Use these insights to build a more accurate 5 Whys chain. The challenge keywords likely represent symptoms - dig deeper to find root causes.
+` : ''
+
+    const rootCausePrompt = formData.rootCausePrompt || ''
+    
     const userPrompt = `
 Business Information:
 - Business Name: ${formData.businessName || formData.business_idea || 'Business concept'}
@@ -256,6 +332,8 @@ Project Details:
 - Timeline: ${formData.timeline || 'Flexible'}
 - Service Focus: ${formData.service || formData.service_interest?.join(', ') || 'General business improvement'}
 - Additional Notes: ${formData.notes || formData.business_idea || 'None provided'}
+
+${rootCausePrompt ? `${rootCausePrompt}\n\n` : ''}${methodologySection}
 `
 
     if (process.env.NODE_ENV === 'development') {

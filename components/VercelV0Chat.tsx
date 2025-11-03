@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useAutoResizeTextarea } from '@/hooks/use-auto-resize-textarea';
-import { ArrowUpIcon, X } from 'lucide-react';
+import { ArrowUpIcon, X, Mail } from 'lucide-react';
 import { auth, createClient } from '@/lib/supabase-client';
 
 // Business idea examples with eg. prefix (defined outside component to prevent recreation)
@@ -33,6 +33,7 @@ export function VercelV0Chat() {
   const [isSignUp, setIsSignUp] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [authError, setAuthError] = useState('');
+  const [authSuccess, setAuthSuccess] = useState('');
   const [currentUser, setCurrentUser] = useState<any>(null);
   
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
@@ -122,6 +123,7 @@ export function VercelV0Chat() {
   const handleModalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
+    setAuthSuccess('');
     
     if (isSignUp && (!email.trim() || !name.trim() || !password.trim())) {
       setAuthError('Please fill in all fields');
@@ -148,7 +150,7 @@ export function VercelV0Chat() {
         
         if (needsEmailConfirmation) {
           // Email confirmation is required (this is the normal flow)
-          setAuthError('Account created! Please check your email and click the confirmation link. You\'ll be automatically logged in after confirming.');
+          setAuthSuccess('We\'ve sent a confirmation email! Check your inbox and click the link to verify your account. You\'ll be automatically logged in once confirmed.');
           setIsSubmitting(false);
           return;
         }
@@ -224,6 +226,26 @@ export function VercelV0Chat() {
                 ? 'Sign up to save your progress and access your business plans anytime.'
                 : 'Log in to continue building your business plan.'}
             </p>
+            
+            {authSuccess && (
+              <div className="mb-4 p-4 rounded-xl bg-alira-gold/20 dark:bg-alira-gold/10 border border-alira-gold/40 dark:border-alira-gold/30 shadow-lg">
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-full bg-alira-gold/30 dark:bg-alira-gold/20 flex items-center justify-center">
+                      <Mail className="w-4 h-4 text-alira-gold dark:text-alira-gold" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm font-sans font-medium text-alira-primary dark:text-alira-white mb-1">
+                      Almost there!
+                    </h3>
+                    <p className="text-xs sm:text-sm text-alira-primary/90 dark:text-alira-white/90 leading-relaxed">
+                      {authSuccess}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
             
             {authError && (
               <div className="mb-4 p-2.5 sm:p-3 rounded-lg bg-red-500/10 border border-red-500/20">

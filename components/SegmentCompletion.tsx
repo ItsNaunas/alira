@@ -24,45 +24,29 @@ export function SegmentCompletion({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.3 }}
-      className="bg-alira-gold/20 dark:bg-alira-gold/10 border border-alira-gold/30 rounded-2xl p-6 mb-6 shadow-lg"
+      className="bg-alira-gold/20 dark:bg-alira-gold/10 border border-alira-gold/30 rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-lg"
     >
-      <div className="flex items-start gap-4 mb-4">
+      <div className="flex items-start gap-3 sm:gap-4 mb-4">
         <div className="flex-shrink-0">
-          <div className="w-12 h-12 rounded-full bg-alira-gold flex items-center justify-center">
-            <CheckCircle className="w-6 h-6 text-alira-primary" />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-alira-gold flex items-center justify-center">
+            <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-alira-primary" />
           </div>
         </div>
         <div className="flex-1">
-          <h3 className="text-lg font-sans font-medium text-text-primary mb-2">
-            {segmentTitle} - Complete!
+          <h3 className="text-base sm:text-lg font-sans font-medium text-text-primary mb-2">
+            {segmentTitle} - Complete! ✨
           </h3>
-          <p className="text-sm text-text-secondary leading-relaxed">
+          <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
             {summary}
           </p>
         </div>
       </div>
 
-      <div className="flex gap-3">
-        {onEdit && (
-          <Button
-            variant="outline"
-            onClick={onEdit}
-            className="flex-1 border-alira-primary/20 dark:border-alira-white/20 text-text-primary hover:bg-alira-primary/10"
-          >
-            <Edit2 className="w-4 h-4 mr-2" />
-            Edit Answer
-          </Button>
-        )}
-        <Button
-          onClick={onContinue}
-          className={cn(
-            'flex-1 bg-alira-gold text-alira-primary hover:bg-alira-gold/90',
-            !onEdit && 'w-full'
-          )}
-        >
-          Continue to Next
-          <ArrowRight className="w-4 h-4 ml-2" />
-        </Button>
+      {/* Note: Buttons are hidden here since we use floating button instead */}
+      <div className="text-center pt-2">
+        <p className="text-xs sm:text-sm text-text-tertiary animate-pulse">
+          👇 Continue button below 👇
+        </p>
       </div>
     </motion.div>
   )

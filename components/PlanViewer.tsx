@@ -147,6 +147,25 @@ export default function PlanViewer({
 
   return (
     <div className={`space-y-6 ${className}`}>
+      {/* Methodology Badges - Show at top if available */}
+      {content.methodology_applied && content.methodology_applied.length > 0 && (
+        <Card className="bg-alira-gold/5 border-alira-gold/20">
+          <CardContent className="p-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm font-medium text-text-primary mr-2">Methodology Applied:</span>
+              {content.methodology_applied.map((methodology, idx) => (
+                <span
+                  key={idx}
+                  className="px-3 py-1 text-xs font-medium rounded-full bg-alira-gold/20 dark:bg-alira-gold/10 text-alira-gold border border-alira-gold/30"
+                >
+                  {methodology}
+                </span>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Problem Statement */}
       {content.problem_statement && (
         <Section
@@ -157,6 +176,74 @@ export default function PlanViewer({
           <p className="text-text-secondary leading-relaxed">
             {content.problem_statement}
           </p>
+        </Section>
+      )}
+
+      {/* Root Cause Analysis - New Methodology Section */}
+      {content.root_cause_analysis && (
+        <Section
+          title="Root Cause Analysis"
+          icon={<AlertTriangle className="w-5 h-5 text-alira-gold" />}
+          collapsible={collapsible}
+          defaultExpanded={true}
+        >
+          <div className="space-y-4">
+            {/* 5 Whys Chain Visualization */}
+            {content.root_cause_analysis.five_whys_chain && content.root_cause_analysis.five_whys_chain.length > 0 && (
+              <div className="bg-bg-muted rounded-lg p-4 border border-borderToken-subtle">
+                <h4 className="text-sm font-medium text-text-primary mb-3 flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded text-xs bg-alira-gold/20 text-alira-gold border border-alira-gold/30">5 Whys Chain</span>
+                </h4>
+                <div className="space-y-2">
+                  {content.root_cause_analysis.five_whys_chain.map((why, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-6 h-6 bg-alira-gold/10 rounded-full flex items-center justify-center mt-0.5">
+                        <span className="text-xs text-alira-gold font-medium">
+                          {index === 0 ? 'S' : index === content.root_cause_analysis!.five_whys_chain.length - 1 ? 'R' : index}
+                        </span>
+                      </div>
+                      <p className="text-text-secondary text-sm leading-relaxed">
+                        {why}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Root Cause Summary */}
+            {content.root_cause_analysis.root_cause && (
+              <div className="bg-alira-gold/5 border border-alira-gold/20 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-text-primary mb-2">Root Cause Identified:</h4>
+                <p className="text-text-secondary leading-relaxed">{content.root_cause_analysis.root_cause}</p>
+              </div>
+            )}
+            
+            {/* Symptoms vs Causes */}
+            {content.root_cause_analysis.symptoms_vs_causes && content.root_cause_analysis.symptoms_vs_causes.length > 0 && (
+              <div>
+                <h4 className="text-sm font-medium text-text-primary mb-3">Symptoms vs Root Causes:</h4>
+                <div className="space-y-3">
+                  {content.root_cause_analysis.symptoms_vs_causes.map((item, index) => (
+                    <div key={index} className="bg-bg-muted rounded-lg p-3 border border-borderToken-subtle">
+                      <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0">
+                          <span className="text-xs font-medium text-red-400/80">Symptom:</span>
+                        </div>
+                        <p className="text-text-secondary text-sm flex-1">{item.symptom}</p>
+                      </div>
+                      <div className="flex items-start gap-3 mt-2">
+                        <div className="flex-shrink-0">
+                          <span className="text-xs font-medium text-alira-gold">Root Cause:</span>
+                        </div>
+                        <p className="text-text-secondary text-sm flex-1">{item.root_cause}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </Section>
       )}
 
@@ -200,6 +287,53 @@ export default function PlanViewer({
           <p className="text-text-secondary leading-relaxed">
             {content.current_state}
           </p>
+        </Section>
+      )}
+
+      {/* Industry Analysis - New Methodology Section */}
+      {content.industry_analysis && (
+        <Section
+          title="Industry Analysis"
+          icon={<TrendingUp className="w-5 h-5 text-alira-gold" />}
+          collapsible={collapsible}
+          defaultExpanded={true}
+        >
+          <div className="space-y-4">
+            {/* Industry Context */}
+            {content.industry_analysis.context && (
+              <div>
+                <h4 className="text-sm font-medium text-text-primary mb-2">Industry Context:</h4>
+                <p className="text-text-secondary leading-relaxed">{content.industry_analysis.context}</p>
+              </div>
+            )}
+            
+            {/* Benchmark Comparisons */}
+            {content.industry_analysis.benchmarks_comparison && Object.keys(content.industry_analysis.benchmarks_comparison).length > 0 && (
+              <div className="bg-bg-muted rounded-lg p-4 border border-borderToken-subtle">
+                <h4 className="text-sm font-medium text-text-primary mb-3 flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded text-xs bg-alira-gold/20 text-alira-gold border border-alira-gold/30">UK Benchmark Comparisons</span>
+                </h4>
+                <div className="space-y-2">
+                  {Object.entries(content.industry_analysis.benchmarks_comparison).map(([metric, comparison], index) => (
+                    <div key={index} className="flex items-start gap-3 py-2 border-b border-borderToken-subtle last:border-0">
+                      <div className="flex-shrink-0 w-20">
+                        <span className="text-xs font-medium text-text-primary">{metric}:</span>
+                      </div>
+                      <p className="text-text-secondary text-sm flex-1">{comparison}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Stage-Specific Insights */}
+            {content.industry_analysis.stage_specific_insights && (
+              <div className="bg-alira-gold/5 border border-alira-gold/20 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-text-primary mb-2">Stage-Specific Insights:</h4>
+                <p className="text-text-secondary leading-relaxed">{content.industry_analysis.stage_specific_insights}</p>
+              </div>
+            )}
+          </div>
         </Section>
       )}
 

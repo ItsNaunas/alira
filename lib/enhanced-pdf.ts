@@ -506,6 +506,88 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     addSubheading('Summary')
     addBody('The bigger picture is not about dreaming. It is about alignment. The distance between what you believe and what you do each week defines your results.')
 
+    // PAGE 3.5 — METHODOLOGY ANALYSIS (if available)
+    if (data.aiAnalysis?.methodology_applied && data.aiAnalysis.methodology_applied.length > 0) {
+      nextPage()
+      addCenteredPageTitle('Methodology Applied')
+      addBody('This analysis has been created using proven business case development frameworks to ensure depth and accuracy.')
+      
+      addSubheading('Frameworks Used')
+      addBullets((data.aiAnalysis.methodology_applied as string[]).map(m => `${m}`))
+      
+      // Root Cause Analysis Section
+      if (data.aiAnalysis?.root_cause_analysis) {
+        const rca = data.aiAnalysis.root_cause_analysis
+        
+        addSubheading('Root Cause Analysis')
+        addBody('Using the "5 Whys" methodology, we\'ve identified the root cause behind the surface symptoms:')
+        
+        // 5 Whys Chain
+        if (rca.five_whys_chain && Array.isArray(rca.five_whys_chain) && rca.five_whys_chain.length > 0) {
+          addBody('Analysis Chain:')
+          rca.five_whys_chain.forEach((why: string, idx: number) => {
+            const label = idx === 0 ? 'Symptom' : idx === rca.five_whys_chain.length - 1 ? 'Root Cause' : `Why ${idx}`
+            doc.setFont('helvetica', 'bold').setFontSize(9).setTextColor(...THEME.text)
+            ensureSpace(6)
+            doc.text(`${label}:`, margin, currentY)
+            doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
+            const lines = doc.splitTextToSize(safe(why), contentWidth - 15)
+            doc.text(lines, margin + 15, currentY)
+            currentY += measureLines(lines) + 3
+          })
+          spacer(TOKENS.PARA)
+        }
+        
+        // Root Cause Summary
+        if (rca.root_cause) {
+          addHighlightBox(`Root Cause Identified: ${safe(rca.root_cause)}`, false, { afterGap: TOKENS.PARA })
+        }
+        
+        // Symptoms vs Causes
+        if (rca.symptoms_vs_causes && Array.isArray(rca.symptoms_vs_causes) && rca.symptoms_vs_causes.length > 0) {
+          addSubheading('Symptoms vs Root Causes')
+          rca.symptoms_vs_causes.slice(0, 3).forEach((item: any) => {
+            if (item.symptom && item.root_cause) {
+              addTwoColumn(
+                'Symptom',
+                safe(item.symptom),
+                'Root Cause',
+                safe(item.root_cause)
+              )
+            }
+          })
+        }
+      }
+      
+      // Industry Analysis Section
+      if (data.aiAnalysis?.industry_analysis) {
+        const ia = data.aiAnalysis.industry_analysis
+        
+        addSubheading('Industry Analysis')
+        
+        if (ia.context) {
+          addBody('Industry Context:')
+          addBody(safe(ia.context))
+        }
+        
+        // Benchmark Comparisons
+        if (ia.benchmarks_comparison && typeof ia.benchmarks_comparison === 'object') {
+          addSubheading('UK Market Benchmark Comparisons')
+          const benchmarks = Object.entries(ia.benchmarks_comparison).slice(0, 5)
+          if (benchmarks.length > 0) {
+            benchmarks.forEach(([metric, comparison]: [string, any]) => {
+              addBody(`${metric}: ${safe(String(comparison))}`)
+            })
+          }
+        }
+        
+        if (ia.stage_specific_insights) {
+          addSubheading('Stage-Specific Insights')
+          addBody(safe(ia.stage_specific_insights))
+        }
+      }
+    }
+
     // PAGE 4 — INSIGHTS + OPPORTUNITIES
     nextPage()
     addCenteredPageTitle('Insights + Opportunities')

@@ -166,3 +166,17 @@ export function getUKMarketBenchmarks(industry: IndustryType): string {
   return `UK Market Benchmarks for ${industry.replace('_', '/').toUpperCase()}:\n${entries}`
 }
 
+/**
+ * Get stage-appropriate timeline guidance
+ */
+export function getStageAppropriateTimeline(stage: BusinessStageType): string {
+  const timelines: Record<BusinessStageType, string> = {
+    idea: "2-4 weeks for validation and quick wins, 2-3 months for initial setup",
+    early: "2-4 weeks for quick wins, 1-2 months for foundational systems, 3-6 months for strategic initiatives",
+    growing: "1-2 months for optimization, 3-6 months for scaling initiatives, 6-12 months for expansion",
+    established: "1-3 months for optimization, 3-6 months for strategic shifts, 6-12 months for transformation"
+  }
+  
+  return timelines[stage] || timelines.early
+}
+
