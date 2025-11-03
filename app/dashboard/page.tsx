@@ -81,6 +81,14 @@ export default function DashboardPage() {
     setIsLoadingPlans(true);
     try {
       const supabase = createClient();
+      
+      // SECURITY: Get current user to filter plans
+      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      if (!currentUser) {
+        console.error('No user found when loading plans');
+        return;
+      }
+      
       const { data, error } = await supabase
         .from('dashboards')
         .select(`
@@ -93,6 +101,7 @@ export default function DashboardPage() {
           )
         `)
         .eq('status', 'complete')
+        .eq('user_id', currentUser.id) // SECURITY FIX: Filter by user_id
         .order('created_at', { ascending: false });
 
       if (error) throw error;

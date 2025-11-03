@@ -39,7 +39,15 @@ export default function PlanDetailPage() {
 
       const supabase = createClient()
       
-      // Fetch plan with generation data
+      // SECURITY: Get current user to verify ownership
+      const { data: { user: currentUser } } = await supabase.auth.getUser()
+      if (!currentUser) {
+        console.error('No user found when loading plan')
+        setError('Authentication required')
+        return
+      }
+      
+      // Fetch plan with generation data - SECURITY FIX: Filter by user_id
       const { data: planData, error: planError } = await supabase
         .from('dashboards')
         .select(`
@@ -53,16 +61,24 @@ export default function PlanDetailPage() {
           )
         `)
         .eq('id', planId)
+        .eq('user_id', currentUser.id) // SECURITY FIX: Filter by user_id
         .single()
 
       if (planError) {
         console.error('Error loading plan:', planError)
-        setError('Failed to load plan')
+        setError('Plan not found or access denied')
         return
       }
 
       if (!planData) {
-        setError('Plan not found')
+        setError('Plan not found or access denied')
+        return
+      }
+      
+      // SECURITY: Additional verification that user_id matches
+      if (planData.user_id !== currentUser.id) {
+        console.error('Plan ownership mismatch')
+        setError('Access denied')
         return
       }
 
