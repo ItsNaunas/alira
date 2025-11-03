@@ -22,7 +22,21 @@ export async function DELETE(request: NextRequest) {
     const user = await requireUser()
     
     // Step 2: Parse and validate input
-    const body = await request.json()
+    let body: any = {}
+    try {
+      // Try to parse JSON body first
+      body = await request.json()
+    } catch (parseError) {
+      // If body parsing fails, try to get planId from query params as fallback
+      const { searchParams } = new URL(request.url)
+      const planIdFromQuery = searchParams.get('planId')
+      if (planIdFromQuery) {
+        body = { planId: planIdFromQuery }
+      } else {
+        throw errors.badRequest('Request body with planId is required')
+      }
+    }
+    
     const { planId } = validateOrThrow(DeletePlanSchema, body)
 
     // Step 3: Verify plan ownership
@@ -92,6 +106,7 @@ export async function DELETE(request: NextRequest) {
     })
 
   } catch (error) {
+    console.error('Plan delete error:', error)
     return handleApiError(error)
   }
 }

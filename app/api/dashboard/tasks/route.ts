@@ -28,10 +28,14 @@ export async function GET(request: NextRequest) {
     if (planId) query = query.eq('plan_id', planId)
 
     const { data, error } = await query
-    if (error) throw errors.internal('Failed to load tasks')
+    if (error) {
+      console.error('Failed to load tasks:', error)
+      throw errors.internal(`Failed to load tasks: ${error.message}`)
+    }
 
-    return successResponse({ tasks: data })
+    return successResponse({ tasks: data || [] })
   } catch (error) {
+    console.error('Tasks GET error:', error)
     return handleApiError(error)
   }
 }
@@ -56,10 +60,14 @@ export async function POST(request: NextRequest) {
       .select('*')
       .single()
 
-    if (error) throw errors.internal('Failed to create task')
+    if (error) {
+      console.error('Failed to create task:', error)
+      throw errors.internal(`Failed to create task: ${error.message}`)
+    }
 
     return successResponse({ task: data })
   } catch (error) {
+    console.error('Tasks POST error:', error)
     return handleApiError(error)
   }
 }
