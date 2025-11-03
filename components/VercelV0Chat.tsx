@@ -399,7 +399,7 @@ export function VercelV0Chat() {
                 'text-base sm:text-lg lg:text-xl text-text-primary font-medium',
                 'focus:outline-none',
                 'focus-visible:ring-0 focus-visible:ring-offset-0',
-                'placeholder:text-text-primary/40',
+                'placeholder:text-text-secondary placeholder:opacity-70',
                 'min-h-[50px] sm:min-h-[60px] lg:min-h-[80px] transition-all duration-300',
                 isFocused && 'min-h-[80px] sm:min-h-[100px] lg:min-h-[120px]'
               )}
@@ -416,19 +416,19 @@ export function VercelV0Chat() {
               type="button"
               onClick={handleSend}
               disabled={!value.trim()}
-              aria-label="Send message"
+              aria-label="Get started"
               className={cn(
                 'flex items-center gap-2 sm:gap-2.5 rounded-lg px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-semibold transition-all duration-200 min-h-[44px] min-w-[44px]',
                 'bg-gradient-to-r from-accent to-accent-dark text-white',
-                'shadow-[0_2px_8px_rgba(203,163,73,0.3)]',
-                'ring-2 ring-white/20',
-                'hover:shadow-[0_0_20px_rgba(203,163,73,0.5)] hover:scale-105',
+                'shadow-[0_4px_16px_rgba(203,163,73,0.5)]',
+                'ring-2 ring-accent/40 border-2 border-accent-dark/30',
+                'hover:shadow-[0_0_30px_rgba(203,163,73,0.7)] hover:scale-105 hover:ring-accent/60 hover:border-accent-dark/50',
                 'active:scale-95',
-                'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-[0_2px_8px_rgba(203,163,73,0.3)]'
+                'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-[0_4px_16px_rgba(203,163,73,0.5)]'
               )}
-              style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}
+              style={{ textShadow: '0 1px 3px rgba(0,0,0,0.2)' }}
             >
-              <span className="whitespace-nowrap">Send</span>
+              <span className="whitespace-nowrap font-medium">Get Started</span>
               <ArrowUpIcon className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
             </button>
           </div>
