@@ -178,14 +178,14 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 lg:hidden"
+            className="fixed inset-0 z-[100] lg:hidden"
           >
-            {/* Backdrop */}
+            {/* Backdrop - Fully opaque with blur for better separation */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-bg-page/95"
+              className="absolute inset-0 bg-bg-page backdrop-blur-md"
               onClick={() => setIsMobileMenuOpen(false)}
             />
             
@@ -195,7 +195,7 @@ export default function Header() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="relative h-full flex flex-col items-center justify-center p-8"
+              className="relative z-10 h-full flex flex-col items-center justify-center p-8"
             >
               {/* Navigation Links */}
               <nav className="flex flex-col items-center gap-8 mb-12">
