@@ -10,93 +10,100 @@ interface MessageBubbleProps {
   content: string
   timestamp?: Date
   isTyping?: boolean
+  methodologies?: string[]
 }
 
-export function MessageBubble({ role, content, timestamp, isTyping = false }: MessageBubbleProps) {
+export function MessageBubble({ role, content, timestamp, isTyping = false, methodologies }: MessageBubbleProps) {
   const isMobile = useMobile()
 
   const isUser = role === 'user'
   const isAssistant = role === 'assistant'
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+    <motion.article
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={cn(
-        'flex items-start gap-3',
-        isUser ? 'justify-end' : 'justify-start',
-        isMobile ? 'mb-4' : 'mb-6' // More spacing on desktop
+        'flex items-start gap-3 w-full',
+        isUser ? 'justify-end' : 'justify-start'
+        // Spacing handled by parent container via space-y
       )}
+      role={isTyping ? 'status' : undefined}
+      aria-live={isTyping ? 'polite' : undefined}
     >
       {isAssistant && (
-        <div className="flex-shrink-0 mt-1">
-          <div className="w-8 h-8 rounded-full bg-alira-primary/20 dark:bg-alira-primary/80 flex items-center justify-center">
-            <Bot className="w-4 h-4 text-alira-primary dark:text-alira-white" />
+        <motion.div 
+          className="flex-shrink-0 mt-1"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+        >
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-alira-primary/20 to-alira-primary/10 dark:from-alira-primary/80 dark:to-alira-primary/60 flex items-center justify-center shadow-md border border-alira-primary/10 dark:border-alira-white/10">
+            <Bot className="w-5 h-5 text-alira-primary dark:text-alira-white" />
           </div>
-        </div>
+        </motion.div>
       )}
 
-      <div
+      <motion.div
         className={cn(
-          'rounded-2xl px-4 py-3 shadow-sm',
+          'rounded-2xl px-4 py-3 shadow-lg',
           'text-sm sm:text-base',
           isUser
-            ? 'bg-alira-gold text-alira-primary rounded-br-sm shadow-md'
-            : 'bg-alira-primary/10 dark:bg-alira-primary/80 text-alira-primary dark:text-alira-white rounded-bl-sm border border-alira-primary/20 dark:border-alira-white/20',
+            ? 'bg-gradient-to-br from-alira-gold to-alira-gold-dark text-alira-primary rounded-br-sm shadow-xl shadow-alira-gold/20'
+            : 'bg-alira-primary/10 dark:bg-alira-primary/90 text-alira-primary dark:text-alira-white rounded-bl-sm border border-alira-primary/20 dark:border-alira-white/20 backdrop-blur-sm',
           // Width: mobile gets 85%, tablet 75%, desktop gets wider (60-70%)
           isMobile 
             ? 'max-w-[85%]' 
-            : 'max-w-[65%] md:max-w-[70%]'
+            : 'max-w-[65%] md:max-w-[70%]',
+          // Enhanced hover effect for desktop
+          !isMobile && isUser && 'hover:shadow-2xl hover:shadow-alira-gold/30 transition-shadow duration-300'
         )}
+        whileHover={!isMobile ? { scale: 1.02, transition: { duration: 0.2 } } : {}}
       >
         {isTyping ? (
-          <div className="flex items-center gap-1">
-            <span className="text-alira-primary/60 dark:text-alira-white/60">Thinking</span>
+          <div className="flex items-center gap-2">
+            <span className="text-alira-primary/70 dark:text-alira-white/70 text-sm">Analyzing</span>
             <div className="flex gap-1">
               {[0, 1, 2].map((i) => (
                 <motion.div
                   key={i}
-                  className="w-1.5 h-1.5 rounded-full bg-alira-primary/60 dark:bg-alira-white/60"
+                  className="w-2 h-2 rounded-full bg-alira-gold"
                   animate={{
-                    y: [0, -4, 0],
-                    opacity: [0.5, 1, 0.5]
+                    y: [0, -6, 0],
+                    opacity: [0.4, 1, 0.4],
+                    scale: [1, 1.2, 1]
                   }}
                   transition={{
-                    duration: 0.6,
+                    duration: 0.8,
                     repeat: Infinity,
-                    delay: i * 0.2
+                    delay: i * 0.2,
+                    ease: 'easeInOut'
                   }}
                 />
               ))}
             </div>
           </div>
         ) : (
-          <p className="leading-relaxed whitespace-pre-wrap break-words">
+          <p className="leading-relaxed whitespace-pre-wrap break-words font-sans">
             {content}
           </p>
         )}
-
-        {timestamp && (
-          <p className={cn(
-            'text-xs mt-2',
-            isUser
-              ? 'text-alira-primary/60'
-              : 'text-alira-primary/40 dark:text-alira-white/40'
-          )}>
-            {timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </p>
-        )}
-      </div>
+      </motion.div>
 
       {isUser && (
-        <div className="flex-shrink-0 mt-1">
-          <div className="w-8 h-8 rounded-full bg-alira-gold flex items-center justify-center">
-            <User className="w-4 h-4 text-alira-primary" />
+        <motion.div 
+          className="flex-shrink-0 mt-1"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+        >
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-alira-gold to-alira-gold-dark flex items-center justify-center shadow-lg shadow-alira-gold/30 border border-alira-gold/20">
+            <User className="w-5 h-5 text-alira-primary" />
           </div>
-        </div>
+        </motion.div>
       )}
-    </motion.div>
+    </motion.article>
   )
 }
 

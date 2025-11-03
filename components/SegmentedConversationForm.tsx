@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
@@ -13,7 +13,7 @@ import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard'
 import { useAutoSave } from '@/hooks/use-auto-save'
 import { createClient } from '@/lib/supabase-client'
 import { cn } from '@/lib/utils'
-import { ArrowUpIcon, Bot, ArrowRight } from 'lucide-react'
+import { ArrowUpIcon, Bot, ArrowRight, Edit2, Check, X } from 'lucide-react'
 import { Spinner } from '@/components/ui/spinner'
 import type { ResponseEvaluation } from '@/lib/ai-conversation'
 import type { WizardFormData } from '@/lib/schema'
@@ -163,6 +163,8 @@ export default function SegmentedConversationForm({
   const [selectedServices, setSelectedServices] = useState<string[]>(initialData?.service_interest || [])
   const [showReview, setShowReview] = useState(false)
   const [isLoadingDraft, setIsLoadingDraft] = useState(true)
+  const [editingSegmentId, setEditingSegmentId] = useState<string | null>(null)
+  const [editValue, setEditValue] = useState<string>('')
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -540,12 +542,77 @@ export default function SegmentedConversationForm({
           return updated
         })
       } else if (optionalFollowUp) {
-        // Show optional follow-up prompt
-        setSegments(prev => {
-          const updated = [...prev]
-          updated[currentSegmentIndex].showOptionalFollowUp = true
-          return updated
-        })
+        // Auto-ask optional follow-up (no card interruption)
+        const contextForFollowUp = buildContext(currentSegmentIndex)
+        try {
+          const followUpResponse = await fetch('/api/ai/generate-follow-up', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              originalQuestion: currentQuestion,
+              userResponse: messageContent,
+              context: {
+                industry: contextForFollowUp.industry,
+                businessStage: contextForFollowUp.businessStage,
+                businessIdea: contextForFollowUp.businessIdea,
+                previousAnswers: contextForFollowUp.previousAnswers
+              }
+            })
+          })
+
+          if (followUpResponse.ok) {
+            const responseData = await followUpResponse.json()
+            if (responseData.success && responseData.followUpQuestion) {
+              const followUpMessage: Message = {
+                id: `msg-followup-opt-${Date.now()}`,
+                role: 'assistant',
+                content: responseData.followUpQuestion,
+                timestamp: new Date()
+              }
+
+              setSegments(prev => {
+                const updated = [...prev]
+                updated[currentSegmentIndex].messages.push(followUpMessage)
+                updated[currentSegmentIndex].followUpCount += 1
+                return updated
+              })
+            } else {
+              // Fallback: accept response and complete segment
+              setSegments(prev => {
+                const updated = [...prev]
+                updated[currentSegmentIndex].data = messageContent
+                updated[currentSegmentIndex].isComplete = true
+                return updated
+              })
+              if (isLastSegment) {
+                setShowReview(true)
+              }
+            }
+          } else {
+            // Fallback: accept response and complete segment
+            setSegments(prev => {
+              const updated = [...prev]
+              updated[currentSegmentIndex].data = messageContent
+              updated[currentSegmentIndex].isComplete = true
+              return updated
+            })
+            if (isLastSegment) {
+              setShowReview(true)
+            }
+          }
+        } catch (error) {
+          console.error('Error generating optional follow-up:', error)
+          // Fallback: accept response and complete segment
+          setSegments(prev => {
+            const updated = [...prev]
+            updated[currentSegmentIndex].data = messageContent
+            updated[currentSegmentIndex].isComplete = true
+            return updated
+          })
+          if (isLastSegment) {
+            setShowReview(true)
+          }
+        }
       } else {
         // Enough detail - complete this segment
         setSegments(prev => {
@@ -688,6 +755,14 @@ export default function SegmentedConversationForm({
     intervalMs: 30000
   })
 
+  // Calculate estimated time remaining (average 2-3 minutes per segment)
+  const totalSegments = segments.length
+  const estimatedTimeRemaining = useMemo(() => {
+    const averageTimePerSegment = 2.5 // minutes
+    const remainingSegments = totalSegments - (currentSegmentIndex + 1)
+    return Math.ceil(remainingSegments * averageTimePerSegment)
+  }, [currentSegmentIndex, totalSegments])
+
   // Build context from all previous segments (defined early)
   const buildContext = useCallback((segmentIndex: number) => {
     const previousAnswers: Record<string, string> = {}
@@ -762,28 +837,6 @@ export default function SegmentedConversationForm({
     })
   }
 
-  // Handle skipping optional follow-up
-  const handleSkipOptionalFollowUp = () => {
-    setSegments(prev => {
-      const updated = [...prev]
-      updated[currentSegmentIndex].showOptionalFollowUp = false
-      updated[currentSegmentIndex].isComplete = true
-      // Use the last user message as the final answer
-      const lastUserMessage = updated[currentSegmentIndex].messages
-        .filter(m => m.role === 'user')
-        .pop()?.content || ''
-      if (lastUserMessage) {
-        updated[currentSegmentIndex].data = lastUserMessage
-      }
-      return updated
-    })
-
-    // Last segment complete - show review immediately
-    if (isLastSegment) {
-      setShowReview(true)
-    }
-    // Otherwise will show completion screen
-  }
 
   // Handle services segment completion
   const handleServicesComplete = () => {
@@ -844,6 +897,12 @@ export default function SegmentedConversationForm({
           segments={segments.map(s => ({ id: s.id, title: s.title, isComplete: s.isComplete }))}
           currentIndex={currentSegmentIndex}
           totalSegments={segments.length}
+          autoSaveState={useAuthenticatedFlow ? {
+            isSaving: autoSaveState.isSaving,
+            lastSaved: autoSaveState.lastSaved,
+            error: autoSaveState.error
+          } : undefined}
+          estimatedTimeRemaining={estimatedTimeRemaining}
         />
 
         <div className="flex-1 container mx-auto px-4 sm:px-6 py-6 max-w-5xl">
@@ -851,51 +910,121 @@ export default function SegmentedConversationForm({
             "mx-auto",
             isMobile ? "max-w-full" : "max-w-4xl"
           )}>
-            <h2 className="text-2xl font-sans font-medium text-text-primary mb-2">
-              {currentSegment.title}
-            </h2>
-            <p className="text-text-secondary mb-6">
-              Which of our service areas would be most valuable to you? Select all that apply.
-            </p>
+            {/* Section heading with clear hierarchy */}
+            <header className="mb-6">
+              <h2 className="text-2xl font-sans font-semibold text-text-primary mb-2">
+                {currentSegment.title}
+              </h2>
+              <p className="text-base text-text-secondary leading-relaxed">
+                Which of our service areas would be most valuable to you? Select all that apply.
+              </p>
+            </header>
 
-            <div className="space-y-3 mb-6">
-              {serviceInterestOptions.map((option) => (
-                <label
-                  key={option.value}
-                  className={cn(
-                    'flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all shadow-sm',
-                    selectedServices.includes(option.value)
-                      ? 'border-alira-gold bg-alira-gold/10 shadow-md'
-                      : 'border-alira-primary/20 dark:border-alira-white/20 hover:border-alira-gold/50 hover:shadow-md'
-                  )}
-                >
-                  <Checkbox
-                    checked={selectedServices.includes(option.value)}
-                    onCheckedChange={() => handleServiceToggle(option.value)}
-                  />
-                  <div className="flex-1">
-                    <div className="font-sans font-medium text-text-primary">
-                      {option.label}
-                    </div>
-                    {option.description && (
-                      <div className="text-sm text-text-tertiary mt-1">
-                        {option.description}
-                      </div>
+            {/* Accessible checkbox group */}
+            <fieldset className="space-y-3 mb-8">
+              <legend className="sr-only">
+                Select service areas of interest. You can select multiple options.
+              </legend>
+              
+              {serviceInterestOptions.map((option, index) => {
+                const isSelected = selectedServices.includes(option.value)
+                const optionId = `service-option-${option.value}`
+                
+                return (
+                  <label
+                    key={option.value}
+                    htmlFor={optionId}
+                    className={cn(
+                      // Base styles - 8px-based padding, minimum 44px touch target
+                      'flex items-start gap-4 p-4 rounded-xl border-2 cursor-pointer',
+                      'transition-all duration-200 min-h-[60px]', // Exceeds 44px minimum for better UX
+                      'focus-within:ring-2 focus-within:ring-alira-gold focus-within:ring-offset-2',
+                      
+                      // Selected state - Clear visual feedback
+                      isSelected
+                        ? [
+                            'border-alira-gold bg-alira-gold/10',
+                            'shadow-md shadow-alira-gold/20',
+                            'ring-1 ring-alira-gold/20'
+                          ]
+                        : [
+                            // Default state with hover feedback
+                            'border-alira-primary/20 dark:border-alira-white/20',
+                            'bg-white dark:bg-alira-primary/5',
+                            'hover:border-alira-gold/50 hover:bg-alira-gold/5',
+                            'hover:shadow-md'
+                          ]
                     )}
-                  </div>
-                </label>
-              ))}
-            </div>
+                    aria-label={`${option.label}${option.description ? ': ' + option.description : ''}`}
+                  >
+                    <div className="flex-shrink-0 mt-0.5">
+                      <Checkbox
+                        id={optionId}
+                        checked={isSelected}
+                        onCheckedChange={() => handleServiceToggle(option.value)}
+                        aria-describedby={`${optionId}-description`}
+                        className="w-5 h-5" // 20px checkbox with padding = ~44px touch area
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-sans font-medium text-base text-text-primary mb-1">
+                        {option.label}
+                      </div>
+                      {option.description && (
+                        <div 
+                          id={`${optionId}-description`}
+                          className="text-sm text-text-secondary leading-relaxed"
+                        >
+                          {option.description}
+                        </div>
+                      )}
+                    </div>
+                  </label>
+                )
+              })}
+            </fieldset>
 
+            {/* Submit button with clear state feedback */}
             <Button
               onClick={handleServicesComplete}
               disabled={selectedServices.length === 0 || isSubmitting}
               loading={isSubmitting}
-              className="w-full bg-alira-gold text-alira-primary hover:bg-alira-gold/90 disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label={
+                selectedServices.length === 0 
+                  ? "Select at least one service to continue"
+                  : isSubmitting
+                  ? "Processing your selection"
+                  : `Continue with ${selectedServices.length} service${selectedServices.length === 1 ? '' : 's'} selected`
+              }
+              aria-busy={isSubmitting}
+              className={cn(
+                'w-full min-h-[52px] font-medium',
+                'bg-gradient-to-br from-alira-gold to-[#7a5000] text-alira-primary',
+                'hover:from-[#c79000] hover:to-alira-gold',
+                'focus-visible:ring-2 focus-visible:ring-alira-gold focus-visible:ring-offset-2',
+                'transition-all duration-200',
+                'disabled:opacity-50 disabled:cursor-not-allowed',
+                'disabled:hover:from-alira-gold disabled:hover:to-[#7a5000]'
+              )}
             >
-              {isSubmitting ? 'Processing...' : 'Continue'}
-              {!isSubmitting && <ArrowUpIcon className="w-4 h-4 ml-2" />}
+              {isSubmitting ? (
+                <span className="flex items-center gap-2">
+                  <span>Processing...</span>
+                </span>
+              ) : (
+                <span className="flex items-center justify-center gap-2">
+                  <span>Continue</span>
+                  <ArrowUpIcon className="w-4 h-4" aria-hidden="true" />
+                </span>
+              )}
             </Button>
+            
+            {/* Helper text for selection count */}
+            {selectedServices.length > 0 && (
+              <p className="mt-3 text-sm text-text-tertiary text-center" role="status" aria-live="polite">
+                {selectedServices.length} service{selectedServices.length === 1 ? '' : 's'} selected
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -910,6 +1039,12 @@ export default function SegmentedConversationForm({
           segments={segments.map(s => ({ id: s.id, title: s.title, isComplete: s.isComplete }))}
           currentIndex={segments.length - 1}
           totalSegments={segments.length}
+          autoSaveState={useAuthenticatedFlow ? {
+            isSaving: autoSaveState.isSaving,
+            lastSaved: autoSaveState.lastSaved,
+            error: autoSaveState.error
+          } : undefined}
+          estimatedTimeRemaining={0}
         />
 
         <div className="flex-1 container mx-auto px-4 sm:px-6 py-6 max-w-5xl">
@@ -917,70 +1052,171 @@ export default function SegmentedConversationForm({
             "mx-auto",
             isMobile ? "max-w-full" : "max-w-4xl"
           )}>
-            <h2 className="text-2xl font-sans font-medium text-text-primary mb-2">
-              Review Your Answers
-            </h2>
-            <p className="text-text-secondary mb-6">
-              Please review your answers before we generate your personalized business plan.
-            </p>
+            {/* Review section header */}
+            <header className="mb-8">
+              <h2 className="text-2xl font-sans font-semibold text-text-primary mb-2">
+                Review Your Answers
+              </h2>
+              <p className="text-base text-text-secondary leading-relaxed">
+                Please review your answers before we generate your personalized business plan.
+              </p>
+            </header>
 
-            <div className="space-y-4 mb-6">
-              {segments.slice(0, 3).map((segment) => (
-                <motion.div
-                  key={segment.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-alira-primary/5 dark:bg-alira-primary/10 rounded-xl p-5 border border-alira-primary/10 dark:border-alira-white/10 shadow-sm"
-                >
-                  <h3 className="font-sans font-medium text-text-primary mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-alira-gold"></span>
-                    {segment.title}
-                  </h3>
-                  <p className="text-sm text-text-secondary leading-relaxed pl-3.5">
-                    {segment.data}
-                  </p>
-                </motion.div>
-              ))}
+            {/* Review cards with proper semantic structure */}
+            <div className="space-y-4 mb-8" role="region" aria-label="Your answers review">
+              {segments.slice(0, 3).map((segment, index) => {
+                const isEditing = editingSegmentId === segment.id
+                return (
+                  <motion.article
+                    key={segment.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2, delay: index * 0.05 }}
+                    className="bg-alira-primary/5 dark:bg-alira-primary/10 rounded-xl p-5 lg:p-6 border border-alira-primary/10 dark:border-alira-white/10 shadow-sm hover:shadow-md transition-shadow duration-200"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="font-sans font-semibold text-base text-text-primary flex items-center gap-2">
+                        <span 
+                          className="w-2 h-2 rounded-full bg-alira-gold flex-shrink-0" 
+                          aria-hidden="true"
+                        />
+                        {segment.title}
+                      </h3>
+                      {!isEditing ? (
+                        <button
+                          onClick={() => {
+                            setEditingSegmentId(segment.id)
+                            setEditValue(segment.data)
+                          }}
+                          className="flex items-center gap-1.5 text-xs text-text-tertiary hover:text-alira-gold transition-colors px-2 py-1 rounded-md hover:bg-alira-primary/5 dark:hover:bg-alira-primary/10"
+                          aria-label={`Edit your answer for ${segment.title}`}
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                          <span className={cn(isMobile && "hidden")}>Edit</span>
+                        </button>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              // Save edited answer
+                              setSegments(prev => {
+                                const updated = [...prev]
+                                const segmentIndex = updated.findIndex(s => s.id === segment.id)
+                                if (segmentIndex !== -1) {
+                                  updated[segmentIndex].data = editValue.trim()
+                                }
+                                return updated
+                              })
+                              setEditingSegmentId(null)
+                              setEditValue('')
+                            }}
+                            className="flex items-center justify-center w-8 h-8 rounded-md bg-green-600 hover:bg-green-700 text-white transition-colors"
+                            aria-label="Save changes"
+                          >
+                            <Check className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setEditingSegmentId(null)
+                              setEditValue('')
+                            }}
+                            className="flex items-center justify-center w-8 h-8 rounded-md bg-text-tertiary/20 hover:bg-text-tertiary/30 transition-colors"
+                            aria-label="Cancel editing"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    {isEditing ? (
+                      <Textarea
+                        value={editValue}
+                        onChange={(e) => setEditValue(e.target.value)}
+                        className="w-full min-h-[100px] text-sm resize-none"
+                        autoFocus
+                        onKeyDown={(e) => {
+                          if (e.key === 'Escape') {
+                            setEditingSegmentId(null)
+                            setEditValue('')
+                          }
+                        }}
+                      />
+                    ) : (
+                      <p className="text-sm text-text-secondary leading-relaxed pl-4">
+                        {segment.data}
+                      </p>
+                    )}
+                  </motion.article>
+                )
+              })}
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
+              {/* Services selection review */}
+              <motion.article
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-                className="bg-alira-primary/5 dark:bg-alira-primary/10 rounded-xl p-5 border border-alira-primary/10 dark:border-alira-white/10 shadow-sm"
+                transition={{ duration: 0.2, delay: 0.15 }}
+                className="bg-alira-primary/5 dark:bg-alira-primary/10 rounded-xl p-5 lg:p-6 border border-alira-primary/10 dark:border-alira-white/10 shadow-sm hover:shadow-md transition-shadow duration-200"
               >
-                <h3 className="font-sans font-medium text-text-primary mb-3 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-alira-gold"></span>
+                <h3 className="font-sans font-semibold text-base text-text-primary mb-3 flex items-center gap-2">
+                  <span 
+                    className="w-2 h-2 rounded-full bg-alira-gold flex-shrink-0"
+                    aria-hidden="true"
+                  />
                   Services of Interest
                 </h3>
-                <div className="flex flex-wrap gap-2 pl-3.5">
+                <div className="flex flex-wrap gap-2 pl-4" role="list" aria-label="Selected services">
                   {selectedServices.map((service) => {
                     const option = serviceInterestOptions.find(o => o.value === service)
                     return (
                       <span
                         key={service}
-                        className="px-3 py-1.5 bg-alira-gold/20 text-alira-primary rounded-full text-sm font-medium shadow-sm"
+                        role="listitem"
+                        className="px-3 py-1.5 bg-alira-gold/20 text-alira-primary rounded-full text-sm font-medium shadow-sm border border-alira-gold/30"
                       >
                         {option?.label || service}
                       </span>
                     )
                   })}
                 </div>
-              </motion.div>
+              </motion.article>
             </div>
 
+            {/* Submit button with proper accessibility */}
             <Button
               onClick={handleSubmit}
               disabled={isSubmitting}
               loading={isSubmitting}
-              className="w-full bg-alira-gold text-alira-primary hover:bg-alira-gold/90 disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px] text-base font-medium"
+              aria-label={isSubmitting ? "Generating your business plan, please wait" : "Generate my business plan"}
+              aria-busy={isSubmitting}
+              className={cn(
+                'w-full min-h-[52px] text-base font-semibold',
+                'bg-gradient-to-br from-alira-gold to-[#7a5000] text-alira-primary',
+                'hover:from-[#c79000] hover:to-alira-gold',
+                'focus-visible:ring-2 focus-visible:ring-alira-gold focus-visible:ring-offset-2',
+                'transition-all duration-200',
+                'disabled:opacity-50 disabled:cursor-not-allowed',
+                'disabled:hover:from-alira-gold disabled:hover:to-[#7a5000]',
+                'shadow-lg hover:shadow-xl hover:shadow-alira-gold/30'
+              )}
             >
-              {isSubmitting ? 'Generating Your Business Plan...' : 'Generate My Business Plan'}
+              {isSubmitting ? (
+                <span className="flex items-center justify-center gap-2">
+                  <span>Generating Your Business Plan...</span>
+                </span>
+              ) : (
+                <span>Generate My Business Plan</span>
+              )}
             </Button>
             
+            {/* Processing status message */}
             {isSubmitting && (
-              <p className="text-center text-sm text-text-tertiary mt-3">
-                This may take a few moments...
+              <p 
+                className="text-center text-sm text-text-tertiary mt-4" 
+                role="status" 
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                This may take a few moments. Please do not close this page.
               </p>
             )}
           </div>
@@ -996,116 +1232,26 @@ export default function SegmentedConversationForm({
         segments={segments.map(s => ({ id: s.id, title: s.title, isComplete: s.isComplete }))}
         currentIndex={currentSegmentIndex}
         totalSegments={segments.length}
+        autoSaveState={useAuthenticatedFlow ? {
+          isSaving: autoSaveState.isSaving,
+          lastSaved: autoSaveState.lastSaved,
+          error: autoSaveState.error
+        } : undefined}
+        estimatedTimeRemaining={estimatedTimeRemaining}
       />
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto container mx-auto px-4 sm:px-6 py-6 max-w-5xl">
+      {/* Messages - Better layout structure */}
+      <div className="flex-1 overflow-y-auto">
         <div className={cn(
           "mx-auto transition-all duration-300",
-          isMobile ? "max-w-full" : "max-w-4xl"
+          // Optimized container widths with 8px-based spacing
+          isMobile 
+            ? "w-full px-4 py-4" // 16px padding = 2x 8px grid
+            : "max-w-3xl px-6 lg:px-8 py-6 lg:py-8" // 24px/32px padding on desktop
         )}>
-          {/* Show optional follow-up prompt */}
-          {currentSegment.showOptionalFollowUp && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="bg-alira-primary/10 dark:bg-alira-primary/20 border border-alira-gold/30 rounded-2xl p-5 mb-6 shadow-lg"
-            >
-              <div className="flex items-start gap-3 mb-4">
-                <div className="flex-shrink-0">
-                  <div className="w-10 h-10 rounded-full bg-alira-gold/20 flex items-center justify-center">
-                    <Bot className="w-5 h-5 text-alira-gold" />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-base font-sans font-medium text-text-primary mb-2">
-                    This is good! Want to add more detail?
-                  </h3>
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4">
-                    Your answer is helpful, but adding a bit more detail will help us create an even better plan for you.
-                  </p>
-                  {currentSegment.evaluation?.suggestedImprovements && currentSegment.evaluation.suggestedImprovements.length > 0 && (
-                    <div className="mb-4">
-                      <p className="text-xs text-text-tertiary mb-2">For example, you could mention:</p>
-                      <ul className="text-xs text-text-secondary space-y-1 ml-4 list-disc">
-                        {currentSegment.evaluation.suggestedImprovements.slice(0, 2).map((suggestion, idx) => (
-                          <li key={idx}>{suggestion}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Button
-                  variant="outline"
-                  onClick={async () => {
-                    // Generate and show follow-up question
-                    try {
-                      const contextForFollowUp = buildContext(currentSegmentIndex)
-                      const currentQuestion = currentSegment.messages.find(m => m.role === 'assistant')?.content || currentSegment.initialQuestion
-                      const lastUserMessage = currentSegment.messages.filter(m => m.role === 'user').pop()?.content || ''
-                      
-                      const followUpResponse = await fetch('/api/ai/generate-follow-up', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          originalQuestion: currentQuestion,
-                          userResponse: lastUserMessage,
-                          context: {
-                            industry: contextForFollowUp.industry,
-                            businessStage: contextForFollowUp.businessStage,
-                            businessIdea: contextForFollowUp.businessIdea,
-                            previousAnswers: contextForFollowUp.previousAnswers
-                          }
-                        })
-                      })
-
-                      if (followUpResponse.ok) {
-                        const responseData = await followUpResponse.json()
-                        if (responseData.success && responseData.followUpQuestion) {
-                          const followUpMessage: Message = {
-                            id: `msg-followup-opt-${Date.now()}`,
-                            role: 'assistant',
-                            content: responseData.followUpQuestion,
-                            timestamp: new Date()
-                          }
-
-                          setSegments(prev => {
-                            const updated = [...prev]
-                            updated[currentSegmentIndex].messages.push(followUpMessage)
-                            updated[currentSegmentIndex].followUpCount += 1
-                            updated[currentSegmentIndex].showOptionalFollowUp = false
-                            return updated
-                          })
-                          return
-                        }
-                      }
-                    } catch (error) {
-                      console.error('Error generating optional follow-up:', error)
-                    }
-                    // If generation fails, just accept the answer
-                    handleSkipOptionalFollowUp()
-                  }}
-                  className="flex-1 border-alira-gold/50 text-text-primary hover:bg-alira-gold/10"
-                >
-                  Add More Detail
-                </Button>
-                <Button
-                  onClick={handleSkipOptionalFollowUp}
-                  className="flex-1 bg-alira-gold text-alira-primary hover:bg-alira-gold/90"
-                >
-                  That's Enough
-                </Button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Show completion if segment just completed */}
+          {/* Show completion if segment just completed - 8px-based spacing */}
           {currentSegment.isComplete && currentSegmentIndex < segments.length - 1 && (
-            <div ref={completionRef} className="mb-4 sm:mb-6">
+            <div ref={completionRef} className="mb-6">
               <SegmentCompletion
                 segmentTitle={currentSegment.title}
                 summary={`We've gathered enough detail about ${currentSegment.title.toLowerCase()}. Ready to move on?`}
@@ -1114,55 +1260,28 @@ export default function SegmentedConversationForm({
             </div>
           )}
 
-          {/* Messages */}
-          <AnimatePresence>
-            {currentSegment.messages.map((message, index) => {
-              // Show methodology indicators for assistant messages in challenge/goals segments
-              const showMethodologyIndicators = 
-                message.role === 'assistant' && 
-                (currentSegment.id === 'challenges' || currentSegment.id === 'goals')
-              
-              // Determine which frameworks are active based on segment
-              const activeMethodologies = showMethodologyIndicators
-                ? (currentSegment.id === 'challenges'
-                    ? ['5 Whys Analysis', 'Root Cause Analysis']
-                    : currentSegment.id === 'goals'
-                    ? ['UK Benchmarking', 'Industry Metrics']
-                    : [])
-                : []
-              
-              return (
-                <div key={message.id}>
-                  {showMethodologyIndicators && activeMethodologies.length > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mb-2 flex flex-wrap gap-2 items-center"
-                    >
-                      <span className="text-xs text-text-tertiary font-medium">
-                        Applying:
-                      </span>
-                      {activeMethodologies.map((methodology) => (
-                        <motion.span
-                          key={methodology}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          className="px-2 py-1 text-xs font-medium rounded-full bg-alira-gold/20 dark:bg-alira-gold/10 text-alira-gold border border-alira-gold/30"
-                        >
-                          {methodology}
-                        </motion.span>
-                      ))}
-                    </motion.div>
-                  )}
+          {/* Messages Container - 8px-based vertical rhythm */}
+          <div 
+            className={cn(
+              "space-y-4", // 16px = 2x 8px grid unit for clear message separation
+              !isMobile && "space-y-5" // 20px on desktop for slightly more breathing room
+            )}
+            role="log"
+            aria-live="polite"
+            aria-label="Conversation messages"
+          >
+            <AnimatePresence>
+              {currentSegment.messages.map((message) => (
+                <div key={message.id} className="w-full">
                   <MessageBubble
                     role={message.role}
                     content={message.content}
                     timestamp={message.timestamp}
                   />
                 </div>
-              )
-            })}
-          </AnimatePresence>
+              ))}
+            </AnimatePresence>
+          </div>
 
           {/* AI Processing indicator */}
           {isEvaluating && (
@@ -1170,7 +1289,7 @@ export default function SegmentedConversationForm({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="flex items-start gap-3 mb-4"
+              className="flex items-start gap-3 mt-3"
             >
               <div className="flex-shrink-0 mt-1">
                 <div className="w-8 h-8 rounded-full bg-alira-primary/20 dark:bg-alira-primary/80 flex items-center justify-center">
@@ -1205,7 +1324,7 @@ export default function SegmentedConversationForm({
             </motion.div>
           )}
 
-          <div ref={messagesEndRef} />
+          <div ref={messagesEndRef} className="h-2" />
         </div>
       </div>
 
@@ -1242,60 +1361,188 @@ export default function SegmentedConversationForm({
         </motion.div>
       )}
 
-      {/* Input area - Hidden when segment is complete */}
+      {/* Input area - Hidden when segment is complete - Better alignment */}
       {!currentSegment.isComplete && (
-        <div className="sticky bottom-0 bg-bg-page/95 backdrop-blur-sm border-t border-borderToken-subtle px-4 sm:px-6 py-4 safe-area-inset-bottom shadow-lg">
+        <div className="sticky bottom-0 bg-bg-page/98 backdrop-blur-md border-t border-borderToken-subtle safe-area-inset-bottom shadow-2xl">
           <div className={cn(
             "mx-auto transition-all duration-300",
-            isMobile ? "max-w-full" : "max-w-4xl"
+            // Match message container width for perfect alignment
+            isMobile 
+              ? "w-full px-4 py-4" 
+              : "max-w-3xl px-6 lg:px-8 py-4 lg:py-5"
           )}>
+            {/* Form with proper accessibility and semantic structure */}
             <form
               onSubmit={(e) => {
                 e.preventDefault()
                 handleUserMessage(inputValue)
               }}
               className={cn(
-                "flex items-end gap-3",
-                !isMobile && "gap-4" // More spacing on desktop
+                "flex flex-col gap-3", // Vertical stack on mobile, cleaner spacing
+                !isMobile && "flex-row items-end gap-4" // Horizontal on desktop
               )}
+              aria-label="Answer input form"
+              noValidate
             >
-              <Textarea
-                ref={inputRef}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault()
-                    if (inputValue.trim() && !isEvaluating) {
-                      handleUserMessage(inputValue)
+              {/* Input wrapper with label and helper text */}
+              <div className="flex-1 relative">
+                {/* Visually hidden label for screen readers */}
+                <label
+                  htmlFor="conversation-input"
+                  className="sr-only"
+                >
+                  Type your answer
+                </label>
+                
+                <Textarea
+                  id="conversation-input"
+                  ref={inputRef}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      if (inputValue.trim() && !isEvaluating) {
+                        handleUserMessage(inputValue)
+                      }
                     }
+                  }}
+                  placeholder={isEvaluating ? "AI is analyzing your response..." : "Type your answer here..."}
+                  rows={isMobile ? 3 : 4}
+                  disabled={isEvaluating}
+                  aria-invalid="false"
+                  aria-describedby={isEvaluating ? "analyzing-helper" : inputValue.trim() ? "submit-helper" : "input-helper"}
+                  aria-label="Your answer"
+                  autoComplete="off"
+                  autoFocus={false}
+                  className={cn(
+                    // Base styles - 8px-based padding for consistency
+                    'flex-1 resize-none rounded-xl border-2 transition-all duration-200',
+                    'min-h-[44px]', // Minimum touch target (44px)
+                    'text-base leading-relaxed', // 16px base to prevent iOS zoom, comfortable line-height
+                    'focus:outline-none', // Remove default outline, use custom focus ring
+                    
+                    // State-specific styles - Clear visual feedback for each state
+                    isEvaluating 
+                      ? [
+                          // Disabled/processing state
+                          'bg-alira-primary/5 dark:bg-alira-primary/40',
+                          'border-alira-primary/20 dark:border-alira-white/10',
+                          'cursor-wait',
+                          'placeholder:text-text-tertiary/50',
+                          'opacity-75'
+                        ]
+                      : [
+                          // Default/interactive state
+                          'bg-white dark:bg-alira-primary/90',
+                          'border-alira-primary/20 dark:border-alira-white/20',
+                          'placeholder:text-text-tertiary',
+                          'focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20 focus:ring-offset-2',
+                          'hover:border-alira-primary/40 dark:hover:border-alira-white/40',
+                          'disabled:opacity-50 disabled:cursor-not-allowed'
+                        ],
+                    
+                    // Responsive padding - 8px grid system
+                    isMobile 
+                      ? 'px-4 py-3' // 16px/12px = 4px grid
+                      : 'px-5 py-4', // 20px/16px = 4px grid
+                  )}
+                />
+                
+                {/* Helper text for screen readers and visual users */}
+                <div id="input-helper" className="sr-only">
+                  {isEvaluating 
+                    ? "AI is analyzing your response, please wait"
+                    : "Type your answer and press Enter to submit, or Shift+Enter for a new line"
                   }
-                }}
-                placeholder={isEvaluating ? "AI is analyzing..." : "Type your answer here..."}
-                rows={isMobile ? 3 : 3}
-                disabled={isEvaluating}
-                className={cn(
-                  'flex-1 resize-none rounded-xl border-2 transition-all',
-                  isEvaluating 
-                    ? 'bg-alira-primary/5 dark:bg-alira-primary/40 border-alira-primary/20 dark:border-alira-white/10 cursor-wait placeholder:text-alira-primary/30'
-                    : 'bg-alira-primary/10 dark:bg-alira-primary/80 border-alira-primary/20 dark:border-alira-white/20 placeholder:text-alira-primary/40 dark:placeholder:text-alira-white/40 focus:border-alira-gold focus:ring-2 focus:ring-alira-gold/20',
-                  'text-alira-primary dark:text-alira-white',
-                  'text-base focus:outline-none', // Prevent zoom on iOS
-                  isMobile && 'text-base', // Ensure 16px+ on mobile
-                  !isMobile && 'px-5 py-4 text-base' // Better desktop sizing
+                </div>
+                
+                {isEvaluating && (
+                  <div id="analyzing-helper" className="sr-only" role="status" aria-live="polite">
+                    Analyzing your response
+                  </div>
                 )}
-              />
+                
+                {/* Submit helper - screen reader only */}
+                {!isEvaluating && inputValue.trim() && (
+                  <div id="submit-helper" className="sr-only" role="status" aria-live="polite">
+                    Press Enter to send, or Shift+Enter for a new line
+                  </div>
+                )}
+                
+                {/* Word count feedback - subtle guidance */}
+                {!isEvaluating && inputValue.trim() && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute -bottom-5 left-0 text-[11px] text-text-tertiary"
+                  >
+                    {(() => {
+                      const wordCount = inputValue.trim().split(/\s+/).filter(w => w.length > 0).length
+                      const charCount = inputValue.trim().length
+                      
+                      // Provide encouraging feedback based on length
+                      if (wordCount >= 20 && charCount >= 150) {
+                        return <span className="text-green-600 dark:text-green-400">Good detail ✓</span>
+                      } else if (wordCount >= 10) {
+                        return `${wordCount} words`
+                      } else {
+                        return `${charCount} characters`
+                      }
+                    })()}
+                  </motion.div>
+                )}
+              </div>
+              
+              {/* Submit button with proper accessibility */}
               <Button
                 type="submit"
                 disabled={!inputValue.trim() || isEvaluating}
+                aria-label={isEvaluating ? "Processing your answer" : inputValue.trim() ? "Submit your answer" : "Submit button disabled"}
+                aria-busy={isEvaluating}
                 className={cn(
-                  'rounded-xl bg-alira-gold text-alira-primary hover:bg-alira-gold/90 transition-all',
-                  'min-w-[44px] min-h-[44px]', // Mobile touch target
+                  // Base button styles - ensure 44px minimum touch target
+                  'rounded-xl font-medium transition-all duration-200',
+                  'min-w-[52px] min-h-[52px]', // 52px exceeds 44px minimum for better usability
+                  'flex-shrink-0', // Prevent button from shrinking
+                  
+                  // Visual states with clear feedback
+                  'bg-gradient-to-br from-alira-gold to-[#7a5000] text-alira-primary',
+                  'hover:from-[#c79000] hover:to-alira-gold',
+                  'focus-visible:ring-2 focus-visible:ring-alira-gold focus-visible:ring-offset-2',
+                  'active:scale-[0.97]', // Subtle press feedback
+                  
+                  // Disabled state
                   'disabled:opacity-50 disabled:cursor-not-allowed',
-                  !isMobile && 'min-w-[52px] min-h-[52px] shadow-md hover:shadow-lg hover:scale-105 active:scale-95' // Enhanced desktop button
+                  'disabled:hover:from-alira-gold disabled:hover:to-[#7a5000]',
+                  
+                  // Desktop enhancements - subtle hover effects
+                  !isMobile && [
+                    'hover:shadow-lg hover:shadow-alira-gold/30',
+                    'hover:-translate-y-0.5' // Subtle lift on hover
+                  ],
+                  
+                  // Mobile: maintain large touch target without hover effects
+                  isMobile && 'touch-manipulation' // Optimize for touch
                 )}
               >
-                <ArrowUpIcon className="w-5 h-5 transition-transform" />
+                {isEvaluating ? (
+                  <div className="flex items-center gap-2">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                    >
+                      <ArrowUpIcon className="w-5 h-5 opacity-50" />
+                    </motion.div>
+                    <span className="sr-only">Processing</span>
+                  </div>
+                ) : (
+                  <ArrowUpIcon 
+                    className="w-5 h-5 transition-transform" 
+                    aria-hidden="true"
+                  />
+                )}
               </Button>
             </form>
           </div>
