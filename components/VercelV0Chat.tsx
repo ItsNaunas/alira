@@ -365,14 +365,14 @@ export function VercelV0Chat() {
       )}
 
       <div className="mx-auto flex w-full max-w-4xl flex-col items-center space-y-3 sm:space-y-4 lg:space-y-6 p-3 sm:p-4 lg:p-6">
-        <h1 className="text-alira-primary text-center text-base sm:text-lg lg:text-xl xl:text-2xl font-serif font-normal px-2 sm:px-4">
+        <h1 className="text-alira-primary text-center text-lg sm:text-xl lg:text-2xl font-serif font-medium px-2 sm:px-4">
           Tell us what you're building
         </h1>
         <div className="w-full">
         <div className={cn(
           'relative rounded-lg sm:rounded-xl lg:rounded-2xl min-h-[80px] sm:min-h-[100px] lg:min-h-[120px] transition-all duration-300',
-          'bg-surface/95 backdrop-blur-md ring-1 ring-borderToken-subtle',
-          'shadow-[0_0_20px_rgba(203,163,73,0.15)] border border-borderToken-subtle',
+          'bg-white/80 backdrop-blur-md ring-2 ring-text-primary/10',
+          'shadow-[0_0_20px_rgba(203,163,73,0.15)] border-2 border-text-primary/15',
           'hover:shadow-[0_0_30px_rgba(203,163,73,0.2)]',
           isFocused && 'ring-accent/50 shadow-[0_0_25px_rgba(203,163,73,0.25)] min-h-[100px] sm:min-h-[120px] lg:min-h-[140px]'
         )}>
@@ -396,35 +396,40 @@ export function VercelV0Chat() {
                 'resize-none',
                 'bg-transparent',
                 'border-none',
-                'text-sm sm:text-base lg:text-lg text-text-primary',
+                'text-base sm:text-lg lg:text-xl text-text-primary font-medium',
                 'focus:outline-none',
                 'focus-visible:ring-0 focus-visible:ring-offset-0',
-                'placeholder:text-text-tertiary',
+                'placeholder:text-text-primary/40',
                 'min-h-[50px] sm:min-h-[60px] lg:min-h-[80px] transition-all duration-300',
                 isFocused && 'min-h-[80px] sm:min-h-[100px] lg:min-h-[120px]'
               )}
               style={{
                 overflow: 'hidden',
               }}
+              aria-label="Enter your business idea"
             />
           </div>
           
-          <div className="flex items-center justify-end p-2 sm:p-3 lg:p-4 border-t border-borderToken-subtle">
+          <div className="flex items-center justify-end p-2 sm:p-3 lg:p-4 border-t-2 border-text-primary/15">
             {/* Primary Send Button */}
             <button
               type="button"
               onClick={handleSend}
               disabled={!value.trim()}
+              aria-label="Send message"
               className={cn(
-                'flex items-center gap-1.5 sm:gap-2 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-all duration-200 min-h-[44px] min-w-[44px]',
-                'bg-gradient-to-r from-accent to-accent-dark text-text-primary',
-                'hover:shadow-[0_0_15px_rgba(203,163,73,0.4)] hover:scale-105',
+                'flex items-center gap-2 sm:gap-2.5 rounded-lg px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-semibold transition-all duration-200 min-h-[44px] min-w-[44px]',
+                'bg-gradient-to-r from-accent to-accent-dark text-white',
+                'shadow-[0_2px_8px_rgba(203,163,73,0.3)]',
+                'ring-2 ring-white/20',
+                'hover:shadow-[0_0_20px_rgba(203,163,73,0.5)] hover:scale-105',
                 'active:scale-95',
-                'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none'
+                'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-[0_2px_8px_rgba(203,163,73,0.3)]'
               )}
+              style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}
             >
               <span className="whitespace-nowrap">Send</span>
-              <ArrowUpIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <ArrowUpIcon className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
             </button>
           </div>
         </div>
