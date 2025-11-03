@@ -328,11 +328,12 @@ export default function SegmentedConversationForm({
 
           setSegments(restoredSegments)
 
-          // Resume from last incomplete segment, or show review if all complete
+          // Resume from last incomplete segment, or start fresh if all complete
           if (lastIncompleteIndex === -1) {
-            // All segments complete, show review
-            setShowReview(true)
-            setCurrentSegmentIndex(segments.length - 1)
+            // All segments complete - this draft was likely abandoned or user wants new plan
+            // Start fresh instead of showing review for old draft
+            console.log('Found complete draft - starting fresh instead of showing review')
+            initializeFirstQuestion()
           } else {
             // Resume from incomplete segment
             setCurrentSegmentIndex(lastIncompleteIndex)
