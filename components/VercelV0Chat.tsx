@@ -236,10 +236,10 @@ export function VercelV0Chat() {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-sm font-sans font-medium text-alira-primary dark:text-alira-white mb-1">
+                    <h3 className="text-sm font-sans font-medium text-alira-black mb-1">
                       Almost there!
                     </h3>
-                    <p className="text-xs sm:text-sm text-alira-primary/90 dark:text-alira-white/90 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-alira-black/90 leading-relaxed">
                       {authSuccess}
                     </p>
                   </div>
