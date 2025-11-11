@@ -32,7 +32,7 @@ const defaultMembers: TeamMember[] = [
     name: 'Etomi',
     role: 'Brand and Media Strategist',
     bio: 'Leading strategic initiatives and client partnerships with a focus on sustainable growth and operational excellence.',
-    imageUrl: '/images/cards/etomi.png',
+    imageUrl: '/images/assets/etomi.png',
     imagePosition: 'center',
   },
   {
