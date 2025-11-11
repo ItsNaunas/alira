@@ -87,9 +87,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
 
   return (
     <div className="group flex w-full max-w-[320px] flex-col items-center rounded-3xl border border-borderToken-subtle bg-surface p-8 text-center shadow-token-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-token-lg">
-      <div className="relative h-44 w-44 overflow-hidden rounded-full border border-alira-gold/25 bg-alira-gold/20 shadow-token-sm transition-transform duration-300 group-hover:scale-[1.02]">
-        <div className="absolute inset-0 rounded-full bg-alira-gold/35 mix-blend-multiply pointer-events-none" />
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-alira-gold/30 via-alira-gold/10 to-transparent opacity-80 pointer-events-none" />
+      <div className="relative h-44 w-44 overflow-hidden rounded-full border-2 border-alira-gold bg-alira-gold/10 shadow-token-sm transition-transform duration-300 group-hover:scale-[1.02]">
         <Image
           src={member.imageUrl}
           alt={member.name}
