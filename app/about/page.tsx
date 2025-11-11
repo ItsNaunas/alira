@@ -174,7 +174,7 @@ export default function AboutPage() {
                           <div className="relative -mt-8">
                           <div className="w-full h-80 rounded-2xl overflow-hidden border border-borderToken-subtle shadow-lg">
                             <Image 
-                              src="/images/assets/founder.jpg" 
+                              src="/images/assets/founder.png"
                               alt="Portrait of ALIRA founder with over 10 years of project management experience, specializing in business strategy and operational excellence"
                               width={400}
                               height={320}

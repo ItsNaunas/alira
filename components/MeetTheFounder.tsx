@@ -78,7 +78,7 @@ export default function MeetTheTeam() {
                 <div className="relative flex justify-center">
                   <div className="w-80 h-80 overflow-hidden border-4 border-alira-gold/30 shadow-2xl relative" style={{borderRadius: '50%'}}>
                     <Image 
-                      src="/images/assets/founder.jpg" 
+                    src="/images/assets/founder.png"
                       alt="ALIRA Founder - Professional headshot"
                       width={320}
                       height={320}
