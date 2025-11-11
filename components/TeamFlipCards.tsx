@@ -10,6 +10,7 @@ interface TeamMember {
   imageUrl: string
   location?: string
   imagePosition?: 'top' | 'center' | 'bottom'
+  imageClassName?: string
 }
 
 interface TeamProps {
@@ -27,6 +28,7 @@ const defaultMembers: TeamMember[] = [
     bio: 'Visionary founder who built ALIRA from the ground up. Combines technical expertise with deep market insight to help brands scale through intelligent systems.',
     imageUrl: '/images/assets/founder.jpg',
     imagePosition: 'top',
+    imageClassName: 'scale-[1.12] group-hover:scale-[1.22]',
   },
   {
     name: 'Etomi',
@@ -41,6 +43,7 @@ const defaultMembers: TeamMember[] = [
     bio: 'Driving technical innovation and system architecture with expertise in scalable solutions and cutting-edge technology.',
     imageUrl: '/images/assets/naufal.jpeg',
     imagePosition: 'top',
+    imageClassName: 'scale-[1.15] group-hover:scale-[1.25]',
   },
 ]
 
@@ -90,7 +93,10 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
           fill
           sizes="(max-width: 640px) 220px, (max-width: 768px) 240px, 256px"
           loading="lazy"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className={cn(
+            'object-cover transition-transform duration-500',
+            member.imageClassName ?? 'group-hover:scale-105'
+          )}
           style={{ objectPosition: imagePosition }}
         />
       </div>
