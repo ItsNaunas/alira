@@ -17,11 +17,13 @@ export default function FinalCTA() {
                 </p>
                 <div className="w-20 h-px bg-alira-gold mx-auto mb-8"></div>
               </div>
-              
+
               <div className="space-y-4">
-                <CTAButton 
-                  href="#start-chat" 
+                <CTAButton
+                  href="#start-chat"
                   variant="aliraOutline"
+                  className="w-full justify-center px-10 py-5 text-lg font-sans font-medium text-text-inverse border-white/30 hover:border-white/60"
+                  location="final-cta"
                 />
                 <p className="text-sm text-white/70 dark:text-alira-primary/70">
                   No credit card • Completely free • Delivered in minutes • Private & secure

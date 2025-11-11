@@ -332,7 +332,7 @@ export default function ResultsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-alira-primary via-alira-primary to-alira-gold/20">
+      <section className="py-20 bg-gradient-to-b from-[#07102c] via-[#0d1b3b] to-[#1b3680]">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
@@ -351,7 +351,7 @@ export default function ResultsPage() {
                   <CTAButton 
                     href="/#start-chat" 
                     variant="aliraOutline"
-                    className="px-12 py-6 text-xl font-sans font-light"
+                    className="px-12 py-6 text-xl font-sans font-light text-text-inverse border-white/40 hover:border-white/60"
                     location="results-cta"
                   >
                     Start My Plan

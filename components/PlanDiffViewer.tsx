@@ -11,6 +11,7 @@ interface PlanDiffViewerProps {
   affectedSections: string[]
   onAccept: () => void
   onReject: () => void
+  summary?: string
   className?: string
 }
 
@@ -107,6 +108,7 @@ export default function PlanDiffViewer({
   affectedSections,
   onAccept,
   onReject,
+  summary,
   className = ''
 }: PlanDiffViewerProps) {
   if (affectedSections.length === 0) {
@@ -152,6 +154,12 @@ export default function PlanDiffViewer({
 
       {/* Changes */}
       <div className="space-y-6">
+        {summary && (
+          <div className="rounded-2xl border border-borderToken-subtle bg-bg-muted px-4 py-3 text-sm text-text-secondary">
+            {summary}
+          </div>
+        )}
+
         {affectedSections.map((section) => {
           const sectionKey = section as keyof BusinessCaseOutline
           const origValue = (original as any)[sectionKey]

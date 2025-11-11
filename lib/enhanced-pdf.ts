@@ -92,14 +92,14 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
     // ===== THEME (Dark) =====
     type RGB = [number, number, number]
     const THEME = {
-      bg: [12, 12, 12] as RGB,          // page background
-      panel: [18, 18, 18] as RGB,       // standard panel
-      panelAlt: [24, 24, 24] as RGB,    // alt panel
-      text: [235, 235, 235] as RGB,     // primary text
-      textMuted: [170, 170, 170] as RGB,// secondary
-      gold: [212, 175, 55] as RGB,      // accent
-      line: [44, 44, 44] as RGB,        // subtle dividers
-      footer: [150, 150, 150] as RGB    // footer text
+      bg: [7, 16, 44] as RGB,            // deep navy background
+      panel: [11, 26, 63] as RGB,        // standard panel
+      panelAlt: [16, 33, 82] as RGB,     // alt panel
+      text: [234, 238, 255] as RGB,      // primary text
+      textMuted: [176, 188, 217] as RGB, // secondary
+      gold: [203, 163, 73] as RGB,       // accent
+      line: [34, 48, 90] as RGB,         // subtle dividers
+      footer: [168, 178, 205] as RGB     // footer text
     }
 
     // ===== Flow Control Utils =====
@@ -268,8 +268,9 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
 
       spacer(top)
       doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
-      lines.forEach((line: string, i: number) => {
-        doc.text(line, pageWidth / 2, currentY + i * (textH / lines.length), { align: 'center' })
+      doc.text(lines, pageWidth / 2, currentY, {
+        align: 'center',
+        baseline: 'top',
       })
       currentY += textH
       spacer(bottom)
@@ -284,15 +285,16 @@ export function generatePersonalPlanPDF(data: PersonalPlanPDFData): Promise<Buff
 
       spacer(TOKENS.PARA)
       doc.setFont('helvetica', 'normal').setFontSize(10).setTextColor(...THEME.textMuted)
-      lines.forEach((line: string, i: number) => {
-        doc.text(line, pageWidth / 2, currentY + i * (textH / lines.length), { align: 'center' })
+      doc.text(lines, pageWidth / 2, currentY, {
+        align: 'center',
+        baseline: 'top',
       })
       currentY += textH
       
       if (subtitle) {
         spacer(2)
         doc.setFont('helvetica', 'italic').setFontSize(9)
-        doc.text(subtitle, pageWidth / 2, currentY, { align: 'center' })
+        doc.text(subtitle, pageWidth / 2, currentY, { align: 'center', baseline: 'top' })
         currentY += subtitleH
       }
       

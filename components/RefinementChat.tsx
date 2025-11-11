@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { Card, CardContent } from '@/components/ui/card'
 import { 
   Send, 
   Loader2, 
@@ -13,13 +12,21 @@ import {
   Check,
   X
 } from 'lucide-react'
-import { RefinementChatMessage } from '@/lib/schema'
+import { RefinementChatMessage, type BusinessCaseOutline } from '@/lib/schema'
 import { getQuickActions } from '@/lib/refinement-utils'
+import { useAutoResizeTextarea } from '@/hooks/use-auto-resize-textarea'
 
 interface RefinementChatProps {
   planId: string
   focusSection?: string
-  onSuggestionAccepted?: (suggestion: any) => void
+  onSuggestionAccepted?: (suggestion: {
+    content: Partial<BusinessCaseOutline>
+    summary?: string
+    sections: string[]
+    messageId: string
+  }) => Promise<void> | void
+  appliedMessageId?: string | null
+  pendingMessageId?: string | null
   className?: string
 }
 
@@ -29,6 +36,7 @@ interface Message {
   content: string
   suggestedChanges?: any
   applied?: boolean
+  affectedSections?: string[]
   timestamp: Date
 }
 
@@ -36,6 +44,8 @@ export default function RefinementChat({
   planId, 
   focusSection, 
   onSuggestionAccepted,
+  appliedMessageId,
+  pendingMessageId,
   className = '' 
 }: RefinementChatProps) {
   const [messages, setMessages] = useState<Message[]>([])
@@ -43,7 +53,8 @@ export default function RefinementChat({
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingHistory, setIsLoadingHistory] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const { textareaRef, adjustHeight } = useAutoResizeTextarea({ minHeight: 80, maxHeight: 240 })
+  const [stagedMessageId, setStagedMessageId] = useState<string | null>(null)
 
   // Auto-scroll to bottom
   const scrollToBottom = () => {
@@ -115,12 +126,14 @@ export default function RefinementChat({
       }
 
       const data = await response.json()
+      const sections = Object.keys(data.refined_content || {})
       
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'assistant',
         content: data.changes_summary || 'I\'ve refined the content based on your feedback.',
         suggestedChanges: data.refined_content,
+        affectedSections: sections,
         applied: false,
         timestamp: new Date()
       }
@@ -136,23 +149,51 @@ export default function RefinementChat({
       }])
     } finally {
       setIsLoading(false)
+      adjustHeight(true)
       textareaRef.current?.focus()
     }
   }
 
   const handleQuickAction = (action: string) => {
     setInputValue(action)
+    adjustHeight()
     textareaRef.current?.focus()
   }
 
-  const handleAcceptSuggestion = (message: Message) => {
-    if (message.suggestedChanges && onSuggestionAccepted) {
-      onSuggestionAccepted(message.suggestedChanges)
-      setMessages(prev => prev.map(msg => 
-        msg.id === message.id ? { ...msg, applied: true } : msg
-      ))
+  const handleAcceptSuggestion = async (message: Message) => {
+    if (!message.suggestedChanges || !onSuggestionAccepted) return
+
+    try {
+      await onSuggestionAccepted({
+        content: message.suggestedChanges as Partial<BusinessCaseOutline>,
+        summary: message.content,
+        sections: message.affectedSections || Object.keys(message.suggestedChanges || {}),
+        messageId: message.id
+      })
+    } catch (error) {
+      console.error('Failed to apply suggestion:', error)
     }
   }
+
+  useEffect(() => {
+    if (!appliedMessageId) return
+
+    setMessages(prev =>
+      prev.map(msg => (msg.id === appliedMessageId ? { ...msg, applied: true } : msg)),
+    )
+
+    if (stagedMessageId === appliedMessageId) {
+      setStagedMessageId(null)
+    }
+  }, [appliedMessageId, stagedMessageId])
+
+  useEffect(() => {
+    if (pendingMessageId) {
+      setStagedMessageId(pendingMessageId)
+    } else {
+      setStagedMessageId(null)
+    }
+  }, [pendingMessageId])
 
   const handleRejectSuggestion = (message: Message) => {
     setMessages(prev => prev.map(msg => 
@@ -243,6 +284,13 @@ export default function RefinementChat({
                   </div>
                 )}
 
+                {stagedMessageId === message.id && !message.applied && (
+                  <div className="mt-2 text-xs text-accent flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" />
+                    Pending review
+                  </div>
+                )}
+
                 <div className="mt-1 text-xs text-text-tertiary">
                   {message.timestamp.toLocaleTimeString('en-GB', { 
                     hour: '2-digit', 
@@ -301,7 +349,10 @@ export default function RefinementChat({
           <Textarea
             ref={textareaRef}
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => {
+              setInputValue(e.target.value)
+              adjustHeight()
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()

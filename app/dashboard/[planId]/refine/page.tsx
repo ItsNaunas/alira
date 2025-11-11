@@ -26,9 +26,12 @@ export default function RefinePlanPage() {
   const [pendingSuggestion, setPendingSuggestion] = useState<{
     content: Partial<BusinessCaseOutline>
     sections: string[]
+    summary?: string
+    messageId?: string
   } | null>(null)
   const [showPreview, setShowPreview] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
+  const [lastAppliedMessageId, setLastAppliedMessageId] = useState<string | null>(null)
 
   const checkUser = useCallback(async () => {
     const { user, error } = await auth.getUser()
@@ -108,12 +111,13 @@ export default function RefinePlanPage() {
     })
   }, [checkUser, loadPlan])
 
-  const handleSuggestionAccepted = (suggestion: Partial<BusinessCaseOutline>) => {
-    const affectedSections = Object.keys(suggestion)
-    setPendingSuggestion({
-      content: suggestion,
-      sections: affectedSections
-    })
+  const handleSuggestionAccepted = (suggestion: {
+    content: Partial<BusinessCaseOutline>
+    sections: string[]
+    summary?: string
+    messageId?: string
+  }) => {
+    setPendingSuggestion(suggestion)
   }
 
   const handleAcceptChanges = async () => {
@@ -128,16 +132,43 @@ export default function RefinePlanPage() {
         ...pendingSuggestion.content
       }
 
-      // TODO: Save to database via API
-      // For now, just update local state
-      setCurrentContent(updatedContent)
-      setPendingSuggestion(null)
+      const response = await fetch('/api/plan/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          planId,
+          content: updatedContent,
+          changesSummary: pendingSuggestion.summary || 'AI refinement applied',
+          createVersion: true,
+        }),
+      })
 
-      // Show success message
-      alert('Changes applied successfully!')
+      if (!response.ok) {
+        throw new Error('Failed to save changes')
+      }
+
+      setCurrentContent(updatedContent)
+      setPlan((prev) =>
+        prev
+          ? {
+              ...prev,
+              generation: prev.generation
+                ? { ...prev.generation, content: updatedContent }
+                : prev.generation,
+            }
+          : prev,
+      )
+
+      const appliedMessageId = pendingSuggestion.messageId ?? null
+      setLastAppliedMessageId(appliedMessageId)
+      setPendingSuggestion(null)
+      if (appliedMessageId) {
+        setTimeout(() => setLastAppliedMessageId(null), 0)
+      }
+      await loadPlan()
     } catch (error) {
       console.error('Failed to save changes:', error)
-      alert('Failed to save changes. Please try again.')
+      window.alert('Failed to save changes. Please try again.')
     } finally {
       setIsSaving(false)
     }
@@ -225,6 +256,7 @@ export default function RefinePlanPage() {
                     original={currentContent}
                     refined={pendingSuggestion.content}
                     affectedSections={pendingSuggestion.sections}
+                    summary={pendingSuggestion.summary}
                     onAccept={handleAcceptChanges}
                     onReject={handleRejectChanges}
                   />
@@ -246,6 +278,8 @@ export default function RefinePlanPage() {
               <RefinementChat
                 planId={planId}
                 onSuggestionAccepted={handleSuggestionAccepted}
+                appliedMessageId={lastAppliedMessageId}
+                pendingMessageId={pendingSuggestion?.messageId ?? null}
                 className="h-full"
               />
             </div>

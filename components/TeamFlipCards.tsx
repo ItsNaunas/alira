@@ -1,25 +1,22 @@
-'use client';
+'use client'
 
-import { cn } from '@/lib/utils';
-import { GithubIcon, LinkedinIcon, TwitterIcon } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 interface TeamMember {
-  name: string;
-  role: string;
-  bio: string;
-  imageUrl: string;
-  location?: string;
-  imagePosition?: 'top' | 'center' | 'bottom';
-  socialLinks?: { platform: 'github' | 'twitter' | 'linkedin'; url: string }[];
+  name: string
+  role: string
+  bio: string
+  imageUrl: string
+  location?: string
+  imagePosition?: 'top' | 'center' | 'bottom'
 }
 
 interface TeamProps {
-  title?: string;
-  subtitle?: string;
-  members?: TeamMember[];
-  className?: string;
+  title?: string
+  subtitle?: string
+  members?: TeamMember[]
+  className?: string
 }
 
 // Team data with actual images and roles
@@ -45,7 +42,7 @@ const defaultMembers: TeamMember[] = [
     imageUrl: '/images/assets/naufal.jpeg',
     imagePosition: 'top',
   },
-];
+]
 
 export default function TeamFlipCards({
   title = 'Our Expert Team',
@@ -60,12 +57,8 @@ export default function TeamFlipCards({
           <div className="text-accent-dark text-sm tracking-wide uppercase mb-4 font-sans font-light">
             Meet The Team
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-primary mb-6">
-            {title}
-          </h2>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 font-serif font-light">
-            {subtitle}
-          </p>
+          <h2 className="text-4xl md:text-5xl font-serif font-normal text-text-primary mb-6">{title}</h2>
+          <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 font-serif font-light">{subtitle}</p>
           <div className="w-16 h-px bg-accent mx-auto"></div>
         </div>
 
@@ -76,74 +69,38 @@ export default function TeamFlipCards({
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 // Team member card component
 function TeamMemberCard({ member }: { member: TeamMember }) {
-  // Custom positioning and scaling for each member
-  let baseTransform = '';
-  let objectPosition = 'center';
-  
-  if (member.name === 'Shuhayb') {
-    // Zoom in (scale 1.05) and position
-    baseTransform = 'scale(1.05)';
-    objectPosition = 'center 35%'; // 35% from top
-  } else if (member.name === 'Naufal') {
-    // Position consistent with Shuhayb
-    baseTransform = '';
-    objectPosition = 'center 35%'; // 35% from top
-  } else if (member.name === 'Etomi') {
-    // Position to show more of top portion
-    baseTransform = '';
-    objectPosition = 'center 50%'; // 50% from top shows more upper portion
-  } else {
-    const imagePos = member.imagePosition || 'center';
-    objectPosition = imagePos === 'top' ? 'center top' : imagePos === 'bottom' ? 'center bottom' : 'center';
-  }
+  const imagePosition =
+    member.imagePosition === 'top'
+      ? 'center top'
+      : member.imagePosition === 'bottom'
+      ? 'center bottom'
+      : 'center'
 
   return (
-    <div className="group bg-surface border border-borderToken-subtle h-[420px] w-full max-w-[280px] sm:max-w-80 md:max-w-96 overflow-hidden rounded-xl shadow-token-sm transition-all duration-300 hover:border-accent hover:shadow-token-md flex flex-col">
-      <div className="relative h-[200px] w-full overflow-hidden flex-shrink-0">
+    <div className="group flex w-full max-w-[320px] flex-col items-center rounded-3xl border border-borderToken-subtle bg-surface p-8 text-center shadow-token-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-token-lg">
+      <div className="relative h-40 w-40 overflow-hidden rounded-full border border-borderToken-subtle/60 bg-bg-muted shadow-token-sm transition-transform duration-300 group-hover:scale-[1.02]">
         <Image
           src={member.imageUrl}
           alt={member.name}
           fill
-          sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 384px"
+          sizes="(max-width: 640px) 220px, (max-width: 768px) 240px, 256px"
           loading="lazy"
-          className="object-cover transition-transform duration-500"
-          style={{
-            objectPosition: objectPosition,
-            transform: baseTransform || 'none',
-          }}
-          onMouseEnter={(e) => {
-            const currentTransform = baseTransform || '';
-            if (currentTransform.includes('scale')) {
-              e.currentTarget.style.transform = currentTransform.replace(/scale\([^)]+\)/, 'scale(1.05)');
-            } else {
-              e.currentTarget.style.transform = currentTransform ? `${currentTransform} scale(1.05)` : 'scale(1.05)';
-            }
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = baseTransform || 'none';
-          }}
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          style={{ objectPosition: imagePosition }}
         />
       </div>
 
-      <div className="flex flex-col p-5 flex-1 min-h-0 overflow-hidden">
-        {member.location && (
-          <div className="text-text-secondary mb-1 flex items-center text-xs font-sans font-light flex-shrink-0">
-            <div className="bg-accent-dark mr-1.5 h-1.5 w-1.5 rounded-full" />
-            {member.location}
-          </div>
-        )}
-
-        <h3 className="mb-1 text-lg sm:text-xl font-serif font-normal text-text-primary flex-shrink-0 break-words">{member.name}</h3>
-        <p className="text-accent-dark mb-3 text-sm font-sans font-medium flex-shrink-0">{member.role}</p>
-        <div className="flex-1 min-h-0 flex items-start">
-          <p className="text-text-secondary text-sm font-sans font-light leading-relaxed">{member.bio}</p>
-        </div>
+      <div className="mt-6 flex w-full flex-1 flex-col items-center">
+        <h3 className="mb-1 text-xl font-serif font-normal text-text-primary">{member.name}</h3>
+        <p className="text-accent-dark text-sm font-sans font-medium uppercase tracking-wide">{member.role}</p>
+        <div className="mt-4 h-[1px] w-12 bg-borderToken-subtle" />
+        <p className="mt-4 text-sm font-sans leading-relaxed text-text-secondary">{member.bio}</p>
       </div>
     </div>
-  );
+  )
 }
