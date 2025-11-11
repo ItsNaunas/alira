@@ -6,7 +6,7 @@ export default function HeroCTAs() {
   return (
     <div className="flex items-center justify-center pt-4">
       <CTAButton 
-        href="#start-chat" 
+        href="#hero" 
         variant="alira"
         className="px-8 py-3 text-sm font-sans font-light"
       />

@@ -173,7 +173,7 @@ export default function DashboardPage() {
   };
 
   const handleNewPlan = () => {
-    router.push('/#start-chat');
+    router.push('/#hero');
   };
 
   const handleDeleteClick = (e: React.MouseEvent, plan: BusinessPlan) => {

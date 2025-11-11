@@ -23,7 +23,7 @@ export default function StickyCTA() {
       <div className="flex items-center justify-between gap-3 max-w-md mx-auto px-4">
         <div className="flex-1 min-w-0">
           <CTAButton 
-            href="#start-chat" 
+            href="#hero" 
             variant="alira"
             className="w-full px-4 py-2 text-sm sm:text-base whitespace-nowrap"
           />

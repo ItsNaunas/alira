@@ -349,7 +349,7 @@ export default function ResultsPage() {
                 
                 <div className="space-y-4">
                   <CTAButton 
-                    href="/#start-chat" 
+                    href="/#hero" 
                     variant="aliraOutline"
                     className="px-12 py-6 text-xl font-sans font-light text-text-inverse border-white/40 hover:border-white/60"
                     location="results-cta"

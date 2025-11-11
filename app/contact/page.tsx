@@ -274,7 +274,7 @@ export default function ContactPage() {
                 Don't wait for the perfect moment. The best time to start is now.
               </p>
               <CTAButton 
-                href="/#start-chat" 
+                href="/#hero"
                 variant="alira"
                 className="px-8 py-4 text-lg font-sans font-light"
                 location="contact-cta"

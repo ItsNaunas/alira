@@ -20,7 +20,7 @@ export default function FinalCTA() {
 
               <div className="space-y-4">
                 <CTAButton
-                  href="#start-chat"
+                  href="/#hero"
                   variant="aliraOutline"
                   className="w-full justify-center px-10 py-5 text-lg font-sans font-medium text-text-inverse border-white/30 hover:border-white/60"
                   location="final-cta"

@@ -36,7 +36,7 @@ export default function HowItWorksPage() {
                 
                 <div className="space-y-4">
                   <CTAButton 
-                    href="/#start-chat" 
+                    href="/#hero" 
                     variant="aliraOutline"
                     className="px-12 py-6 text-xl font-sans font-light"
                     location="how-it-works-cta"

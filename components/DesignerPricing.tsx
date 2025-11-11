@@ -89,7 +89,7 @@ export default function DesignerPricing() {
 
                 <div className="mb-8 flex flex-col gap-3">
                   <CTAButton
-                    href="/#start-chat"
+                    href="/#hero"
                     location="pricing-content"
                     className="w-full justify-center px-6 py-3 text-sm font-sans font-semibold"
                   >
@@ -241,7 +241,7 @@ export default function DesignerPricing() {
 
                 <div className="mb-8 flex flex-col gap-3">
                   <CTAButton
-                    href="/#start-chat"
+                    href="/#hero"
                     location="pricing-systems"
                     className="w-full justify-center px-6 py-3 text-sm font-sans font-semibold"
                   >
@@ -396,7 +396,7 @@ export default function DesignerPricing() {
 
                 <div className="mb-8 flex flex-col gap-3">
                   <CTAButton
-                    href="/#start-chat"
+                    href="/#hero"
                     location="pricing-complete"
                     className="w-full justify-center px-6 py-3 text-sm font-sans font-semibold"
                   >

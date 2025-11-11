@@ -52,13 +52,20 @@ export default function CTAButton({
     // Track CTA click
     const finalText = typeof children === 'string' ? children : buttonText
     conversionEvents.ctaClicked(location, finalText)
-    
-    // Handle smooth scrolling for anchor links
-    if (href.startsWith('#')) {
+
+    const isHashLink = href.startsWith('#')
+    const isSamePageHashLink =
+      !isHashLink &&
+      href.startsWith('/#') &&
+      typeof window !== 'undefined' &&
+      window.location.pathname === '/'
+
+    // Handle smooth scrolling for anchor links on the current page
+    if (isHashLink || isSamePageHashLink) {
       e.preventDefault()
-      const targetId = href.substring(1)
+      const targetId = href.substring(href.indexOf('#') + 1)
       const targetElement = document.getElementById(targetId)
-      
+
       if (targetElement) {
         // Calculate offset to show form header fully visible
         const headerOffset = 80 // Adjust this value as needed for your header height

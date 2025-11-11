@@ -632,7 +632,7 @@ export default function AboutPage() {
                 Let's turn your ambition into clear action. Start with a simple plan and build from there.
               </p>
               <CTAButton 
-                href="/#start-chat" 
+                href="/#hero" 
                 variant="alira"
                 className="px-8 py-4 text-lg font-sans font-light"
                 location="about-cta"

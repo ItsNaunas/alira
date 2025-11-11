@@ -36,7 +36,8 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section 
+      <section
+        id="hero"
         className="min-h-screen flex items-center justify-center bg-bg-page relative overflow-hidden"
         aria-labelledby="hero-heading"
       >
