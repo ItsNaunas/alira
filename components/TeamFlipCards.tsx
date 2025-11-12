@@ -28,7 +28,7 @@ const defaultMembers: TeamMember[] = [
     bio: 'Visionary founder who built ALIRA from the ground up. Combines technical expertise with deep market insight to help brands scale through intelligent systems.',
     imageUrl: '/images/assets/founder.png',
     imagePosition: 'top',
-    imageClassName: 'scale-[1.32] group-hover:scale-[1.4]',
+    imageClassName: 'scale-[1.42] group-hover:scale-[1.5]',
   },
   {
     name: 'Etomi',
@@ -44,7 +44,7 @@ const defaultMembers: TeamMember[] = [
     bio: 'Driving technical innovation and system architecture with expertise in scalable solutions and cutting-edge technology.',
     imageUrl: '/images/assets/naufal.png',
     imagePosition: 'top',
-    imageClassName: 'scale-[1.35] group-hover:scale-[1.42]',
+    imageClassName: 'scale-[1.48] group-hover:scale-[1.56]',
   },
 ]
 

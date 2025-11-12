@@ -128,94 +128,104 @@ export default function AboutPage() {
             {/* Our Founder Subsection */}
             <div className="mb-16">
               <Reveal delay={100}>
-                <div className="text-center mb-12 bg-surface rounded-2xl p-8 border border-borderToken-subtle shadow-sm">
-                  <h3 className="text-3xl font-serif font-normal text-text-primary mb-4">Our Founder</h3>
-                  <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+                <div className="text-center mb-14 bg-surface rounded-3xl p-10 border border-borderToken-subtle shadow-sm relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-alira-gold/5 via-transparent to-transparent pointer-events-none" />
+                  <h3 className="text-3xl md:text-4xl font-serif font-normal text-text-primary mb-4 relative z-10">Our Founder</h3>
+                  <p className="text-lg text-text-secondary max-w-2xl mx-auto relative z-10">
                     ALIRA began with one person's frustration: seeing brilliant ideas stall in complexity.
                   </p>
-                  <div className="w-12 h-px bg-alira-gold mx-auto mt-4"></div>
+                  <div className="w-12 h-px bg-alira-gold mx-auto mt-5 relative z-10"></div>
                 </div>
               </Reveal>
 
-              {/* Two-column layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                {/* Left column - Story */}
+              <div className="grid grid-cols-1 lg:grid-cols-[320px,1fr] gap-12 items-start">
+                {/* Founder portrait */}
                 <Reveal delay={200}>
-                <div className="space-y-8 bg-surface rounded-2xl p-8 border border-borderToken-subtle shadow-sm">
-                  {/* Opening statement */}
-                  <div className="relative">
-                    <div className="absolute -left-4 top-0 w-1 h-full bg-alira-gold/30"></div>
-                    <p className="text-2xl text-text-primary font-serif leading-relaxed pl-6">
-                      "I know what it feels like to have ambition but no clear path."
-                    </p>
-                  </div>
+                  <div className="flex justify-center">
+                    <div className="relative flex flex-col items-center">
+                      <div className="absolute -top-6 -right-6 w-20 h-20 bg-alira-gold/10 rounded-full blur-xl" />
+                      <div className="absolute -bottom-6 -left-10 w-24 h-24 bg-alira-gold/10 rounded-full blur-2xl" />
 
-                  {/* Personal journey */}
-                  <div className="space-y-6">
-                    <p className="text-lg text-text-secondary leading-relaxed">
-                      For over a decade, I worked in project management and operations — leading teams, fixing systems, and delivering projects that saved organisations time and money.
-                    </p>
-                    
-                    <p className="text-lg text-text-secondary leading-relaxed">
-                      But I kept seeing the same pattern: great ideas getting stuck in complexity. Simple problems becoming complicated messes.
-                    </p>
-                    
-                    <p className="text-lg text-text-secondary leading-relaxed">
-                      That's why I built ALIRA: to strip away the noise and give people what they actually need — a simple plan, clear steps, and the confidence to move forward.
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
+                      <div className="relative">
+                        <div className="absolute inset-0 rounded-full border border-alira-gold/40 [mask-image:radial-gradient(circle,rgba(0,0,0,0.35) 60%,transparent 100%)]" />
+                        <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-alira-gold/30 shadow-2xl bg-white">
+                          <Image
+                            src="/images/assets/founder.png"
+                            alt="Portrait of ALIRA founder with over 10 years of project management experience, specializing in business strategy and operational excellence"
+                            width={256}
+                            height={256}
+                            className="w-full h-full object-cover object-top"
+                            priority
+                          />
+                        </div>
+                      </div>
 
-              {/* Right column - Visual elements and CTA */}
-              <Reveal delay={400}>
-                <div className="space-y-8">
-                                            {/* Founder photo with elegant styling */}
-                          <div className="relative -mt-8">
-                          <div className="w-full h-80 rounded-2xl overflow-hidden border border-borderToken-subtle shadow-lg">
-                            <Image 
-                              src="/images/assets/founder.png"
-                              alt="Portrait of ALIRA founder with over 10 years of project management experience, specializing in business strategy and operational excellence"
-                              width={400}
-                              height={320}
-                              className="w-full h-full object-cover object-top"
-                            />
-                          </div>
-                            {/* Decorative elements */}
-                            <div className="absolute -top-4 -right-4 w-8 h-8 bg-alira-gold/20 rounded-full"></div>
-                            <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-alira-gold/30 rounded-full"></div>
-                          </div>
-
-                  {/* Credentials/Experience */}
-                  <div className="space-y-4 bg-surface rounded-2xl p-6 border border-borderToken-subtle shadow-sm">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-text-primary font-sans font-light">10+ years in project management</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-text-primary font-sans font-light">Experience leading teams across multiple industries</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-alira-gold rounded-full"></div>
-                      <span className="text-text-primary font-sans font-light">Delivered projects that saved organisations time and money</span>
+                      <div className="mt-8 text-center bg-surface rounded-2xl px-6 py-5 border border-borderToken-subtle shadow-sm w-full max-w-xs">
+                        <p className="text-sm uppercase tracking-[0.3em] text-alira-gold/80 font-sans font-light mb-2">
+                          Founder & Lead Strategist
+                        </p>
+                        <p className="text-xl font-serif text-text-primary">Funke Alira</p>
+                      </div>
                     </div>
                   </div>
+                </Reveal>
 
-                  {/* CTA */}
-                  <div className="text-center pt-4">
-                    <CTAButton 
-                      href="/contact" 
-                      variant="alira"
-                      className="px-8 py-4 text-lg font-sans font-light"
-                      location="founder-section"
-                    >
-                      Contact Us
-                    </CTAButton>
+                {/* Founder story and credentials */}
+                <Reveal delay={350}>
+                  <div className="space-y-10 bg-surface rounded-3xl p-10 border border-borderToken-subtle shadow-sm">
+                    <div className="relative pl-6">
+                      <div className="absolute left-0 top-1 h-16 w-1 rounded-full bg-alira-gold/40" />
+                      <p className="text-2xl md:text-3xl text-text-primary font-serif leading-relaxed">
+                        “I know what it feels like to have ambition but no clear path.”
+                      </p>
+                    </div>
+
+                    <div className="space-y-6 text-lg text-text-secondary leading-relaxed">
+                      <p>
+                        For over a decade, I worked in project management and operations — leading teams, fixing systems, and delivering projects that saved organisations time and money.
+                      </p>
+                      <p>
+                        But I kept seeing the same pattern: great ideas getting stuck in complexity. Simple problems becoming complicated messes.
+                      </p>
+                      <p>
+                        That's why I built ALIRA: to strip away the noise and give people what they actually need — a simple plan, clear steps, and the confidence to move forward.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="rounded-2xl border border-borderToken-subtle bg-white/30 p-4 text-center shadow-sm">
+                        <div className="text-alira-gold text-xs uppercase tracking-[0.2em] mb-2">Experience</div>
+                        <div className="text-text-primary font-serif text-xl">10+ years</div>
+                        <p className="text-sm text-text-secondary mt-2">Project leadership & operations</p>
+                      </div>
+                      <div className="rounded-2xl border border-borderToken-subtle bg-white/30 p-4 text-center shadow-sm">
+                        <div className="text-alira-gold text-xs uppercase tracking-[0.2em] mb-2">Industries</div>
+                        <div className="text-text-primary font-serif text-xl">Multi-sector</div>
+                        <p className="text-sm text-text-secondary mt-2">Cross-functional team delivery</p>
+                      </div>
+                      <div className="rounded-2xl border border-borderToken-subtle bg-white/30 p-4 text-center shadow-sm">
+                        <div className="text-alira-gold text-xs uppercase tracking-[0.2em] mb-2">Impact</div>
+                        <div className="text-text-primary font-serif text-xl">Measured</div>
+                        <p className="text-sm text-text-secondary mt-2">Time & cost savings for clients</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                      <div className="text-sm text-text-secondary leading-relaxed sm:max-w-xl">
+                        Ready to move beyond ideas and into action? Let’s map out the next steps together.
+                      </div>
+                      <CTAButton
+                        href="/contact"
+                        variant="alira"
+                        className="px-8 py-4 text-lg font-sans font-light"
+                        location="founder-section"
+                      >
+                        Contact Us
+                      </CTAButton>
+                    </div>
                   </div>
-                </div>
-              </Reveal>
-            </div>
+                </Reveal>
+              </div>
             </div>
 
             {/* Team Capabilities Section */}
