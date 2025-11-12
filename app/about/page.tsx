@@ -147,8 +147,8 @@ export default function AboutPage() {
                       <div className="absolute -bottom-6 -left-10 w-24 h-24 bg-alira-gold/10 rounded-full blur-2xl" />
 
                       <div className="relative">
-                        <div className="absolute inset-0 rounded-full border border-alira-gold/40 [mask-image:radial-gradient(circle,rgba(0,0,0,0.35) 60%,transparent 100%)]" />
-                        <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-alira-gold/30 shadow-2xl bg-white">
+                        <div className="absolute inset-0 rounded-full border border-alira-gold/30 [mask-image:radial-gradient(circle,rgba(0,0,0,0.35) 60%,transparent 100%)]" />
+                        <div className="relative w-64 h-64 rounded-full overflow-hidden border-2 border-alira-gold bg-alira-gold/10 shadow-token-sm">
                           <Image
                             src="/images/assets/founder.png"
                             alt="Portrait of ALIRA founder with over 10 years of project management experience, specializing in business strategy and operational excellence"
